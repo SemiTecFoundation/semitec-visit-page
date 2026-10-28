@@ -583,16 +583,15 @@ html.map-end #chipmap .cm-viewport{bottom:0!important}
 #chipmap:not(.is-expanded) .cm-pad span{color:#7a5a22;font-weight:600}
 #chipmap:not(.is-expanded) .cm-pad.is-supporter span{color:#8e4a26}
 #chipmap:not(.is-expanded) .cm-pad.is-free span{color:#6f7f7c;font-weight:500}
-/* supporters' names: not on the chip (on the near edges they'd sit on the pads and the chip's side) but in a row
-   under it, as small copper labels. Clicking one highlights its pad. Full screen keeps the names on the chip. */
+/* supporters' names (copper pads on the bottom and right edges): drawn flat on the screen just outside the chip's
+   edge (chipmap.js placeSupporters), joined to their pad by a thin copper line; the in-chip labels stay hidden */
 #chipmap:not(.is-expanded) .cm-pad.is-supporter span{display:none}
-.cm-supporters{display:none}
-#chipmap:not(.is-expanded) .cm-viewport{bottom:86px}
-#chipmap:not(.is-expanded) .cm-supporters{position:absolute;left:0;right:0;bottom:50px;display:flex;align-items:center;gap:6px;flex-wrap:nowrap;overflow:hidden;z-index:2;transition:opacity .3s}
-.cm-sup-title{flex:none;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#8e4a26;margin-right:4px}
-.cm-supporters button{flex:none;display:flex;align-items:center;gap:5px;padding:3px 7px;border-radius:5px;border:1px solid #e2a27a88;background:var(--surface);font-size:10px;color:#6b3a1f;white-space:nowrap;cursor:pointer}
-.cm-supporters button:before{content:'';width:9px;height:7px;border-radius:1px;background:linear-gradient(135deg,#e2a27a,#8a4f2e)}
-.cm-supporters button.is-free{border-style:dashed;color:#8e4a26;background:transparent}
-.cm-supporters button.is-free:before{background:none;border:1px dashed #e2a27a}
-.cm-supporters button:hover,.cm-supporters button.is-open{background:#e2a27a26}
-html:not(.map-docked) #chipmap:not(.is-expanded) .cm-supporters,html.map-end #chipmap .cm-supporters{opacity:0;pointer-events:none}
+.cm-sup-labels{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .3s;z-index:1}
+.cm-sup-labels.is-on{opacity:1}
+.cm-sup-lines{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.cm-sup-lines path{stroke:#c98a62;stroke-width:1.2;fill:none}
+.cm-sup-label{position:absolute;left:0;top:0;padding:1px 4px;border:0;background:var(--background);font:600 12px/1.2 var(--font);color:#8e4a26;white-space:nowrap;cursor:pointer;pointer-events:auto}
+.cm-sup-labels:not(.is-on) .cm-sup-label{pointer-events:none}
+.cm-sup-label.is-free{font-weight:500;color:#6f7f7c}
+.cm-sup-label:hover,.cm-sup-label.is-open{color:#14262c;text-decoration:underline}
+html.map-end .cm-sup-labels,html:not(.map-docked) #chipmap:not(.is-expanded) .cm-sup-labels{display:none}

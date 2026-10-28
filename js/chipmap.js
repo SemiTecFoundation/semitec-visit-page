@@ -76,6 +76,11 @@
     /* ---------- DOM ---------- */
     build() {
       const f = this.frame;
+      /* supporters' names (the copper pads on the near edges) are drawn flat on the screen just outside the chip's
+         edge and follow it in every view, so the chip's side wall or the pads never cover them. Real supporters,
+         plus one free pad per edge with "+ Become a supporter". */
+      const supLabels = L.pads.filter(p => p.kind === 'supporter').filter((p, k, a) => !p.free || a.findIndex(q => q.free && q.side === p.side) === k);
+      this.supPads = supLabels;
       f.classList.add('chipmap');
       f.innerHTML = `
         <div class="cm-viewport" tabindex="0" role="application" data-ui-label="mapCaption">
@@ -94,6 +99,7 @@
             <div class="cm-blocks"></div>
             <div class="cm-pads">${L.pads.map(p => `<button type="button" class="cm-pad cm-pad-${p.side} is-${p.kind}${p.free ? ' is-free' : ''}" data-pad="${p.id}" style="left:${p.x}px;top:${p.y}px;width:${p.w}px;height:${p.h}px"><span></span></button>`).join('')}</div>
           </div>
+          <div class="cm-sup-labels"><svg class="cm-sup-lines" aria-hidden="true"></svg>${supLabels.map(p => `<button type="button" class="cm-sup-label${p.free ? ' is-free' : ''}" data-pad="${p.id}"></button>`).join('')}</div>
         </div>
         <div class="cm-top-ui">
           <div class="cm-caption"><i class="status-light"></i><span data-ui="mapCaption"></span></div>
@@ -117,7 +123,6 @@
           <rect class="mm-die" x="0" y="0" width="${L.width}" height="${L.height}" rx="10"/>
           <g class="mm-blocks"></g><polygon class="mm-view" points="0,0"/>
         </svg>
-        <div class="cm-supporters"><span class="cm-sup-title"></span>${(SITE_CONTENT.partners || []).filter(p => p.kind === 'supporter').map(p => `<button type="button" data-sup="${p.id}"></button>`).join('')}<button type="button" class="is-free" data-sup="free-supporter-0"></button></div>
         <div class="cm-pad-card" hidden><button type="button" class="cm-pad-close" aria-label="Close">×</button><span class="cm-pad-kind"></span><strong class="cm-pad-name"></strong><p class="cm-pad-note"></p><div class="cm-pad-links"></div></div>
         <div class="cm-hint" aria-live="polite"></div>
         <p class="cm-help" data-ui="mapHelp"></p>`;
@@ -150,6 +155,7 @@
       });
       this.mmRects = [...mm.children];
       this.padEls = [...f.querySelectorAll('.cm-pad')];
+      this.supLayer = f.querySelector('.cm-sup-labels'); this.supLines = f.querySelector('.cm-sup-lines'); this.supEls = [...f.querySelectorAll('.cm-sup-label')];
       this.drawPath = f.querySelector('.cm-draw');
       this.built = -1;
     }
@@ -192,18 +198,15 @@
         const kick = el.querySelector('.cm-kicker'); if (kick) kick.textContent = ST.text('powerUnit');
         el.querySelector('.cm-top').setAttribute('aria-label', ST.pick(s.label));
       });
-      this.frame.querySelectorAll('[data-pad]').forEach(el => {
+      this.frame.querySelectorAll('.cm-pad[data-pad]').forEach(el => {
         if (el.classList.contains('is-free')) { const sup = el.classList.contains('is-supporter'); el.firstElementChild.textContent = '+ ' + ST.text(sup ? 'becomeSupporter' : 'becomePartner'); el.setAttribute('aria-label', `${ST.text('freePad')}: ${ST.text(sup ? 'becomeSupporter' : 'becomePartner')}`); return; }
         const p = (SITE_CONTENT.partners || []).find(q => q.id === el.dataset.pad);
         el.firstElementChild.textContent = ST.pick(p.name);
         el.setAttribute('aria-label', `${ST.text(p.kind === 'supporter' ? 'supporterKind' : 'partnerKind')}: ${ST.pick(p.name)}`);
       });
-      const sup = this.frame.querySelector('.cm-supporters');
-      sup.querySelector('.cm-sup-title').textContent = ST.text('supportersTitle');
-      sup.querySelectorAll('[data-sup]').forEach(b => {
-        const p = (SITE_CONTENT.partners || []).find(q => q.id === b.dataset.sup);
-        b.textContent = p ? ST.pick(p.name) : ST.text('joinShort');
-        b.title = p ? ST.pick(p.name) : ST.text('becomeSupporter');
+      this.supEls.forEach(el => {
+        const p = (SITE_CONTENT.partners || []).find(q => q.id === el.dataset.pad);
+        el.textContent = p ? ST.pick(p.name) : '+ ' + ST.text('becomeSupporter');
       });
       if (this.padId) this.showPad(this.padId);
       this.paintStatus(); this.paintView();
@@ -212,7 +215,6 @@
     showPad(id) {
       this.padId = id;
       this.frame.querySelectorAll('[data-pad]').forEach(el => el.classList.toggle('is-open', el.dataset.pad === id));
-      this.frame.querySelectorAll('[data-sup]').forEach(el => el.classList.toggle('is-open', el.dataset.sup === id));
       if (!id) { this.padCard.hidden = true; return; }
       const c = this.padCard;
       if (id.startsWith('free-')) {   /* a free contact: invite the visitor to take it */
@@ -293,7 +295,6 @@
       this.padCard = f.querySelector('.cm-pad-card');
       f.querySelector('.cm-pad-close').addEventListener('click', () => this.showPad(null));
       this.padCard.addEventListener('click', e => { const a = e.target.closest('[data-path]'); if (a) { e.preventDefault(); this.showPad(null); this.onSelect(a.dataset.path.split('/')); } });
-      f.querySelector('.cm-supporters').addEventListener('click', e => { const b = e.target.closest('[data-sup]'); if (b) this.showPad(this.padId === b.dataset.sup ? null : b.dataset.sup); });
       f.querySelector('.cm-expand').addEventListener('click', () => this.setExpanded(!this.expanded));
       f.querySelectorAll('[data-view]').forEach(b => b.addEventListener('click', () => this.setView(b.dataset.view)));
       /* minimap: click or drag to move the camera there */
@@ -327,6 +328,34 @@
       const X = ox / s, Y = oy / s, ca = Math.cos(rx), sa = Math.sin(rx);
       const vy = Y * d / Math.max(1, d * ca + Y * sa), vx = X * (d - vy * sa) / d;
       return { x: vx * Math.cos(-rz) - vy * Math.sin(-rz), y: vx * Math.sin(-rz) + vy * Math.cos(-rz) };
+    }
+    /* forward projection: a chip point → px in the viewport (the inverse of unproject) */
+    project(wx, wy, c = this.cam) {
+      const s = this.scaleOf(c), d = 1500, { rx, rz } = this.angles(c);
+      const dx = wx - c.x, dy = wy - this.lookY(c);
+      const vx = dx * Math.cos(rz) - dy * Math.sin(rz), vy = dx * Math.sin(rz) + dy * Math.cos(rz);
+      const y2 = vy * Math.cos(rx), z2 = vy * Math.sin(rx), f = d / Math.max(1, d - z2);
+      return { x: this.W / 2 + s * vx * f, y: this.H / 2 + s * y2 * f };
+    }
+    placeSupporters(s) {
+      const on = !this.expanded && s > .82;
+      this.supLayer.classList.toggle('is-on', on);
+      if (!on) return;
+      let lines = '';
+      const placed = [];
+      this.supPads.forEach((p, k) => {
+        const el = this.supEls[k], far = 46 + (k % 3) * 34 + 30 * this.cam.tilt;   /* staggered; further out in the 3D view, past the side wall */
+        const a = p.side === 'bottom' ? this.project(p.x + p.w / 2, p.y + p.h) : this.project(p.x + p.w, p.y + p.h / 2);
+        const b = p.side === 'bottom' ? this.project(p.x + p.w / 2, L.height + far) : this.project(L.width + 34 + 34 * this.cam.tilt, p.y + p.h / 2);
+        const w = el.offsetWidth || 90, h = el.offsetHeight || 16;
+        /* never on top of another name: move down until the spot is free */
+        let r = p.side === 'bottom' ? { l: b.x - w / 2, t: b.y + 2, w, h } : { l: b.x + 4, t: b.y - h / 2, w, h };
+        for (let n = 0; n < 12 && placed.some(q => r.l < q.l + q.w + 4 && q.l < r.l + r.w + 4 && r.t < q.t + q.h + 2 && q.t < r.t + r.h + 2); n++) r.t += h + 2;
+        placed.push(r);
+        el.style.transform = `translate(${r.l.toFixed(1)}px,${r.t.toFixed(1)}px)`;
+        lines += `<path d="M${a.x.toFixed(1)} ${a.y.toFixed(1)}L${(r.l + (p.side === 'bottom' ? w / 2 : 0)).toFixed(1)} ${(r.t + (p.side === 'bottom' ? 0 : h / 2)).toFixed(1)}"/>`;
+      });
+      this.supLines.innerHTML = lines;
     }
     /* move the map with the pointer: the chip point under the finger stays under the finger */
     panBy(dx, dy, immediate, ax = 0, ay = 0) {
@@ -466,6 +495,7 @@
       const pts = [[-1, -1], [1, -1], [1, 1], [-1, 1]].map(([sx, sy]) => { const w = this.unproject(sx * this.W / 2, sy * this.H / 2); return `${(c.x + w.x).toFixed(0)},${(cy + w.y).toFixed(0)}`; });
       this.mmView.setAttribute('points', pts.join(' '));
       this.frame.classList.toggle('is-zoomed', c.z > 1.12 || this.expanded);
+      this.placeSupporters(s);
     }
   }
   ST.ChipMap = ChipMap;
