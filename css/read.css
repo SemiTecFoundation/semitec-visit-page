@@ -576,8 +576,7 @@ html.map-end .map-dock:before{opacity:0}
 #chipmap:not(.is-expanded) .cm-expand{width:36px;height:36px}
 #chipmap:not(.is-expanded) .cm-hint{background:#14262ce6}
 /* the opening build and the ending: the chip alone, no toolbar */
-html:not(.map-docked) #chipmap:not(.is-expanded) :is(.cm-controls,.cm-top-ui),html.map-end #chipmap :is(.cm-controls,.cm-top-ui){opacity:0;pointer-events:none}
-html:not(.map-docked) #chipmap:not(.is-expanded) .cm-viewport{bottom:0!important}
+html.map-end #chipmap :is(.cm-controls,.cm-top-ui){opacity:0;pointer-events:none}
 html.map-end #chipmap .cm-viewport{bottom:0!important}
 /* on the page background the pin names need dark ink (the full-screen window keeps the light ones) */
 #chipmap:not(.is-expanded) .cm-pad span{color:#7a5a22;font-weight:600}
@@ -585,13 +584,15 @@ html.map-end #chipmap .cm-viewport{bottom:0!important}
 #chipmap:not(.is-expanded) .cm-pad.is-free span{color:#6f7f7c;font-weight:500}
 /* supporters' names (copper pads on the bottom and right edges): drawn flat on the screen just outside the chip's
    edge (chipmap.js placeSupporters), joined to their pad by a thin copper line; the in-chip labels stay hidden */
-#chipmap:not(.is-expanded) .cm-pad.is-supporter span{display:none}
+#chipmap:not(.is-expanded) .cm-pad span{display:none}
 .cm-sup-labels{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .3s;z-index:1}
 .cm-sup-labels.is-on{opacity:1}
 .cm-sup-lines{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .cm-sup-lines path{stroke:#c98a62;stroke-width:1.2;fill:none}
+.cm-sup-lines path.is-partner{stroke:#c9a95e}
 .cm-sup-label{position:absolute;left:0;top:0;padding:1px 4px;border:0;background:var(--background);font:600 12px/1.2 var(--font);color:#8e4a26;white-space:nowrap;cursor:pointer;pointer-events:auto}
 .cm-sup-labels:not(.is-on) .cm-sup-label{pointer-events:none}
+.cm-sup-label.is-partner{color:#7a5a22}
 .cm-sup-label.is-free{font-weight:500;color:#6f7f7c}
 .cm-sup-label:hover,.cm-sup-label.is-open{color:#14262c;text-decoration:underline}
-html.map-end .cm-sup-labels,html:not(.map-docked) #chipmap:not(.is-expanded) .cm-sup-labels{display:none}
+html.map-end .cm-sup-labels{display:none}

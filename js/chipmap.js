@@ -79,7 +79,7 @@
       /* supporters' names (the copper pads on the near edges) are drawn flat on the screen just outside the chip's
          edge and follow it in every view, so the chip's side wall or the pads never cover them. Real supporters,
          plus one free pad per edge with "+ Become a supporter". */
-      const supLabels = L.pads.filter(p => p.kind === 'supporter').filter((p, k, a) => !p.free || a.findIndex(q => q.free && q.side === p.side) === k);
+      const supLabels = L.pads.filter((p, k, a) => !p.free || a.findIndex(q => q.free && q.side === p.side) === k);   /* every partner and supporter + one free pad per edge */
       this.supPads = supLabels;
       f.classList.add('chipmap');
       f.innerHTML = `
@@ -99,7 +99,7 @@
             <div class="cm-blocks"></div>
             <div class="cm-pads">${L.pads.map(p => `<button type="button" class="cm-pad cm-pad-${p.side} is-${p.kind}${p.free ? ' is-free' : ''}" data-pad="${p.id}" style="left:${p.x}px;top:${p.y}px;width:${p.w}px;height:${p.h}px"><span></span></button>`).join('')}</div>
           </div>
-          <div class="cm-sup-labels"><svg class="cm-sup-lines" aria-hidden="true"></svg>${supLabels.map(p => `<button type="button" class="cm-sup-label${p.free ? ' is-free' : ''}" data-pad="${p.id}"></button>`).join('')}</div>
+          <div class="cm-sup-labels"><svg class="cm-sup-lines" aria-hidden="true"></svg>${supLabels.map(p => `<button type="button" class="cm-sup-label is-${p.kind}${p.free ? ' is-free' : ''}" data-pad="${p.id}"></button>`).join('')}</div>
         </div>
         <div class="cm-top-ui">
           <div class="cm-caption"><i class="status-light"></i><span data-ui="mapCaption"></span></div>
@@ -206,7 +206,7 @@
       });
       this.supEls.forEach(el => {
         const p = (SITE_CONTENT.partners || []).find(q => q.id === el.dataset.pad);
-        el.textContent = p ? ST.pick(p.name) : '+ ' + ST.text('becomeSupporter');
+        el.textContent = p ? ST.pick(p.name) : '+ ' + ST.text(el.classList.contains('is-supporter') ? 'becomeSupporter' : 'becomePartner');
       });
       if (this.padId) this.showPad(this.padId);
       this.paintStatus(); this.paintView();
@@ -338,22 +338,28 @@
       return { x: this.W / 2 + s * vx * f, y: this.H / 2 + s * y2 * f };
     }
     placeSupporters(s) {
-      const on = !this.expanded && s > .82;
+      const on = !this.expanded && s > .82 && !(this.built >= 0 && this.built < .9);   /* not before the pads are built */
       this.supLayer.classList.toggle('is-on', on);
       if (!on) return;
       let lines = '';
-      const placed = [];
+      const placed = [], count = {};
       this.supPads.forEach((p, k) => {
-        const el = this.supEls[k], far = 46 + (k % 3) * 34 + 30 * this.cam.tilt;   /* staggered; further out in the 3D view, past the side wall */
-        const a = p.side === 'bottom' ? this.project(p.x + p.w / 2, p.y + p.h) : this.project(p.x + p.w, p.y + p.h / 2);
-        const b = p.side === 'bottom' ? this.project(p.x + p.w / 2, L.height + far) : this.project(L.width + 34 + 34 * this.cam.tilt, p.y + p.h / 2);
+        const el = this.supEls[k], i = count[p.side] = (count[p.side] ?? -1) + 1;
+        /* staggered distances; the near edges (bottom, right) go further out in the 3D view, past the side wall */
+        const far = 46 + (i % 3) * 34, wall = 30 * this.cam.tilt;
+        const anchor = { top: [p.x + p.w / 2, p.y], bottom: [p.x + p.w / 2, p.y + p.h], left: [p.x, p.y + p.h / 2], right: [p.x + p.w, p.y + p.h / 2] }[p.side];
+        const spot = { top: [p.x + p.w / 2, -far], bottom: [p.x + p.w / 2, L.height + far + wall], left: [-34, p.y + p.h / 2], right: [L.width + 34 + wall, p.y + p.h / 2] }[p.side];
+        const a = this.project(...anchor), b = this.project(...spot);
         const w = el.offsetWidth || 90, h = el.offsetHeight || 16;
-        /* never on top of another name: move down until the spot is free */
-        let r = p.side === 'bottom' ? { l: b.x - w / 2, t: b.y + 2, w, h } : { l: b.x + 4, t: b.y - h / 2, w, h };
-        for (let n = 0; n < 12 && placed.some(q => r.l < q.l + q.w + 4 && q.l < r.l + r.w + 4 && r.t < q.t + q.h + 2 && q.t < r.t + r.h + 2); n++) r.t += h + 2;
+        let r = p.side === 'top' ? { l: b.x - w / 2, t: b.y - h - 2, w, h } : p.side === 'bottom' ? { l: b.x - w / 2, t: b.y + 2, w, h }
+          : p.side === 'left' ? { l: b.x - 4 - w, t: b.y - h / 2, w, h } : { l: b.x + 4, t: b.y - h / 2, w, h };
+        /* never on top of another name: step away from the chip until the spot is free */
+        const step = p.side === 'top' ? -(h + 2) : h + 2;
+        for (let n = 0; n < 12 && placed.some(q => r.l < q.l + q.w + 4 && q.l < r.l + r.w + 4 && r.t < q.t + q.h + 2 && q.t < r.t + r.h + 2); n++) r.t += step;
         placed.push(r);
         el.style.transform = `translate(${r.l.toFixed(1)}px,${r.t.toFixed(1)}px)`;
-        lines += `<path d="M${a.x.toFixed(1)} ${a.y.toFixed(1)}L${(r.l + (p.side === 'bottom' ? w / 2 : 0)).toFixed(1)} ${(r.t + (p.side === 'bottom' ? 0 : h / 2)).toFixed(1)}"/>`;
+        const end = p.side === 'top' ? [r.l + w / 2, r.t + h] : p.side === 'bottom' ? [r.l + w / 2, r.t] : p.side === 'left' ? [r.l + w, r.t + h / 2] : [r.l, r.t + h / 2];
+        lines += `<path class="is-${p.kind}" d="M${a.x.toFixed(1)} ${a.y.toFixed(1)}L${end[0].toFixed(1)} ${end[1].toFixed(1)}"/>`;
       });
       this.supLines.innerHTML = lines;
     }
