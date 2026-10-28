@@ -1,0 +1,209 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Noto+Sans+Armenian:wght@400;500;700&display=swap');
+/* ==========================================================================
+   Shared shell: colours for both views, header, mode switch, bottom bar,
+   dialogs, which layers each view shows, and the switch transition.
+   ========================================================================== */
+
+/* ---------- colours ---------- */
+:root{
+  --font:'DM Sans','Noto Sans Armenian',Arial,Helvetica,sans-serif;
+  --header:84px; --nav:62px;
+  --panel-width:360px; --panel-fade:380ms;
+  --ease-out:cubic-bezier(.16,1,.3,1); --ease-io:cubic-bezier(.65,0,.35,1);
+  /* chip materials — read by the WebGL renderer at load, and used by the 2D map */
+  --chip-board:#10232a; --chip-body:#21383e; --chip-metal:#526264; --chip-signal:#eac883; --chip-trace:#397b80; --chip-fog:#071419;
+}
+/* 2D — "Read": warm paper, dark chip window */
+[data-mode="2d"]{
+  color-scheme:light;
+  --background:#f4f2ea; --surface:#fbfaf5; --text:#14262c; --muted:#6f7f7c; --faint:#9aa39b;
+  --line:#dcdcd0; --accent:#b08a45; --accent-2:#eac883;
+}
+/* 3D — "Travel": the Signal palette */
+[data-mode="3d"]{
+  color-scheme:dark;
+  --background:#071419; --surface:#0b1b20; --text:#f1eee6; --muted:#97b0b3; --faint:#779397;
+  --line:#a1cbcc29; --accent:#eac883; --accent-2:#eac883;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--background);color:var(--text);font-family:var(--font);font-synthesis:none;-webkit-font-smoothing:antialiased}
+body{overflow-x:hidden;overflow-anchor:none;transition:background-color .5s}
+button,a{-webkit-tap-highlight-color:transparent}
+button{cursor:pointer;font:inherit;color:inherit}
+a{text-decoration:none;color:inherit}
+button:focus-visible,a:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+button:disabled{cursor:default;opacity:.25}
+[hidden]{display:none!important}
+::selection{background:var(--accent);color:var(--background)}
+h1,h2,h3,p,ul,figure{margin:0}
+ul{padding:0;list-style:none}
+.skip{position:fixed;top:-70px;left:20px;z-index:200;background:var(--accent);color:#14262c;padding:15px}.skip:focus{top:15px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* ---------- which layers belong to which view ---------- */
+[data-mode="2d"] #chip-scene,[data-mode="2d"] .scene-shade,[data-mode="2d"] .experience,[data-mode="2d"] #scroll-track,[data-mode="2d"] #motion-toggle{display:none}
+[data-mode="3d"] .read,[data-mode="3d"] .site-foot{display:none}
+[data-mode="3d"] .experience{position:fixed;inset:var(--header) 0 0;pointer-events:none}
+main:focus{outline:none}
+
+/* ---------- header ---------- */
+.header{position:fixed;z-index:50;inset:0 0 auto;height:var(--header);display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 4.3%;transition:background-color .5s,border-color .5s}
+[data-mode="2d"] .header{background:color-mix(in srgb,var(--background) 86%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+[data-mode="3d"] .header{background:linear-gradient(#071419cc,#07141900);border-bottom:1px solid transparent}
+.brand{display:flex;align-items:center;gap:10px}
+.brand svg{width:38px;height:38px;fill:none;stroke:var(--accent);stroke-width:1.4;stroke-linejoin:round;transition:transform .6s var(--ease-out)}
+.brand:hover svg{transform:translateY(-2px)}
+.brand>span{font-size:24px;letter-spacing:-1px;line-height:1;font-weight:500}
+.brand small{display:block;font-size:8px;letter-spacing:3.9px;color:var(--muted);margin-top:8px;font-weight:400}
+.header-center,.header-tools{display:flex;align-items:center;gap:13px}
+.header-center{font-size:9px;letter-spacing:2px;color:var(--muted)}
+.header-tools{gap:20px}
+.status-light{width:5px;height:5px;display:inline-block;flex-shrink:0;border-radius:50%;background:var(--accent);box-shadow:0 0 10px #eac88388;animation:ping 2.4s infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 #eac88399}70%,100%{box-shadow:0 0 0 7px #eac88300}}
+.text-button{padding:9px 0;border:0;background:none;color:var(--muted);font-size:10px}
+.text-button:hover{color:var(--accent)}
+.languages{display:flex;align-items:center;gap:9px;font-size:10px;color:var(--faint)}
+.languages button{border:0;background:none;color:var(--muted);font-size:10px;padding:7px 0}
+.languages button[aria-pressed=true]{color:var(--text);border-bottom:1px solid var(--accent)}
+.motion-toggle{display:flex;align-items:center;gap:7px;border:1px solid var(--line);background:none;padding:9px 12px;font-size:10px;color:#b5c3c5}
+.motion-toggle svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.5}
+.motion-toggle[aria-pressed=true]{color:var(--accent);border-color:#eac88355}
+.sound-toggle{display:grid;place-items:center;width:34px;height:34px;border:1px solid var(--line);border-radius:50%;background:none;color:var(--muted);transition:color .3s,border-color .3s}
+.sound-toggle svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.sound-toggle .sw{opacity:0;transition:opacity .3s}
+.sound-toggle[aria-pressed=true]{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 50%,transparent)}
+.sound-toggle[aria-pressed=true] .sw{opacity:1;animation:sw 1.6s ease-in-out infinite}
+.sound-toggle[aria-pressed=true] .sw2{animation-delay:.25s}
+.sound-toggle[aria-pressed=true] .sx{opacity:0}
+@keyframes sw{50%{opacity:.35}}
+.progress{position:absolute;left:0;right:0;bottom:-1px;height:2px}
+.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#f3d695);transform:scaleX(0);transform-origin:left;box-shadow:0 0 8px #e0c17c88}
+
+/* ---------- 2D / 3D switch ---------- */
+.mode-switch{position:relative;display:flex;border:1px solid var(--line);border-radius:999px;padding:3px;transition:border-color .5s}
+.mode-switch button{position:relative;z-index:1;display:flex;align-items:center;gap:7px;border:0;background:none;padding:8px 14px;font-size:10px;letter-spacing:.06em;color:var(--muted);border-radius:999px;transition:color .4s}
+.mode-switch b{font-weight:700}
+.ms-word{font-weight:400;opacity:.8}
+.mode-switch button[aria-pressed=true]{color:#14262c}
+.ms-thumb{position:absolute;top:3px;bottom:3px;left:3px;width:calc(50% - 3px);border-radius:999px;background:var(--accent-2);box-shadow:0 0 18px #eac88340;transition:transform .55s var(--ease-out)}
+[data-mode="3d"] .ms-thumb{transform:translateX(100%)}
+.ms-icon{width:11px;height:11px;display:inline-block;border:1.5px solid currentColor;border-radius:2px;transition:transform .5s var(--ease-out)}
+.ms-3d{transform:perspective(30px) rotateX(42deg) rotateZ(-30deg)}
+.mode-switch button:hover .ms-2d{transform:rotate(45deg) scale(.9)}
+.mode-switch button:hover .ms-3d{transform:perspective(30px) rotateX(58deg) rotateZ(-55deg)}
+
+/* ---------- shared bottom section bar ---------- */
+.chapter-nav{position:fixed;z-index:45;left:0;right:0;bottom:0;height:var(--nav);display:flex;align-items:stretch;gap:24px;padding:0 5%;transition:background-color .5s}
+[data-mode="2d"] .chapter-nav{background:color-mix(in srgb,var(--background) 90%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line)}
+[data-mode="3d"] .chapter-nav{left:5%;right:5%;padding:0;bottom:14px;border-top:1px solid var(--line)}
+.chapter-nav a{position:relative;display:flex;align-items:center;gap:8px;font-size:10px;white-space:nowrap;color:var(--muted);transition:color .3s}
+.chapter-nav a:hover{color:var(--text)}
+.chapter-nav a:after{content:'';position:absolute;top:-1px;left:0;right:0;height:2px;background:var(--accent);transform:scaleX(0);transition:transform .45s var(--ease-out)}
+.chapter-nav a[aria-current]{color:var(--accent)}
+[data-mode="2d"] .chapter-nav a[aria-current]{color:var(--text)}
+.chapter-nav a[aria-current]:after{transform:scaleX(1)}
+.chapter-nav a>span:first-child{font-size:8px;color:var(--faint)}
+.chapter-nav .start-link span{font-size:17px;color:var(--accent)}
+.start-link{padding-right:18px}
+#chapter-links{display:flex;justify-content:space-between;gap:20px;flex:1;overflow-x:auto;scrollbar-width:none}
+.nav-count{display:flex;align-items:center;color:var(--faint);font-size:9px;white-space:nowrap;font-variant-numeric:tabular-nums}
+
+/* ---------- dialogs (both views) ---------- */
+dialog{background:#0b1b20;border:1px solid #638b8a66;color:#f1eee6;box-shadow:0 30px 100px #0009;color-scheme:dark}
+dialog::backdrop{background:#020b11c9;backdrop-filter:blur(8px)}
+.route-map{width:min(800px,92vw);max-height:85vh;padding:30px 35px;overflow-y:auto;scrollbar-width:thin}
+.map-header{display:flex;align-items:flex-start;justify-content:space-between;gap:20px}
+.map-header h2{font-size:34px;font-weight:400;letter-spacing:-1px;margin:0}
+.map-header button,#media-close{background:#0b1b20;border:1px solid #a1cbcc29;width:35px;height:35px;font-size:24px;flex-shrink:0;color:#f1eee6}
+.map-intro{font-size:12px;color:#97b0b3;line-height:1.7;margin:18px 0 25px}
+.map-home{display:block;color:#eac883;font-size:12px;padding-bottom:20px}
+.map-section{border-top:1px solid #a1cbcc29}
+.map-section>summary{padding:17px 0;font-size:15px;cursor:pointer}
+.map-section summary::marker{color:#88b9b9}
+.map-section ul{list-style:none;padding-left:20px;border-left:1px solid #517b7a44;margin:3px 0 21px 7px}
+.map-section li{font-size:12px;color:#afc9c7;line-height:1.5;padding:7px 0}
+.map-section li summary{cursor:pointer;padding:2px 0}
+.map-section a:hover{color:#eac883}
+.map-enter{display:block;padding:0 0 15px 17px;font-size:10px;color:#78a8a8}
+.map-section li .map-enter{font-size:9px;margin-top:7px;padding-bottom:7px}
+.map-footer{font-size:9px;color:#779396;margin-top:20px}
+.media-dialog{width:min(900px,92vw);padding:18px}
+.media-dialog img{width:100%;max-height:65vh;object-fit:contain;display:block}
+#media-close{position:absolute;top:25px;right:25px}
+.media-dialog h2{font-size:22px;font-weight:400;margin:18px 5px 10px}
+.media-dialog p{font-size:12px;color:#97b0b3;line-height:1.6;margin:0 5px 10px}
+/* memory cells (gallery and archive) — used in the 2D Events panel, the 3D board and the dialog */
+.mem-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.mem-cell{display:flex;flex-direction:column;justify-content:space-between;gap:6px;min-height:62px;padding:8px 9px;border:1px solid #a1cbcc26;border-radius:4px;background:#0a1d22;color:#58787a;text-align:left;font:inherit}
+.mem-cell.is-on{cursor:pointer;color:#f1eee6;border-color:#eac88370;background:linear-gradient(135deg,#3a3120,#1b2a2a);box-shadow:inset 0 0 0 1px #eac88314}
+.mem-cell.is-on:hover{border-color:#eac883;box-shadow:0 0 14px #eac88340}
+.mem-addr{font-size:9px;letter-spacing:1px;font-variant-numeric:tabular-nums;color:#4c6a6c}
+.mem-cell.is-on .mem-addr{color:#eac883}
+.mem-title{font-size:11px;line-height:1.35}
+.memory-dialog .mem-grid{margin-bottom:8px}
+/* bank colours: gold = gallery (events), teal = projects, copper = reports */
+[data-bank-color="teal"]{--mem:#6fd3cc;--mem-bg:#16343a}
+[data-bank-color="copper"]{--mem:#e2a27a;--mem-bg:#3a2619}
+.mem-grid[data-bank-color] .mem-cell.is-on{border-color:color-mix(in srgb,var(--mem,#eac883) 45%,transparent);background:linear-gradient(135deg,var(--mem-bg,#3a3120),#1b2a2a)}
+.mem-grid[data-bank-color] .mem-cell.is-on .mem-addr{color:var(--mem,#eac883)}
+.mem-grid[data-bank-color] .mem-cell.is-on:hover{border-color:var(--mem,#eac883)}
+.memory-banks{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.memory-banks button{display:flex;align-items:center;gap:8px;border:1px solid #a1cbcc29;border-radius:999px;background:none;color:#c7d6d3;padding:7px 12px;font-size:12px}
+.memory-banks button span{font-size:10px;color:var(--mem,#eac883)}
+.memory-banks button[aria-pressed=true]{border-color:var(--mem,#eac883);color:#f1eee6;background:#ffffff0d}
+@media(max-width:560px){.mem-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.no-script{position:fixed;inset:130px 5% auto;max-width:500px;background:var(--background);padding:25px}
+
+.scroll-mouse{height:18px;width:11px;border:1px solid currentColor;border-radius:7px;display:inline-flex;justify-content:center;padding-top:4px;opacity:.7}
+.scroll-mouse i{height:4px;width:1px;background:currentColor;animation:wheel 1.8s var(--ease-io) infinite}
+@keyframes wheel{0%{transform:translateY(0);opacity:1}70%{transform:translateY(6px);opacity:0}100%{opacity:0}}
+.site-foot{display:flex;justify-content:space-between;gap:20px;padding:28px 4.3% calc(var(--nav) + 28px);font-size:10px;color:var(--faint);border-top:1px solid var(--line)}
+
+/* ==========================================================================
+   Switching views. The 2D map window and the 3D canvas share the name
+   "stage", so the browser morphs one rectangle into the other
+   (View Transitions: Chrome/Edge 111+, Safari 18+). Elsewhere: a quick veil.
+   ========================================================================== */
+[data-mode="2d"] #chipmap{view-transition-name:stage}
+[data-mode="3d"] #chip-scene{view-transition-name:stage}
+.header{view-transition-name:header}
+.chapter-nav{view-transition-name:chapters}
+::view-transition-group(stage){animation-duration:.9s;animation-timing-function:cubic-bezier(.75,0,.15,1)}
+::view-transition-old(stage),::view-transition-new(stage){width:100%;height:100%;object-fit:cover;animation-duration:.9s;animation-timing-function:cubic-bezier(.75,0,.15,1)}
+::view-transition-group(header),::view-transition-group(chapters){animation-duration:.6s}
+::view-transition-old(root){animation:vt-out .5s var(--ease-io) both}
+::view-transition-new(root){animation:vt-in .7s var(--ease-out) .2s both}
+@keyframes vt-out{to{opacity:0;transform:scale(.985)}}
+@keyframes vt-in{from{opacity:0;transform:translateY(14px)}}
+.mode-veil{position:fixed;inset:0;background:var(--background);opacity:0;pointer-events:none;z-index:300;transition:opacity .26s}
+.veil .mode-veil{opacity:1}
+.is-switching body{pointer-events:none}
+/* the 3D reading panel and boards step aside while the camera rises, and return after it lands */
+[data-mode="3d"] .experience>*,[data-mode="3d"] .scene-shade{transition:opacity .6s var(--ease-out)}
+.is-rising .experience>*,.is-arriving .experience>*{opacity:0}
+.is-rising .scene-shade,.is-arriving .scene-shade{opacity:.35}
+
+@media(max-width:1050px){.header-center{display:none}.header-tools{gap:14px}.ms-word{display:none}.nav-count{display:none}#chapter-links{gap:16px}}
+@media(max-width:760px){
+  :root{--header:66px;--nav:52px}
+  .header{padding:0 5%}
+  .brand>span{font-size:20px}.brand svg{width:30px;height:30px}.brand small{font-size:7px;letter-spacing:3px;margin-top:6px}
+  .header-tools{gap:10px}
+  .text-button{display:none}
+  .mode-switch button{padding:7px 10px}.ms-icon{display:none}
+  .motion-toggle{padding:7px}.motion-toggle span{display:none}
+  .chapter-nav{gap:0;padding:0 0 0 5%}
+  [data-mode="3d"] .chapter-nav{left:6%;right:0;bottom:6px}
+  #chapter-links{justify-content:flex-start;gap:24px;padding-right:30px}
+  .chapter-nav a>span:first-child{display:none}
+  .chapter-nav .start-link span{display:inline}
+}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;animation:none!important}}
+
+/* switching views inside the ending: the package is the same in both views, so only a short plain fade */
+html.switch-plain #chipmap,html.switch-plain #chip-scene{view-transition-name:none!important}
+html.switch-plain::view-transition-old(root){animation:vt-fade-out .3s ease both}
+html.switch-plain::view-transition-new(root){animation:vt-fade-in .3s ease both}
+@keyframes vt-fade-out{to{opacity:0}}
+@keyframes vt-fade-in{from{opacity:0}}
