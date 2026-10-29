@@ -243,7 +243,7 @@
     const st = stage.getBoundingClientRect();
     const center = { l: st.left, t: st.top, w: st.width, h: st.height };
     let left;
-    if (narrow.matches) left = { l: vw * .04, t: header + 8, w: vw * .92, h: vh * .34 };
+    if (narrow.matches) { const w = 128, h = 112; left = { l: vw - w - 12, t: vh - nav - h - 14, w, h }; }   /* phones: the mini chip badge */
     else { const sp = space.getBoundingClientRect(), pad = vw * .032; left = { l: sp.left + pad, t: header + 18, w: sp.width - pad, h: vh - header - nav - 36 }; }
     return { center, left, st, vh, header };
   }
@@ -322,6 +322,11 @@
       show = endShow;
       if ((endAnim || endFade) && !dockRaf) dockRaf = requestAnimationFrame(() => { dockRaf = 0; placeDock(); });
     }
+    /* phones, while reading: the badge shows the whole chip in top view, without controls or names */
+    const badge = narrow.matches && state === 'left' && endStage === 0 && !map.expanded;
+    dock.classList.toggle('is-badge', badge);
+    if (endStage === 0) { map.setOutro(badge ? 1 : 0); map.setPacking(badge); }
+    if (badge) dock.dataset.label = `${ST.pad(Math.max(0, index))} · ${ST.pick(sections[Math.max(0, index)].label)}`;
     cur = r; applyRect(r, show);
     dockShown = show;
   }
@@ -390,6 +395,12 @@
     main = $('#read-sections'); intro = $('#read-intro'); outro = $('#read-outro');
     map = new ST.ChipMap($('#chipmap'), { onSelect: path => { if (map.expanded) map.setExpanded(false); R.go(path); } });
     R.map = map;
+    const setExpanded = map.setExpanded.bind(map);
+    map.setExpanded = on => { setExpanded(on); if (!on) map.viewport.blur(); [60, 400, 1000].forEach(t => setTimeout(placeDock, t)); };   /* the switch runs inside a view transition */
+    $('.map-dock').addEventListener('click', e => {
+      if (!e.currentTarget.classList.contains('is-badge')) return;
+      e.preventDefault(); e.stopPropagation(); map.setExpanded(true);
+    }, true);
     render(); measure();
     addEventListener('scroll', readScroll, { passive: true });
     let rt; addEventListener('resize', () => { if (on) { ST.eco.layout(); placeDock(); } clearTimeout(rt); rt = setTimeout(() => { if (on) { measure(); readScroll(); placeDock(); } }, 80); });
