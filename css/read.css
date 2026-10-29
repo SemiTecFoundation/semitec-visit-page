@@ -360,6 +360,17 @@ html[lang=hy] .sec-hero .sec-title{font-size:clamp(34px,3.8vw,56px)}
   .map-dock.is-badge .chipmap :is(.cm-controls,.cm-top-ui,.cm-sup-labels,.cm-pad-card,.cm-hint){display:none!important}
   .map-dock.is-badge:after{content:attr(data-label);position:absolute;left:8px;right:8px;bottom:5px;font:600 9px/1.2 var(--font);letter-spacing:.06em;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center}
   .map-dock.is-badge .chipmap .cm-viewport{bottom:14px!important}
+  /* the strip (C): whole chip on the left, the section on the right, "_" to minimise it to the badge */
+  .map-dock.is-strip{background:color-mix(in srgb,var(--surface) 97%,transparent);border-bottom:1px solid var(--line);box-shadow:0 10px 24px -20px #0b1c22aa;cursor:pointer}
+  .map-dock.is-strip .chipmap{width:104px;margin-left:10px}
+  .map-dock.is-strip .cm-viewport{pointer-events:none}
+  .map-dock.is-strip .chipmap :is(.cm-controls,.cm-top-ui,.cm-sup-labels,.cm-pad-card,.cm-hint){display:none!important}
+  .map-dock.is-strip .chipmap .cm-viewport{bottom:4px!important;top:4px}
+  .dock-strip,.dock-min{display:none}
+  .map-dock.is-strip .dock-strip{display:flex;flex-direction:column;justify-content:center;gap:3px;position:absolute;left:126px;right:52px;top:0;bottom:0;min-width:0}
+  .ds-k{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ds-t{font-size:15px;font-weight:600;letter-spacing:-.01em;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .map-dock.is-strip .dock-min{display:grid;place-items:center;position:absolute;right:8px;top:50%;width:36px;height:36px;margin-top:-18px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--text);font:600 16px/1 var(--font);padding-bottom:8px}
   .chipmap{border-radius:14px}
   .choose-stage{width:92vw}
   .choose-pin{padding:2.5vh 4vw 1.5vh}

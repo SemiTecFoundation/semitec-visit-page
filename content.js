@@ -1476,6 +1476,10 @@ const SITE_CONTENT = {
       "Partners",
       "Գործընկերներ"
     ],
+    "mapMinimize": [
+      "Make the map smaller",
+      "Փոքրացնել քարտեզը"
+    ],
     "supportersTitle": [
       "Supporters",
       "Աջակիցներ"

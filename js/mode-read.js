@@ -235,7 +235,17 @@
        the chip PACKAGE (js/ecosystem.js) — the map fades as it lands and the package lid appears.
      Scrolling back above a point plays it in reverse. */
   const narrow = matchMedia('(max-width:900px)');
-  const DOCK_MS = 480;
+  const DOCK_MS = 480, STRIP_H = 72;
+  /* phones: the reading map is a strip (default) or a badge; "_" minimises the strip, a double tap on the badge brings it back */
+  let mini = 'strip';
+  try { if (localStorage.getItem('st-map-mini') === 'badge') mini = 'badge'; } catch (e) {}
+  function setMini(m) {
+    if (m === mini) return;
+    mini = m;
+    try { localStorage.setItem('st-map-mini', m); } catch (e) {}
+    if (cur && !ST.state.reduced) anim = { from: { ...cur }, start: performance.now() };
+    placeDock();
+  }
   let state = 'center', anim = null, cur = null, dockRaf = 0;
   function dockRects() {
     const stage = $('.choose-stage'), space = $('.map-space');
@@ -243,7 +253,8 @@
     const st = stage.getBoundingClientRect();
     const center = { l: st.left, t: st.top, w: st.width, h: st.height };
     let left;
-    if (narrow.matches) { const w = 128, h = 112; left = { l: vw - w - 12, t: vh - nav - h - 14, w, h }; }   /* phones: the mini chip badge */
+    /* phones: a slim strip under the header (C), or minimised to a badge in the corner (A) */
+    if (narrow.matches) left = mini === 'badge' ? { l: vw - 128 - 12, t: vh - nav - 112 - 14, w: 128, h: 112 } : { l: 0, t: header, w: vw, h: STRIP_H };
     else { const sp = space.getBoundingClientRect(), pad = vw * .032; left = { l: sp.left + pad, t: header + 18, w: sp.width - pad, h: vh - header - nav - 36 }; }
     return { center, left, st, vh, header };
   }
@@ -323,10 +334,19 @@
       if ((endAnim || endFade) && !dockRaf) dockRaf = requestAnimationFrame(() => { dockRaf = 0; placeDock(); });
     }
     /* phones, while reading: the badge shows the whole chip in top view, without controls or names */
-    const badge = narrow.matches && state === 'left' && endStage === 0 && !map.expanded;
-    dock.classList.toggle('is-badge', badge);
-    if (endStage === 0) { map.setOutro(badge ? 1 : 0); map.setPacking(badge); }
-    if (badge) dock.dataset.label = `${ST.pad(Math.max(0, index))} · ${ST.pick(sections[Math.max(0, index)].label)}`;
+    const phone = narrow.matches && state === 'left' && endStage === 0 && !map.expanded;
+    dock.classList.toggle('is-badge', phone && mini === 'badge');
+    dock.classList.toggle('is-strip', phone && mini === 'strip');
+    document.documentElement.classList.toggle('map-strip', phone && mini === 'strip');
+    if (endStage === 0) { map.setOutro(phone ? 1 : 0); map.setPacking(phone); }
+    if (phone) {
+      const sec = sections[Math.max(0, index)], k = `${ST.pad(Math.max(0, index))} · ${ST.pick(sec.label)}`;
+      if (dock.dataset.label !== k) {
+        dock.dataset.label = k;
+        dock.querySelector('.ds-k').textContent = k;
+        dock.querySelector('.ds-t').textContent = ST.pick(sec.title).replace(/\s*\n\s*/g, ' ');
+      }
+    }
     cur = r; applyRect(r, show);
     dockShown = show;
   }
@@ -385,7 +405,7 @@
         return;
       }
     }
-    const header = $('.header').offsetHeight;
+    const header = $('.header').offsetHeight + (document.documentElement.classList.contains('map-strip') || (narrow.matches && mini === 'strip' && r.index > 0) ? STRIP_H : 0);
     scrollTo({ top: r.index === 0 ? 0 : Math.max(0, tops[r.index] - header - 8), behavior });
     if (instant) readScroll();
   }
@@ -397,9 +417,21 @@
     R.map = map;
     const setExpanded = map.setExpanded.bind(map);
     map.setExpanded = on => { setExpanded(on); if (!on) map.viewport.blur(); [60, 400, 1000].forEach(t => setTimeout(placeDock, t)); };   /* the switch runs inside a view transition */
-    $('.map-dock').addEventListener('click', e => {
-      if (!e.currentTarget.classList.contains('is-badge')) return;
-      e.preventDefault(); e.stopPropagation(); map.setExpanded(true);
+    /* phones: the strip and the badge */
+    const dockEl = $('.map-dock');
+    dockEl.insertAdjacentHTML('beforeend', `<div class="dock-strip" aria-hidden="true"><span class="ds-k"></span><b class="ds-t"></b></div>
+      <button type="button" class="dock-min" data-ui-label="mapMinimize" aria-label="Minimise">_</button>`);
+    let lastTap = 0, tapT = 0;
+    dockEl.addEventListener('click', e => {
+      const badge = dockEl.classList.contains('is-badge'), strip = dockEl.classList.contains('is-strip');
+      if (!badge && !strip) return;
+      e.preventDefault(); e.stopPropagation();
+      if (e.target.closest('.dock-min')) { setMini('badge'); return; }
+      if (strip) { map.setExpanded(true); return; }
+      /* badge: one tap opens the full map, a double tap brings the strip back */
+      const now = performance.now();
+      if (now - lastTap < 320) { clearTimeout(tapT); lastTap = 0; setMini('strip'); return; }
+      lastTap = now; tapT = setTimeout(() => { if (dockEl.classList.contains('is-badge')) map.setExpanded(true); }, 320);
     }, true);
     render(); measure();
     addEventListener('scroll', readScroll, { passive: true });
