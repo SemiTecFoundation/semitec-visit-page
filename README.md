@@ -19,7 +19,7 @@ Scrolling on releases the screen. At the **switching point** the map slides into
 
 After Connect, the ending has **four switching points**, like the opening. Each is a short timed animation, and scrolling back above a point plays it in reverse:
 1. **Topology:** when the ending reaches the header (Connect has moved up), the map flies to the middle of the screen. It zooms out to the whole chip in top view, with **every partner's and supporter's name** around its edges.
-2. **Partners:** the chip turns slowly in the 3D view, showing its contact edges and everyone connected to them ("Everyone connected to the chip"). Free contacts carry a **+**.
+2. **Partners:** the chip turns over like a card to its I/O side ("Everyone connected to the chip"). There, every partner's and supporter's name stands fixed next to its contact: gold for partners, copper for supporters. Free contacts carry a **+**.
 3. **Package:** the chip shrinks into place, the circuit board darkens and the **package lid closes over it**: SemiTec logo and gold leads on every side. Only four labelled contacts stay outside:
    - top: **+ Become a partner** and **+ Become a supporter**
    - bottom: **Contact us** and **Email**
@@ -31,7 +31,7 @@ After Connect, the ending has **four switching points**, like the opening. Each 
 
 **The same ending in 3D:** after the journey reaches the chip edge (the seal ring and the bond pads), the page keeps scrolling through the same three switching points:
 1. The camera rises out of the trace and the view becomes the **chip's topology**, with all the names: the same chip map as in 2D.
-2. The chip turns to show its partners.
+2. The chip turns over to its I/O side with the partners' names.
 3. The package closes over it.
 4. The ecosystem connects.
 

@@ -70,7 +70,7 @@ function updateTrack(){document.querySelector('#scroll-track').style.height=(scr
 function outroAmount(){return clamp((scrollY-scrollSpace.toPixels(timeline.length))/outroPx(),0,1);}
 /* four switching points after the chip edge, each a timed animation (the same ending as the 2D page):
    1 the camera rises out to the chip's topology, with every partner's and supporter's name
-   2 the chip turns slowly to show its contact edges   3 it shrinks and the package closes over it   4 the ecosystem connects
+   2 the chip turns over to its I/O side, every partner's and supporter's name fixed by its contact   3 it shrinks and the package closes over it   4 the ecosystem connects
    The chip here is a chip map of its own (js/chipmap.js), above the board; it fades away under the package lid. */
 function ensureEndMap(){
  if(endMap)return;
@@ -90,7 +90,7 @@ function updateOutro(dt){
   const to=want>=1&&want<=2?1:0;
   if(to!==(endFade?endFade.to:endShow>.5?1:0))endFade=quick?null:{from:endShow,to,start:now+(want>=3?650+80:endStage===0?450:0),ms:want===1&&endStage===0?600:450};
   if(quick)endShow=to;
-  endStage=want;eco3d.setStage(endStage);endMap.setShowcase(endStage===2);
+  endStage=want;eco3d.setStage(endStage);endMap.frame.classList.toggle('is-flipped',endStage===2);
   if(ST.sound)endStage>=3?ST.sound.blip('open'):ST.sound.tick();
  }
  const target=endStage>=1?1:0;
@@ -491,7 +491,7 @@ const V=ST.modes['3d']={
  init(){ if('requestIdleCallback' in window)requestIdleCallback(()=>ensureScene(),{timeout:4000});else setTimeout(ensureScene,1500); },
  enter(path,from,end){
   on=true;ensureScene();scene?.resize();resetJourney();
-  if(!eco3d)eco3d=ST.makeEco();endLift=0;endStage=0;eco3d.setStage(0);endShow=0;endAnim=endFade=null;if(endEl){endEl.style.opacity='0';endEl.style.visibility='hidden';endMap.setShowcase(false);}
+  if(!eco3d)eco3d=ST.makeEco();endLift=0;endStage=0;eco3d.setStage(0);endShow=0;endAnim=endFade=null;if(endEl){endEl.style.opacity='0';endEl.style.visibility='hidden';endMap.frame.classList.remove('is-flipped');}
   setLanguage(ST.state.lang);
   mediaBoards.forEach(b=>b.width=b.figure.offsetWidth);
   updateTrack();
@@ -521,7 +521,7 @@ const V=ST.modes['3d']={
  },
  leave(){
   on=false;cancelAnimationFrame(animation);animation=0;lift=0;glide=null;endLift=0;
-  document.documentElement.classList.remove('is-rising','is-arriving','travel-end');eco3dEl.classList.remove('is-live');if(endEl){endEl.style.visibility='hidden';endMap.setShowcase(false);}
+  document.documentElement.classList.remove('is-rising','is-arriving','travel-end');eco3dEl.classList.remove('is-live');if(endEl){endEl.style.visibility='hidden';endMap.frame.classList.remove('is-flipped');}
   if(mapDialog.open)mapDialog.close();if(mediaDialog.open)mediaDialog.close();
  },
  currentPath(){return [...active.path];},

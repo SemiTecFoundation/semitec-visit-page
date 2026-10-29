@@ -629,3 +629,35 @@ html.map-end .map-dock:before{opacity:0}
 .outro .eco-p .sec-eyebrow{color:var(--accent)}
 /* in the ending the chip is alone on the stage: let its names reach past the map's box */
 .chipmap.is-bare,.chipmap.is-bare .cm-viewport{overflow:visible}
+
+/* ---------- the partners' step: the chip turns over like a card ----------
+   the chip map turns away (its back face hidden) while the I/O side turns in, in the same place */
+.chipmap{transition:transform .7s var(--ease-io),visibility 0s linear .35s}
+.chipmap.is-flipped{transform:perspective(1800px) rotateY(180deg);visibility:hidden}   /* each face disappears half-way through the turn */
+.chipmap.is-flipped{backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.chipmap:not(.is-expanded){backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.eco-back{position:absolute;pointer-events:none;visibility:hidden;transform:perspective(1800px) rotateY(-180deg);backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  transition:transform .7s var(--ease-io),visibility 0s linear .35s}
+.st-partners .eco-back{visibility:visible;transform:none;pointer-events:auto}
+.eco-back svg{width:100%;height:100%;overflow:visible}
+.bk-sub{fill:#10252b;stroke:#3d6a6c;stroke-width:3}
+.bk-ring{fill:none;stroke:#2c5558;stroke-width:1.5}
+.bk-balls circle{fill:#1d3a40;stroke:#2f5a5e;stroke-width:1}
+.bk-k{fill:#eac883;font:600 20px var(--font);letter-spacing:.2em}
+.bk-l{fill:#a9c0c0;font:500 17px var(--font)}
+.bk-l .is-partner{fill:#e2c47f}.bk-l .is-supporter{fill:#e2a27a}.bk-l .is-free{fill:#eac883}
+.bk-pad rect{fill:#d9bf7f;stroke:#f3d695;stroke-width:1}
+.bk-pad.is-supporter rect{fill:#d08d62;stroke:#f0b48f}
+.bk-pad.is-free rect{fill:#0b1c22;stroke:#eac883aa;stroke-width:1.5;stroke-dasharray:4 3}
+.bk-pad.is-free.is-supporter rect{stroke:#e2a27aaa}
+.bk-plus{fill:#eac883;font:700 18px var(--font)}
+.bk-pad.is-supporter .bk-plus{fill:#e2a27a}
+.bk-pad path{stroke:#c9a95e;stroke-width:1.5;fill:none}
+.bk-pad.is-supporter path{stroke:#c98a62}
+.bk-pad text:not(.bk-plus){font:600 21px var(--font);fill:#7a5a22}
+.bk-pad.is-supporter text:not(.bk-plus){fill:#8e4a26}
+.bk-pad:hover rect{filter:brightness(1.25)}
+.bk-pad:hover text:not(.bk-plus){text-decoration:underline}
+/* in 3D (dark board) the names are light */
+.eco-3d .bk-pad text:not(.bk-plus){fill:#ead9aa}
+.eco-3d .bk-pad.is-supporter text:not(.bk-plus){fill:#efb48f}

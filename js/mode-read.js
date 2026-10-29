@@ -269,7 +269,7 @@
       document.documentElement.style.setProperty('--split', state === 'center' ? '0' : '1');
       map.setScroll(mapP());
       anim = cur && !ST.state.reduced && !snap ? { from: { ...cur }, start: performance.now() } : null;
-      if (state !== 'left' && endStage) { endStage = 0; endAnim = endFade = null; endShow = 1; ST.eco.setStage(0); map.setOutro(0); map.setShowcase(false); map.frame.classList.remove('is-bare'); document.documentElement.classList.remove('map-end'); }
+      if (state !== 'left' && endStage) { endStage = 0; endAnim = endFade = null; endShow = 1; ST.eco.setStage(0); map.setOutro(0); map.frame.classList.remove('is-bare', 'is-flipped'); document.documentElement.classList.remove('map-end'); }
     }
     let show = state === 'left' ? 1 : (ST.state.reduced ? (st.top < vh ? 1 : 0) : ST.clamp((vh * .95 - st.top) / (vh * .45)));
     let r = state === 'left' ? left : center;
@@ -295,7 +295,7 @@
         endStage = want;
         ST.eco.setStage(endStage);
         map.setOutro(endStage >= 1 ? 1 : 0);
-        map.setShowcase(endStage === 2);
+        map.frame.classList.toggle('is-flipped', endStage === 2);   /* the partners' step: the chip turns over */
         map.frame.classList.toggle('is-bare', endStage >= 1);
         if (endStage >= 1 && map.expanded) map.setExpanded(false);
         document.documentElement.classList.toggle('map-end', endStage >= 1);

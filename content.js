@@ -1589,8 +1589,8 @@ const SITE_CONTENT = {
       "Բոլոր նրանք, ովքեր միացած են չիպին"
     ],
     "partnersText": [
-      "Every partner and supporter is a contact on the edge of the chip. The contacts marked + are still free: one of them can be yours.",
-      "Յուրաքանչյուր գործընկեր և աջակից կոնտակտ է չիպի եզրին։ + նշանով կոնտակտները դեռ ազատ են․ դրանցից մեկը կարող է ձերը լինել։"
+      "The chip turned over: its I/O side. Every partner and supporter is one of its contacts; the ones marked + are still free and one of them can be yours.",
+      "Չիպը շրջված է՝ դեպի իր մուտք/ելքի կողմը։ Յուրաքանչյուր գործընկեր և աջակից դրա կոնտակտներից մեկն է․ + նշանով կոնտակտները դեռ ազատ են, և դրանցից մեկը կարող է ձերը լինել։"
     ],
     "endKicker": [
       "SemiTec Foundation · the package",
