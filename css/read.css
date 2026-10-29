@@ -14,9 +14,9 @@
 .map-dock{display:none}
 [data-mode="2d"] .map-dock{display:block;position:fixed;left:0;top:0;width:0;height:0;z-index:15;will-change:left,top,width,height}
 .map-dock.is-hidden{pointer-events:none;visibility:hidden}
-#chipmap{position:relative;height:100%;border-radius:18px;overflow:hidden;color:#f1eee6;isolation:isolate;
+.chipmap{position:relative;height:100%;border-radius:18px;overflow:hidden;color:#f1eee6;isolation:isolate;
   background:radial-gradient(ellipse at 50% 42%,#15343d 0,#0c1e24 55%,#071419 100%);box-shadow:0 30px 60px -32px #0b1c22aa,inset 0 0 0 1px #a1cbcc22}
-#chipmap:before{content:'';position:absolute;inset:0;background-image:radial-gradient(#397b8055 .9px,transparent .9px);background-size:22px 22px;opacity:.6;pointer-events:none}
+.chipmap:before{content:'';position:absolute;inset:0;background-image:radial-gradient(#397b8055 .9px,transparent .9px);background-size:22px 22px;opacity:.6;pointer-events:none}
 .cm-viewport{position:absolute;inset:0;touch-action:pan-y;cursor:grab;outline:none;overflow:hidden}
 .cm-viewport:focus-visible{box-shadow:inset 0 0 0 2px var(--accent-2)}
 .cm-viewport.is-dragging{cursor:grabbing}
@@ -146,10 +146,10 @@
 .cm-help{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);font-size:10px;color:#9fbab9;display:none;white-space:nowrap;z-index:2}
 
 /* full-screen map */
-#chipmap.is-expanded{position:fixed;inset:12px;height:auto;z-index:120;border-radius:20px;box-shadow:0 0 0 100vmax #020b11b8,0 40px 90px #000a}
-#chipmap.is-expanded .cm-viewport{touch-action:none}
-#chipmap.is-expanded .cm-help{display:block}
-#chipmap.is-expanded .cm-minimap{width:180px}
+.chipmap.is-expanded{position:fixed;inset:12px;height:auto;z-index:120;border-radius:20px;box-shadow:0 0 0 100vmax #020b11b8,0 40px 90px #000a}
+.chipmap.is-expanded .cm-viewport{touch-action:none}
+.chipmap.is-expanded .cm-help{display:block}
+.chipmap.is-expanded .cm-minimap{width:180px}
 html.map-expanded{overflow:hidden}
 html.map-expanded .map-dock{z-index:130;backdrop-filter:none;-webkit-backdrop-filter:none}
 
@@ -355,7 +355,7 @@ html[lang=hy] .sec-hero .sec-title{font-size:clamp(34px,3.8vw,56px)}
   .read-grid{grid-template-columns:1fr;padding-top:calc(34vh + 20px)}
   .map-space{display:none}
   .map-dock.is-docked:before{content:'';position:absolute;z-index:-1;left:-6vw;right:-6vw;top:-10px;bottom:-10px;background:color-mix(in srgb,var(--background) 94%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
-  #chipmap{border-radius:14px}
+  .chipmap{border-radius:14px}
   .choose-stage{width:92vw}
   .choose-pin{padding:2.5vh 4vw 1.5vh}
   .build-steps li{padding:5px 9px 5px 5px;font-size:11px}
@@ -369,8 +369,8 @@ html[lang=hy] .sec-hero .sec-title{font-size:clamp(34px,3.8vw,56px)}
   .cm-expand{width:34px;height:34px}
   .cm-view button{padding:6px 8px}
   .cm-minimap{display:none}
-  #chipmap.is-expanded .cm-minimap{display:block;width:120px;bottom:64px}
-  #chipmap.is-expanded .cm-help{bottom:auto;top:52px;left:12px;transform:none;white-space:normal;max-width:70%}
+  .chipmap.is-expanded .cm-minimap{display:block;width:120px;bottom:64px}
+  .chipmap.is-expanded .cm-help{bottom:auto;top:52px;left:12px;transform:none;white-space:normal;max-width:70%}
   [data-mode="2d"] .sec{min-height:72vh;padding:8vh 6% 8vh}
   .sec-ghost{font-size:110px;top:3vh}
   .sec-intro{font-size:14px}
@@ -385,7 +385,7 @@ html[lang=hy] .sec-hero .sec-title{font-size:clamp(34px,3.8vw,56px)}
    package closes over it → the ecosystem modules connect.
    ========================================================================== */
 .outro{display:none}
-[data-mode="2d"] .outro{display:block;position:relative;height:260vh}
+[data-mode="2d"] .outro{display:block;position:relative;height:340vh}
 /* the page background continues; the dark circuit board fades in (--dark, scroll-scrubbed) as the package closes */
 .eco{--enter:1;color:#f1eee6}
 .eco-board{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .6s ease;background:radial-gradient(ellipse at 50% 40%,#13323a 0,#0b1e24 55%,#06131a 100%)}
@@ -398,22 +398,23 @@ html[lang=hy] .sec-hero .sec-title{font-size:clamp(34px,3.8vw,56px)}
 .eco-copy .sec-eyebrow{justify-content:center;color:#eac883}
 .eco-title{margin:12px 0 0;font-size:clamp(26px,2.6vw,38px);font-weight:500;letter-spacing:-.035em;line-height:1.1}
 .eco-text{margin:10px auto 0;max-width:520px;font-size:14px;line-height:1.6;color:#a9c0c0}
-.eco-a,.eco-b{opacity:0;transform:translate(-50%,8px)!important;transition:opacity .4s ease,transform .5s var(--ease-out)}
-.st-pack:not(.st-eco) .eco-a{opacity:1;transform:translate(-50%,0)!important;transition-delay:.45s}
+.eco-p,.eco-a,.eco-b{opacity:0;transform:translate(-50%,8px)!important;transition:opacity .4s ease,transform .5s var(--ease-out)}
+.st-partners .eco-p{opacity:1;transform:translate(-50%,0)!important;transition-delay:.3s}
+.st-pack:not(.st-eco) .eco-a{opacity:1;transform:translate(-50%,0)!important;transition-delay:1.05s}
 .st-eco .eco-b{opacity:1;transform:translate(-50%,0)!important;transition-delay:.2s}
 .eco-3d.st-topo .eco-board,.st-pack .eco-board{opacity:1}   /* 2D keeps the page background until the package */
 
 .eco-cue{position:absolute;left:0;right:0;bottom:18px;margin:0;display:flex;justify-content:center;align-items:center;gap:10px;font-size:11px;letter-spacing:.08em;color:#a9c0c0;opacity:0;transition:opacity .3s}
-.st-pack:not(.st-eco) .eco-cue{opacity:1;transition-delay:1s}
+.st-pack:not(.st-eco) .eco-cue{opacity:1;transition-delay:1.6s}
 
 
 /* the package: a sealed lid with the logo, gold leads on every side */
 .eco-package{position:absolute;opacity:0;transform:scale(1.06);transition:opacity .45s ease,transform .6s var(--ease-out)}
 .ep-leads,.et-stems{opacity:0;transition:opacity .4s ease}
 .eco-pin{opacity:0}
-.st-pack .eco-package{opacity:1;transform:none;transition-delay:.15s}
-.st-pack .ep-leads,.st-pack .et-stems{opacity:1;transition-delay:.4s}
-.st-pack .eco-pin{opacity:1;transition:opacity .4s ease .6s,background .25s,box-shadow .25s}
+.st-pack .eco-package{opacity:1;transform:none;transition-delay:.75s}
+.st-pack .ep-leads,.st-pack .et-stems{opacity:1;transition-delay:1s}
+.st-pack .eco-pin{opacity:1;transition:opacity .4s ease 1.2s,background .25s,box-shadow .25s}
 /* 3D: the topology the camera rises to (the same floorplan as the 2D map) */
 .eco-topo{position:absolute;overflow:visible;opacity:0;transform:scale(1.25);transition:opacity .5s ease,transform .9s var(--ease-out)}
 .st-topo .eco-topo{opacity:1;transform:none;transition-delay:.25s}
@@ -526,9 +527,9 @@ html[lang=hy] .sec-hero .sec-title{font-size:clamp(34px,3.8vw,56px)}
 .cm-draw{fill:none;stroke:#5fb7b5;stroke-width:3;stroke-linecap:round;stroke-dasharray:1 1;stroke-dashoffset:1;opacity:0;filter:drop-shadow(0 0 5px #5fb7b5)}
 .is-building .cm-draw{opacity:var(--drawn,0)}
 /* the ending: the map lands in the centre as a bare chip (no window, no controls) before the package closes */
-html.map-end #chipmap{background:transparent;box-shadow:none}
-html.map-end #chipmap:before,html.map-end .cm-top-ui,html.map-end .cm-controls,html.map-end .cm-minimap,html.map-end .cm-help,html.map-end .cm-hint{opacity:0;pointer-events:none}
-#chipmap,#chipmap:before,.cm-top-ui,.cm-controls{transition:background .4s,box-shadow .4s,opacity .3s}
+.chipmap.is-bare{background:transparent;box-shadow:none}
+.chipmap.is-bare:before,.is-bare .cm-top-ui,.is-bare .cm-controls,.is-bare .cm-minimap,.is-bare .cm-help,.is-bare .cm-hint{opacity:0;pointer-events:none}
+.chipmap,.chipmap:before,.cm-top-ui,.cm-controls{transition:background .4s,box-shadow .4s,opacity .3s}
 /* the pinned opening screen: keep everything inside the column, give the chip the room */
 .choose-heads,.choose-foot{width:min(880px,100%)}
 .choose-stage{width:min(1040px,100%)}
@@ -559,34 +560,35 @@ html.map-end .map-dock:before{opacity:0}
    Outside full screen the chip floats on the page: no window, no caption, no minimap. The few controls
    sit in a quiet toolbar under the chip (fully visible on hover or focus); "Follow page" appears there only
    after you move the map yourself. Full screen keeps the complete window with every control. */
-#chipmap:not(.is-expanded){background:transparent;box-shadow:none;border-radius:0}
-#chipmap:not(.is-expanded):before{display:none}
-#chipmap:not(.is-expanded) .cm-viewport{bottom:48px}
-#chipmap:not(.is-expanded) .cm-caption,#chipmap:not(.is-expanded) .cm-minimap{display:none}
-#chipmap:not(.is-expanded) .cm-top-ui{top:auto;bottom:6px;left:0;right:auto}
-#chipmap:not(.is-expanded) .cm-status[data-state=follow]{display:none}
-#chipmap:not(.is-expanded) .cm-status{background:var(--surface);border-color:var(--line);color:var(--text);backdrop-filter:none}
-#chipmap:not(.is-expanded) .cm-controls{right:0;bottom:6px;flex-direction:row;align-items:center;gap:6px;opacity:.45;transition:opacity .3s}
-#chipmap:not(.is-expanded):hover .cm-controls,#chipmap:not(.is-expanded) .cm-controls:focus-within{opacity:1}
-#chipmap:not(.is-expanded) :is(.cm-view,.cm-zoom,.cm-expand){background:var(--surface);border-color:var(--line);color:var(--text);backdrop-filter:none}
-#chipmap:not(.is-expanded) .cm-view button{color:var(--muted)}
-#chipmap:not(.is-expanded) .cm-zoom{flex-direction:row;width:auto;height:36px}
-#chipmap:not(.is-expanded) .cm-zoom button{width:32px;height:34px;font-size:16px}
-#chipmap:not(.is-expanded) .cm-zval{border-block:0;border-inline:1px solid var(--line);padding:0 8px;width:auto;color:var(--muted)}
-#chipmap:not(.is-expanded) .cm-expand{width:36px;height:36px}
-#chipmap:not(.is-expanded) .cm-hint{background:#14262ce6}
+.chipmap:not(.is-expanded){background:transparent;box-shadow:none;border-radius:0}
+.chipmap:not(.is-expanded):before{display:none}
+.chipmap:not(.is-expanded) .cm-viewport{bottom:48px}
+.chipmap:not(.is-expanded) .cm-caption,.chipmap:not(.is-expanded) .cm-minimap{display:none}
+.chipmap:not(.is-expanded) .cm-top-ui{top:auto;bottom:6px;left:0;right:auto}
+.chipmap:not(.is-expanded) .cm-status[data-state=follow]{display:none}
+.chipmap:not(.is-expanded) .cm-status{background:var(--surface);border-color:var(--line);color:var(--text);backdrop-filter:none}
+.chipmap:not(.is-expanded) .cm-controls{right:0;bottom:6px;flex-direction:row;align-items:center;gap:6px;opacity:.45;transition:opacity .3s}
+.chipmap:not(.is-expanded):hover .cm-controls,.chipmap:not(.is-expanded) .cm-controls:focus-within{opacity:1}
+.chipmap:not(.is-expanded) :is(.cm-view,.cm-zoom,.cm-expand){background:var(--surface);border-color:var(--line);color:var(--text);backdrop-filter:none}
+.chipmap:not(.is-expanded) .cm-view button{color:var(--muted)}
+.chipmap:not(.is-expanded) .cm-zoom{flex-direction:row;width:auto;height:36px}
+.chipmap:not(.is-expanded) .cm-zoom button{width:32px;height:34px;font-size:16px}
+.chipmap:not(.is-expanded) .cm-zval{border-block:0;border-inline:1px solid var(--line);padding:0 8px;width:auto;color:var(--muted)}
+.chipmap:not(.is-expanded) .cm-expand{width:36px;height:36px}
+.chipmap:not(.is-expanded) .cm-hint{background:#14262ce6}
 /* the opening build and the ending: the chip alone, no toolbar */
-html.map-end #chipmap :is(.cm-controls,.cm-top-ui){opacity:0;pointer-events:none}
-html.map-end #chipmap .cm-viewport{bottom:0!important}
+.chipmap.is-bare :is(.cm-controls,.cm-top-ui){opacity:0;pointer-events:none}
+.chipmap.is-bare .cm-viewport{bottom:0!important}
 /* on the page background the pin names need dark ink (the full-screen window keeps the light ones) */
-#chipmap:not(.is-expanded) .cm-pad span{color:#7a5a22;font-weight:600}
-#chipmap:not(.is-expanded) .cm-pad.is-supporter span{color:#8e4a26}
-#chipmap:not(.is-expanded) .cm-pad.is-free span{color:#6f7f7c;font-weight:500}
+.chipmap:not(.is-expanded) .cm-pad span{color:#7a5a22;font-weight:600}
+.chipmap:not(.is-expanded) .cm-pad.is-supporter span{color:#8e4a26}
+.chipmap:not(.is-expanded) .cm-pad.is-free span{color:#6f7f7c;font-weight:500}
 /* supporters' names (copper pads on the bottom and right edges): drawn flat on the screen just outside the chip's
    edge (chipmap.js placeSupporters), joined to their pad by a thin copper line; the in-chip labels stay hidden */
-#chipmap:not(.is-expanded) .cm-pad span{display:none}
-.cm-sup-labels{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .3s;z-index:1}
-.cm-sup-labels.is-on{opacity:1}
+.chipmap:not(.is-expanded) .cm-pad span{display:none}
+.cm-sup-labels{position:absolute;inset:0;pointer-events:none;z-index:1}
+.cm-sup-labels :is(.cm-sup-label,.cm-sup-lines){opacity:0;transition:opacity .3s}
+.cm-sup-labels.is-on :is(.cm-sup-label,.cm-sup-lines){opacity:1}
 .cm-sup-lines{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .cm-sup-lines path{stroke:#c98a62;stroke-width:1.2;fill:none}
 .cm-sup-lines path.is-partner{stroke:#c9a95e}
@@ -595,4 +597,35 @@ html.map-end #chipmap .cm-viewport{bottom:0!important}
 .cm-sup-label.is-partner{color:#7a5a22}
 .cm-sup-label.is-free{font-weight:500;color:#6f7f7c}
 .cm-sup-label:hover,.cm-sup-label.is-open{color:#14262c;text-decoration:underline}
-html.map-end .cm-sup-labels{display:none}
+
+/* the blocks stand above the traces in the 3D view: their container must keep the 3D space (it flattened them
+   onto the die before, so the signal route was drawn on top of the blocks) */
+.cm-blocks{position:absolute;inset:0;transform-style:preserve-3d;pointer-events:none}
+.cm-blocks .cm-block{pointer-events:auto}
+.is-flat .cm-blocks{transform-style:flat}
+
+/* free pads: a + on every contact that is still waiting for a partner (gold) or a supporter (copper) */
+.cm-pad.is-free:before{content:'+';position:absolute;inset:0;display:grid;place-items:center;font:600 17px/1 var(--font);color:#eac883;pointer-events:none}
+.cm-pad.is-free.is-supporter:before{color:#e2a27a}
+.cm-pad.is-free:hover:before{color:#fff3cf}
+/* …and a tip when you hover one */
+.cm-pad-tip{position:absolute;left:0;top:0;display:flex;flex-direction:column;gap:2px;padding:6px 10px;border-radius:7px;background:#14262c;color:#f1eee6;font:600 12px/1.2 var(--font);white-space:nowrap;box-shadow:0 8px 20px -8px #0008;pointer-events:none;z-index:3}
+.cm-pad-tip small{font-size:9px;font-weight:500;letter-spacing:.14em;color:#eac883}
+.cm-pad-tip[data-kind=supporter] small{color:#e2a27a}
+.cm-pad-tip:after{content:'';position:absolute;left:50%;bottom:-5px;width:10px;height:10px;background:#14262c;transform:translateX(-50%) rotate(45deg)}
+
+/* 3D ending: its own chip map in this layer (topology, partners' turn, then it shrinks under the package lid) */
+.end-map{position:fixed;left:0;top:0;width:0;height:0;opacity:0;visibility:hidden;pointer-events:none;z-index:6}
+[data-mode="2d"] .end-map{display:none}
+.end-map .chipmap{height:100%}
+/* on the dark board the names need light ink */
+.end-map .cm-sup-label{background:transparent;color:#ead9aa}
+.end-map .cm-sup-label.is-supporter{color:#efb48f}
+.end-map .cm-sup-lines path{stroke:#c9a95e99}
+
+/* 2D: the partners' turn is still on the page background, so its copy is in dark ink */
+.outro .eco-p .eco-title{color:var(--text)}
+.outro .eco-p .eco-text{color:var(--muted)}
+.outro .eco-p .sec-eyebrow{color:var(--accent)}
+/* in the ending the chip is alone on the stage: let its names reach past the map's box */
+.chipmap.is-bare,.chipmap.is-bare .cm-viewport{overflow:visible}

@@ -1580,6 +1580,18 @@ const SITE_CONTENT = {
       "Turn sound on",
       "Միացնել ձայնը"
     ],
+    "partnersKicker": [
+      "Partners & supporters",
+      "Գործընկերներ և աջակիցներ"
+    ],
+    "partnersTitle": [
+      "Everyone connected to the chip",
+      "Բոլոր նրանք, ովքեր միացած են չիպին"
+    ],
+    "partnersText": [
+      "Every partner and supporter is a contact on the edge of the chip. The contacts marked + are still free: one of them can be yours.",
+      "Յուրաքանչյուր գործընկեր և աջակից կոնտակտ է չիպի եզրին։ + նշանով կոնտակտները դեռ ազատ են․ դրանցից մեկը կարող է ձերը լինել։"
+    ],
     "endKicker": [
       "SemiTec Foundation · the package",
       "SemiTec հիմնադրամ · կորպուսը"

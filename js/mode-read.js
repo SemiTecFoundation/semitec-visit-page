@@ -253,11 +253,7 @@
     dock.classList.toggle('is-hidden', show < .05);
   }
   /* the ending's dock rect: the map lands so that its die is exactly where the package will be */
-  function endRect(fallback) {
-    const r = ST.eco.packageRect(); if (!r) return fallback;
-    const w = r.w * 1080 / 1000, h = r.h * 820 / 760;
-    return { l: r.l + r.w / 2 - w / 2, t: r.t + r.h / 2 - h / 2, w, h };
-  }
+  function endRect(fallback) { return ST.eco.packMapRect() || fallback; }
   const lerpRect = (a, b, e) => ({ l: ST.lerp(a.l, b.l, e), t: ST.lerp(a.t, b.t, e), w: ST.lerp(a.w, b.w, e), h: ST.lerp(a.h, b.h, e) });
   let snap = false;   /* entering the view: place the map without animating it */
   let ecoQ = 0, endStage = 0, endAnim = null, endFade = null, endShow = 1;
@@ -273,7 +269,7 @@
       document.documentElement.style.setProperty('--split', state === 'center' ? '0' : '1');
       map.setScroll(mapP());
       anim = cur && !ST.state.reduced && !snap ? { from: { ...cur }, start: performance.now() } : null;
-      if (state !== 'left' && endStage) { endStage = 0; endAnim = endFade = null; endShow = 1; ST.eco.setStage(0); map.setOutro(0); document.documentElement.classList.remove('map-end'); }
+      if (state !== 'left' && endStage) { endStage = 0; endAnim = endFade = null; endShow = 1; ST.eco.setStage(0); map.setOutro(0); map.setShowcase(false); map.frame.classList.remove('is-bare'); document.documentElement.classList.remove('map-end'); }
     }
     let show = state === 'left' ? 1 : (ST.state.reduced ? (st.top < vh ? 1 : 0) : ST.clamp((vh * .95 - st.top) / (vh * .45)));
     let r = state === 'left' ? left : center;
@@ -289,22 +285,25 @@
        2 package   — once the ending is pinned, the package lid closes over the chip and the map fades under it
        3 ecosystem — further on, the modules connect one by one (js/ecosystem.js + css/read.css) */
     if (state === 'left') {
-      const ot = outro.getBoundingClientRect().top, h = .02;
+      const ot = outro.getBoundingClientRect().top, h = .02, at = n => (endStage >= n ? h : 0);
       const s1 = ot < header + 16 + (endStage >= 1 ? 8 : 0);   /* the same switching line as the opening */
-      const want = !s1 ? 0 : ecoQ > .45 - (endStage >= 3 ? h : 0) ? 3 : ecoQ > .12 - (endStage >= 2 ? h : 0) ? 2 : 1;
+      const want = !s1 ? 0 : ecoQ > .62 - at(4) ? 4 : ecoQ > .36 - at(3) ? 3 : ecoQ > .12 - at(2) ? 2 : 1;
       if (want !== endStage) {
-        const now = performance.now(), reduced = ST.state.reduced || snap;
-        if ((want >= 1) !== (endStage >= 1)) endAnim = reduced ? null : { from: { ...(cur || left) }, start: now };
-        if ((want >= 2) !== (endStage >= 2)) endFade = reduced ? null : { from: endShow, to: want >= 2 ? 0 : 1, start: now + (want >= 2 ? 150 : 0) };
+        const now = performance.now(), reduced = ST.state.reduced || snap, place = n => (n === 0 ? 0 : n <= 2 ? 1 : 2);
+        if (place(want) !== place(endStage)) endAnim = reduced ? null : { from: { ...(cur || left) }, start: now };
+        if ((want >= 3) !== (endStage >= 3)) endFade = reduced ? null : { from: endShow, to: want >= 3 ? 0 : 1, start: now + (want >= 3 ? DOCK_MS * 1.3 + 80 : 0) };
         endStage = want;
         ST.eco.setStage(endStage);
         map.setOutro(endStage >= 1 ? 1 : 0);
+        map.setShowcase(endStage === 2);
+        map.frame.classList.toggle('is-bare', endStage >= 1);
         if (endStage >= 1 && map.expanded) map.setExpanded(false);
         document.documentElement.classList.toggle('map-end', endStage >= 1);
-        if (ST.sound) endStage >= 2 ? ST.sound.blip('open') : ST.sound.tick();
+        if (ST.sound) endStage >= 3 ? ST.sound.blip('open') : ST.sound.tick();
       }
       if (endStage >= 1 || endAnim) {
-        const target = endStage >= 1 ? endRect(left) : left;
+        /* 1–2: the whole chip in the middle (topology, then the partners' turn); 3–4: shrunk into the package's place */
+        const target = endStage === 0 ? left : endStage <= 2 ? (ST.eco.bigRect() || left) : endRect(left);
         r = target;
         if (endAnim) {
           const t = ST.clamp((performance.now() - endAnim.start) / (DOCK_MS * 1.3));
@@ -312,7 +311,7 @@
           if (t >= 1) endAnim = null;
         }
       }
-      endShow = endStage >= 2 ? 0 : 1;
+      endShow = endStage >= 3 ? 0 : 1;
       if (endFade) {
         const t = ST.clamp((performance.now() - endFade.start) / 450);
         endShow = ST.lerp(endFade.from, endFade.to, t);
@@ -405,7 +404,7 @@
     addEventListener('hashchange', () => { if (on && !ST.state.switching) { const p = ST.readHash(); scrollToPath(p); } });
   };
   /* where each step of the ending sits in its pinned scroll (used when switching views inside the ending) */
-  const END_AT = [0, .03, .26, .72];
+  const END_AT = [0, .04, .22, .47, .82];
   function scrollToEnd(stage) {
     const r = outro.getBoundingClientRect(), header = $('.header').offsetHeight;
     const stageH = outro.firstElementChild ? outro.firstElementChild.offsetHeight : innerHeight;

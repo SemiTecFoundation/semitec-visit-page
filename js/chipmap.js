@@ -79,7 +79,7 @@
       /* supporters' names (the copper pads on the near edges) are drawn flat on the screen just outside the chip's
          edge and follow it in every view, so the chip's side wall or the pads never cover them. Real supporters,
          plus one free pad per edge with "+ Become a supporter". */
-      const supLabels = L.pads.filter((p, k, a) => !p.free || a.findIndex(q => q.free && q.side === p.side) === k);   /* every partner and supporter + one free pad per edge */
+      const supLabels = L.pads.filter(p => !p.free);   /* every partner and supporter; free pads show a + and a tip on hover */
       this.supPads = supLabels;
       f.classList.add('chipmap');
       f.innerHTML = `
@@ -99,7 +99,7 @@
             <div class="cm-blocks"></div>
             <div class="cm-pads">${L.pads.map(p => `<button type="button" class="cm-pad cm-pad-${p.side} is-${p.kind}${p.free ? ' is-free' : ''}" data-pad="${p.id}" style="left:${p.x}px;top:${p.y}px;width:${p.w}px;height:${p.h}px"><span></span></button>`).join('')}</div>
           </div>
-          <div class="cm-sup-labels"><svg class="cm-sup-lines" aria-hidden="true"></svg>${supLabels.map(p => `<button type="button" class="cm-sup-label is-${p.kind}${p.free ? ' is-free' : ''}" data-pad="${p.id}"></button>`).join('')}</div>
+          <div class="cm-sup-labels"><svg class="cm-sup-lines" aria-hidden="true"></svg>${supLabels.map(p => `<button type="button" class="cm-sup-label is-${p.kind}${p.free ? ' is-free' : ''}" data-pad="${p.id}"></button>`).join('')}<div class="cm-pad-tip" hidden><b></b><small></small></div></div>
         </div>
         <div class="cm-top-ui">
           <div class="cm-caption"><i class="status-light"></i><span data-ui="mapCaption"></span></div>
@@ -155,7 +155,7 @@
       });
       this.mmRects = [...mm.children];
       this.padEls = [...f.querySelectorAll('.cm-pad')];
-      this.supLayer = f.querySelector('.cm-sup-labels'); this.supLines = f.querySelector('.cm-sup-lines'); this.supEls = [...f.querySelectorAll('.cm-sup-label')];
+      this.supLayer = f.querySelector('.cm-sup-labels'); this.supLines = f.querySelector('.cm-sup-lines'); this.supEls = [...f.querySelectorAll('.cm-sup-label')]; this.tip = f.querySelector('.cm-pad-tip');
       this.drawPath = f.querySelector('.cm-draw');
       this.built = -1;
     }
@@ -269,6 +269,9 @@
         if (!this.pointers.size) v.classList.remove('is-dragging');
       };
       v.addEventListener('pointerup', up); v.addEventListener('pointercancel', up);
+      /* free pads: a tip on hover says what they are */
+      v.addEventListener('pointerover', e => { const pad = e.target.closest('.cm-pad.is-free'); const id = pad ? pad.dataset.pad : null; if (id !== this.tipPad) { this.tipPad = id; this.draw(); } });
+      v.addEventListener('pointerleave', () => { if (this.tipPad) { this.tipPad = null; this.draw(); } });
       v.addEventListener('click', e => {
         if (this.moved > 5) { e.preventDefault(); e.stopPropagation(); return; }
         const pad = e.target.closest('[data-pad]'); if (pad) { this.showPad(pad.dataset.pad); return; }
@@ -320,7 +323,7 @@
     /* the tilted chip is drawn a little smaller and looked at slightly below its centre, so it sits well in the frame */
     scaleOf(c = this.cam) { return this.fit * (1 - .14 * c.tilt) * c.z; }
     lookY(c = this.cam) { return c.y + 40 * c.tilt; }
-    angles(c = this.cam) { return { rx: (c.tilt * 50 + c.dive * 24) * Math.PI / 180, rz: (c.tilt * -22 - c.dive * 8) * Math.PI / 180 }; }
+    angles(c = this.cam) { return { rx: (c.tilt * 50 + c.dive * 24) * Math.PI / 180, rz: (c.tilt * -22 - c.dive * 8) * Math.PI / 180 + (c.spin || 0) }; }
     /* exact inverse of the world transform: a screen offset (px from the viewport centre) → chip-space offset.
        forward: v = Rz·(w−c);  rotateX: y' = v.y·cos a, z' = v.y·sin a;  perspective d: × d/(d−z');  then × s */
     unproject(ox, oy, c = this.cam) {
@@ -338,17 +341,20 @@
       return { x: this.W / 2 + s * vx * f, y: this.H / 2 + s * y2 * f };
     }
     placeSupporters(s) {
-      const on = !this.expanded && s > .82 && !(this.built >= 0 && this.built < .9);   /* not before the pads are built */
+      /* names show when the chip is close enough to read them, and always in the ending (topology and the turn) */
+      const on = !this.expanded && (s > .82 || this.showcase || (this.outro || 0) > .99) && !(this.built >= 0 && this.built < .9);
       this.supLayer.classList.toggle('is-on', on);
+      this.placeTip();
       if (!on) return;
       let lines = '';
       const placed = [], count = {};
       this.supPads.forEach((p, k) => {
         const el = this.supEls[k], i = count[p.side] = (count[p.side] ?? -1) + 1;
         /* staggered distances; the near edges (bottom, right) go further out in the 3D view, past the side wall */
-        const far = 46 + (i % 3) * 34, wall = 30 * this.cam.tilt;
+        const far = 46 + (i % 3) * 34, wall = 30 * this.cam.tilt;   /* (while the chip turns every edge gets the extra room) */
         const anchor = { top: [p.x + p.w / 2, p.y], bottom: [p.x + p.w / 2, p.y + p.h], left: [p.x, p.y + p.h / 2], right: [p.x + p.w, p.y + p.h / 2] }[p.side];
-        const spot = { top: [p.x + p.w / 2, -far], bottom: [p.x + p.w / 2, L.height + far + wall], left: [-34, p.y + p.h / 2], right: [L.width + 34 + wall, p.y + p.h / 2] }[p.side];
+        const all = this.showcase ? wall : 0;
+        const spot = { top: [p.x + p.w / 2, -far - all], bottom: [p.x + p.w / 2, L.height + far + wall], left: [-34 - all, p.y + p.h / 2], right: [L.width + 34 + wall, p.y + p.h / 2] }[p.side];
         const a = this.project(...anchor), b = this.project(...spot);
         const w = el.offsetWidth || 90, h = el.offsetHeight || 16;
         let r = p.side === 'top' ? { l: b.x - w / 2, t: b.y - h - 2, w, h } : p.side === 'bottom' ? { l: b.x - w / 2, t: b.y + 2, w, h }
@@ -362,6 +368,27 @@
         lines += `<path class="is-${p.kind}" d="M${a.x.toFixed(1)} ${a.y.toFixed(1)}L${end[0].toFixed(1)} ${end[1].toFixed(1)}"/>`;
       });
       this.supLines.innerHTML = lines;
+    }
+    placeTip() {
+      const p = this.tipPad && !this.expanded ? L.pads.find(q => q.id === this.tipPad) : null;
+      this.tip.hidden = !p; if (!p) return;
+      const sup = p.kind === 'supporter';
+      this.tip.dataset.kind = p.kind;
+      this.tip.firstElementChild.textContent = '+ ' + ST.text(sup ? 'becomeSupporter' : 'becomePartner');
+      this.tip.lastElementChild.textContent = ST.text('freePad');
+      const a = this.project(p.x + p.w / 2, p.y + p.h / 2), w = this.tip.offsetWidth, h = this.tip.offsetHeight;
+      this.tip.style.transform = `translate(${(a.x - w / 2).toFixed(1)}px,${(a.y - h - 14).toFixed(1)}px)`;
+    }
+    /* the partners' turn in the ending: the chip turns slowly in the 3D view with every partner's and supporter's
+       name around its edges. The turn is timed from a shared start, so both views show the same angle. */
+    setShowcase(on) {
+      if (on === !!this.showcase) return;
+      this.showcase = on;
+      if (on) {
+        if (!ST.state.switching || ST.state.spinStart == null) ST.state.spinStart = performance.now();
+        this.following = true; this.paintStatus(); if (this.padId) this.showPad(null);
+      }
+      this.applyFollow(); this.wake();
     }
     /* move the map with the pointer: the chip point under the finger stays under the finger */
     panBy(dx, dy, immediate, ax = 0, ay = 0) {
@@ -386,6 +413,7 @@
     free() { if (this.following) { this.following = false; this.paintStatus(); } }
     follow() { this.following = true; this.paintStatus(); this.applyFollow(); this.wake(); }
     applyFollow() {
+      if (this.showcase) { Object.assign(this.tgt, { x: L.width / 2, y: L.height / 2, z: .9, tilt: 1 }); return; }
       const c = cameraAt(this.p), o = ST.smoothstep(this.outro || 0), v = this.view === 'tilt' ? 1 : 0;
       Object.assign(this.tgt, { x: ST.lerp(c.x, L.width / 2, o), y: ST.lerp(c.y, L.height / 2, o), z: ST.lerp(c.z, 1, o), tilt: ST.lerp(v, 0, o) });
     }
@@ -462,6 +490,15 @@
       const dt = Math.max(0, Math.min(64, now - this.last)); this.last = now;
       const k = ST.state.reduced ? 1 : 1 - Math.pow(1 - .14, dt / 16.67);
       let busy = false;
+      /* the turn: follow the shared clock while showing the partners; afterwards settle on the nearest full turn */
+      const TURN = Math.PI * 2;
+      if (this.showcase) { this.tgt.spin = (now - ST.state.spinStart) / 1000 * TURN / 26; if (ST.state.switching || ST.state.reduced) this.cam.spin = this.tgt.spin; busy = true; }
+      else if (this.cam.spin) { this.tgt.spin = Math.round(this.cam.spin / TURN) * TURN; }
+      if (this.tgt.spin != null && !this.anim) {
+        const d = this.tgt.spin - (this.cam.spin || 0);
+        if (Math.abs(d) > .0005) { this.cam.spin = (this.cam.spin || 0) + d * k * .6; busy = true; }
+        else { this.cam.spin = this.tgt.spin; if (!this.showcase) this.cam.spin = this.tgt.spin = 0; }
+      }
       if (!this.anim) for (const key of ['x', 'y', 'z', 'tilt', 'dive']) {
         const d = this.tgt[key] - this.cam[key];
         if (Math.abs(d) > (key === 'z' || key === 'tilt' || key === 'dive' ? .0004 : .02)) { this.cam[key] += d * k; busy = true; } else this.cam[key] = this.tgt[key];
@@ -472,7 +509,7 @@
     draw() {
       if (!this.W) return;
       const c = this.cam, s = this.scaleOf(c), cy = this.lookY(c), { rx, rz } = this.angles(c);
-      const flat = c.tilt < .002 && c.dive < .002;   // pure top view: a plain 2D transform keeps text sharp when zoomed
+      const flat = c.tilt < .002 && c.dive < .002 && !c.spin;   // pure top view: a plain 2D transform keeps text sharp when zoomed
       this.world.style.transform = `translate(${(this.W / 2).toFixed(1)}px,${(this.H / 2).toFixed(1)}px) scale(${s.toFixed(4)})` +
         (flat ? '' : ` perspective(1500px) rotateX(${(rx * 180 / Math.PI).toFixed(2)}deg) rotateZ(${(rz * 180 / Math.PI).toFixed(2)}deg)`) +
         ` translate(${(-c.x).toFixed(1)}px,${(-cy).toFixed(1)}px)`;

@@ -64,22 +64,48 @@ function nativeScroll(distance,instant=false){
 }
 /* ▸ENDING after the chip edge the page scrolls on: the camera rises and pulls back, the package closes over
    the chip and the ecosystem modules connect — the same ending as the 2D page (js/ecosystem.js) */
-const outroPx=()=>Math.round(innerHeight*2.4);
-let eco3d=null,endLift=0,endStage=0;
+const outroPx=()=>Math.round(innerHeight*3.4);
+let eco3d=null,endLift=0,endStage=0,endMap=null,endEl=null,endCur=null,endAnim=null,endFade=null,endShow=0;
 function updateTrack(){document.querySelector('#scroll-track').style.height=(scrollSpace.height(timeline.length)+innerHeight+outroPx())+'px';}
 function outroAmount(){return clamp((scrollY-scrollSpace.toPixels(timeline.length))/outroPx(),0,1);}
-/* three switching points after the chip edge, each a timed animation:
-   1 the camera rises out to the chip's topology  2 the package closes over it  3 the ecosystem connects */
+/* four switching points after the chip edge, each a timed animation (the same ending as the 2D page):
+   1 the camera rises out to the chip's topology, with every partner's and supporter's name
+   2 the chip turns slowly to show its contact edges   3 it shrinks and the package closes over it   4 the ecosystem connects
+   The chip here is a chip map of its own (js/chipmap.js), above the board; it fades away under the package lid. */
+function ensureEndMap(){
+ if(endMap)return;
+ endEl=document.createElement('div');endEl.className='end-map';endEl.innerHTML='<div class="chipmap is-bare"></div>';
+ document.querySelector('.experience').append(endEl);
+ endMap=new ST.ChipMap(endEl.firstElementChild,{onSelect:p=>navigate(p)});
+ endMap.setScroll(sections.length-1);endMap.setOutro(1);
+}
 function updateOutro(dt){
  if(!eco3d)return;
- const e=active.segment.kind==='main'?outroAmount():0,h=.02;
- const want=e>.6-(endStage>=3?h:0)?3:e>.3-(endStage>=2?h:0)?2:e>.04-(endStage>=1?h:0)?1:0;
- if(want!==endStage){endStage=want;eco3d.setStage(endStage);if(ST.sound)endStage>=2?ST.sound.blip('open'):ST.sound.tick();}
+ const e=active.segment.kind==='main'?outroAmount():0,h=.02,at=n=>endStage>=n?h:0;
+ const want=e>.68-at(4)?4:e>.45-at(3)?3:e>.22-at(2)?2:e>.04-at(1)?1:0;
+ if(want!==endStage){
+  ensureEndMap();
+  const now=performance.now(),quick=still||ST.state.switching,place=n=>n===0?0:n<=2?1:2;
+  if(place(want)!==place(endStage)&&endCur&&endStage>0)endAnim=quick?null:{from:{...endCur},start:now};
+  const to=want>=1&&want<=2?1:0;
+  if(to!==(endFade?endFade.to:endShow>.5?1:0))endFade=quick?null:{from:endShow,to,start:now+(want>=3?650+80:endStage===0?450:0),ms:want===1&&endStage===0?600:450};
+  if(quick)endShow=to;
+  endStage=want;eco3d.setStage(endStage);endMap.setShowcase(endStage===2);
+  if(ST.sound)endStage>=3?ST.sound.blip('open'):ST.sound.tick();
+ }
  const target=endStage>=1?1:0;
  endLift=still?target:endLift+(target-endLift)*(1-Math.exp(-dt*4.5));
  if(Math.abs(endLift-target)<.002)endLift=target;
  eco3dEl.classList.toggle('is-live',endStage>=1||endLift>.01);
  document.documentElement.classList.toggle('travel-end',endStage>=1);
+ if(!endMap)return;
+ /* where the chip is: in the middle for the topology and the turn, in the package's place afterwards */
+ const tgt=(endStage>=3?eco3d.packMapRect():eco3d.bigRect())||endCur;let r=tgt;
+ if(endAnim&&tgt){const t=clamp((performance.now()-endAnim.start)/624,0,1),k=ST.easeInOut(t);r={l:endAnim.from.l+(tgt.l-endAnim.from.l)*k,t:endAnim.from.t+(tgt.t-endAnim.from.t)*k,w:endAnim.from.w+(tgt.w-endAnim.from.w)*k,h:endAnim.from.h+(tgt.h-endAnim.from.h)*k};if(t>=1)endAnim=null;}
+ if(endFade){const t=clamp((performance.now()-endFade.start)/endFade.ms,0,1);endShow=endFade.from+(endFade.to-endFade.from)*t;if(t>=1)endFade=null;}
+ if(r){endCur=r;Object.assign(endEl.style,{left:r.l.toFixed(1)+'px',top:r.t.toFixed(1)+'px',width:r.w.toFixed(1)+'px',height:r.h.toFixed(1)+'px'});}
+ endEl.style.opacity=endShow.toFixed(3);endEl.style.visibility=endShow>.01?'visible':'hidden';
+ endEl.style.pointerEvents=endStage>=1&&endStage<=2?'auto':'none';
 }
 const eco3dEl=document.querySelector('#eco-3d');
 eco3dEl.addEventListener('click',e=>{const top=e.target.closest('[data-top]');if(top){e.preventDefault();navigate(['overview']);}});
@@ -465,14 +491,14 @@ const V=ST.modes['3d']={
  init(){ if('requestIdleCallback' in window)requestIdleCallback(()=>ensureScene(),{timeout:4000});else setTimeout(ensureScene,1500); },
  enter(path,from,end){
   on=true;ensureScene();scene?.resize();resetJourney();
-  if(!eco3d)eco3d=ST.makeEco({topo:true});endLift=0;endStage=0;eco3d.setStage(0);
+  if(!eco3d)eco3d=ST.makeEco();endLift=0;endStage=0;eco3d.setStage(0);endShow=0;endAnim=endFade=null;if(endEl){endEl.style.opacity='0';endEl.style.visibility='hidden';endMap.setShowcase(false);}
   setLanguage(ST.state.lang);
   mediaBoards.forEach(b=>b.width=b.figure.offsetWidth);
   updateTrack();
   navigate(path,{historyMode:'replace',instant:true});
   if(end){ // ▸ENDING switching views inside the ending: open at the same step of it
    navigationTarget=null;glide=null;currentDistance=targetDistance=timeline.length;active=timeline.locate(currentDistance);
-   window.scrollTo({top:scrollSpace.toPixels(timeline.length)+Math.round([0,.15,.45,.8][end]*outroPx()),behavior:'instant'});
+   window.scrollTo({top:scrollSpace.toPixels(timeline.length)+Math.round([0,.12,.33,.56,.85][end]*outroPx()),behavior:'instant'});
    endLift=1;eco3d.snap();
   }
   else if(from&&!still){
@@ -495,7 +521,7 @@ const V=ST.modes['3d']={
  },
  leave(){
   on=false;cancelAnimationFrame(animation);animation=0;lift=0;glide=null;endLift=0;
-  document.documentElement.classList.remove('is-rising','is-arriving','travel-end');eco3dEl.classList.remove('is-live');
+  document.documentElement.classList.remove('is-rising','is-arriving','travel-end');eco3dEl.classList.remove('is-live');if(endEl){endEl.style.visibility='hidden';endMap.setShowcase(false);}
   if(mapDialog.open)mapDialog.close();if(mediaDialog.open)mediaDialog.close();
  },
  currentPath(){return [...active.path];},

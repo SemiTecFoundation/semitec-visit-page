@@ -53,7 +53,7 @@
 
   /* one ending = one instance: the 2D page has one (ST.eco), the 3D journey another (ST.makeEco) */
   function makeEco(opts = {}) {
-  let el, stage, world, mods = [], copyA, copyB, endCta, wide = null, geo = null;
+  let el, stage, world, mods = [], copyP, copyA, copyB, endCta, wide = null, geo = null;
   function contactLink() {
     const row = ((SITE_CONTENT.contact || {}).rows || [])[0];
     return { href: row && row.href ? row.href : '#support/contact', label: row ? ST.pick(row.label) : 'Email', value: row ? ST.pick(row.value) : '' };
@@ -126,6 +126,8 @@
     el.innerHTML = `<div class="eco-stage">
         <div class="eco-board" aria-hidden="true"></div>
         <div class="eco-copy">
+          <div class="eco-p" aria-hidden="true"><p class="sec-eyebrow"><span class="sec-rule" aria-hidden="true"></span><span>${ST.esc(ST.text('partnersKicker'))}</span></p>
+            <h2 class="eco-title">${ST.esc(ST.text('partnersTitle'))}</h2><p class="eco-text">${ST.esc(ST.text('partnersText'))}</p></div>
           <div class="eco-a"><p class="sec-eyebrow"><span class="sec-rule" aria-hidden="true"></span><span>${ST.esc(ST.text('endKicker'))}</span></p>
             <h2 class="eco-title">${ST.esc(ST.text('endTitle'))}</h2><p class="eco-text">${ST.esc(ST.text('endText'))}</p></div>
           <div class="eco-b" aria-hidden="true"><p class="sec-eyebrow"><span class="sec-rule" aria-hidden="true"></span><span>${ST.esc(ST.text('ecoKicker'))}</span></p>
@@ -140,7 +142,7 @@
         </div>
       </div>`;
     stage = el.querySelector('.eco-stage'); world = el.querySelector('.eco-world');
-    copyA = el.querySelector('.eco-a'); copyB = el.querySelector('.eco-b'); endCta = el.querySelector('.eco-end');
+    copyP = el.querySelector('.eco-p'); copyA = el.querySelector('.eco-a'); copyB = el.querySelector('.eco-b'); endCta = el.querySelector('.eco-end');
     wide = null; Eco.layout();
     const was = Eco.stage || 0; Eco.stage = -1; Eco.setStage(was);
   };
@@ -157,11 +159,12 @@
     const b = r.getBoundingClientRect(); return { l: b.left, t: b.top, w: b.width, h: b.height };
   };
 
-  /* The ending has three switching points (the caller decides when; CSS times the animations):
-       1  topology — the whole chip, top view, already at its final size (3D draws it here; 2D brings its map)
-       2  package  — the board darkens, the lid closes over the chip, the four contacts appear
-       3  ecosystem — the modules connect one by one, then the ways to join appear
-     There is one zoom only: the package is placed at the size the whole ecosystem needs. */
+  /* The ending has four switching points (the caller decides when; CSS times the animations):
+       1  topology  — the whole chip, top view, in the middle of the screen, with every partner's and supporter's name
+       2  partners  — the chip turns slowly in 3D to show its contact edges and everyone connected to them
+       3  package   — the chip shrinks into place, the board darkens, the lid closes over it, the four contacts appear
+       4  ecosystem — the modules connect one by one, then the ways to join appear
+     The chip itself is the view's chip map (2D: the docked map; 3D: its own map in this layer). */
   /* show the current step at once, without its animations (used when switching views inside the ending) */
   Eco.snap = function () {
     if (!el) return;
@@ -172,9 +175,23 @@
     if (!el || n === Eco.stage) return;
     Eco.stage = n;
     el.classList.toggle('st-topo', n >= 1);
-    el.classList.toggle('st-pack', n >= 2);
-    el.classList.toggle('st-eco', n >= 3);
-    copyA.setAttribute('aria-hidden', String(n !== 2)); copyB.setAttribute('aria-hidden', String(n < 3));
+    el.classList.toggle('st-partners', n === 2);
+    el.classList.toggle('st-pack', n >= 3);
+    el.classList.toggle('st-eco', n >= 4);
+    copyP.setAttribute('aria-hidden', String(n !== 2)); copyA.setAttribute('aria-hidden', String(n !== 3)); copyB.setAttribute('aria-hidden', String(n < 4));
+  };
+  /* the chip map's rect so that its die lands exactly where the package lid closes */
+  Eco.packMapRect = function () {
+    const r = el && el.querySelector('.eco-package'); if (!r) return null;
+    const b = r.getBoundingClientRect(), w = b.width * 1080 / 1000, h = b.height * 820 / 760;
+    return { l: b.left + b.width / 2 - w / 2, t: b.top + b.height / 2 - h / 2, w, h };
+  };
+  /* where the whole chip sits for the topology and the partners' turn: the stage between the copy and the bottom */
+  Eco.bigRect = function () {
+    const v = el && el.querySelector('.eco-view'); if (!v) return null;
+    const vr = v.getBoundingClientRect(), top = wide ? 150 : 128, bot = wide ? 84 : 128;
+    const w = Math.min(vr.width - 32, 1100), h = Math.max(120, vr.height - top - bot);
+    return { l: vr.left + (vr.width - w) / 2, t: vr.top + top, w, h };
   };
   function fitWorld() {
     if (!el || !geo) return;

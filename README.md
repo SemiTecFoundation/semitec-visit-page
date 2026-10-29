@@ -17,17 +17,23 @@ Scrolling on releases the screen. At the **switching point** the map slides into
 
 ## The 2D ending: the package and the ecosystem
 
-After Connect, the ending has **three switching points**, like the opening. Each is a short timed animation, and scrolling back above a point plays it in reverse. There is **only one zoom**:
-1. **Topology:** when the ending reaches the header (Connect has moved up), the map flies from the left column to the centre. At the same time it zooms out to the whole chip in top view. It lands at the size of the package, which is already the size the whole ecosystem needs. The page background is unchanged.
-2. **Package:** scrolling a little further, the circuit board darkens and the **package lid closes over the chip**: SemiTec logo and gold leads on every side. Only four labelled contacts stay outside:
-   - top: **+ Become a partner** and **+ Become a supporter** (dashed = free)
-   - bottom: **Contact us** and **Email** (from `SITE_CONTENT.contact`)
-3. **Ecosystem:** scrolling further, the modules connect to the package's side leads one after another. Each gets a trace drawn in, then the module appears and a signal starts running: universities, research institutes, researchers & mentors, schools & students, industry companies, startups, government & public bodies, international & diaspora. A dashed **"+ Your organisation"** module is the free slot. Then the buttons to become a partner or supporter, or go back to the beginning, appear.
+After Connect, the ending has **four switching points**, like the opening. Each is a short timed animation, and scrolling back above a point plays it in reverse:
+1. **Topology:** when the ending reaches the header (Connect has moved up), the map flies to the middle of the screen. It zooms out to the whole chip in top view, with **every partner's and supporter's name** around its edges.
+2. **Partners:** the chip turns slowly in the 3D view, showing its contact edges and everyone connected to them ("Everyone connected to the chip"). Free contacts carry a **+**.
+3. **Package:** the chip shrinks into place, the circuit board darkens and the **package lid closes over it**: SemiTec logo and gold leads on every side. Only four labelled contacts stay outside:
+   - top: **+ Become a partner** and **+ Become a supporter**
+   - bottom: **Contact us** and **Email**
+4. **Ecosystem:** the modules connect to the package's side leads one after another: universities, research institutes, researchers & mentors, schools & students, industry companies, startups, government & public bodies, international & diaspora. A dashed **"+ Your organisation"** module is the free slot. Then the buttons to become a partner or supporter, or go back to the beginning, appear.
+
+**Names and free contacts on the map:**
+- **Names:** partners' and supporters' names sit just outside the chip's edges, each joined to its pad by a thin line. They show when you're close enough to read them, and always in the ending.
+- **Free contacts:** every free contact shows a **+**. Hovering over it shows "+ Become a partner" or "+ Become a supporter", and clicking it opens the invitation.
 
 **The same ending in 3D:** after the journey reaches the chip edge (the seal ring and the bond pads), the page keeps scrolling through the same three switching points:
-1. The camera rises out of the trace and the view becomes the **chip's topology**: the same floorplan as the 2D map, top view.
-2. The package closes over it.
-3. The ecosystem connects.
+1. The camera rises out of the trace and the view becomes the **chip's topology**, with all the names: the same chip map as in 2D.
+2. The chip turns to show its partners.
+3. The package closes over it.
+4. The ecosystem connects.
 
 Space continues into the ending. "Back to the beginning" glides to the start of the journey.
 
