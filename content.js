@@ -1472,6 +1472,10 @@ const SITE_CONTENT = {
       "+ Join",
       "+ Միանալ"
     ],
+    "partnersCol": [
+      "Partners",
+      "Գործընկերներ"
+    ],
     "supportersTitle": [
       "Supporters",
       "Աջակիցներ"

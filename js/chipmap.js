@@ -60,13 +60,45 @@
     return { x: ST.lerp(a.x, b.x, t), y: ST.lerp(a.y, b.y, t), z: ST.lerp(a.z, b.z, t) - dip };
   }
 
+  /* The chip's other side (the partners' step of the ending): its I/O contacts — the same pads, mirrored as on a
+     real chip turned over — with every partner's and supporter's name fixed next to its contact, + on the free ones,
+     and a field of solder balls in the middle. Drawn in die units on the chip's underside. */
+  function underHTML() {
+    const W = L.width, H = L.height, list = SITE_CONTENT.partners || [];
+    const mirror = { left: 'right', right: 'left', top: 'top', bottom: 'bottom' };
+    let balls = '';
+    for (let y = 120; y <= H - 120; y += 44) for (let x = 120; x <= W - 120; x += 44) balls += `<circle cx="${x}" cy="${y}" r="9"/>`;
+    const pads = L.pads.map(p => {
+      const side = mirror[p.side], x = W - p.x - p.w, y = p.y, cx = x + p.w / 2, cy = y + p.h / 2;
+      const who = list.find(q => q.id === p.id);
+      const href = p.kind === 'supporter' ? '#donate' : (p.free ? '#support/partner' : '#people/partners');
+      const tip = p.free ? '+ ' + ST.text(p.kind === 'supporter' ? 'becomeSupporter' : 'becomePartner') : ST.pick(who.name);
+      let label = '';
+      if (who) {
+        const name = ST.esc(ST.pick(who.name));
+        if (side === 'top') label = `<path d="M${cx} ${y}V${y - 26}"/><text transform="translate(${cx + 4} ${y - 32}) rotate(-38)">${name}</text>`;
+        else if (side === 'bottom') label = `<path d="M${cx} ${y + p.h}V${y + p.h + 26}"/><text transform="translate(${cx + 4} ${y + p.h + 44}) rotate(38)">${name}</text>`;
+        else if (side === 'left') label = `<path d="M${x} ${cy}H${x - 30}"/><text x="${x - 38}" y="${cy + 7}" text-anchor="end">${name}</text>`;
+        else label = `<path d="M${x + p.w} ${cy}H${x + p.w + 30}"/><text x="${x + p.w + 38}" y="${cy + 7}">${name}</text>`;
+      }
+      return `<a class="bk-pad is-${p.kind}${p.free ? ' is-free' : ''}" href="${href}" data-under="${p.id}"><title>${ST.esc(tip)}</title>
+        <rect x="${x}" y="${y}" width="${p.w}" height="${p.h}" rx="3"/>${p.free ? `<text class="bk-plus" x="${cx}" y="${cy + 7}" text-anchor="middle">+</text>` : ''}${label}</a>`;
+    }).join('');
+    return `<svg viewBox="0 0 ${W} ${H}" aria-hidden="true">
+      <rect class="bk-sub" x="0" y="0" width="${W}" height="${H}" rx="6"/><rect class="bk-ring" x="14" y="14" width="${W - 28}" height="${H - 28}" rx="4"/>
+      <g class="bk-balls">${balls}</g>
+      <g class="bk-mid"><text class="bk-k" x="${W / 2}" y="${H / 2 - 18}" text-anchor="middle">I/O · ${ST.esc(ST.text('partnersKicker').toUpperCase())}</text>
+        <text class="bk-l" x="${W / 2}" y="${H / 2 + 22}" text-anchor="middle"><tspan class="is-partner">■</tspan> ${ST.esc(ST.text('partnerKind'))}   <tspan class="is-supporter">■</tspan> ${ST.esc(ST.text('supporterKind'))}   <tspan class="is-free">+</tspan> ${ST.esc(ST.text('freePad'))}</text></g>
+      ${pads}</svg>`;
+  }
+
   class ChipMap {
     constructor(frame, opts = {}) {
       this.frame = frame; this.onSelect = opts.onSelect || (() => {});
       this.route = buildRoute(L.route);
       this.view = 'tilt';                         // 'tilt' (3D) or 'top'
       try { const v = localStorage.getItem('st-map-view'); if (v === 'top' || v === 'tilt') this.view = v; } catch (e) {}
-      this.cam = { x: 500, y: 380, z: 1, tilt: this.view === 'tilt' ? 1 : 0, dive: 0 };
+      this.cam = { x: 500, y: 380, z: 1, tilt: this.view === 'tilt' ? 1 : 0, dive: 0, flip: 0 };
       this.tgt = { ...this.cam };
       this.p = 0; this.index = 0; this.following = true; this.expanded = false;
       this.pointers = new Map(); this.moved = 0; this.raf = 0; this.last = 0; this.anim = false;
@@ -97,6 +129,7 @@
             </svg>
             <div class="cm-die-label" aria-hidden="true"><strong>SEMITEC</strong><span>EDUCATION · SCIENCE · TECHNOLOGY</span></div>
             <div class="cm-blocks"></div>
+            <div class="cm-under">${underHTML()}</div>
             <div class="cm-pads">${L.pads.map(p => `<button type="button" class="cm-pad cm-pad-${p.side} is-${p.kind}${p.free ? ' is-free' : ''}" data-pad="${p.id}" style="left:${p.x}px;top:${p.y}px;width:${p.w}px;height:${p.h}px"><span></span></button>`).join('')}</div>
           </div>
           <div class="cm-sup-labels"><svg class="cm-sup-lines" aria-hidden="true"></svg>${supLabels.map(p => `<button type="button" class="cm-sup-label is-${p.kind}${p.free ? ' is-free' : ''}" data-pad="${p.id}"></button>`).join('')}<div class="cm-pad-tip" hidden><b></b><small></small></div></div>
@@ -208,6 +241,7 @@
         const p = (SITE_CONTENT.partners || []).find(q => q.id === el.dataset.pad);
         el.textContent = p ? ST.pick(p.name) : '+ ' + ST.text(el.classList.contains('is-supporter') ? 'becomeSupporter' : 'becomePartner');
       });
+      const under = this.frame.querySelector('.cm-under'); if (under) under.innerHTML = underHTML();
       if (this.padId) this.showPad(this.padId);
       this.paintStatus(); this.paintView();
     }
@@ -274,6 +308,7 @@
       v.addEventListener('pointerleave', () => { if (this.tipPad) { this.tipPad = null; this.draw(); } });
       v.addEventListener('click', e => {
         if (this.moved > 5) { e.preventDefault(); e.stopPropagation(); return; }
+        const under = e.target.closest('[data-under]'); if (under) { e.preventDefault(); this.showPad(under.dataset.under); return; }
         const pad = e.target.closest('[data-pad]'); if (pad) { this.showPad(pad.dataset.pad); return; }
         const b = e.target.closest('[data-path]'); if (b) this.onSelect(b.dataset.path.split('/'));
       }, true);
@@ -342,7 +377,7 @@
     }
     placeSupporters(s) {
       /* names show when the chip is close enough to read them, and always in the ending (topology and the turn) */
-      const on = !this.expanded && (s > .82 || this.showcase || (this.outro || 0) > .99) && !(this.built >= 0 && this.built < .9);
+      const on = !this.expanded && this.cam.flip < .02 && (s > .82 || this.showcase || (this.outro || 0) > .99) && !(this.built >= 0 && this.built < .9);
       this.supLayer.classList.toggle('is-on', on);
       this.placeTip();
       if (!on) return;
@@ -379,6 +414,15 @@
       const a = this.project(p.x + p.w / 2, p.y + p.h / 2), w = this.tip.offsetWidth, h = this.tip.offsetHeight;
       this.tip.style.transform = `translate(${(a.x - w / 2).toFixed(1)}px,${(a.y - h - 14).toFixed(1)}px)`;
     }
+    /* the partners' step in the ending: the chip, as a 3D object, turns over to its I/O side (and back) */
+    setFlip(on) { this.tgt.flip = on ? 1 : 0; if (on && this.padId) this.showPad(null); if (!this.following) this.follow(); this.wake(); }
+    /* the package step: back to the front, top view, whole chip — then it shrinks into the package */
+    setPacking(on) {
+      if (on === !!this.packing) return;
+      this.packing = on; this.frame.classList.toggle('is-packing', on);
+      if (on) { this.tgt.flip = 0; this.follow(); } else this.applyFollow();
+      this.wake();
+    }
     /* the partners' turn in the ending: the chip turns slowly in the 3D view with every partner's and supporter's
        name around its edges. The turn is timed from a shared start, so both views show the same angle. */
     setShowcase(on) {
@@ -414,8 +458,9 @@
     follow() { this.following = true; this.paintStatus(); this.applyFollow(); this.wake(); }
     applyFollow() {
       if (this.showcase) { Object.assign(this.tgt, { x: L.width / 2, y: L.height / 2, z: .9, tilt: 1 }); return; }
-      const c = cameraAt(this.p), o = ST.smoothstep(this.outro || 0), v = this.view === 'tilt' ? 1 : 0;
-      Object.assign(this.tgt, { x: ST.lerp(c.x, L.width / 2, o), y: ST.lerp(c.y, L.height / 2, o), z: ST.lerp(c.z, 1, o), tilt: ST.lerp(v, 0, o) });
+      /* the ending shows the whole chip; Top / 3D still applies (except while it goes into the package: top view) */
+      const c = cameraAt(this.p), o = ST.smoothstep(this.outro || 0), v = this.packing ? 0 : this.view === 'tilt' ? 1 : 0;
+      Object.assign(this.tgt, { x: ST.lerp(c.x, L.width / 2, o), y: ST.lerp(c.y, L.height / 2, o), z: ST.lerp(c.z, 1, o), tilt: v });
     }
     setView(v) {
       this.view = v; this.tgt.tilt = v === 'tilt' ? 1 : 0;
@@ -499,9 +544,9 @@
         if (Math.abs(d) > .0005) { this.cam.spin = (this.cam.spin || 0) + d * k * .6; busy = true; }
         else { this.cam.spin = this.tgt.spin; if (!this.showcase) this.cam.spin = this.tgt.spin = 0; }
       }
-      if (!this.anim) for (const key of ['x', 'y', 'z', 'tilt', 'dive']) {
+      if (!this.anim) for (const key of ['x', 'y', 'z', 'tilt', 'dive', 'flip']) {
         const d = this.tgt[key] - this.cam[key];
-        if (Math.abs(d) > (key === 'z' || key === 'tilt' || key === 'dive' ? .0004 : .02)) { this.cam[key] += d * k; busy = true; } else this.cam[key] = this.tgt[key];
+        if (Math.abs(d) > (key === 'x' || key === 'y' ? .02 : .0004)) { this.cam[key] += d * k; busy = true; } else this.cam[key] = this.tgt[key];
       }
       this.draw();
       if (busy) this.wake();
@@ -509,11 +554,13 @@
     draw() {
       if (!this.W) return;
       const c = this.cam, s = this.scaleOf(c), cy = this.lookY(c), { rx, rz } = this.angles(c);
-      const flat = c.tilt < .002 && c.dive < .002 && !c.spin;   // pure top view: a plain 2D transform keeps text sharp when zoomed
+      const flat = c.tilt < .002 && c.dive < .002 && !c.spin && c.flip < .0005;   // pure top view: a plain 2D transform keeps text sharp when zoomed
       this.world.style.transform = `translate(${(this.W / 2).toFixed(1)}px,${(this.H / 2).toFixed(1)}px) scale(${s.toFixed(4)})` +
         (flat ? '' : ` perspective(1500px) rotateX(${(rx * 180 / Math.PI).toFixed(2)}deg) rotateZ(${(rz * 180 / Math.PI).toFixed(2)}deg)`) +
-        ` translate(${(-c.x).toFixed(1)}px,${(-cy).toFixed(1)}px)`;
+        ` translate(${(-c.x).toFixed(1)}px,${(-cy).toFixed(1)}px)` +
+        (c.flip > .0005 ? ` translate3d(${L.width / 2}px,${L.height / 2}px,-15px) rotateY(${(c.flip * 180).toFixed(2)}deg) translate3d(${-L.width / 2}px,${-L.height / 2}px,15px)` : '');
       this.frame.classList.toggle('is-flat', flat);
+      this.frame.classList.toggle('is-under', c.flip > .5);   /* past half-way the I/O side faces you */
       this.frame.style.setProperty('--tilt', c.tilt.toFixed(3));
       this.frame.style.setProperty('--inv', (1 / s).toFixed(3));
       /* level of detail: when blocks are big enough on screen, show their paths */

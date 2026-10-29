@@ -97,37 +97,21 @@
       <g class="tp-quiet">${L.quiet.map(d => `<path d="${d}"/>`).join('')}</g><g class="tp-rails">${L.rails.map(d => `<path d="${d}"/>`).join('')}</g>
       <g class="tp-wires">${L.wires.map(d => `<path d="${d}"/>`).join('')}</g><path class="tp-route" d="${L.route}"/>${blocks}${pads}</svg>`;
   }
-  /* The other side of the chip (the partners' step): the chip turns over like a card and shows its I/O side —
-     the same contacts, mirrored, with the name of every partner and supporter fixed next to its contact.
-     Free contacts are marked +. The I/O side is drawn a little smaller than the chip, so the names have room. */
-  function backHTML() {
-    const L = buildChipLayout(SITE_CONTENT.sections, CHIP_LAYOUT, SITE_CONTENT.partners || []);
-    const W = L.width, H = L.height, list = SITE_CONTENT.partners || [];
-    const mirror = { left: 'right', right: 'left', top: 'top', bottom: 'bottom' };
-    let balls = '';
-    for (let y = 120; y <= H - 120; y += 44) for (let x = 120; x <= W - 120; x += 44) balls += `<circle cx="${x}" cy="${y}" r="9"/>`;
-    const pads = L.pads.map(p => {
-      const side = mirror[p.side], x = W - p.x - p.w, y = p.y, cx = x + p.w / 2, cy = y + p.h / 2;
-      const who = list.find(q => q.id === p.id);
-      const href = p.kind === 'supporter' ? '#donate' : (p.free ? '#support/partner' : '#people/partners');
-      const tip = p.free ? '+ ' + ST.text(p.kind === 'supporter' ? 'becomeSupporter' : 'becomePartner') : ST.pick(who.name);
-      let label = '';
-      if (who) {
-        const name = ST.esc(ST.pick(who.name));
-        if (side === 'top') label = `<path d="M${cx} ${y}V${y - 26}"/><text transform="translate(${cx + 4} ${y - 32}) rotate(-38)">${name}</text>`;
-        else if (side === 'bottom') label = `<path d="M${cx} ${y + p.h}V${y + p.h + 26}"/><text transform="translate(${cx + 4} ${y + p.h + 44}) rotate(38)">${name}</text>`;
-        else if (side === 'left') label = `<path d="M${x} ${cy}H${x - 30}"/><text x="${x - 38}" y="${cy + 7}" text-anchor="end">${name}</text>`;
-        else label = `<path d="M${x + p.w} ${cy}H${x + p.w + 30}"/><text x="${x + p.w + 38}" y="${cy + 7}">${name}</text>`;
-      }
-      return `<a class="bk-pad is-${p.kind}${p.free ? ' is-free' : ''}" href="${href}"><title>${ST.esc(tip)}</title>
-        <rect x="${x}" y="${y}" width="${p.w}" height="${p.h}" rx="3"/>${p.free ? `<text class="bk-plus" x="${cx}" y="${cy + 7}" text-anchor="middle">+</text>` : ''}${label}</a>`;
-    }).join('');
-    return `<div class="eco-back"><svg viewBox="-260 -190 ${W + 520} ${H + 360}" preserveAspectRatio="xMidYMid meet" aria-label="${ST.esc(ST.text('partnersKicker'))}">
-      <rect class="bk-sub" x="0" y="0" width="${W}" height="${H}" rx="10"/><rect class="bk-ring" x="14" y="14" width="${W - 28}" height="${H - 28}" rx="6"/>
-      <g class="bk-balls">${balls}</g>
-      <g class="bk-mid"><text class="bk-k" x="${W / 2}" y="${H / 2 - 18}" text-anchor="middle">I/O · ${ST.esc(ST.text('partnersKicker').toUpperCase())}</text>
-        <text class="bk-l" x="${W / 2}" y="${H / 2 + 22}" text-anchor="middle"><tspan class="is-partner">■</tspan> ${ST.esc(ST.text('partnerKind'))}   <tspan class="is-supporter">■</tspan> ${ST.esc(ST.text('supporterKind'))}   <tspan class="is-free">+</tspan> ${ST.esc(ST.text('freePad'))}</text></g>
-      ${pads}</svg></div>`;
+  /* Beside the chip (topology and I/O side, wide screens): the partners on the left and the supporters on the right,
+     each with a logo — `logo` in SITE_CONTENT.partners (an image path), or their initials until a logo is added. */
+  function orgsHTML() {
+    const list = SITE_CONTENT.partners || [];
+    const initials = n => n.split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0]).join('').toUpperCase();
+    const col = (kind, title, join, href) => {
+      const items = list.filter(p => (p.kind === 'supporter' ? 'supporter' : 'partner') === kind).map((p, k) => {
+        const name = ST.pick(p.name), link = p.url || (kind === 'supporter' ? '#donate' : '#people/partners');
+        const logo = p.logo ? `<img src="${ST.esc(p.logo)}" alt="">` : ST.esc(initials(name));
+        return `<a class="eco-org" href="${ST.esc(link)}"${p.url ? ' target="_blank" rel="noopener"' : ''} style="--k:${k}"><span class="eco-logo">${logo}</span><span class="eco-org-t"><b>${ST.esc(name)}</b><small>${ST.esc(ST.text(kind === 'supporter' ? 'supporterKind' : 'partnerKind'))}</small></span></a>`;
+      }).join('');
+      return `<aside class="eco-col is-${kind}" aria-label="${ST.esc(title)}"><p class="eco-col-h">${ST.esc(title)}</p>${items}
+        <a class="eco-org is-free" href="${href}"><span class="eco-logo">+</span><span class="eco-org-t"><b>${ST.esc(ST.text(join))}</b><small>${ST.esc(ST.text('freePad'))}</small></span></a></aside>`;
+    };
+    return col('partner', ST.text('partnersCol'), 'becomePartner', '#support/partner') + col('supporter', ST.text('supportersTitle'), 'becomeSupporter', '#donate');
   }
   function moduleHTML(o, k) {
     const style = `left:${o.x - o.w / 2}px;top:${o.y - o.h / 2}px;width:${o.w}px;height:${o.h}px`;
@@ -165,7 +149,7 @@
           <div class="eco-b" aria-hidden="true"><p class="sec-eyebrow"><span class="sec-rule" aria-hidden="true"></span><span>${ST.esc(ST.text('ecoKicker'))}</span></p>
             <h2 class="eco-title">${ST.esc(ST.text('ecoTitle'))}</h2><p class="eco-text">${ST.esc(ST.text('ecoText'))}</p></div>
         </div>
-        ${backHTML()}
+        ${orgsHTML()}
         <div class="eco-view"><div class="eco-world"></div></div>
         <p class="eco-cue"><span class="scroll-mouse" aria-hidden="true"><i></i></span>${ST.esc(ST.text('endScroll'))}</p>
         <div class="eco-end">
@@ -194,7 +178,7 @@
 
   /* The ending has four switching points (the caller decides when; CSS times the animations):
        1  topology  — the whole chip, top view, in the middle of the screen, with every partner's and supporter's name
-       2  partners  — the chip turns slowly in 3D to show its contact edges and everyone connected to them
+       2  partners  — the chip turns over to its I/O side, every partner's and supporter's name fixed by its contact
        3  package   — the chip shrinks into place, the board darkens, the lid closes over it, the four contacts appear
        4  ecosystem — the modules connect one by one, then the ways to join appear
      The chip itself is the view's chip map (2D: the docked map; 3D: its own map in this layer). */
@@ -223,7 +207,8 @@
   Eco.bigRect = function () {
     const v = el && el.querySelector('.eco-view'); if (!v) return null;
     const vr = v.getBoundingClientRect(), top = wide ? 150 : 128, bot = wide ? 84 : 128;
-    const w = Math.min(vr.width - 32, 1100), h = Math.max(120, vr.height - top - bot);
+    const cols = vr.width >= 1100 ? 2 * (240 + 40) : 0;   /* room for the partners' and supporters' columns */
+    const w = Math.min(vr.width - 32 - cols, 1100), h = Math.max(120, vr.height - top - bot);
     return { l: vr.left + (vr.width - w) / 2, t: vr.top + top, w, h };
   };
   function fitWorld() {
@@ -235,8 +220,6 @@
     const s = Math.min(area.w / (b.x1 - b.x0), area.h / (b.y1 - b.y0)) * .97, cx = (b.x0 + b.x1) / 2, cy = (b.y0 + b.y1) / 2;
     world.style.transform = `translate(${(area.x + area.w / 2 - cx * s).toFixed(1)}px,${(area.y + area.h / 2 - cy * s).toFixed(1)}px) scale(${s.toFixed(4)})`;
     el.style.setProperty('--inv', (1 / s).toFixed(3));
-    const back = el.querySelector('.eco-back'), bw = Math.min(W - 32, 1100);
-    Object.assign(back.style, { left: ((W - bw) / 2).toFixed(1) + 'px', top: top + 'px', width: bw.toFixed(1) + 'px', height: area.h.toFixed(1) + 'px' });
   }
   Eco.place = fitWorld;
   return Eco;

@@ -18,9 +18,9 @@ Scrolling on releases the screen. At the **switching point** the map slides into
 ## The 2D ending: the package and the ecosystem
 
 After Connect, the ending has **four switching points**, like the opening. Each is a short timed animation, and scrolling back above a point plays it in reverse:
-1. **Topology:** when the ending reaches the header (Connect has moved up), the map flies to the middle of the screen. It zooms out to the whole chip in top view, with **every partner's and supporter's name** around its edges.
-2. **Partners:** the chip turns over like a card to its I/O side ("Everyone connected to the chip"). There, every partner's and supporter's name stands fixed next to its contact: gold for partners, copper for supporters. Free contacts carry a **+**.
-3. **Package:** the chip shrinks into place, the circuit board darkens and the **package lid closes over it**: SemiTec logo and gold leads on every side. Only four labelled contacts stay outside:
+1. **Topology:** when the ending reaches the header (Connect has moved up), the map flies to the middle of the screen and shows the whole chip, with **every partner's and supporter's name** around its edges. On wide screens, the **partners are listed on the left and the supporters on the right**, each with a logo; the initials stand in until a `logo` image is set in `SITE_CONTENT.partners`. Top / 3D and zoom work here as everywhere else.
+2. **Partners:** the chip, as a 3D object, turns over to its underside, the I/O side ("Everyone connected to the chip"). There, every partner's and supporter's name stands fixed next to its contact: gold for partners, copper for supporters. Free contacts carry a **+**.
+3. **Package:** the chip turns back to its front and goes to the top view, then shrinks into place in one animation, the circuit board darkens and the **package lid closes over it**: SemiTec logo and gold leads on every side. Only four labelled contacts stay outside:
    - top: **+ Become a partner** and **+ Become a supporter**
    - bottom: **Contact us** and **Email**
 4. **Ecosystem:** the modules connect to the package's side leads one after another: universities, research institutes, researchers & mentors, schools & students, industry companies, startups, government & public bodies, international & diaspora. A dashed **"+ Your organisation"** module is the free slot. Then the buttons to become a partner or supporter, or go back to the beginning, appear.

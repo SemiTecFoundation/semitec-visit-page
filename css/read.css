@@ -400,21 +400,21 @@ html[lang=hy] .sec-hero .sec-title{font-size:clamp(34px,3.8vw,56px)}
 .eco-text{margin:10px auto 0;max-width:520px;font-size:14px;line-height:1.6;color:#a9c0c0}
 .eco-p,.eco-a,.eco-b{opacity:0;transform:translate(-50%,8px)!important;transition:opacity .4s ease,transform .5s var(--ease-out)}
 .st-partners .eco-p{opacity:1;transform:translate(-50%,0)!important;transition-delay:.3s}
-.st-pack:not(.st-eco) .eco-a{opacity:1;transform:translate(-50%,0)!important;transition-delay:1.05s}
+.st-pack:not(.st-eco) .eco-a{opacity:1;transform:translate(-50%,0)!important;transition-delay:1.55s}
 .st-eco .eco-b{opacity:1;transform:translate(-50%,0)!important;transition-delay:.2s}
 .eco-3d.st-topo .eco-board,.st-pack .eco-board{opacity:1}   /* 2D keeps the page background until the package */
 
 .eco-cue{position:absolute;left:0;right:0;bottom:18px;margin:0;display:flex;justify-content:center;align-items:center;gap:10px;font-size:11px;letter-spacing:.08em;color:#a9c0c0;opacity:0;transition:opacity .3s}
-.st-pack:not(.st-eco) .eco-cue{opacity:1;transition-delay:1.6s}
+.st-pack:not(.st-eco) .eco-cue{opacity:1;transition-delay:2.1s}
 
 
 /* the package: a sealed lid with the logo, gold leads on every side */
 .eco-package{position:absolute;opacity:0;transform:scale(1.06);transition:opacity .45s ease,transform .6s var(--ease-out)}
 .ep-leads,.et-stems{opacity:0;transition:opacity .4s ease}
 .eco-pin{opacity:0}
-.st-pack .eco-package{opacity:1;transform:none;transition-delay:.75s}
-.st-pack .ep-leads,.st-pack .et-stems{opacity:1;transition-delay:1s}
-.st-pack .eco-pin{opacity:1;transition:opacity .4s ease 1.2s,background .25s,box-shadow .25s}
+.st-pack .eco-package{opacity:1;transform:none;transition-delay:1.25s}
+.st-pack .ep-leads,.st-pack .et-stems{opacity:1;transition-delay:1.5s}
+.st-pack .eco-pin{opacity:1;transition:opacity .4s ease 1.7s,background .25s,box-shadow .25s}
 /* 3D: the topology the camera rises to (the same floorplan as the 2D map) */
 .eco-topo{position:absolute;overflow:visible;opacity:0;transform:scale(1.25);transition:opacity .5s ease,transform .9s var(--ease-out)}
 .st-topo .eco-topo{opacity:1;transform:none;transition-delay:.25s}
@@ -528,7 +528,7 @@ html[lang=hy] .sec-hero .sec-title{font-size:clamp(34px,3.8vw,56px)}
 .is-building .cm-draw{opacity:var(--drawn,0)}
 /* the ending: the map lands in the centre as a bare chip (no window, no controls) before the package closes */
 .chipmap.is-bare{background:transparent;box-shadow:none}
-.chipmap.is-bare:before,.is-bare .cm-top-ui,.is-bare .cm-controls,.is-bare .cm-minimap,.is-bare .cm-help,.is-bare .cm-hint{opacity:0;pointer-events:none}
+.chipmap.is-bare:before,.is-bare .cm-minimap,.is-bare .cm-help,.is-packing .cm-top-ui,.is-packing .cm-controls,.is-packing .cm-hint{opacity:0;pointer-events:none}
 .chipmap,.chipmap:before,.cm-top-ui,.cm-controls{transition:background .4s,box-shadow .4s,opacity .3s}
 /* the pinned opening screen: keep everything inside the column, give the chip the room */
 .choose-heads,.choose-foot{width:min(880px,100%)}
@@ -577,8 +577,8 @@ html.map-end .map-dock:before{opacity:0}
 .chipmap:not(.is-expanded) .cm-expand{width:36px;height:36px}
 .chipmap:not(.is-expanded) .cm-hint{background:#14262ce6}
 /* the opening build and the ending: the chip alone, no toolbar */
-.chipmap.is-bare :is(.cm-controls,.cm-top-ui){opacity:0;pointer-events:none}
-.chipmap.is-bare .cm-viewport{bottom:0!important}
+.chipmap.is-packing :is(.cm-controls,.cm-top-ui){opacity:0;pointer-events:none}
+.chipmap.is-packing .cm-viewport{bottom:0!important}
 /* on the page background the pin names need dark ink (the full-screen window keeps the light ones) */
 .chipmap:not(.is-expanded) .cm-pad span{color:#7a5a22;font-weight:600}
 .chipmap:not(.is-expanded) .cm-pad.is-supporter span{color:#8e4a26}
@@ -630,16 +630,12 @@ html.map-end .map-dock:before{opacity:0}
 /* in the ending the chip is alone on the stage: let its names reach past the map's box */
 .chipmap.is-bare,.chipmap.is-bare .cm-viewport{overflow:visible}
 
-/* ---------- the partners' step: the chip turns over like a card ----------
-   the chip map turns away (its back face hidden) while the I/O side turns in, in the same place */
-.chipmap{transition:transform .7s var(--ease-io),visibility 0s linear .35s}
-.chipmap.is-flipped{transform:perspective(1800px) rotateY(180deg);visibility:hidden}   /* each face disappears half-way through the turn */
-.chipmap.is-flipped{backface-visibility:hidden;-webkit-backface-visibility:hidden}
-.chipmap:not(.is-expanded){backface-visibility:hidden;-webkit-backface-visibility:hidden}
-.eco-back{position:absolute;pointer-events:none;visibility:hidden;transform:perspective(1800px) rotateY(-180deg);backface-visibility:hidden;-webkit-backface-visibility:hidden;
-  transition:transform .7s var(--ease-io),visibility 0s linear .35s}
-.st-partners .eco-back{visibility:visible;transform:none;pointer-events:auto}
-.eco-back svg{width:100%;height:100%;overflow:visible}
+/* ---------- the partners' step: the chip turns over (a 3D turn of the chip object, chipmap.js setFlip) ----------
+   its underside is the I/O side; past half-way the top face hides and the underside shows */
+.cm-under{position:absolute;left:0;top:0;width:1000px;height:760px;transform:translateZ(-32px) rotateY(180deg);visibility:hidden;pointer-events:none}
+.cm-under svg{width:100%;height:100%;overflow:visible}
+.is-under .cm-under{visibility:visible;pointer-events:auto}
+.is-under :is(.cm-surface,.cm-nets,.cm-die-label,.cm-blocks,.cm-pads,.cm-sup-labels){visibility:hidden}
 .bk-sub{fill:#10252b;stroke:#3d6a6c;stroke-width:3}
 .bk-ring{fill:none;stroke:#2c5558;stroke-width:1.5}
 .bk-balls circle{fill:#1d3a40;stroke:#2f5a5e;stroke-width:1}
@@ -659,5 +655,33 @@ html.map-end .map-dock:before{opacity:0}
 .bk-pad:hover rect{filter:brightness(1.25)}
 .bk-pad:hover text:not(.bk-plus){text-decoration:underline}
 /* in 3D (dark board) the names are light */
-.eco-3d .bk-pad text:not(.bk-plus){fill:#ead9aa}
-.eco-3d .bk-pad.is-supporter text:not(.bk-plus){fill:#efb48f}
+.end-map .bk-pad text:not(.bk-plus){fill:#ead9aa}
+.end-map .bk-pad.is-supporter text:not(.bk-plus){fill:#efb48f}
+
+/* beside the chip in the ending (topology and I/O side): partners left, supporters right, with logos */
+.eco-col{position:absolute;top:150px;width:240px;display:flex;flex-direction:column;gap:8px;z-index:2;opacity:0;pointer-events:none;transition:opacity .4s ease,transform .5s var(--ease-out)}
+.eco-col.is-partner{left:32px;transform:translateX(-16px)}
+.eco-col.is-supporter{right:32px;transform:translateX(16px)}
+.st-topo:not(.st-pack) .eco-col{opacity:1;transform:none;pointer-events:auto;transition-delay:.35s}
+.eco-col-h{margin:0 0 4px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+.eco-org{display:flex;align-items:center;gap:12px;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--text);transition:border-color .25s,transform .25s}
+.eco-org:hover{border-color:#b08a45;transform:translateX(3px)}
+.eco-col.is-supporter .eco-org:hover{border-color:#c98a62;transform:translateX(-3px)}
+.eco-logo{flex:none;display:grid;place-items:center;width:38px;height:38px;border-radius:8px;overflow:hidden;font:700 13px/1 var(--font);letter-spacing:.04em;color:#14262c;background:linear-gradient(135deg,#efd697,#b08a45)}
+.eco-col.is-supporter .eco-logo{background:linear-gradient(135deg,#efb48f,#a0603a)}
+.eco-logo img{width:100%;height:100%;object-fit:contain;background:#fff}
+.eco-org-t{display:flex;flex-direction:column;min-width:0}
+.eco-org-t b{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.eco-org-t small{font-size:9px;letter-spacing:.14em;color:var(--muted)}
+.eco-org.is-free{border-style:dashed;background:transparent}
+.eco-org.is-free .eco-logo{background:transparent;border:1.5px dashed #b08a45;color:#b08a45;font-size:20px;font-weight:500}
+.eco-col.is-supporter .eco-org.is-free .eco-logo{border-color:#c98a62;color:#c98a62}
+@media (max-width:1099px){.eco-col{display:none}}
+/* 3D: on the dark board */
+.eco-3d .eco-org{background:#0b1c22cc;border-color:#a1cbcc33;color:#f1eee6}
+.eco-3d .eco-org-t small{color:#9fbab9}
+.eco-3d .eco-org.is-free{background:transparent}
+.eco-3d .eco-col-h{color:#eac883}
+/* going into the package: no toolbar, no names (the chip is about to be sealed) */
+.chipmap.is-packing .cm-controls,.chipmap.is-packing .cm-top-ui{opacity:0!important;pointer-events:none!important}
+.chipmap.is-packing .cm-sup-labels{display:none}

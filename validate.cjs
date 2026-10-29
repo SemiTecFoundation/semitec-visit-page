@@ -199,6 +199,7 @@ console.log(`Passed ${checks} checks: content, assets, curve speed, forward loop
   let n = 0;
   for (const p of SITE_CONTENT.partners || []) { bilingual(p.name, 'partner ' + p.id); assert.ok(['partner', 'supporter'].includes(p.kind), 'Partner kind: ' + p.id); n++; }
   assert.ok(new Set((SITE_CONTENT.partners || []).map(p => p.id)).size === (SITE_CONTENT.partners || []).length, 'Unique partner ids');
+  for (const p of SITE_CONTENT.partners || []) assert.ok(p.logo === undefined || typeof p.logo === 'string', 'Partner logo is an image path: ' + p.id);
   for (const r of (SITE_CONTENT.contact || {}).rows || []) { bilingual(r.label, 'contact label'); bilingual(r.value, 'contact value'); n++; }
   console.log('Passed partner and contact checks (' + n + ' entries).');
 }
