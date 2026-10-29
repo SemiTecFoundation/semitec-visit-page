@@ -415,6 +415,7 @@
       this.tip.style.transform = `translate(${(a.x - w / 2).toFixed(1)}px,${(a.y - h - 14).toFixed(1)}px)`;
     }
     /* the partners' step in the ending: the chip, as a 3D object, turns over to its I/O side (and back) */
+    setFocus(on) { if (on === !!this.focusBlock) return; this.focusBlock = on; if (on && !this.following) this.follow(); else this.applyFollow(); this.wake(); }
     setFlip(on) { this.tgt.flip = on ? 1 : 0; if (on && this.padId) this.showPad(null); if (!this.following) this.follow(); this.wake(); }
     /* the package step: back to the front, top view, whole chip — then it shrinks into the package */
     setPacking(on) {
@@ -457,6 +458,14 @@
     free() { if (this.following) { this.following = false; this.paintStatus(); } }
     follow() { this.following = true; this.paintStatus(); this.applyFollow(); this.wake(); }
     applyFollow() {
+      /* phones (strip / badge): the current block fills the little frame, and the camera moves block to block */
+      if (this.focusBlock && this.W) {
+        const fitOf = i => { const b = L.blocks[(sections[i] || {}).id]; if (!b) return { x: L.width / 2, y: L.height / 2, z: 1 };
+          return { x: b.x + b.w / 2, y: b.y + b.h / 2, z: Math.min(.88 * this.W / b.w, .88 * this.H / b.h) / this.fit }; };
+        const i0 = Math.floor(this.p), i1 = Math.min(sections.length - 1, i0 + 1), t = ST.dwell(this.p - i0), a = fitOf(i0), b = fitOf(i1);
+        Object.assign(this.tgt, { x: ST.lerp(a.x, b.x, t), y: ST.lerp(a.y, b.y, t), z: ST.lerp(a.z, b.z, t), tilt: 0 });
+        return;
+      }
       if (this.showcase) { Object.assign(this.tgt, { x: L.width / 2, y: L.height / 2, z: .9, tilt: 1 }); return; }
       /* the ending shows the whole chip; Top / 3D still applies (except while it goes into the package: top view) */
       const c = cameraAt(this.p), o = ST.smoothstep(this.outro || 0), v = this.packing ? 0 : this.view === 'tilt' ? 1 : 0;
@@ -527,6 +536,7 @@
       const r = this.viewport.getBoundingClientRect();
       this.W = r.width; this.H = r.height;
       this.fit = Math.max(.05, Math.min(this.W / 1080, this.H / 820));
+      if (this.following && this.focusBlock) { this.applyFollow(); this.wake(); }
       this.draw();
     }
     wake() { if (!this.raf) { this.last = performance.now(); this.raf = requestAnimationFrame(t => this.tick(t)); } }

@@ -280,6 +280,7 @@
       document.documentElement.style.setProperty('--split', state === 'center' ? '0' : '1');
       map.setScroll(mapP());
       anim = cur && !ST.state.reduced && !snap ? { from: { ...cur }, start: performance.now() } : null;
+      if (state !== 'left') map.setFocus(false);
       if (state !== 'left' && endStage) { endStage = 0; endAnim = endFade = null; endShow = 1; ST.eco.setStage(0); map.setOutro(0); map.setFlip(false); map.setPacking(false); map.frame.classList.remove('is-bare'); document.documentElement.classList.remove('map-end'); }
     }
     let show = state === 'left' ? 1 : (ST.state.reduced ? (st.top < vh ? 1 : 0) : ST.clamp((vh * .95 - st.top) / (vh * .45)));
@@ -307,6 +308,7 @@
         endStage = want;
         ST.eco.setStage(endStage);
         map.setOutro(endStage >= 1 ? 1 : 0);
+        if (endStage >= 1) map.setFocus(false);
         map.setFlip(endStage === 2);        /* the partners' step: the chip turns over to its I/O side */
         map.setPacking(endStage >= 3);      /* the package: front, top view, whole chip — then it shrinks */
         map.frame.classList.toggle('is-bare', endStage >= 1);
@@ -338,7 +340,7 @@
     dock.classList.toggle('is-badge', phone && mini === 'badge');
     dock.classList.toggle('is-strip', phone && mini === 'strip');
     document.documentElement.classList.toggle('map-strip', phone && mini === 'strip');
-    if (endStage === 0) { map.setOutro(phone ? 1 : 0); map.setPacking(phone); }
+    if (endStage === 0) { map.setOutro(0); map.setPacking(phone); map.setFocus(phone); }   /* phones: zoomed to the current block, top view */
     if (phone) {
       const sec = sections[Math.max(0, index)], k = `${ST.pad(Math.max(0, index))} · ${ST.pick(sec.label)}`;
       if (dock.dataset.label !== k) {
