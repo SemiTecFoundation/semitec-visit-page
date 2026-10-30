@@ -28,8 +28,7 @@
       cards.push(`<article class="story-card is-section${sec.id === CHIP_LAYOUT.power ? ' is-power' : ''}" data-card="sec" data-index="${i}">
         <p class="sc-k">${ST.pad(i)} · ${ST.esc(ST.pick(sec.label))}${sec.id === CHIP_LAYOUT.power ? ` · ${ST.esc(ST.text('powerUnit'))}` : ''}</p>
         <h3 class="sc-t">${ST.esc(ST.pick(sec.title)).replace(/\n/g, ' ')}</h3>
-        <p class="sc-p">${ST.esc(ST.pick(sec.intro))}</p>
-        <a class="sc-go" href="#${sec.id}" data-path="${sec.id}">${ST.esc(ST.text('openSection'))} →</a></article>`);
+        <p class="sc-p">${ST.esc(ST.pick(sec.intro))}</p></article>`);   /* no link here: the section opens from its block once it is on the chip */
     });
     cards.push(`<article class="story-card" data-card="conn">
         <p class="sc-k">${ST.esc(ST.text('build2'))}</p><h3 class="sc-t">${ST.esc(ST.text('connTitle'))}</h3>
