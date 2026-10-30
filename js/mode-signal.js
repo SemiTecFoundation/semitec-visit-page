@@ -305,7 +305,7 @@ function renderCard(force=false){
  }else{
   const list=element('div',route.index===0?'intro-tags':'panel-items');(node.items||[]).forEach(item=>list.append(element(route.index===0?'span':'div',route.index===0?'':'panel-item',pick(item))));card.append(list);
  }
- if((node.links||[]).length){const ls=element('div','panel-links');node.links.forEach(l=>{const a=element('a','',pick(l.label)+' ↗');a.href=l.href;a.target='_blank';a.rel='noopener';ls.append(a);});card.append(ls);}
+ if((node.links||[]).length){const ls=element('div','panel-links');node.links.forEach(l=>{const inner=l.href[0]==='#',a=element('a','',pick(l.label)+(inner?' →':' ↗'));a.href=l.href;if(!inner){a.target='_blank';a.rel='noopener';}ls.append(a);});card.append(ls);}
  const actions=element('div','panel-actions');
  const primary=element('button','primary-action');primary.type='button';
  primary.append(element('span','',inLoop?text('back')+labelFor(active.segment.visit.parentPath):route.index===0?text('enter'):route.index===sections.length-1?text('restart'):text('next')),element('span','',inLoop?'↺':'↗'));
@@ -324,7 +324,17 @@ function renderCard(force=false){
  document.querySelector('#route-announcement').textContent=active.path.map((_,i)=>labelFor(active.path.slice(0,i+1))).join(' / ');
  if(!navigationTarget)history.replaceState(null,'','#'+pathKey(active.path));
 }
-function updatePanelSize(){if(currentCard)panel.style.height=currentCard.offsetHeight+'px';}
+function updatePanelSize(){
+ if(!currentCard)return;
+ /* large screens: the path list gives up height so the buttons stay above the bottom bar (it scrolls instead) */
+ const ro=currentCard.querySelector('.route-options');
+ if(ro&&innerWidth>760){
+  ro.style.maxHeight='';
+  const nav=document.querySelector('.chapter-nav'),limit=(nav?nav.getBoundingClientRect().top:innerHeight)-14,over=currentCard.getBoundingClientRect().bottom-limit;
+  if(over>0)ro.style.maxHeight=Math.max(84,ro.offsetHeight-over)+'px';
+ }
+ panel.style.height=currentCard.offsetHeight+'px';
+}
 /* after a side path returns to the main route, the sign comes back just ahead of the camera, so the
    other paths can be chosen without scrolling back */
 let entranceEpoch=0,lastEntranceKind='main';
@@ -432,16 +442,17 @@ function addVisitMedia(visit){
   const n=node.showcase.length;
   /* a selected path arrives at min(34, 20% of the loop): the first board stands a little after that point */
   const L=visit.curve.length,from=Math.min(34,L*.2)+26,to=Math.max(from+1,L*.8);
+  /* each board stands on the side of the road that the camera sees on its right while approaching it (the loop turns) */
+  const rightness=(d,pt)=>{let sum=0;for(const back of [26,18,10]){const c=visit.curve.pose(Math.max(0,d-back)),f=c.direction,rr=[-f[2],0,f[0]],v=[pt[0]-c.point[0],0,pt[2]-c.point[2]],ahead=v[0]*f[0]+v[2]*f[2];sum+=(v[0]*rr[0]+v[2]*rr[2])/Math.max(4,ahead);}return sum;};
   node.showcase.forEach((item,k)=>{
-   const pose=visit.curve.pose(n>1?from+(to-from)*k/(n-1):from),r=[-pose.direction[2],0,pose.direction[0]];
-   createShow(item,k,n,[pose.point[0]+r[0]*7,5.6,pose.point[2]+r[2]*7],visit,[pose.point[0]+r[0]*2.2,3.7,pose.point[2]+r[2]*2.2]);
+   const d=n>2?[from,L*.64,L*.88][Math.round(k*2/(n-1))]:n>1?from+(to-from)*k/(n-1):from,pose=visit.curve.pose(d),r=[-pose.direction[2],0,pose.direction[0]];
+   const at=(sd,o)=>[pose.point[0]+r[0]*o*sd,0,pose.point[2]+r[2]*o*sd];
+   const sd=rightness(d,at(1,7))>=rightness(d,at(-1,7))?1:-1,p=at(sd,7),m=at(sd,2.2);
+   createShow(item,k,n,[p[0],5.6,p[2]],visit,[m[0],3.7,m[2]]);
   });
   return;
  }
- for(const t of [.12,.68]){
-  const pose=visit.curve.pose(visit.curve.distanceAt(t)),r=[-pose.direction[2],0,pose.direction[0]];
-  createBoard(node.media,node.title,[pose.point[0]+r[0]*7,5.6,pose.point[2]+r[2]*7],visit,[pose.point[0]+r[0]*2.2,3.7,pose.point[2]+r[2]*2.2]);
- }
+ /* a path without its own cards shows no repeated section picture */
 }
 function updateMedia(time,dt){
  if(!scene)return;

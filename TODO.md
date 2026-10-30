@@ -21,6 +21,8 @@ Placeholders in the page are marked "(example)" or "to be confirmed".
 - [ ] Add the figures to `SITE_CONTENT.story` (e.g. `numbers: [{value, label}]`, `next: [...]`) and render them in `js/story.js` next to the brief.
 
 ## Content
+- [ ] **Meetings with industry engineers:** define the series: how often (e.g. monthly), where, who hosts, the first topics and engineers; then add each meeting to `SITE_CONTENT.events`.
+- [ ] Programs: review the new texts for *Mentorship and project supervision*, *Research and technical challenges* (grants) and *Meetings with industry engineers*; replace the illustrations in `assets/programs/` with photos of real lectures and meetings when there are some.
 - [ ] Programs merged: *Educational programs* and *Open knowledge* are now part of **Education and open knowledge: SemiTec Academy**; review the combined text.
 - [ ] **Update the logo, colours and styles** to look more professional: a final logo (and its variants), a refined colour palette, consistent typography, spacing and component styles across 2D, 3D and phones.
 - [ ] **Every 3D path with its own boards:** like SemiTec Academy (`showcase`), give each path details, pictures or links along its loop instead of repeating the section picture.

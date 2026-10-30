@@ -134,7 +134,7 @@
     if (!dlg) {
       dlg = document.createElement('dialog'); dlg.id = 'show-dialog'; dlg.className = 'show-dialog';
       document.body.append(dlg);
-      dlg.addEventListener('click', e => { if (e.target === dlg || e.target.closest('.sd-close')) dlg.close(); });
+      dlg.addEventListener('click', e => { if (e.target === dlg || e.target.closest('.sd-close,[data-inner]')) dlg.close(); });
       /* swipe left / right between slides on touch screens */
       let sx = null, sy = 0;
       dlg.addEventListener('touchstart', e => { if (!e.target.closest('.sd-view')) return; sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
@@ -153,7 +153,7 @@
       <nav class="sd-tabs" role="tablist">${tabs.map((t, i) => `<button type="button" role="tab" data-i="${i}">${esc(t)}</button>`).join('')}</nav>
       <div class="sd-view"><div class="sd-track">${slides.join('')}</div>
       <button type="button" class="sd-arrow sd-prev" aria-label="←">‹</button><button type="button" class="sd-arrow sd-next" aria-label="→">›</button></div>
-      <p class="sd-links">${(item.links || []).map(l => `<a href="${esc(l.href)}" target="_blank" rel="noopener">${esc(P(l.label))} ↗</a>`).join('')}</p></div>`;
+      <p class="sd-links">${(item.links || []).map(l => l.href[0] === '#' ? `<a href="${esc(l.href)}" data-inner>${esc(P(l.label))} →</a>` : `<a href="${esc(l.href)}" target="_blank" rel="noopener">${esc(P(l.label))} ↗</a>`).join('')}</p></div>`;
     const track = dlg.querySelector('.sd-track'), tabEls = [...dlg.querySelectorAll('.sd-tabs button')];
     dlg._go = i => { dlg._cur = (i + slides.length) % slides.length; track.style.transform = `translateX(${-dlg._cur * 100}%)`; tabEls.forEach((t, j) => { t.classList.toggle('on', j === dlg._cur); t.setAttribute('aria-selected', String(j === dlg._cur)); }); };
     tabEls.forEach(t => t.addEventListener('click', () => dlg._go(+t.dataset.i)));

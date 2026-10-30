@@ -27,7 +27,7 @@
     </button></figure>`;
   }
   /* outside links (e.g. SemiTec Academy): open in a new tab */
-  const linksHTML = (links, cls) => (links || []).length ? `<p class="${cls}">${links.map(l => `<a href="${ST.esc(l.href)}" target="_blank" rel="noopener">${ST.esc(ST.pick(l.label))} ↗</a>`).join('')}</p>` : '';
+  const linksHTML = (links, cls) => (links || []).length ? `<p class="${cls}">${links.map(l => l.href[0] === '#' ? `<a href="${ST.esc(l.href)}">${ST.esc(ST.pick(l.label))} →</a>` : `<a href="${ST.esc(l.href)}" target="_blank" rel="noopener">${ST.esc(ST.pick(l.label))} ↗</a>`).join('')}</p>` : '';
   /* a row of product cards inside a path (e.g. SemiTec Academy): picture, title, short text and links */
   const showcaseHTML = list => (list || []).length ? `<div class="pc-show" style="--n:${list.length}">${list.map((it, k) => {
     const m = SITE_CONTENT.media[it.media];
@@ -174,8 +174,16 @@
   /* ---------- path cards ---------- */
   function setCard(path, open, instant) {
     const card = document.getElementById(`card-${path[0]}-${path[1]}`); if (!card) return null;
-    if (open) $$('.path-card.is-open').forEach(c => { if (c !== card && c.closest('.sec') === card.closest('.sec')) toggle(c, false, instant); });
+    /* the clicked card keeps its place on screen while a longer card above it closes */
+    const y0 = card.getBoundingClientRect().top;
+    let closedAbove = false;
+    if (open) $$('.path-card.is-open').forEach(c => { if (c !== card && c.closest('.sec') === card.closest('.sec')) { if (c.compareDocumentPosition(card) & Node.DOCUMENT_POSITION_FOLLOWING) closedAbove = true; toggle(c, false, instant); } });
     toggle(card, open, instant);
+    if (closedAbove) {
+      const t0 = performance.now();
+      const hold = () => { const dy = card.getBoundingClientRect().top - y0; if (Math.abs(dy) > .5) scrollBy({ top: dy, behavior: 'instant' }); if (performance.now() - t0 < 700) requestAnimationFrame(hold); };
+      if (instant) requestAnimationFrame(hold); else hold();
+    }
     openPath = open ? [path[0], path[1]] : null;
     return card;
   }

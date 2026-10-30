@@ -490,8 +490,8 @@ const SITE_CONTENT = {
       ],
       "text": [
         [
-          "Our programs are designed to encourage active participation, promote knowledge exchange, and support long-term educational and technological development. SemiTec Academy is available now; the other programs below are planned, and each will show its status as it starts.",
-          "Մեր ծրագրերը նախատեսված են խրախուսելու ակտիվ մասնակցությունը, նպաստելու գիտելիքի փոխանակմանը և աջակցելու երկարաժամկետ կրթական և տեխնոլոգիական զարգացմանը։ SemiTec Ակադեմիան արդեն հասանելի է․ ստորև ներկայացված մյուս ծրագրերը նախատեսված են, և յուրաքանչյուրի կարգավիճակը կցուցադրվի դրա մեկնարկին զուգընթաց։"
+          "Our programs are designed to encourage active participation, promote knowledge exchange, and support long-term educational and technological development. Education, mentorship and research support are running now; the meetings with engineers are being prepared and the hackathons are planned.",
+          "Մեր ծրագրերը նախատեսված են խրախուսելու ակտիվ մասնակցությունը, նպաստելու գիտելիքի փոխանակմանը և աջակցելու երկարաժամկետ կրթական և տեխնոլոգիական զարգացմանը։ Կրթությունը, մենթորությունը և հետազոտական աջակցությունն արդեն գործում են․ ինժեներների հետ հանդիպումները նախապատրաստվում են, իսկ հաքաթոնները նախատեսված են։"
         ]
       ],
       "items": [
@@ -500,20 +500,20 @@ const SITE_CONTENT = {
           "Կրթություն և SemiTec Ակադեմիա"
         ],
         [
-          "Technical challenges",
-          "Տեխնիկական մարտահրավերներ"
+          "Mentorship and project supervision",
+          "Մենթորություն և նախագծերի ղեկավարում"
         ],
         [
-          "Industry–academia dialogue",
-          "Արդյունաբերություն–ակադեմիա երկխոսություն"
+          "Research and grants",
+          "Հետազոտություն և դրամաշնորհներ"
+        ],
+        [
+          "Meetings with engineers",
+          "Հանդիպումներ ինժեներների հետ"
         ],
         [
           "Hackathons",
           "Հաքաթոններ"
-        ],
-        [
-          "Mentorship",
-          "Մենթորություն"
         ]
       ],
       "media": "learning",
@@ -724,6 +724,118 @@ const SITE_CONTENT = {
           ]
         },
         {
+          "id": "mentorship",
+          "title": [
+            "Mentorship and project supervision",
+            "Մենթորություն և նախագծերի ղեկավարում"
+          ],
+          "intro": [
+            "Supervising student projects and bringing engineers into the classroom.",
+            "Ղեկավարում ենք ուսանողական նախագծեր և ինժեներներին բերում լսարան։"
+          ],
+          "items": [],
+          "children": [],
+          "text": [
+            [
+              "SemiTec supervises students in their diploma and master's projects and in other technical projects, from choosing a topic to presenting the result. Experienced engineers and researchers share their knowledge, give guidance and support emerging talent.",
+              "SemiTec-ը ղեկավարում է ուսանողների դիպլոմային և մագիստրոսական նախագծերը, ինչպես նաև այլ տեխնիկական նախագծեր՝ թեմայի ընտրությունից մինչև արդյունքի ներկայացում։ Փորձառու ինժեներներն ու հետազոտողները կիսվում են իրենց գիտելիքով, տալիս ուղղորդում և աջակցում նոր տաղանդներին։"
+            ],
+            [
+              "We also organize guest lectures, where engineers from industry and researchers talk about their work, the technologies they use and how to start a career in the field.",
+              "Մենք նաև կազմակերպում ենք հյուր դասախոսություններ, որտեղ արդյունաբերության ինժեներներն ու հետազոտողները պատմում են իրենց աշխատանքի, օգտագործվող տեխնոլոգիաների և ոլորտում կարիերա սկսելու մասին։"
+            ]
+          ],
+          "media": "learning",
+          "showcase": [
+            {
+              "id": "diploma",
+              "title": [
+                "Diploma and master's projects",
+                "Դիպլոմային և մագիստրոսական նախագծեր"
+              ],
+              "intro": [
+                "Supervision from the topic to the defence.",
+                "Ղեկավարում՝ թեմայից մինչև պաշտպանություն։"
+              ],
+              "details": [
+                [
+                  "Students work on a real engineering topic with a supervisor from SemiTec: defining the goal, planning the work, designing, verifying and writing up the result.",
+                  "Ուսանողներն աշխատում են իրական ինժեներական թեմայի վրա SemiTec-ի ղեկավարի հետ՝ նպատակի սահմանում, աշխատանքի պլանավորում, նախագծում, ստուգում և արդյունքի շարադրում։"
+                ]
+              ],
+              "items": [
+                [
+                  "Regular reviews of progress",
+                  "Առաջընթացի կանոնավոր քննարկումներ"
+                ],
+                [
+                  "Help with the written work and the presentation",
+                  "Օգնություն գրավոր աշխատանքի և ներկայացման հարցում"
+                ]
+              ],
+              "links": [],
+              "media": "prog-diploma",
+              "gallery": [
+                "prog-diploma"
+              ]
+            },
+            {
+              "id": "projects",
+              "title": [
+                "Student projects",
+                "Ուսանողական նախագծեր"
+              ],
+              "intro": [
+                "Guidance for projects beyond the diploma.",
+                "Ուղղորդում դիպլոմից դուրս նախագծերի համար։"
+              ],
+              "details": [
+                [
+                  "Course projects, personal projects and team projects get the same kind of guidance: how to plan the work, which tools to use and how to check that the design really works.",
+                  "Դասընթացային, անձնական և թիմային նախագծերը ստանում են նույն ուղղորդումը՝ ինչպես պլանավորել աշխատանքը, ինչ գործիքներ օգտագործել և ինչպես ստուգել, որ նախագիծն իսկապես աշխատում է։"
+                ]
+              ],
+              "items": [],
+              "links": [
+                {
+                  "label": [
+                    "Propose a project",
+                    "Առաջարկել նախագիծ"
+                  ],
+                  "href": "#support/idea"
+                }
+              ],
+              "media": "prog-projects",
+              "gallery": [
+                "prog-projects"
+              ]
+            },
+            {
+              "id": "lectures",
+              "title": [
+                "Guest lectures",
+                "Հյուր դասախոսություններ"
+              ],
+              "intro": [
+                "Engineers and researchers talk about their work.",
+                "Ինժեներներն ու հետազոտողները պատմում են իրենց աշխատանքի մասին։"
+              ],
+              "details": [
+                [
+                  "Guest lectures bring practice into the classroom: how chips are designed and verified in industry, which skills are needed, and what a first job in the field looks like.",
+                  "Հյուր դասախոսությունները պրակտիկան բերում են լսարան՝ ինչպես են չիպերը նախագծվում և ստուգվում արդյունաբերությունում, ինչ հմտություններ են պետք և ինչ տեսք ունի առաջին աշխատանքը ոլորտում։"
+                ]
+              ],
+              "items": [],
+              "links": [],
+              "media": "prog-lectures",
+              "gallery": [
+                "prog-lectures"
+              ]
+            }
+          ]
+        },
+        {
           "id": "challenges",
           "title": [
             "Research and technical challenges",
@@ -733,49 +845,230 @@ const SITE_CONTENT = {
             "Connecting research interests with meaningful engineering problems.",
             "Կապում ենք հետազոտական հետաքրքրությունները իմաստալից ինժեներական խնդիրների հետ։"
           ],
-          "items": [
-            [
-              "Status: planned",
-              "Կարգավիճակ՝ նախատեսված"
-            ]
-          ],
+          "items": [],
           "children": [],
           "text": [
             [
               "We seek to create opportunities for students, researchers, and industry professionals to identify, discuss, and investigate relevant technical challenges. Through collaborative research topics, experimental projects, and problem-solving activities, we aim to encourage practical innovation and scientific exploration.",
               "Մենք ձգտում ենք ստեղծել հնարավորություններ, որպեսզի ուսանողները, հետազոտողները և արդյունաբերության մասնագետները բացահայտեն, քննարկեն և ուսումնասիրեն արդիական տեխնիկական խնդիրներ։ Համատեղ հետազոտական թեմաների, փորձարարական նախագծերի և խնդիրների լուծման միջոցով մենք ձգտում ենք խրախուսել գործնական նորարարությունը և գիտական որոնումը։"
+            ],
+            [
+              "We also help students and young researchers prepare applications for grants with their projects: shaping the idea, describing the plan and the expected results.",
+              "Մենք նաև օգնում ենք ուսանողներին և երիտասարդ հետազոտողներին իրենց նախագծերով դրամաշնորհային հայտեր պատրաստել՝ գաղափարի ձևավորում, պլանի և ակնկալվող արդյունքների նկարագրություն։"
             ]
           ],
-          "media": "learning"
+          "media": "learning",
+          "showcase": [
+            {
+              "id": "research",
+              "title": [
+                "Research topics",
+                "Հետազոտական թեմաներ"
+              ],
+              "intro": [
+                "Questions worth investigating, shaped together.",
+                "Ուսումնասիրության արժանի հարցեր՝ միասին ձևավորված։"
+              ],
+              "details": [
+                [
+                  "Students, researchers and engineers identify and discuss relevant technical questions and turn them into research topics and experimental projects.",
+                  "Ուսանողները, հետազոտողները և ինժեներները բացահայտում և քննարկում են արդիական տեխնիկական հարցեր և դրանք վերածում հետազոտական թեմաների ու փորձարարական նախագծերի։"
+                ]
+              ],
+              "items": [],
+              "links": [],
+              "media": "prog-research",
+              "gallery": [
+                "prog-research"
+              ]
+            },
+            {
+              "id": "problems",
+              "title": [
+                "Engineering problems",
+                "Ինժեներական խնդիրներ"
+              ],
+              "intro": [
+                "Real problems from practice, solved step by step.",
+                "Պրակտիկայից վերցված իրական խնդիրներ՝ քայլ առ քայլ լուծված։"
+              ],
+              "details": [
+                [
+                  "Problem-solving activities start from questions engineers meet in their work, so students practise the way real designs are checked, debugged and improved.",
+                  "Խնդիրների լուծման աշխատանքները սկսվում են այն հարցերից, որոնց ինժեներները հանդիպում են աշխատանքում, որպեսզի ուսանողները վարժվեն այնպես, ինչպես իրական նախագծերն են ստուգվում, շտկվում և բարելավվում։"
+                ]
+              ],
+              "items": [],
+              "links": [],
+              "media": "prog-problems",
+              "gallery": [
+                "prog-problems"
+              ]
+            },
+            {
+              "id": "grants",
+              "title": [
+                "Help with grant applications",
+                "Օգնություն դրամաշնորհային հայտերով"
+              ],
+              "intro": [
+                "Turning a good project into a strong application.",
+                "Լավ նախագիծը վերածում ենք ուժեղ հայտի։"
+              ],
+              "details": [
+                [
+                  "We help prepare grant applications for student and research projects: a clear goal, a realistic plan and measurable results.",
+                  "Մենք օգնում ենք պատրաստել ուսանողական և հետազոտական նախագծերի դրամաշնորհային հայտեր՝ հստակ նպատակ, իրատեսական պլան և չափելի արդյունքներ։"
+                ]
+              ],
+              "items": [],
+              "links": [
+                {
+                  "label": [
+                    "Propose a project",
+                    "Առաջարկել նախագիծ"
+                  ],
+                  "href": "#support/idea"
+                }
+              ],
+              "media": "prog-grants",
+              "gallery": [
+                "prog-grants"
+              ]
+            }
+          ]
         },
         {
-          "id": "dialogue",
+          "id": "meetings",
           "title": [
-            "Industry–academia dialogue",
-            "Արդյունաբերություն–ակադեմիա երկխոսություն"
+            "Meetings with industry engineers",
+            "Հանդիպումներ արդյունաբերության ինժեներների հետ"
           ],
           "intro": [
-            "Creating conversations that lead to action.",
-            "Ստեղծում ենք զրույցներ, որոնք հանգեցնում են գործողության։"
+            "A series of meetings where students talk with engineers from the semiconductor industry.",
+            "Հանդիպումների շարք, որտեղ ուսանողները զրուցում են կիսահաղորդչային արդյունաբերության ինժեներների հետ։"
           ],
-          "items": [
-            [
-              "Status: planned",
-              "Կարգավիճակ՝ նախատեսված"
-            ]
-          ],
+          "items": [],
           "children": [],
           "text": [
             [
-              "SemiTec aims to organize discussions where industry professionals, students, educators, and researchers can exchange experiences and explore technological challenges. These discussions may help identify educational gaps, emerging technical needs, potential research topics, and opportunities for collaborative projects.",
-              "SemiTec-ը ձգտում է կազմակերպել քննարկումներ, որտեղ արդյունաբերության մասնագետները, ուսանողները, դասախոսները և հետազոտողները կարող են կիսվել փորձով և քննարկել տեխնոլոգիական խնդիրներ։ Այս քննարկումները կարող են օգնել բացահայտել կրթական բացերը, նոր տեխնիկական կարիքները, հնարավոր հետազոտական թեմաները և համատեղ նախագծերի հնարավորությունները։"
+              "Each meeting takes one topic and brings students and engineers to the same table: engineers share their experience, students ask their questions, and the discussion can lead to projects, internships or research topics.",
+              "Յուրաքանչյուր հանդիպում քննարկում է մեկ թեմա և նույն սեղանի շուրջ է հավաքում ուսանողներին ու ինժեներներին․ ինժեներները կիսվում են փորձով, ուսանողները տալիս են իրենց հարցերը, և քննարկումը կարող է հանգեցնել նախագծերի, պրակտիկաների կամ հետազոտական թեմաների։"
             ],
             [
-              "Our goal is to encourage follow-up activities that transform valuable discussions into practical outcomes.",
-              "Մեր նպատակն է խրախուսել շարունակական գործողություններ, որոնք արժեքավոր քննարկումները վերածում են գործնական արդյունքների։"
+              "The meetings will take place regularly; the schedule and the first topics will be announced in News & Events.",
+              "Հանդիպումները տեղի կունենան պարբերաբար․ ժամանակացույցը և առաջին թեմաները կհրապարակվեն «Նորություններ և միջոցառումներ» բաժնում։"
             ]
           ],
-          "media": "learning"
+          "media": "learning",
+          "showcase": [
+            {
+              "id": "format",
+              "title": [
+                "The format",
+                "Ձևաչափը"
+              ],
+              "intro": [
+                "One topic, one or two engineers, open questions.",
+                "Մեկ թեմա, մեկ-երկու ինժեներ, բաց հարցեր։"
+              ],
+              "details": [
+                [
+                  "A short talk by an engineer, then questions and an open discussion with the students.",
+                  "Ինժեների կարճ ելույթ, ապա հարցեր և բաց քննարկում ուսանողների հետ։"
+                ]
+              ],
+              "items": [],
+              "links": [],
+              "media": "prog-meet",
+              "gallery": [
+                "prog-meet"
+              ]
+            },
+            {
+              "id": "topics",
+              "title": [
+                "Topics we want to discuss",
+                "Թեմաներ, որոնք ցանկանում ենք քննարկել"
+              ],
+              "intro": [
+                "A first list; students can suggest more.",
+                "Առաջին ցանկը․ ուսանողները կարող են առաջարկել նորերը։"
+              ],
+              "details": [
+                [
+                  "These are first ideas for the meetings:",
+                  "Սրանք հանդիպումների առաջին գաղափարներն են․"
+                ]
+              ],
+              "items": [
+                [
+                  "How a chip is made: from an idea to silicon",
+                  "Ինչպես է ստեղծվում չիպը՝ գաղափարից մինչև սիլիցիում"
+                ],
+                [
+                  "Digital design and verification in practice",
+                  "Թվային նախագծում և ստուգում գործնականում"
+                ],
+                [
+                  "FPGA prototyping",
+                  "FPGA նախատիպավորում"
+                ],
+                [
+                  "Careers in the semiconductor industry",
+                  "Կարիերա կիսահաղորդչային արդյունաբերությունում"
+                ],
+                [
+                  "From student to first job: skills and interviews",
+                  "Ուսանողից առաջին աշխատանք՝ հմտություններ և հարցազրույցներ"
+                ]
+              ],
+              "links": [
+                {
+                  "label": [
+                    "Suggest a topic",
+                    "Առաջարկել թեմա"
+                  ],
+                  "href": "#support/idea"
+                }
+              ],
+              "media": "prog-topics",
+              "gallery": [
+                "prog-topics"
+              ]
+            },
+            {
+              "id": "series",
+              "title": [
+                "A regular series",
+                "Կանոնավոր շարք"
+              ],
+              "intro": [
+                "Meetings at a regular rhythm through the year.",
+                "Հանդիպումներ տարվա ընթացքում՝ կանոնավոր ռիթմով։"
+              ],
+              "details": [
+                [
+                  "The meetings will follow a fixed rhythm, so students can plan to attend. Dates are announced in News & Events.",
+                  "Հանդիպումները կունենան հաստատուն ռիթմ, որպեսզի ուսանողները կարողանան պլանավորել մասնակցությունը։ Ամսաթվերը հրապարակվում են «Նորություններ և միջոցառումներ» բաժնում։"
+                ]
+              ],
+              "items": [],
+              "links": [
+                {
+                  "label": [
+                    "News & Events",
+                    "Նորություններ և միջոցառումներ"
+                  ],
+                  "href": "#events"
+                }
+              ],
+              "media": "prog-series",
+              "gallery": [
+                "prog-series"
+              ]
+            }
+          ]
         },
         {
           "id": "hackathons",
@@ -798,47 +1091,6 @@ const SITE_CONTENT = {
             [
               "We envision technical competitions and collaborative challenges where participants can apply their knowledge to real engineering problems. Such activities can encourage creativity, teamwork, experimentation, and the development of practical solutions.",
               "Մենք նախատեսում ենք տեխնիկական մրցույթներ և համատեղ մարտահրավերներ, որտեղ մասնակիցները կարող են իրենց գիտելիքը կիրառել իրական ինժեներական խնդիրների վրա։ Նման գործողությունները կարող են խթանել ստեղծագործականությունը, թիմային աշխատանքը, փորձարկումը և գործնական լուծումների մշակումը։"
-            ]
-          ],
-          "media": "learning"
-        },
-        {
-          "id": "mentorship",
-          "title": [
-            "Mentorship and professional exchange",
-            "Մենթորություն և մասնագիտական փոխանակում"
-          ],
-          "intro": [
-            "Connecting experience with potential.",
-            "Կապում ենք փորձը ներուժի հետ։"
-          ],
-          "items": [
-            [
-              "Status: planned",
-              "Կարգավիճակ՝ նախատեսված"
-            ],
-            [
-              "Technical consultations",
-              "Տեխնիկական խորհրդատվություններ"
-            ],
-            [
-              "Career discussions",
-              "Կարիերային զրույցներ"
-            ],
-            [
-              "Project guidance",
-              "Նախագծերի ուղղորդում"
-            ],
-            [
-              "Research-oriented collaboration",
-              "Հետազոտական համագործակցություն"
-            ]
-          ],
-          "children": [],
-          "text": [
-            [
-              "We seek to create opportunities for experienced professionals and researchers to share knowledge, provide guidance, and support emerging talent.",
-              "Մենք ձգտում ենք հնարավորություններ ստեղծել, որպեսզի փորձառու մասնագետներն ու հետազոտողները կիսվեն գիտելիքով, ուղղորդեն և աջակցեն նոր տաղանդներին։"
             ]
           ],
           "media": "learning"
@@ -1834,6 +2086,141 @@ const SITE_CONTENT = {
       "caption": [
         "App interface · example course data",
         "Հավելվածի միջերես · օրինակային դասընթացի տվյալներ"
+      ]
+    },
+    "prog-diploma": {
+      "src": "assets/programs/diploma.svg",
+      "alt": [
+        "A graduation cap above a project document with a chip",
+        "Ավարտական գլխարկ՝ չիպով նախագծային փաստաթղթի վերևում"
+      ],
+      "title": [
+        "Project supervision",
+        "Նախագծի ղեկավարում"
+      ],
+      "caption": [
+        "Illustration",
+        "Պատկերազարդում"
+      ]
+    },
+    "prog-projects": {
+      "src": "assets/programs/projects.svg",
+      "alt": [
+        "A project board with tasks and two students",
+        "Առաջադրանքներով նախագծային վահանակ և երկու ուսանող"
+      ],
+      "title": [
+        "Student projects",
+        "Ուսանողական նախագծեր"
+      ],
+      "caption": [
+        "Illustration",
+        "Պատկերազարդում"
+      ]
+    },
+    "prog-lectures": {
+      "src": "assets/programs/lectures.svg",
+      "alt": [
+        "A speaker beside a screen showing a chip, with an audience",
+        "Բանախոս չիպ ցուցադրող էկրանի կողքին և լսարան"
+      ],
+      "title": [
+        "Guest lectures",
+        "Հյուր դասախոսություններ"
+      ],
+      "caption": [
+        "Illustration",
+        "Պատկերազարդում"
+      ]
+    },
+    "prog-research": {
+      "src": "assets/programs/research.svg",
+      "alt": [
+        "A magnifier over a chip",
+        "Խոշորացույց չիպի վրա"
+      ],
+      "title": [
+        "Research topics",
+        "Հետազոտական թեմաներ"
+      ],
+      "caption": [
+        "Illustration",
+        "Պատկերազարդում"
+      ]
+    },
+    "prog-problems": {
+      "src": "assets/programs/problems.svg",
+      "alt": [
+        "A chip and a spark",
+        "Չիպ և կայծ"
+      ],
+      "title": [
+        "Engineering problems",
+        "Ինժեներական խնդիրներ"
+      ],
+      "caption": [
+        "Illustration",
+        "Պատկերազարդում"
+      ]
+    },
+    "prog-grants": {
+      "src": "assets/programs/grants.svg",
+      "alt": [
+        "An application document with a seal and a rising line",
+        "Կնիքով հայտի փաստաթուղթ և աճող գիծ"
+      ],
+      "title": [
+        "Grant applications",
+        "Դրամաշնորհային հայտեր"
+      ],
+      "caption": [
+        "Illustration",
+        "Պատկերազարդում"
+      ]
+    },
+    "prog-meet": {
+      "src": "assets/programs/meet.svg",
+      "alt": [
+        "Two people talking, with a chip",
+        "Երկու զրուցող մարդ և չիպ"
+      ],
+      "title": [
+        "Meetings",
+        "Հանդիպումներ"
+      ],
+      "caption": [
+        "Illustration",
+        "Պատկերազարդում"
+      ]
+    },
+    "prog-topics": {
+      "src": "assets/programs/topics.svg",
+      "alt": [
+        "Cards with discussion topics",
+        "Քննարկման թեմաներով քարտեր"
+      ],
+      "title": [
+        "Topics",
+        "Թեմաներ"
+      ],
+      "caption": [
+        "Illustration",
+        "Պատկերազարդում"
+      ]
+    },
+    "prog-series": {
+      "src": "assets/programs/series.svg",
+      "alt": [
+        "A calendar with meetings at regular intervals",
+        "Օրացույց՝ կանոնավոր հանդիպումներով"
+      ],
+      "title": [
+        "A regular series",
+        "Կանոնավոր շարք"
+      ],
+      "caption": [
+        "Illustration",
+        "Պատկերազարդում"
       ]
     }
   },
