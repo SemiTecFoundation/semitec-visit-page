@@ -4,6 +4,8 @@ Items that need a server, a service or real content before they can be built.
 Placeholders in the page are marked "(example)" or "to be confirmed".
 
 ## Needs a server or a service
+- [ ] **Actions on the page that need a server:** *Suggest a topic*, *Propose a project*, *Propose an idea*, the contact form, partner/supporter requests — today they only lead to Get Involved; when the server is ready, each becomes a real form that sends.
+- [ ] **Load the content from a database:** programs and their cards, projects, events, meetings, news, reports, partners and the "SemiTec today" figures should come from the platform's database (with an admin to edit them), instead of `content.js`. Measure first: list every kind of record the page shows and the fields it needs, so the database and the page agree.
 - [ ] **Payments (Support).** Choose a payment provider (one-time "Pulse" and monthly "Clock"), set real amounts, enable the Donate button, add a thank-you return (`?thanks=1` → chip power-on with thank-you message).
 - [ ] **Contact form (Connect).** Connect the form to a mail address or form service; until then a `mailto:` link can be set in `SITE_CONTENT.contact.rows[].href`.
 - [ ] **"Save the date" on upcoming events.** A button per upcoming event that adds it to the visitor's calendar (.ics file / Google Calendar link). Can be generated in the page, but publish together with the server so links and times are final.
@@ -22,7 +24,7 @@ Placeholders in the page are marked "(example)" or "to be confirmed".
 
 ## Content
 - [ ] **Meetings with industry engineers:** define the series: how often (e.g. monthly), where, who hosts, the first topics and engineers; then add each meeting to `SITE_CONTENT.events`.
-- [ ] Programs: review the new texts for *Mentorship and project supervision*, *Research and technical challenges* (grants) and *Meetings with industry engineers*; replace the illustrations in `assets/programs/` with photos of real lectures and meetings when there are some.
+- [ ] **Programs: update the texts of paths 2, 3, 4 and 5** (Mentorship and project supervision, Research and technical challenges, Meetings with industry engineers, Hackathons). Review the new texts for *Mentorship and project supervision*, *Research and technical challenges* (grants) and *Meetings with industry engineers*; replace the illustrations in `assets/programs/` with photos of real lectures and meetings when there are some.
 - [ ] Programs merged: *Educational programs* and *Open knowledge* are now part of **Education and open knowledge: SemiTec Academy**; review the combined text.
 - [ ] **Update the logo, colours and styles** to look more professional: a final logo (and its variants), a refined colour palette, consistent typography, spacing and component styles across 2D, 3D and phones.
 - [ ] **Every 3D path with its own boards:** like SemiTec Academy (`showcase`), give each path details, pictures or links along its loop instead of repeating the section picture.

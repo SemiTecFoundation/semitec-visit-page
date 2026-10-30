@@ -314,24 +314,31 @@ function renderCard(force=false){
  if(!inLoop){const previous=element('button','previous','←');previous.type='button';previous.disabled=route.index===0;previous.setAttribute('aria-label',text('previous'));previous.addEventListener('click',returnFromLoop);actions.append(previous);}
  card.append(actions,element('p','prototype-note',text('prototype')));
  // Both cards coexist briefly. Only the new card remains interactive/accessibile.
- const old=currentCard;panel.querySelectorAll('.is-leaving').forEach(e=>e.remove());panel.append(card);currentCard=card;updatePanelSize();
+ const old=currentCard;panel.querySelectorAll('.is-leaving').forEach(e=>e.remove());panel.append(card);currentCard=card;updatePanelSize();requestAnimationFrame(updatePanelSize);setTimeout(updatePanelSize,160);setTimeout(updatePanelSize,panelFadeMs+60);
  renderBranchEntrances(route,ready);
  if(old){old.inert=true;old.setAttribute('aria-hidden','true');old.classList.add('is-leaving');old.classList.remove('is-current');setTimeout(()=>old.remove(),panelFadeMs+30);}
  if(still||!old)card.classList.add('is-current');else requestAnimationFrame(()=>card.classList.add('is-current'));
  ST.report(route.index,active.path); // ▸DUAL the shared bottom bar follows this view
- document.querySelector('#scroll-hint').textContent=inLoop?text(route.children.length&&!ready?'contentFirst':'loopHint'):route.index===0?text('introHint'):route.index===sections.length-1?text('doneHint'):text('mainHint');
+ const hint=inLoop?text(route.children.length&&!ready?'contentFirst':'loopHint'):route.index===0?text('introHint'):route.index===sections.length-1?text('doneHint'):''; // no hint in the middle sections
+ document.querySelector('#scroll-hint').textContent=hint;document.body.dataset.cueText=hint?'1':'0';
  document.body.dataset.longCard=String((ready&&route.children.length>4)||(node.items||[]).length>4); // ▸DUAL long cards hide the scroll hint
  document.querySelector('#route-announcement').textContent=active.path.map((_,i)=>labelFor(active.path.slice(0,i+1))).join(' / ');
  if(!navigationTarget)history.replaceState(null,'','#'+pathKey(active.path));
 }
 function updatePanelSize(){
  if(!currentCard)return;
- /* large screens: the path list gives up height so the buttons stay above the bottom bar (it scrolls instead) */
- const ro=currentCard.querySelector('.route-options');
- if(ro&&innerWidth>760){
-  ro.style.maxHeight='';
-  const nav=document.querySelector('.chapter-nav'),limit=(nav?nav.getBoundingClientRect().top:innerHeight)-14,over=currentCard.getBoundingClientRect().bottom-limit;
-  if(over>0)ro.style.maxHeight=Math.max(84,ro.offsetHeight-over)+'px';
+ /* large screens: "Continue the journey" and "back" always stand at the same place, just above the bottom bar.
+    Shorter content leaves a gap above them; longer content gives up height (the path list or the read-more text scroll). */
+ const acts=currentCard.querySelector('.panel-actions');
+ if(acts&&innerWidth>760){
+  const ro=currentCard.querySelector('.route-options'),more=currentCard.classList.contains('is-more')?currentCard.querySelector('.panel-more'):null;
+  acts.style.paddingTop='';if(ro)ro.style.maxHeight='';if(more)more.style.maxHeight='';
+  const nav=document.querySelector('.chapter-nav'),target=(nav?nav.getBoundingClientRect().top:innerHeight)-18,top=panel.getBoundingClientRect().top;
+  const bottom=()=>acts.getBoundingClientRect().bottom-(currentCard.getBoundingClientRect().top-top);   // without the card's entrance slide
+  let over=bottom()-target;
+  if(over>0&&more){more.style.maxHeight=Math.max(80,more.offsetHeight-over)+'px';over=bottom()-target;}
+  if(over>0&&ro){ro.style.maxHeight=Math.max(84,ro.offsetHeight-over)+'px';over=bottom()-target;}
+  if(over<0)acts.style.paddingTop=(-over)+'px';   // padding, not margin: margins would collapse with the element above
  }
  panel.style.height=currentCard.offsetHeight+'px';
 }

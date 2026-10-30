@@ -188,7 +188,7 @@ html[lang=hy] .sec-title{font-size:clamp(30px,3.3vw,46px);letter-spacing:-.02em;
 .paths{margin-top:34px}
 .paths-label{font-size:9px;letter-spacing:.18em;color:var(--faint);margin-bottom:10px}
 .path-grid{display:grid;gap:8px}
-.path-card{--a:clamp(0,calc(var(--enter) * 2.6 - 1.4 - var(--c) * .14),1);border:1px solid var(--line);border-radius:12px;background:var(--surface);opacity:var(--a);transform:translateY(calc((1 - var(--a)) * 26px));transition:border-color .3s,box-shadow .3s}
+.path-card{--a:clamp(0,calc(var(--enter) * 2.6 - 1.2 - min(var(--c),5) * .08),1);border:1px solid var(--line);border-radius:12px;background:var(--surface);opacity:var(--a);transform:translateY(calc((1 - var(--a)) * 26px));transition:border-color .3s,box-shadow .3s}
 .path-card:hover{border-color:#c9b48a}
 .path-card.is-open{border-color:var(--accent);box-shadow:0 18px 40px -26px #6b5a3399}
 .pc-head{display:flex;align-items:center;gap:14px;width:100%;border:0;background:none;padding:15px 16px;text-align:left;font-size:15px;color:var(--text)}
