@@ -182,7 +182,7 @@
     const end = opts.path ? 0 : (from.currentEnd ? from.currentEnd() : 0);
     state.switching = true; root.classList.add('is-switching');
     /* inside the ending (topology / package / ecosystem) both views show the same picture: switch with a plain fade, no zoom */
-    root.classList.toggle('switch-plain', end > 0);
+    root.classList.toggle('switch-plain', end > 0 || !!(from.isPlain && from.isPlain() && !opts.path));
     ST.sound && ST.sound.sweep();
     try {
       if (!state.reduced && from.beforeLeave) await from.beforeLeave(m, path);

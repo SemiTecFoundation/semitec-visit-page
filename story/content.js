@@ -1629,6 +1629,26 @@ const SITE_CONTENT = {
       "The contacts on the edge",
       "Կոնտակտները եզրին"
     ],
+    "storySkip": [
+      "Skip the intro",
+      "Բաց թողնել ներածությունը"
+    ],
+    "storyJourneyKicker": [
+      "The journey",
+      "Ճամփորդությունը"
+    ],
+    "storyJourneyTitle": [
+      "Now travel through the chip.",
+      "Իսկ հիմա ճամփորդեք չիպի միջով։"
+    ],
+    "storyStart": [
+      "Start the journey",
+      "Սկսել ճամփորդությունը"
+    ],
+    "storyStartNote": [
+      "Or keep scrolling",
+      "Կամ շարունակեք ոլորել"
+    ],
     "endKicker": [
       "SemiTec Foundation · the package",
       "SemiTec հիմնադրամ · կորպուսը"

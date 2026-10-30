@@ -12,19 +12,20 @@
     (function(){var m=new URLSearchParams(location.search).get('mode');try{m=m||localStorage.getItem('st-mode')}catch(e){}
     document.documentElement.dataset.mode=(m==='3d')?'3d':'2d';})();
   </script>
-  <link rel="stylesheet" href="css/base.css?v=s2610301131">
-  <link rel="stylesheet" href="css/read.css?v=s2610301131">
-  <link rel="stylesheet" href="css/signal.css?v=s2610301131">
-  <script src="content.js?v=s2610301131" defer></script>
-  <script src="js/journey.js?v=s2610301131" defer></script>
-  <script src="js/scene.js?v=s2610301131" defer></script>
-  <script src="js/core.js?v=s2610301131" defer></script>
-  <script src="js/sound.js?v=s2610301131" defer></script>
-  <script src="js/chiplayout.js?v=s2610301131" defer></script>
-  <script src="js/chipmap.js?v=s2610301131" defer></script>
-  <script src="js/ecosystem.js?v=s2610301131" defer></script>
-  <script src="js/mode-read.js?v=s2610301131" defer></script>
-  <script src="js/mode-signal.js?v=s2610301131" defer></script>
+  <link rel="stylesheet" href="css/base.css?v=s2610301147">
+  <link rel="stylesheet" href="css/read.css?v=s2610301147">
+  <link rel="stylesheet" href="css/signal.css?v=s2610301147">
+  <script src="content.js?v=s2610301147" defer></script>
+  <script src="js/journey.js?v=s2610301147" defer></script>
+  <script src="js/scene.js?v=s2610301147" defer></script>
+  <script src="js/core.js?v=s2610301147" defer></script>
+  <script src="js/sound.js?v=s2610301147" defer></script>
+  <script src="js/chiplayout.js?v=s2610301147" defer></script>
+  <script src="js/chipmap.js?v=s2610301147" defer></script>
+  <script src="js/ecosystem.js?v=s2610301147" defer></script>
+  <script src="js/story.js?v=s2610301147" defer></script>
+  <script src="js/mode-read.js?v=s2610301147" defer></script>
+  <script src="js/mode-signal.js?v=s2610301147" defer></script>
 </head>
 <body>
   <a class="skip" href="#main" data-ui="skip"></a>
@@ -61,6 +62,8 @@
       <div id="event-layer" class="event-layer" aria-label="Upcoming events and memory"></div>
       <!-- the ending after the chip edge: zoom out, the package, the ecosystem (js/ecosystem.js) -->
       <div id="eco-3d" class="eco-3d"></div>
+      <!-- the opening story before the journey (js/story.js) -->
+      <div id="intro-3d" class="intro-3d"></div>
       <div class="travel-status"><div><i class="status-light"></i><span id="travel-label" data-ui="inside"></span></div><span id="journey-percent">000%</span><div class="travel-line"><span id="travel-fill"></span></div></div>
       <div class="scroll-cue"><span class="scroll-icon" aria-hidden="true">↓</span><span id="scroll-hint"></span><span class="key-hint" data-ui="spaceHint"></span></div>
     </div>

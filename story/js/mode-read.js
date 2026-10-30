@@ -115,53 +115,8 @@
        …  the connections (one signal through every section), then the edge contacts (partners, supporters, free)
        last the two ways to explore. Then the page releases and the map docks on the left.
      In this part the chip is a fixed object: no zoom or drag, only a slow float. Its blocks can be clicked. */
-  const storySections = () => sections.slice(1).filter(s => CHIP_LAYOUT && buildChipLayout(sections, CHIP_LAYOUT, SITE_CONTENT.partners || []).blocks[s.id]);
-  function storyCards() {
-    const st = SITE_CONTENT.story || {}, ev = ST.events().upcoming[0];
-    const nums = (st.numbers || []).map((n, k) => `<div class="sn" style="--k:${k}"><strong>${ST.esc(n.value)}</strong><span>${ST.esc(ST.pick(n.label))}</span></div>`).join('');
-    const next = [
-      ev ? { k: ST.text('nextEvent'), v: `${ST.fmtDate(ev.when)} · ${ST.pick(ev.title)}`, href: '#events/upcoming' } : null,
-      ...(st.now || []).map(n => ({ k: ST.pick(n.kicker), v: ST.pick(n.text), href: '#' + (n.path || '') }))
-    ].filter(Boolean).map(n => `<a class="sx" href="${ST.esc(n.href)}"><span>${ST.esc(n.k)}</span><b>${ST.esc(n.v)}</b></a>`).join('');
-    const cards = [`<article class="story-card is-glance" data-card="glance">
-        <p class="sc-k"><i class="status-light"></i>${ST.esc(ST.text('glanceKicker'))}</p>
-        <h3 class="sc-t">${ST.esc(ST.text('glanceTitle'))}</h3>
-        <div class="sc-nums">${nums}</div><div class="sc-next">${next}</div>
-        <p class="sc-note">${ST.esc(ST.text('exampleNote'))}</p></article>`];
-    storySections().forEach((sec, k) => {
-      const i = sections.indexOf(sec);
-      cards.push(`<article class="story-card is-section${sec.id === CHIP_LAYOUT.power ? ' is-power' : ''}" data-card="sec" data-index="${i}">
-        <p class="sc-k">${ST.pad(i)} · ${ST.esc(ST.pick(sec.label))}${sec.id === CHIP_LAYOUT.power ? ` · ${ST.esc(ST.text('powerUnit'))}` : ''}</p>
-        <h3 class="sc-t">${ST.esc(ST.pick(sec.title)).replace(/\n/g, ' ')}</h3>
-        <p class="sc-p">${ST.esc(ST.pick(sec.intro))}</p>
-        <a class="sc-go" href="#${sec.id}" data-path="${sec.id}">${ST.esc(ST.text('openSection'))} →</a></article>`);
-    });
-    cards.push(`<article class="story-card" data-card="conn">
-        <p class="sc-k">${ST.esc(ST.text('build2'))}</p><h3 class="sc-t">${ST.esc(ST.text('connTitle'))}</h3>
-        <p class="sc-p">${ST.esc(ST.text('build2Note'))}</p><p class="sc-p">${ST.esc(ST.text('connPower'))}</p></article>`);
-    cards.push(`<article class="story-card" data-card="pads">
-        <p class="sc-k">${ST.esc(ST.text('build3'))}</p><h3 class="sc-t">${ST.esc(ST.text('padsCardTitle'))}</h3>
-        <p class="sc-p">${ST.esc(ST.text('build3Note'))}</p>
-        <ul class="sc-legend"><li class="is-partner"><i></i>${ST.esc(ST.text('partnersCol'))}</li><li class="is-supporter"><i></i>${ST.esc(ST.text('supportersTitle'))}</li><li class="is-free"><i>+</i>${ST.esc(ST.text('freePad'))}</li></ul>
-        <p class="sc-links"><a href="#support/partner">+ ${ST.esc(ST.text('becomePartner'))}</a><a href="#donate">+ ${ST.esc(ST.text('becomeSupporter'))}</a></p></article>`);
-    cards.push(`<article class="story-card is-final" data-card="final">
-        <p class="sc-k">${ST.esc(ST.text('chooseKicker'))}</p><h3 class="sc-t">${ST.esc(ST.text('chooseTitle'))}</h3>
-        <div class="choose-options">
-          <div class="choose-opt"><span class="scroll-mouse" aria-hidden="true"><i></i></span><span><strong>${ST.esc(ST.text('chooseRead'))} ↓</strong><small>${ST.esc(ST.text('chooseReadNote'))}</small></span></div>
-          <a class="choose-opt is-3d" href="#overview" data-travel="overview"><span class="ms-icon ms-3d" aria-hidden="true"></span><span><strong>${ST.esc(ST.text('enter3d'))} ↗</strong><small>${ST.esc(ST.text('choose3dNote'))}</small></span></a>
-        </div></article>`);
-    return cards.join('');
-  }
   function chooseBlock() {
-    return `<div class="choose story" id="choose">
-      <div class="choose-pin">
-        <div class="story-head"><p class="sec-eyebrow"><span class="sec-rule" aria-hidden="true"></span><span>${ST.esc(ST.text('buildKicker'))}</span></p>
-          <h2 class="choose-title">${ST.esc(ST.text('buildTitle'))}</h2></div>
-        <div class="choose-stage" aria-hidden="true"></div>
-        <div class="story-cards">${storyCards()}</div>
-        <p class="story-hint"><span class="scroll-mouse" aria-hidden="true"><i></i></span>${ST.esc(ST.text('buildScroll'))}</p>
-      </div>
-    </div>`;
+    return `<div class="choose story" id="choose"><div class="choose-pin">${ST.story.html('2d')}</div></div>`;
   }
   function render() {
     const html = sections.map((s, i) => {
@@ -277,7 +232,7 @@
   }
   let state = 'center', anim = null, cur = null, dockRaf = 0;
   function dockRects() {
-    const stage = $('.choose-stage'), space = $('.map-space');
+    const stage = $('.choose .choose-stage'), space = $('.map-space');
     const vw = innerWidth, vh = innerHeight, header = $('.header').offsetHeight, nav = $('.chapter-nav').offsetHeight;
     const st = stage.getBoundingClientRect();
     const center = { l: st.left, t: st.top, w: st.width, h: st.height };
@@ -298,7 +253,7 @@
   let snap = false;   /* entering the view: place the map without animating it */
   let ecoQ = 0, endStage = 0, endAnim = null, endFade = null, endShow = 1;
   function placeDock() {
-    const dock = $('.map-dock'), stage = $('.choose-stage'); if (!dock || !stage) return;
+    const dock = $('.map-dock'), stage = $('.choose .choose-stage'); if (!dock || !stage) return;
     const { center, left, st, vh, header } = dockRects();
     const line = header + 16;                                   /* the switching point of the opening */
     const want = st.top < line + (state !== 'center' ? 8 : 0) ? 'left' : 'center';
@@ -383,58 +338,25 @@
     dockShown = show;
   }
   /* the opening story, scrubbed by the scroll: P runs 0 … number of steps through the pinned screen */
-  let storyN = 0, storyLast = -1;
+  /* the opening story, scrubbed by the scroll (the steps themselves are in js/story.js, shared with the 3D view) */
   function placeStory() {
     const ch = $('.choose'), pin = ch && ch.firstElementChild; if (!pin) return;
-    const cards = [...ch.querySelectorAll('.story-card')], n = cards.length; storyN = n;
     const r = ch.getBoundingClientRect(), header = $('.header').offsetHeight;
     const raw = ST.clamp((header - r.top) / Math.max(1, r.height - pin.offsetHeight));
-    const P = raw * (n + .6);                                  /* step 0 is the empty chip; card k is step k+1 */
-    const pr = pin.getBoundingClientRect(), W = pr.width, H = pr.height, phone = narrow.matches;
-    /* where the chip floats: centred at first, then aside (left on wide screens, top on phones) */
-    const shift = ST.smoothstep(ST.clamp((P - .35) / .65));
-    const headH = phone ? 96 : 124, pad = phone ? 12 : W * .04;
-    const big = { l: W * .08, t: headH, w: W * .84, h: H - headH - (phone ? 70 : 64) };
-    const aside = phone ? { l: pad, t: headH - 8, w: W - 2 * pad, h: H * .36 } : { l: pad, t: headH, w: W * .54 - pad, h: H - headH - 40 };
-    const cr = { l: ST.lerp(big.l, aside.l, shift), t: ST.lerp(big.t, aside.t, shift), w: ST.lerp(big.w, aside.w, shift), h: ST.lerp(big.h, aside.h, shift) };
-    const stage = ch.querySelector('.choose-stage');
+    const P = raw * ST.story.length(pin);
+    const cr = ST.story.apply(pin, P, map, narrow.matches);
+    const stage = pin.querySelector('.choose-stage');
     Object.assign(stage.style, { left: cr.l.toFixed(1) + 'px', top: cr.t.toFixed(1) + 'px', width: cr.w.toFixed(1) + 'px', height: cr.h.toFixed(1) + 'px' });
-    ch.style.setProperty('--shift', shift.toFixed(3));
-    /* the chip's parts: each section card flies into its block in the last part of its step */
-    const blocks = Array(sections.length).fill(0);
-    let route = 0, pads = 0;
-    const box = ch.querySelector('.story-cards').getBoundingClientRect();
-    cards.forEach((card, k) => {
-      const f = P - (k + 1);
-      const inn = ST.clamp((f + .14) / .14), kind = card.dataset.card;   /* the next card comes in as the previous one lands */
-      let op = inn, tf = `translateY(${((1 - inn) * 24).toFixed(1)}px)`;
-      if (kind === 'sec') {
-        const i = +card.dataset.index, g = ST.smoothstep(ST.clamp((f - .62) / .38));
-        blocks[i] = g;
-        if (g > 0) {   /* fly into the block: from the card's place to the block's place on the chip */
-          const br = map.blockRect(i);
-          if (br) {
-            const sx = br.w / box.width, sy = br.h / box.height, dx = br.l - box.left, dy = br.t - box.top;
-            tf = `translate(${(dx * g).toFixed(1)}px,${(dy * g).toFixed(1)}px) scale(${ST.lerp(1, sx, g).toFixed(3)},${ST.lerp(1, sy, g).toFixed(3)})`;
-          }
-          op = 1 - ST.clamp((g - .75) / .25);
-        }
-        card.style.setProperty('--fly', g.toFixed(3));
-      } else if (kind === 'conn') { route = ST.clamp(f / .7); op = inn * (1 - ST.clamp((f - .82) / .18)); }
-      else if (kind === 'pads') { pads = ST.clamp((f - .05) / .75); op = inn * (1 - ST.clamp((f - .82) / .18)); }
-      else if (kind === 'glance') op = inn * (1 - ST.clamp((f - .78) / .2));
-      if (f > 1.05 && kind !== 'final') op = 0;
-      card.style.opacity = op.toFixed(3); card.style.transform = tf;
-      card.classList.toggle('is-on', op > .5);
-      card.inert = op < .5;
-    });
-    /* everything before the current point is built, so scrolling back un-builds it */
-    map.setStory({ blocks, route: P > n ? 1 : route, pads: P > n ? 1 : pads });
-    const step = Math.floor(P);
-    if (step !== storyLast) { if (storyLast >= 0 && ST.sound) ST.sound.tick(); storyLast = step; }
-    ch.classList.toggle('is-ready', P >= n - .1);
-    ch.querySelector('.story-hint').style.opacity = (1 - ST.clamp(P / .5)).toFixed(3);
+    /* where the reader is in the story, so the 3D view can open at the same step */
+    ST.state.storyP = state === 'center' && raw < 1 ? P : null;
   }
+  /* open the story at step P (switching from the 3D view during its opening) */
+  function scrollToStory(P) {
+    const ch = $('.choose'), pin = ch.firstElementChild, header = $('.header').offsetHeight;
+    const top = ch.getBoundingClientRect().top + scrollY - header + (P / ST.story.length(pin)) * (ch.offsetHeight - pin.offsetHeight);
+    scrollTo({ top: Math.max(0, Math.round(top)), behavior: 'instant' });
+  }
+  R.isPlain = () => ST.state.storyP != null && ST.state.storyP > .05;   /* during the story both views show the same chip */
   /* the ending's progress 0…1 while its sticky stage is pinned */
   function placeEco() {
     const r = outro.getBoundingClientRect(), header = $('.header').offsetHeight;
@@ -523,8 +445,9 @@
   R.enter = function (path, from, end) {
     on = true;
     measure();
-    if (end) { anim = endAnim = endFade = null; ST.eco.snap(); scrollToEnd(end); } else
-    scrollToPath(path, true);
+    if (end) { anim = endAnim = endFade = null; ST.eco.snap(); scrollToEnd(end); }
+    else if (path[0] === 'overview' && from === '3d' && ST.state.storyP != null) scrollToStory(ST.state.storyP);
+    else scrollToPath(path, true);
     measure(); readScroll();
     snap = true; smooth = target; reveal(); map.resize(); map.setScroll(mapP()); reveal(); snap = false;
   };

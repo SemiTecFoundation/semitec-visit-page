@@ -20,6 +20,18 @@ In this part the chip's blocks show only their section's name (the subsections a
 - The next event comes from `SITE_CONTENT.events`.
 - The length of the story is the height of `.choose.story` in `css/read.css`, about 60% of a screen per card.
 
+## The 3D opening: the same story, then the journey
+
+The 3D view starts with the same story over the risen 3D chip: the empty chip with the SemiTec Foundation name, "At a glance", the section cards flying into their blocks, the connections and the edge contacts. The last card is **Start the journey**.
+
+- **Moving through it:** while the story shows, the wheel, a swipe, the arrow keys or Space move through it, and the page itself doesn't scroll.
+- **Into the journey:** after the last card, scrolling on (or **Start the journey**, or **Skip the intro** in the corner, or Esc) fades the story and glides the camera down into the journey.
+- **Back:** scrolling up at the very start of the journey opens the story again at its last steps.
+- **Switching views:** during the story, switching between 2D and 3D keeps the same step and the same picture.
+- **Direct links:** opening 3D at a section (a link, the section bar, "Travel this path in 3D") skips the story.
+
+**Code:** `js/story.js` (shared by both views) and `mode-signal.js` (marked ▸STORY).
+
 ## The 2D ending: the package and the ecosystem
 
 After Connect, the ending has **four switching points**, like the opening. Each is a short timed animation, and scrolling back above a point plays it in reverse:

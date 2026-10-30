@@ -557,7 +557,7 @@ html[lang=hy] .sec-hero .sec-title{font-size:clamp(34px,3.8vw,56px)}
 [data-mode="3d"] .eco-3d.is-live{visibility:visible}
 .eco-3d .eco-stage{position:absolute;inset:0;height:auto;top:0}
 .eco-3d.st-pack .eco-pin,.eco-3d.st-eco .eco-mod,.eco-3d.st-eco .eco-end{pointer-events:auto}
-html.travel-end #reading-panel,html.travel-end .travel-status,html.travel-end .scroll-cue,html.travel-end #branch-entrances,html.travel-end #scene-media,html.travel-end #event-layer,html.travel-end #finale-pads{opacity:0!important;pointer-events:none!important;transition:opacity .4s}
+html.travel-intro #reading-panel,html.travel-intro .travel-status,html.travel-intro .scroll-cue,html.travel-intro #branch-entrances,html.travel-intro #scene-media,html.travel-intro #event-layer,html.travel-intro #finale-pads,html.travel-end #reading-panel,html.travel-end .travel-status,html.travel-end .scroll-cue,html.travel-end #branch-entrances,html.travel-end #scene-media,html.travel-end #event-layer,html.travel-end #finale-pads{opacity:0!important;pointer-events:none!important;transition:opacity .4s}
 html.map-end .map-dock:before{opacity:0}
 .map-dock:before{transition:opacity .3s}
 /* 3D: a visible zoom out first — the camera rises (about .8 s), then the topology takes over from a large
@@ -777,3 +777,22 @@ html.map-end .map-dock:before{opacity:0}
 .chipmap.is-locked .cm-name{font-size:34px;margin-top:8px}
 .chipmap.is-locked .cm-power .cm-top{flex-direction:column;justify-content:center;align-items:center;gap:6px}
 .chipmap.is-locked .cm-power .cm-name{font-size:30px}
+
+/* the 3D view's opening story (mode-signal.js ▸STORY): the same chip and cards over the risen 3D chip */
+.intro-3d{display:none}
+[data-mode="3d"] .intro-3d.is-on{display:block;position:absolute;inset:0 0 var(--nav);z-index:7;pointer-events:auto;transition:opacity .6s ease}
+[data-mode="3d"] .intro-3d.is-leaving{opacity:0;pointer-events:none}
+.intro-3d.is-snap .story-card{transition:none!important}
+.intro-board{position:absolute;inset:0;background:radial-gradient(ellipse at 40% 45%,#13323aee 0,#0b1e24f2 60%,#06131af7 100%)}
+.intro-root{position:absolute;inset:0}
+.intro-3d .story-head .choose-title{color:#f1eee6}
+.intro-3d .story-head .sec-eyebrow{color:#eac883}
+.intro-3d .story-hint{color:#a9c0c0}
+.intro-3d .cm-sup-label{background:transparent;color:#ead9aa}
+.intro-3d .cm-sup-label.is-supporter{color:#efb48f}
+.story-skip{position:absolute;right:22px;bottom:16px;z-index:3;padding:8px 14px;border-radius:99px;border:1px solid #a1cbcc40;background:#0b1c22aa;color:#d6e2dd;font-size:12px;cursor:pointer}
+.story-skip:hover{background:#21383e}
+.story-start{cursor:pointer;border:0;font:inherit;text-align:left;width:100%}
+.intro-3d .story-start{background:#eac883;border-color:#eac883;color:#14262c}
+.intro-3d .story-start small{color:#3a3020}
+.intro-3d .story-start:hover{background:#f3d695}
