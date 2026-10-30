@@ -161,6 +161,22 @@
     dlg.querySelector('.sd-next').addEventListener('click', () => dlg._go(dlg._cur + 1));
     dlg._go(0); if (!dlg.open) dlg.showModal();
   };
+  /* a small reading window (phones, 3D): the page behind it does not scroll while it is open */
+  ST.openTextSheet = (title, paragraphs) => {
+    let dlg = document.querySelector('#text-sheet');
+    if (!dlg) {
+      dlg = document.createElement('dialog'); dlg.id = 'text-sheet'; dlg.className = 'text-sheet'; document.body.append(dlg);
+      dlg.addEventListener('click', e => { if (e.target === dlg || e.target.closest('.ts-close')) dlg.close(); });
+    }
+    dlg.innerHTML = `<div class="ts-box"><header><h2>${ST.esc(title)}</h2><button type="button" class="ts-close" aria-label="${ST.esc(ST.text('close'))}">×</button></header>
+      <div class="ts-body">${(paragraphs || []).map(t => `<p>${ST.esc(ST.pick(t))}</p>`).join('')}</div></div>`;
+    dlg.showModal(); dlg.querySelector('.ts-body').scrollTop = 0;
+  };
+  /* while any window is open, swiping outside its scrolling area does nothing (no journey behind it) */
+  document.addEventListener('touchmove', e => {
+    const open = document.querySelector('dialog[open]'); if (!open) return;
+    if (!e.target.closest('.ts-body,.sd-slide,.sd-tabs,.route-map,#map-tree,.memory-grid,#memory-grid')) e.preventDefault();
+  }, { passive: false });
   ST.openMemory = (bankId = 'gallery') => {
     const bank = ST.bank(bankId), d = $('#memory-dialog');
     $('#memory-title').textContent = `${ST.text('memoryView')} · ${ST.pick(bank.title)}`;

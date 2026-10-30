@@ -845,3 +845,6 @@ html.map-end .map-dock:before{opacity:0}
 .psc-more{align-self:flex-start;margin-top:4px;padding:0;border:0;background:none;color:var(--accent);font-size:10.5px;cursor:pointer}
 .psc-more:hover{text-decoration:underline;text-underline-offset:3px}
 html.travel-intro .gate-layer,html.travel-end .gate-layer{opacity:0!important;transition:opacity .4s}
+
+/* the story: blocks not yet on the chip are not links */
+.chipmap .is-pending,.chipmap .is-pending *{cursor:default!important;pointer-events:none}

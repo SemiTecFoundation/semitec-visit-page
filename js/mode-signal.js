@@ -291,7 +291,7 @@ function renderCard(force=false){
  if(inLoop&&(node.text||[]).length){
   const more=element('div','panel-more');node.text.forEach(t=>more.append(element('p','panel-text',pick(t))));
   const tog=element('button','panel-more-toggle',text('readMore'));tog.type='button';
-  tog.addEventListener('click',()=>{const o=card.classList.toggle('is-more');tog.textContent=text(o?'readLess':'readMore');updatePanelSize();});
+  tog.addEventListener('click',()=>{if(innerWidth<=760){ST.openTextSheet(pick(node.title),node.text);return;}const o=card.classList.toggle('is-more');tog.textContent=text(o?'readLess':'readMore');updatePanelSize();});
   card.append(more,tog);
   if(node.text.reduce((n,t)=>n+pick(t).length,0)>600)card.classList.add('has-long');
  }

@@ -240,3 +240,15 @@ html.switch-plain::view-transition-new(root){animation:vt-fade-in .3s ease both}
 @media(max-width:700px){.sd-text{padding:18px 22px;font-size:14px}.sd-head h2{font-size:21px}.sd-arrow{display:none}}
 .sd-view{touch-action:pan-y}
 @media(max-width:700px){.show-dialog{width:calc(100vw - 16px);max-height:calc(100dvh - 16px)}.sd-box{max-height:calc(100dvh - 16px)}.sd-slide{height:calc(100dvh - 250px)}.sd-tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}.sd-tabs button{flex:0 0 auto}}
+
+/* any open window: the page behind does not scroll */
+html:has(dialog[open]){overflow:hidden}
+.ts-body,.sd-slide{overscroll-behavior:contain}
+.text-sheet{width:min(520px,calc(100vw - 24px));max-height:min(70dvh,560px);padding:0;border:1px solid #98ceca55;border-radius:14px;background:#0b2026;color:#f1eee6;box-shadow:0 30px 80px #0008;overflow:hidden}
+.text-sheet::backdrop{background:#06131acc;backdrop-filter:blur(3px)}
+.ts-box{display:flex;flex-direction:column;max-height:min(70dvh,560px)}
+.text-sheet header{position:relative;padding:16px 54px 10px 18px;border-bottom:1px solid #98ceca22}
+.text-sheet h2{margin:0;font-size:19px;font-weight:400;line-height:1.3}
+.ts-close{position:absolute;top:10px;right:12px;width:34px;height:34px;border:1px solid #98ceca44;border-radius:50%;background:none;color:#f1eee6;font-size:19px}
+.ts-body{overflow:auto;padding:14px 18px 18px;font-size:14px;line-height:1.65;color:#d6e2e1}
+.ts-body p{margin:0 0 12px}

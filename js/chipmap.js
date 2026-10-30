@@ -223,7 +223,9 @@
       const f = this.frame, set = (el, k, v) => el.style.setProperty(k, v.toFixed(3));
       this.built = route >= 1 && pads >= 1 && blocks.every((v, i) => !i || !L.blocks[sections[i].id] || v >= 1) ? 1 : .5;
       f.classList.toggle('is-building', this.built < 1);
-      this.blocks.forEach(({ el, i }) => set(el, '--show', blocks[i] || 0));
+      /* a block that has not landed yet (or a pad not yet shown) is not a link */
+      this.blocks.forEach(({ el, i }) => { set(el, '--show', blocks[i] || 0); el.classList.toggle('is-pending', (blocks[i] || 0) < .95); });
+      this.storyPads = pads;
       /* the name and logo on the empty chip fade away as the first section lands on it */
       const first = this.blocks.length ? blocks[this.blocks[0].i] || 0 : 1;
       set(f, '--brand', 1 - ST.smoothstep(ST.clamp(first)));
@@ -348,6 +350,8 @@
       v.addEventListener('pointerleave', () => { if (this.tipPad) { this.tipPad = null; this.draw(); } });
       v.addEventListener('click', e => {
         if (this.moved > 5) { e.preventDefault(); e.stopPropagation(); return; }
+        const pending = e.target.closest('.is-pending'); if (pending) { e.preventDefault(); e.stopPropagation(); return; }
+        if (this.storyPads != null && this.storyPads < .95 && e.target.closest('[data-pad],[data-under]')) { e.preventDefault(); e.stopPropagation(); return; }
         const under = e.target.closest('[data-under]'); if (under) { e.preventDefault(); this.showPad(under.dataset.under); return; }
         const pad = e.target.closest('[data-pad]'); if (pad) { this.showPad(pad.dataset.pad); return; }
         const b = e.target.closest('[data-path]'); if (b) this.onSelect(b.dataset.path.split('/'));
