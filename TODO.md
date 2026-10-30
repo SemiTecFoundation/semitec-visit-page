@@ -31,7 +31,7 @@ Placeholders in the page are marked "(example)" or "to be confirmed".
 
 ## Content
 - [ ] **News & Events records:** confirm the dates of the news items (the Academy release is 20 Oct 2026; *First course* and *Academy Templates* are dated October 2026), and add real events to `SITE_CONTENT.events` (`id`, `date`, `type`: lecture / meeting / workshop, `title`, `place`, `text`, optional `link`, `photos`) and news to `SITE_CONTENT.news`. Later both come from the database.
-- [ ] Filters on News & Events (All · Lectures · Meetings · Workshops · News) once there are enough items; "Add to calendar" for upcoming events (see the server section).
+- [ ] Filters on News & Events (All · Lectures · Meetings · Workshops, and News if it stays) once there are enough items; "Add to calendar" for upcoming events (see the server section).
 - [ ] **Meetings with industry engineers:** define the series: how often (e.g. monthly), where, who hosts, the first topics and engineers; then add each meeting to `SITE_CONTENT.events`.
 - [ ] **Programs: update the texts of paths 2, 3, 4 and 5** (Mentorship and project supervision, Research and technical challenges, Meetings with industry engineers, Hackathons). Review the new texts for *Mentorship and project supervision*, *Research and technical challenges* (grants) and *Meetings with industry engineers*; replace the illustrations in `assets/programs/` with photos of real lectures and meetings when there are some.
 - [ ] Programs merged: *Educational programs* and *Open knowledge* are now part of **Education and open knowledge: SemiTec Academy**; review the combined text.
@@ -48,10 +48,10 @@ Placeholders in the page are marked "(example)" or "to be confirmed".
 - [ ] Check all Armenian text written for new controls.
 - [ ] Replace illustrations in `assets/` with real photos.
 
-## Blog (separate site)
-- [ ] **Blog as its own page / site**, outside this page (e.g. `blog.<domain>` or `/blog`). This page only links to it: a "Blog" link in the header and in Connect, and later the latest 2–3 posts as cards in Impact or Events.
-- [ ] Design the blog later in the same visual language (paper + chip palette, EN/HY). Decide the platform (static site generator, or a hosted blog with a custom domain) together with the server.
-- [ ] Topics to plan: foundation news, student project write-ups, event recaps (can link back to the gallery), "how chips are made" explainers.
+## Articles and news: the next platform, not the visit page
+- [ ] **No blog on the visit page.** Articles (project write-ups, lecture recaps, explainers) belong to the next Foundation platform, with its database and editors. The visit page only links to it when it exists.
+- [ ] **Decide whether the visit page keeps News at all.** Today News & Events shows three news items (Academy release, first course, Academy Templates). Options: (a) keep a short list of the latest few items here; (b) drop News and keep only Upcoming / Past events, with news living on the platform; (c) move these items into Programs (e.g. the Academy path) as facts, not news. Decide together with the platform plan.
+- [ ] If News moves to the platform: remove `SITE_CONTENT.news`, the News list in 2D, the news cards on the 3D road and the "News" cell on the chip map; keep a link to the platform's news instead.
 
 ## Other things foundations usually have
 - [ ] **Legal and trust basics:** registration details, charter, board, privacy policy, code of conduct; a safeguarding policy if school students attend events.
