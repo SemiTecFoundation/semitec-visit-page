@@ -769,3 +769,11 @@ html.map-end .map-dock:before{opacity:0}
 .cm-brand span{display:flex;flex-direction:column;line-height:1}
 .cm-brand strong{font-size:96px;font-weight:500;letter-spacing:.2em;color:#efe6cf}
 .cm-brand em{margin-top:14px;font-style:normal;font-size:28px;letter-spacing:.5em;color:#eac883}
+
+/* opening story: the chip's blocks show only their section's name (no subsection cells), large and centred */
+.chipmap.is-locked .cm-cells,.chipmap.is-locked .cm-bits{display:none}
+.chipmap.is-locked .cm-block .cm-top{justify-content:center;align-items:center;text-align:center;padding:14px}
+.chipmap.is-locked .cm-num{font-size:14px}
+.chipmap.is-locked .cm-name{font-size:34px;margin-top:8px}
+.chipmap.is-locked .cm-power .cm-top{flex-direction:column;justify-content:center;align-items:center;gap:6px}
+.chipmap.is-locked .cm-power .cm-name{font-size:30px}

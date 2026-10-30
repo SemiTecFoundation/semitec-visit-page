@@ -129,12 +129,11 @@
         <div class="sc-nums">${nums}</div><div class="sc-next">${next}</div>
         <p class="sc-note">${ST.esc(ST.text('exampleNote'))}</p></article>`];
     storySections().forEach((sec, k) => {
-      const i = sections.indexOf(sec), kids = (sec.children || []).map(c => `<li>${ST.esc(ST.pick(c.title))}</li>`).join('');
+      const i = sections.indexOf(sec);
       cards.push(`<article class="story-card is-section${sec.id === CHIP_LAYOUT.power ? ' is-power' : ''}" data-card="sec" data-index="${i}">
         <p class="sc-k">${ST.pad(i)} · ${ST.esc(ST.pick(sec.label))}${sec.id === CHIP_LAYOUT.power ? ` · ${ST.esc(ST.text('powerUnit'))}` : ''}</p>
         <h3 class="sc-t">${ST.esc(ST.pick(sec.title)).replace(/\n/g, ' ')}</h3>
         <p class="sc-p">${ST.esc(ST.pick(sec.intro))}</p>
-        ${kids ? `<ul class="sc-kids">${kids}</ul>` : ''}
         <a class="sc-go" href="#${sec.id}" data-path="${sec.id}">${ST.esc(ST.text('openSection'))} →</a></article>`);
     });
     cards.push(`<article class="story-card" data-card="conn">

@@ -8,12 +8,12 @@ This is the **story version** (folder `VisitPageStory`; on GitHub under `/story/
 
 1. **The empty chip** floats in the middle as an object, with the SemiTec Foundation name and logo on it: no window, no zoom or drag, only a slow float. The name and logo stay through "At a glance" and fade away as the first section lands on the chip.
 2. **At a glance:** the chip moves aside (to the left, or to the top on phones). On the right comes "SemiTec today": numbers (volunteers, students reached, published papers, entrepreneurs supported, partner universities, events held) and what's next (next event, open roles, plans, latest report).
-3. **One card per section:** each card introduces a section (title, short text, its paths). Then it **flies into the chip and becomes that section's block**, from Purpose to Connect, with Support as the power unit.
+3. **One card per section:** each card introduces a section (title and a short text). Then it **flies into the chip and becomes that section's block**, from Purpose to Connect, with Support as the power unit.
 4. **Connections:** the signal route draws itself through every block, and Support's power rails appear.
 5. **Edge contacts:** the pads appear around the edge. Gold is for partners, copper for supporters, and **+** marks a free contact, with links to become a partner or supporter.
 6. **Two ways to explore:** read on, or enter the 3D journey.
 
-Scrolling back un-builds the chip. You can click a block at any time to go to its section. Then the page releases, and at the switching point the map docks on the left (desktop) or becomes the strip or badge (phones).
+In this part the chip's blocks show only their section's name (the subsections appear once the page continues). Scrolling back un-builds the chip. You can click a block at any time to go to its section. Then the page releases, and at the switching point the map docks on the left (desktop) or becomes the strip or badge (phones).
 
 **Edit:**
 - The numbers and the "what's next" items are in `SITE_CONTENT.story` in `content.js`. They are placeholders.
