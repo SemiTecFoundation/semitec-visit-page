@@ -21,6 +21,9 @@ Placeholders in the page are marked "(example)" or "to be confirmed".
 - [ ] Add the figures to `SITE_CONTENT.story` (e.g. `numbers: [{value, label}]`, `next: [...]`) and render them in `js/story.js` next to the brief.
 
 ## Content
+- [ ] **Fix the frames** (section images and panels): consistent sizes, placement and look across sections, in 2D and 3D.
+- [ ] **Review and clean all text** (English): shorten where too long, consistent tone and terms, no leftover example wording.
+- [ ] **Review and clean the Armenian text** with a native speaker: the current Armenian is a draft translation and must not be published as final.
 - [ ] Real events (dates, places, recaps, photos) in `SITE_CONTENT.events`.
 - [ ] Real projects and reports in the archive (`SITE_CONTENT.memory`) (with links to PDFs for reports).
 - [ ] Real partners and supporters, with permission, in `SITE_CONTENT.partners`.

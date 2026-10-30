@@ -139,7 +139,7 @@ The gold trace and signal move with your reading position, and the block you're 
 
 ## The 2D page
 
-Each section has a scroll-linked reveal: title words rise, the image unmasks with a small parallax, chips and cards appear one after another, and the large section number moves more slowly than the page. These play backwards when you scroll up. Submenus are expandable **path cards** showing their items and nested paths. The 2D page has no separate "3D" links: the 2D / 3D switch at the top is the only way in, and it keeps your place.
+Each section has a scroll-linked reveal: title words rise, the image unmasks with a small parallax, chips and cards appear one after another, and the large section number moves more slowly than the page. These play backwards when you scroll up. Submenus are expandable **path cards** showing their items and nested paths. Sections and path cards have no separate "3D" links: the way into 3D is the 2D / 3D switch at the top (it keeps your place), or the 3D choice in the story's last card, "Read the page, or travel through the chip."
 
 ## Support (donations)
 
