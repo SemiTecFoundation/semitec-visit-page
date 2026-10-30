@@ -825,3 +825,18 @@ html.map-end .map-dock:before{opacity:0}
 .panel-links a:hover{background:rgba(234,200,131,.12)}
 .site-foot a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 #academy-link{text-decoration:none}
+
+/* product cards in a path: one row, three columns, lift and grow on hover */
+.pc-show{display:grid;grid-template-columns:repeat(var(--n,3),minmax(0,1fr));gap:12px;margin:16px 0 8px}
+.pc-show-card{position:relative;display:flex;flex-direction:column;border:1px solid #e2dccb;border-radius:12px;background:#fbfaf6;overflow:hidden;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s,border-color .35s;z-index:0}
+.pc-show-card:hover,.pc-show-card:focus-within{transform:translateY(-6px) scale(1.06);box-shadow:0 18px 40px #14262c2e;border-color:#d9c79f;z-index:2}
+.psc-img{aspect-ratio:1.55;overflow:hidden;background:#14262c}
+.psc-img img{display:block;width:100%;height:100%;object-fit:cover;object-position:top left;transition:transform .6s}
+.pc-show-card:hover .psc-img img{transform:scale(1.05)}
+.psc-body{display:flex;flex-direction:column;gap:6px;padding:11px 12px 12px;flex:1}
+.psc-body strong{font-size:13.5px;font-weight:500}
+.psc-body p{margin:0;font-size:11.5px;line-height:1.45;color:var(--muted)}
+.psc-links{display:flex;flex-wrap:wrap;gap:5px;margin-top:auto;padding-top:6px}
+.psc-links a{padding:4px 9px;border-radius:999px;background:#14262c;color:#f1eee6;font-size:10.5px;text-decoration:none}
+.psc-links a:hover{background:#21383e}
+@media(max-width:700px){.pc-show{grid-template-columns:1fr}.pc-show-card:hover{transform:translateY(-3px) scale(1.02)}}

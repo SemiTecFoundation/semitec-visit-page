@@ -28,6 +28,14 @@
   }
   /* outside links (e.g. SemiTec Academy): open in a new tab */
   const linksHTML = (links, cls) => (links || []).length ? `<p class="${cls}">${links.map(l => `<a href="${ST.esc(l.href)}" target="_blank" rel="noopener">${ST.esc(ST.pick(l.label))} ↗</a>`).join('')}</p>` : '';
+  /* a row of product cards inside a path (e.g. SemiTec Academy): picture, title, short text and links */
+  const showcaseHTML = list => (list || []).length ? `<div class="pc-show" style="--n:${list.length}">${list.map((it, k) => {
+    const m = SITE_CONTENT.media[it.media];
+    return `<article class="pc-show-card" style="--k:${k}">
+      ${m ? `<div class="psc-img"><img src="${ST.esc(m.src)}" alt="${ST.esc(ST.pick(m.alt))}" loading="lazy" decoding="async"></div>` : ''}
+      <div class="psc-body"><strong>${ST.esc(ST.pick(it.title))}</strong><p>${ST.esc(ST.pick(it.intro))}</p>
+      ${linksHTML(it.links, 'psc-links')}</div></article>`;
+  }).join('')}</div>` : '';
   function pathCard(section, child, c) {
     const p = `${section.id}/${child.id}`;
     const items = (child.items || []).map(it => `<li>${ST.esc(ST.pick(it))}</li>`).join('');
@@ -46,6 +54,7 @@
         ${(child.text || []).map(t => `<p class="pc-text">${ST.esc(ST.pick(t))}</p>`).join('')}
         ${items ? `<ul class="pc-items">${items}</ul>` : ''}
         ${linksHTML(child.links, 'pc-links')}
+        ${showcaseHTML(child.showcase)}
         ${sub ? `<p class="pc-sub-label">${ST.esc(ST.text('further'))}</p><div class="pc-sub">${sub}</div>` : ''}
       </div></div>
     </article>`;

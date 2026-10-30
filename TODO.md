@@ -22,6 +22,7 @@ Placeholders in the page are marked "(example)" or "to be confirmed".
 
 ## Content
 - [ ] **Update the logo, colours and styles** to look more professional: a final logo (and its variants), a refined colour palette, consistent typography, spacing and component styles across 2D, 3D and phones.
+- [ ] **Every 3D path with its own boards:** like SemiTec Academy (`showcase`), give each path details, pictures or links along its loop instead of repeating the section picture.
 - [ ] **Fix the frames** (section images and panels): consistent sizes, placement and look across sections, in 2D and 3D.
 - [ ] **Review and clean all text** (English): shorten where too long, consistent tone and terms, no leftover example wording.
 - [ ] **Review and clean the Armenian text** with a native speaker: the current Armenian is a draft translation and must not be published as final.
