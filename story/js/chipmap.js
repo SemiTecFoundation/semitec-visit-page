@@ -127,6 +127,7 @@
               <path class="cm-flow" d="${L.route}"/><path class="cm-draw" d="${L.route}" pathLength="1"/><path class="cm-active" d="${L.route}"/>
               <circle class="cm-halo" r="16"/><circle class="cm-signal" r="5"/>
             </svg>
+            <div class="cm-brand" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M5 29 17 9l6 10 4-6 9 16H5Z"/><path d="m12 29 7-11 6 11"/></svg><span><strong>SEMITEC</strong><em class="cm-brand-sub"></em></span></div>
             <div class="cm-die-label" aria-hidden="true"><strong>SEMITEC</strong><span>EDUCATION · SCIENCE · TECHNOLOGY</span></div>
             <div class="cm-blocks"></div>
             <div class="cm-under">${underHTML()}</div>
@@ -223,6 +224,9 @@
       this.built = route >= 1 && pads >= 1 && blocks.every((v, i) => !i || !L.blocks[sections[i].id] || v >= 1) ? 1 : .5;
       f.classList.toggle('is-building', this.built < 1);
       this.blocks.forEach(({ el, i }) => set(el, '--show', blocks[i] || 0));
+      /* the name and logo on the empty chip fade away as the first section lands on it */
+      const first = this.blocks.length ? blocks[this.blocks[0].i] || 0 : 1;
+      set(f, '--brand', 1 - ST.smoothstep(ST.clamp(first)));
       set(f, '--lbl', ST.clamp(route * 3));
       this.drawPath.style.strokeDashoffset = (1 - ST.clamp(route / .75)).toFixed(4);
       set(f, '--drawn', 1 - ST.clamp((route - .8) / .2));
@@ -263,6 +267,7 @@
         el.querySelector('.cm-name').textContent = ST.pick(s.label);
         el.querySelectorAll('.cm-cells button').forEach((btn, k) => btn.firstElementChild.textContent = ST.pick(s.children[k].title));
         const kick = el.querySelector('.cm-kicker'); if (kick) kick.textContent = ST.text('powerUnit');
+        const sub = this.frame.querySelector('.cm-brand-sub'); if (sub) sub.textContent = ST.pick(SITE_CONTENT.brand.subtitle);
         el.querySelector('.cm-top').setAttribute('aria-label', ST.pick(s.label));
       });
       this.frame.querySelectorAll('.cm-pad[data-pad]').forEach(el => {

@@ -6,7 +6,7 @@ The foundation page. The older prototype folders (VisitPage, VisitPage3D, VisitP
 
 This is the **story version** (folder `VisitPageStory`; on GitHub under `/story/`). The first screen after the overview is pinned while you scroll, so the page itself stays still:
 
-1. **The empty chip** floats in the middle as an object: no window, no zoom or drag, only a slow float.
+1. **The empty chip** floats in the middle as an object, with the SemiTec Foundation name and logo on it: no window, no zoom or drag, only a slow float. The name and logo stay through "At a glance" and fade away as the first section lands on the chip.
 2. **At a glance:** the chip moves aside (to the left, or to the top on phones). On the right comes "SemiTec today": numbers (volunteers, students reached, published papers, entrepreneurs supported, partner universities, events held) and what's next (next event, open roles, plans, latest report).
 3. **One card per section:** each card introduces a section (title, short text, its paths). Then it **flies into the chip and becomes that section's block**, from Purpose to Connect, with Support as the power unit.
 4. **Connections:** the signal route draws itself through every block, and Support's power rails appear.

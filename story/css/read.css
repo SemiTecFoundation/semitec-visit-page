@@ -761,3 +761,11 @@ html.map-end .map-dock:before{opacity:0}
 .dock-strip,.dock-min{display:none}
 /* the floating object may reach past its box (no window to cut it) */
 .chipmap.is-locked,.chipmap.is-locked .cm-viewport{overflow:visible}
+
+/* the name and logo on the empty chip (opening story); --brand fades from 1 to 0 as the first section lands */
+.cm-brand{position:absolute;left:0;top:0;width:1000px;height:760px;display:flex;align-items:center;justify-content:center;gap:34px;color:#eac883;pointer-events:none;
+  transform:translateZ(2px);opacity:var(--brand,0);transition:opacity .2s linear}
+.cm-brand svg{width:120px;height:120px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linejoin:round;filter:drop-shadow(0 0 14px #eac88355)}
+.cm-brand span{display:flex;flex-direction:column;line-height:1}
+.cm-brand strong{font-size:96px;font-weight:500;letter-spacing:.2em;color:#efe6cf}
+.cm-brand em{margin-top:14px;font-style:normal;font-size:28px;letter-spacing:.5em;color:#eac883}
