@@ -270,7 +270,7 @@
     setLanguage(state.lang);
     paintSwitch();
     const path = ST.readHash();
-    state.path = path; state.index = Math.max(0, ST.resolve(path).index);
+    state.path = path; state.index = Math.max(0, (ST.resolve(path) || ST.resolve([path[0]]) || { index: 0 }).index);
     ST.modes[state.mode].enter(path, null);
     ST.modes[state.mode].afterEnter && ST.modes[state.mode].afterEnter(null);
     ST.report(state.index, path); renderNav();

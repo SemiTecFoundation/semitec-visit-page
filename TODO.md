@@ -25,7 +25,7 @@ Placeholders in the page are marked "(example)" or "to be confirmed".
 ## Design (2D and 3D)
 - [ ] **A good final logo** for SemiTec Foundation (with versions for the header, the chip, the favicon and dark backgrounds), then use it everywhere on the page.
 - [ ] **No empty paths in 3D:** every path and sub-path must carry its own information along the road (cards with text, pictures and links, like *Education and open knowledge: SemiTec Academy* and the other Programs paths). A path that has nothing to show yet should not be a path.
-- [x] **About without side paths** (done: six cards; review the texts and pictures): *Who we are*, *Why we exist*, *Our mission*, *Our vision*, *Our values* and *Our story: Mount Aragats* become cards along the main road of the About section (click to open text and pictures, in 2D as a row of cards) instead of six side paths with little on them. Same review for Focus, Impact and Transparency.
+- [x] **About without side paths** (done: six cards; review the texts and pictures): *Who we are*, *Why we exist*, *Our mission*, *Our vision*, *Our values* and *Our story: Mount Aragats* become cards along the main road of the About section (click to open text and pictures, in 2D as a row of cards) instead of six side paths with little on them. Focus is done the same way; next: Impact and Transparency.
 - [ ] Unify the look of cards, panels, buttons and windows across 2D and 3D (sizes, spacing, corner radius, shadows), and check every screen size (phone, tablet, laptop, large screen).
 - [ ] Replace the illustrations (section pictures, program icons) with real photos or a consistent illustration set.
 

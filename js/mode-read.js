@@ -29,7 +29,7 @@
   /* outside links (e.g. SemiTec Academy): open in a new tab */
   const linksHTML = (links, cls) => (links || []).length ? `<p class="${cls}">${links.map(l => l.href[0] === '#' ? `<a href="${ST.esc(l.href)}">${ST.esc(ST.pick(l.label))} →</a>` : `<a href="${ST.esc(l.href)}" target="_blank" rel="noopener">${ST.esc(ST.pick(l.label))} ↗</a>`).join('')}</p>` : '';
   /* a row of product cards inside a path (e.g. SemiTec Academy): picture, title, short text and links */
-  const showcaseHTML = (list, key) => (list || []).length ? `<div class="pc-show${list.length > 3 ? ' is-many' : ''}" style="--n:${Math.min(list.length, 3)}" data-show-key="${key}">${list.map((it, k) => {
+  const showcaseHTML = (list, key) => (list || []).length ? `<div class="pc-show${list.length > 3 ? ' is-many' : ''}" style="--n:${list.length === 4 ? 2 : Math.min(list.length, 3)}" data-show-key="${key}">${list.map((it, k) => {
     const m = SITE_CONTENT.media[it.media];
     return `<article class="pc-show-card" style="--k:${k}" data-show="${k}" id="show-${key.replace('/', '-')}-${it.id}">
       ${m ? `<div class="psc-img"><img src="${ST.esc(m.src)}" alt="${ST.esc(ST.pick(m.alt))}" loading="lazy" decoding="async"></div>` : ''}

@@ -285,26 +285,10 @@ const SITE_CONTENT = {
           "Ամրապնդելով այս փոխկապակցված ոլորտները՝ SemiTec-ը ձգտում է օգնել ստեղծել էկոհամակարգ, որտեղ գիտելիքը, փորձը և հնարավորությունները կարող են շրջանառվել մարդկանց և հաստատությունների միջև։ Այս ոլորտներին առանձին-առանձին անդրադառնալու փոխարեն մենք ձգտում ենք խրախուսել դրանց միջև համագործակցությունը։"
         ]
       ],
-      "items": [
-        [
-          "Education",
-          "Կրթություն"
-        ],
-        [
-          "Research",
-          "Հետազոտություն"
-        ],
-        [
-          "Collaboration",
-          "Համագործակցություն"
-        ],
-        [
-          "Community",
-          "Համայնք"
-        ]
-      ],
+      "items": [],
       "media": "learning",
-      "children": [
+      "children": [],
+      "showcase": [
         {
           "id": "education",
           "title": [
@@ -314,6 +298,16 @@ const SITE_CONTENT = {
           "intro": [
             "Empowering the next generation of engineers and researchers.",
             "Աջակցում ենք ինժեներների և հետազոտողների նոր սերնդին։"
+          ],
+          "details": [
+            [
+              "Education is the foundation of technological progress. SemiTec aims to support technical knowledge and practical engineering skills through educational resources, workshops, training activities, and cooperation with academic institutions.",
+              "Կրթությունը տեխնոլոգիական առաջընթացի հիմքն է։ SemiTec-ը ձգտում է աջակցել տեխնիկական գիտելիքներին և գործնական ինժեներական հմտություններին՝ կրթական ռեսուրսների, սեմինարների, վերապատրաստումների և ակադեմիական հաստատությունների հետ համագործակցության միջոցով։"
+            ],
+            [
+              "We seek to connect theoretical foundations with practical experience and real-world engineering challenges.",
+              "Մենք ձգտում ենք կապել տեսական հիմքերը գործնական փորձի և իրական ինժեներական խնդիրների հետ։"
+            ]
           ],
           "items": [
             [
@@ -341,18 +335,11 @@ const SITE_CONTENT = {
               "Էլեկտրոնային նախագծման ավտոմատացում"
             ]
           ],
-          "children": [],
-          "text": [
-            [
-              "Education is the foundation of technological progress. SemiTec aims to support technical knowledge and practical engineering skills through educational resources, workshops, training activities, and cooperation with academic institutions.",
-              "Կրթությունը տեխնոլոգիական առաջընթացի հիմքն է։ SemiTec-ը ձգտում է աջակցել տեխնիկական գիտելիքներին և գործնական ինժեներական հմտություններին՝ կրթական ռեսուրսների, սեմինարների, վերապատրաստումների և ակադեմիական հաստատությունների հետ համագործակցության միջոցով։"
-            ],
-            [
-              "We seek to connect theoretical foundations with practical experience and real-world engineering challenges.",
-              "Մենք ձգտում ենք կապել տեսական հիմքերը գործնական փորձի և իրական ինժեներական խնդիրների հետ։"
-            ]
-          ],
-          "media": "learning"
+          "links": [],
+          "media": "focus-education",
+          "gallery": [
+            "focus-education"
+          ]
         },
         {
           "id": "research",
@@ -364,9 +351,7 @@ const SITE_CONTENT = {
             "Transforming scientific curiosity into meaningful discoveries and solutions.",
             "Գիտական հետաքրքրասիրությունը վերածում ենք իմաստալից բացահայտումների և լուծումների։"
           ],
-          "items": [],
-          "children": [],
-          "text": [
+          "details": [
             [
               "Research plays a critical role in advancing technology and developing new capabilities. SemiTec aims to encourage research activities connecting academic interests with emerging technological challenges and practical engineering needs.",
               "Հետազոտությունը կարևոր դեր ունի տեխնոլոգիաների զարգացման և նոր կարողությունների ստեղծման գործում։ SemiTec-ը ձգտում է խրախուսել հետազոտական աշխատանքներ, որոնք ակադեմիական հետաքրքրությունները կապում են նոր տեխնոլոգիական մարտահրավերների և գործնական ինժեներական կարիքների հետ։"
@@ -376,7 +361,12 @@ const SITE_CONTENT = {
               "Մենք ձգտում ենք աջակցել հետազոտական գաղափարներին, համատեղ նախագծերին, փորձարարական մշակումներին և արդիական տեխնիկական խնդիրներ ուսումնասիրելու հնարավորություններին։"
             ]
           ],
-          "media": "learning"
+          "items": [],
+          "links": [],
+          "media": "focus-research",
+          "gallery": [
+            "focus-research"
+          ]
         },
         {
           "id": "industry",
@@ -388,9 +378,7 @@ const SITE_CONTENT = {
             "Connecting knowledge with real-world challenges.",
             "Կապում ենք գիտելիքը իրական խնդիրների հետ։"
           ],
-          "items": [],
-          "children": [],
-          "text": [
+          "details": [
             [
               "Cooperation between academia and industry creates opportunities for educational improvement and technological innovation. SemiTec seeks to facilitate dialogue between universities, researchers, engineers, and companies to identify challenges, exchange expertise, and explore joint initiatives.",
               "Ակադեմիայի և արդյունաբերության համագործակցությունը հնարավորություններ է ստեղծում կրթության բարելավման և տեխնոլոգիական նորարարության համար։ SemiTec-ը ձգտում է նպաստել երկխոսությանը համալսարանների, հետազոտողների, ինժեներների և ընկերությունների միջև՝ խնդիրները բացահայտելու, փորձ փոխանակելու և համատեղ նախաձեռնություններ քննարկելու համար։"
@@ -400,7 +388,12 @@ const SITE_CONTENT = {
               "Մենք ձգտում ենք օգնել արդյունաբերության գործնական դիտարկումները վերածել կրթական նախագծերի, հետազոտական հարցերի և համատեղ գործողությունների։"
             ]
           ],
-          "media": "learning"
+          "items": [],
+          "links": [],
+          "media": "focus-industry",
+          "gallery": [
+            "focus-industry"
+          ]
         },
         {
           "id": "community",
@@ -412,9 +405,7 @@ const SITE_CONTENT = {
             "Building a connected and engaged technological community.",
             "Կառուցում ենք փոխկապակցված և ներգրավված տեխնոլոգիական համայնք։"
           ],
-          "items": [],
-          "children": [],
-          "text": [
+          "details": [
             [
               "Technological progress benefits from communities where people exchange ideas, learn from different experiences, and work toward shared objectives. SemiTec aims to bring together students, educators, researchers, engineers, and organizations through discussions, events, mentorship, and community activities.",
               "Տեխնոլոգիական առաջընթացին նպաստում են համայնքները, որտեղ մարդիկ փոխանակում են գաղափարներ, սովորում տարբեր փորձից և աշխատում ընդհանուր նպատակների համար։ SemiTec-ը ձգտում է համախմբել ուսանողներին, դասախոսներին, հետազոտողներին, ինժեներներին և կազմակերպություններին քննարկումների, միջոցառումների, մենթորության և համայնքային գործողությունների միջոցով։"
@@ -424,7 +415,12 @@ const SITE_CONTENT = {
               "Մենք ձգտում ենք խրախուսել շարունակական ուսումը, կառուցողական քննարկումը և տեխնոլոգիական զարգացման համար ընդհանուր պատասխանատվությունը։"
             ]
           ],
-          "media": "learning"
+          "items": [],
+          "links": [],
+          "media": "focus-community",
+          "gallery": [
+            "focus-community"
+          ]
         }
       ]
     },
@@ -2261,6 +2257,66 @@ const SITE_CONTENT = {
       "title": [
         "Mount Aragats",
         "Արագած լեռ"
+      ],
+      "caption": [
+        "Illustration",
+        "Պատկերազարդում"
+      ]
+    },
+    "focus-education": {
+      "src": "assets/focus/education.svg",
+      "alt": [
+        "An open book with a chip",
+        "Բաց գիրք և չիպ"
+      ],
+      "title": [
+        "Education and talent development",
+        "Կրթություն և տաղանդների զարգացում"
+      ],
+      "caption": [
+        "Illustration",
+        "Պատկերազարդում"
+      ]
+    },
+    "focus-research": {
+      "src": "assets/focus/research.svg",
+      "alt": [
+        "A laboratory flask",
+        "Լաբորատոր կոլբա"
+      ],
+      "title": [
+        "Research and innovation",
+        "Հետազոտություն և նորարարություն"
+      ],
+      "caption": [
+        "Illustration",
+        "Պատկերազարդում"
+      ]
+    },
+    "focus-industry": {
+      "src": "assets/focus/industry.svg",
+      "alt": [
+        "A chip connected to a factory",
+        "Գործարանին միացված չիպ"
+      ],
+      "title": [
+        "Industry and academic collaboration",
+        "Արդյունաբերության և ակադեմիայի համագործակցություն"
+      ],
+      "caption": [
+        "Illustration",
+        "Պատկերազարդում"
+      ]
+    },
+    "focus-community": {
+      "src": "assets/focus/community.svg",
+      "alt": [
+        "People connected to each other",
+        "Միմյանց հետ կապված մարդիկ"
+      ],
+      "title": [
+        "Community and knowledge exchange",
+        "Համայնք և գիտելիքի փոխանակում"
       ],
       "caption": [
         "Illustration",
