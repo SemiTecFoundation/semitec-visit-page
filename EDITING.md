@@ -1,6 +1,6 @@
 # Editing the two-view page (2D Read · 3D Travel)
 
-> Adapted from `../VisitPageSignal/EDITING.md`. Sections 2–4 and 6–7 apply unchanged to the content and to the 3D view. The **2D view** uses the same content, so a change in `content.js` updates both views.
+> Adapted from the Signal prototype's editing guide. Sections 2–4 and 6–7 apply unchanged to the content and to the 3D view. The **2D view** uses the same content, so a change in `content.js` updates both views.
 
 This project is plain HTML, CSS and JavaScript. It works when `index.html` is opened directly, including offline. Keep the classic deferred script order: **content.js → js/journey.js → js/scene.js → js/core.js → js/chiplayout.js → js/chipmap.js → js/mode-read.js → js/mode-signal.js**. No framework or build process is required.
 

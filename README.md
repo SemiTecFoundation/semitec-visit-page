@@ -1,6 +1,6 @@
 # SemiTec — Read or Travel · Memory (VisitPageMemory)
 
-The current version of the foundation page (it replaces `VisitPageDual`). Open `index.html`. Open items that need a server or real content are in **[TODO.md](TODO.md)**.
+The foundation page. The older prototype folders (VisitPage, VisitPage3D, VisitPageCircuit, VisitPageSignal, VisitPageDual) have been removed. Open `index.html`. Open items that need a server or real content are in **[TODO.md](TODO.md)**.
 
 ## The 2D opening
 
@@ -85,7 +85,7 @@ Browsers only allow sound after a click or key press, so a remembered "on" start
 One page and one content file, shown two ways. Switch with **2D Read / 3D Travel** in the header. Open `index.html` in a browser; it needs no installs or build step.
 
 - **2D · Read** is a long, readable page. Next to it is an **interactive chip map** you can zoom, drag and open full screen.
-- **3D · Travel** is the Signal journey from `../VisitPageSignal`: the WebGL chip, side-path loops, image boards and the "Explore sections" dialog.
+- **3D · Travel** is the Signal journey (originally the separate Signal prototype): the WebGL chip, side-path loops, image boards and the "Explore sections" dialog.
 
 Both views read `content.js` (the Signal content: 9 sections including **Support**, their submenus and nested submenus, images, EN/HY text). They also share the header, language, bottom section bar and the current location.
 
@@ -179,7 +179,6 @@ validate.cjs        node validate.cjs: Signal's checks + floorplan overlap check
 EDITING.md          how to edit (adapted from Signal)
 ```
 
-`../VisitPageSignal` and `../VisitPage3D` are unchanged.
 
 ## Ideas for next steps
 
