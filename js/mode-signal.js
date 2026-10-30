@@ -229,8 +229,10 @@ function navigate(path,{historyMode='push',focus=false,instant=false}={}){
  else if(pathKey(here.path)===pathKey(parent)){
   // Insert at the exact displayed camera position, without moving or rebuilding it.
   // ▸DUAL …then travel forward into it, so the turn onto the side path is visible.
-  const visit=insertVisit(path,currentDistance,instant);
-  destination=instant||still?currentDistance:currentDistance+Math.min(34,visit.curve.length*.2);
+  const mid=here.segment.kind==='main'?timeline.mainLocation(route.index)+JOURNEY_SETTINGS.mainBranchAhead:-1;
+  const at=mid>currentDistance+1?mid:currentDistance;
+  const visit=insertVisit(path,at,instant);
+  destination=instant||still?timeline.visitLocation(visit,0):at+Math.min(34,visit.curve.length*.2);
   glide=null;window.scrollTo({top:scrollSpace.toPixels(currentDistance),behavior:'instant'});
   targetDistance=currentDistance;
  }else{
@@ -291,6 +293,7 @@ function renderCard(force=false){
   const tog=element('button','panel-more-toggle',text('readMore'));tog.type='button';
   tog.addEventListener('click',()=>{const o=card.classList.toggle('is-more');tog.textContent=text(o?'readLess':'readMore');updatePanelSize();});
   card.append(more,tog);
+  if(node.text.reduce((n,t)=>n+pick(t).length,0)>600)card.classList.add('has-long');
  }
  if(inLoop){
   const status=element('div','loop-status');const ring=element('div','loop-ring');ring.setAttribute('role','progressbar');ring.setAttribute('aria-label',text('loopProgress'));ring.setAttribute('aria-valuemin','0');ring.setAttribute('aria-valuemax','100');
@@ -328,7 +331,7 @@ function renderBranchEntrances(route,ready){
  if(!route.children.length||!ready){currentEntrance=null;return;}
  if(!entrance){
   const curve=active.segment.curve;
-  const distance=active.segment.kind==='main'?timeline.main.distanceAt(active.index/(sections.length-1))+JOURNEY_SETTINGS.branchSignAhead:curve.length*branchRevealAt(route.node,active.path)+JOURNEY_SETTINGS.branchSignAhead*(active.segment.visit?.scale||1);
+  const distance=active.segment.kind==='main'?timeline.main.distanceAt(active.index/(sections.length-1))+JOURNEY_SETTINGS.mainBranchAhead:curve.length*branchRevealAt(route.node,active.path)+JOURNEY_SETTINGS.branchSignAhead*(active.segment.visit?.scale||1);
   const pose=curve.pose(Math.min(distance,curve.length));
   if(distance>curve.length)pose.point=pose.point.map((v,i)=>v+pose.direction[i]*(distance-curve.length));
   const layer=element('div','branch-entrance');layer.setAttribute('aria-hidden','true');
@@ -498,7 +501,28 @@ function textEvents(){
   el.querySelector('.mb-kicker').textContent=`${text('memoryView')} · ${pick(b.title)}`.toUpperCase();
   el.querySelector('strong').textContent=`${ST.memoryItems(b.id).length} ${text('stored')}`;el.querySelector('button').textContent=pick(b.open)+' ↗';});
 }
+/* the section's name on its gate: crossing a gate is where the reading panel changes to that section */
+let gateBuilt=false;const gateLayer=element('div','event-layer gate-layer');gateLayer.setAttribute('aria-hidden','true');eventLayer.after(gateLayer);
+function buildGateLabels(){
+ if(!scene||!scene.gates)return;gateBuilt=true;
+ scene.gates.forEach((g,i)=>{const sec=sections[i+2];if(!sec)return;const el=element('div','gate-name');el.dataset.gate=i;el.append(element('span','gn-num',String(i+2).padStart(2,'0')),element('strong'));gateLayer.append(el);});
+ textGates();
+}
+function textGates(){gateLayer.querySelectorAll('[data-gate]').forEach(el=>{el.querySelector('strong').textContent=pick(sections[+el.dataset.gate+2].label);});}
+function updateGates(dt){
+ if(!scene||!scene.gates)return;if(!gateBuilt)buildGateLabels();
+ const main=active.segment.kind==='main'&&Math.max(lift,endLift)<.05;
+ gateLayer.querySelectorAll('[data-gate]').forEach(el=>{
+  const g=scene.gates[+el.dataset.gate],q=main?scene.project([g.x,g.y+.5,g.z+.95]):null;
+  let target=0;if(q&&q.depth>3&&q.depth<150)target=clamp((q.depth-3)/6,0,1)*clamp((150-q.depth)/40,0,1);
+  let a=layerAlpha.get(el)||0;a=still?target:a+(target-a)*(1-Math.exp(-dt*6));layerAlpha.set(el,a);
+  if(!q||a<.02){el.style.visibility='hidden';return;}
+  el.style.visibility='visible';el.style.opacity=String(a);
+  el.style.transform=`translate(${q.x}px,${q.y}px) translate(-50%,-50%) scale(${clamp(26/q.depth,.35,2.2)})`;
+ });
+}
 function updateEvents(dt){
+ updateGates(dt);
  if(!scene||!scene.eventsGeo)return;if(!eventBuilt)buildEventLabels();
  const g=scene.eventsGeo,main=active.segment.kind==='main'&&Math.max(lift,endLift)<.05;
  const readingRight=innerWidth>760?panel.getBoundingClientRect().right:0;
@@ -525,7 +549,7 @@ function setLanguage(lang){ // ▸DUAL brand, bottom bar and [data-ui] are handl
  panel.setAttribute('aria-label',text('content'));
  document.querySelector('#map-close').setAttribute('aria-label',text('close'));document.querySelector('#media-close').setAttribute('aria-label',text('close'));
  for(const b of mediaBoards){if(b.relabel){b.relabel();continue;}b.image.alt=pick(b.data.alt);b.heading.textContent=pick(b.title||b.data.title);b.kicker.textContent=text('mediaType');b.view.firstChild.textContent=text('viewImage');}
- updateMotionButton();textFinale();textEvents();if(eco3d){eco3d.render(eco3dEl);}if(introRoot){const was=introOn,P=introT;introRoot=null;renderIntro();if(was){introOn=false;openIntro(P);}else introEl.classList.remove('is-on');}if(on){renderCard(true);if(mapDialog.open)buildMap();wake();}
+ updateMotionButton();textFinale();textEvents();textGates();if(eco3d){eco3d.render(eco3dEl);}if(introRoot){const was=introOn,P=introT;introRoot=null;renderIntro();if(was){introOn=false;openIntro(P);}else introEl.classList.remove('is-on');}if(on){renderCard(true);if(mapDialog.open)buildMap();wake();}
 }
 function updateMotionButton(){const b=document.querySelector('#motion-toggle');b.setAttribute('aria-pressed',String(still));b.setAttribute('aria-label',still?text('resume'):text('pause'));b.querySelector('span').textContent=still?text('motion'):text('still');}
 function setStill(value){still=value;document.body.classList.toggle('still-view',still);if(!still)displayedFrame=null;updateMotionButton();wake();}
@@ -603,7 +627,7 @@ function resetJourney(){
 }
 function tweenLift(from,to,ms,ease){lift=from;wake();return ST.tween(ms,t=>{lift=from+(to-from)*t;wake();},ease);}
 
-addMainMedia();setStill(still);
+setStill(still);
 const V=ST.modes['3d']={
  init(){ if('requestIdleCallback' in window)requestIdleCallback(()=>ensureScene(),{timeout:4000});else setTimeout(ensureScene,1500); },
  enter(path,from,end){

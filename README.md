@@ -145,6 +145,13 @@ Each section has a scroll-linked reveal: title words rise, the image unmasks wit
 
 Support sits between Trust and Connect, so the reports are right before it. On the 2D page it has a power-unit panel: **Pulse · give once** / **Clock · give monthly**, three amount slots, a Donate button and "Where the support goes" (which opens Trust → Reports). The amounts and the payment link are placeholders: the button stays disabled until a payment provider is chosen. Its submenus: give once, give monthly, fund a lab kit, donate equipment, give your time. In 3D, reaching Support powers on the chip: every trace brightens.
 
+## Gates, section names and side paths (3D)
+
+- Each section's **name stands on its gate** (`.gate-name`, projected onto the gate's beam). Crossing a gate is where the reading panel changes to that section. The section pictures that used to float on the right of the main route are gone.
+- On the main route the **side paths branch off in the middle of a section**, between its gates (`JOURNEY_SETTINGS.mainBranchAhead`, 0 = the middle).
+- Choosing a side path from the reading panel before that middle point travels on to the middle first, then turns onto the path; after the middle it turns where you are.
+- A long path text (over ~600 characters) stays behind **Read more** in the 3D reading panel; on phones every path text does.
+
 ## 3D journey changes
 
 - Scrolling is about 1.6× slower (`pixelsPerUnit` 30, was 18) with softer camera easing (`js/journey.js`).

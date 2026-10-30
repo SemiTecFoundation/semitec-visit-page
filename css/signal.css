@@ -210,3 +210,13 @@ html[lang=hy][data-mode="3d"] .breadcrumbs { font-size: 7px; }
  [data-mode="3d"] .panel-more-toggle { display: inline-block; margin: -4px 0 12px; padding: 0; border: 0; background: none; color: var(--accent); font-size: 11px; }
  [data-mode="3d"] .panel-text { font-size: 10.5px; margin: 0 0 10px; }
 }
+
+/* section names on the gates */
+[data-mode="3d"] .gate-name{position:absolute;left:0;top:0;display:flex;align-items:baseline;gap:10px;padding:6px 16px 7px;white-space:nowrap;border:1px solid #eac88366;background:#0a2228d9;color:#f1eee6;transform-origin:50% 50%;will-change:transform,opacity}
+[data-mode="3d"] .gate-name strong{font-size:22px;font-weight:400;letter-spacing:.5px}
+[data-mode="3d"] .gate-name .gn-num{font-size:11px;letter-spacing:1.5px;color:#eac883}
+
+/* a long path text stays behind "Read more" on large screens too */
+[data-mode="3d"] .has-long .panel-more-toggle { display: inline-block; margin: -4px 0 14px; padding: 0; border: 0; background: none; color: var(--accent); font-size: 11px; cursor: pointer; }
+[data-mode="3d"] .has-long:not(.is-more) .panel-more { display: none; }
+[data-mode="3d"] .has-long.is-more .panel-more { max-height: 36vh; overflow: auto; padding-right: 6px; }
