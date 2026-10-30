@@ -74,18 +74,22 @@
       <a class="gp-where" href="#transparency/reports">${ST.esc(ST.text('whereGoes'))} →</a>
     </div>`;
   }
-  /* Events: upcoming events (gold, on the path) and the memory block (past events = gallery) */
+  /* News & Events: upcoming (date badges), past (photo cards, gallery) and news (a dated list); every item opens large */
   function eventsPanel() {
-    const { upcoming, past } = ST.events();
-    const list = upcoming.length ? upcoming.map((e, k) => `<li style="--c:${k}"><span class="ev-dot" aria-hidden="true"></span>
-        <span class="ev-date">${ST.esc(ST.fmtDate(e.when))}</span><span class="ev-title">${ST.esc(ST.pick(e.title))}</span><span class="ev-place">${ST.esc(ST.pick(e.place))}</span></li>`).join('')
-      : `<li class="ev-none">${ST.esc(ST.text('noUpcoming'))}</li>`;
-    return `<div class="events-panel">
-      <div class="ev-col"><p class="ev-head"><i class="status-light"></i>${ST.esc(ST.text('upcomingTitle'))}</p><ol class="ev-list">${list}</ol></div>
-      <div class="ev-col"><p class="ev-head">${ST.esc(ST.text('memoryTitle'))} <span class="ev-count">${past.length} ${ST.esc(ST.text('stored'))}</span></p>
-        <p class="ev-intro">${ST.esc(ST.text('memoryIntro'))}</p>${ST.memoryGridHTML('gallery')}
-        <button type="button" class="ev-open" data-open-memory="gallery">${ST.esc(ST.text('openGallery'))} ↗</button></div>
-      <p class="ev-note">${ST.esc(ST.text('exampleNote'))}</p>
+    const { upcoming, past } = ST.events(), news = ST.news(), types = SITE_CONTENT.eventTypes || {};
+    const badge = d => `<span class="evc-badge"><b>${d.getDate()}</b>${ST.esc(new Intl.DateTimeFormat(ST.state.lang === 'hy' ? 'hy-AM' : 'en-GB', { month: 'short' }).format(d))}</span>`;
+    const evCard = (e, k, kind) => { const t = types[e.type] || {}, m = SITE_CONTENT.media[e.media || t.media];
+      return `<article class="evc is-${kind}" data-ev-open="${kind}:${k}" tabindex="0">${m ? `<div class="evc-img"><img src="${ST.esc(m.src)}" alt="" loading="lazy"></div>` : ''}${badge(e.when)}
+        <div class="evc-body"><span class="evc-type">${ST.esc(ST.pick(t.label || ''))}</span><strong>${ST.esc(ST.pick(e.title))}</strong><small>${ST.esc(ST.pick(e.place || ''))}</small></div></article>`; };
+    const empty = (key, btn) => `<div class="evc-empty"><p>${ST.esc(ST.text(key))}</p>${btn ? `<a class="evc-btn" href="#support/idea">${ST.esc(ST.text('evPropose'))} →</a>` : ''}</div>`;
+    return `<div class="ev-groups">
+      <section class="ev-group" id="show-events-upcoming"><p class="ev-head"><i class="status-light"></i>${ST.esc(ST.text('upcomingTitle'))}</p>
+        ${upcoming.length ? `<div class="evc-row">${upcoming.map((e, k) => evCard(e, k, 'up')).join('')}</div>` : empty('evNoneUpcoming', true)}</section>
+      <section class="ev-group" id="show-events-past"><p class="ev-head">${ST.esc(ST.text('evPast'))}${past.length ? ` <button type="button" class="ev-open" data-open-memory="gallery">${ST.esc(ST.text('openGallery'))} ↗</button>` : ''}</p>
+        ${past.length ? `<div class="evc-row">${past.slice().reverse().map((e, k) => evCard(e, past.length - 1 - k, 'past')).join('')}</div>` : empty('evNonePast')}</section>
+      <section class="ev-group" id="show-events-news"><p class="ev-head">${ST.esc(ST.text('evNews'))}</p>
+        <ol class="news-list">${news.map((n, k) => `<li><button type="button" data-news="${k}"><span class="nl-date">${ST.esc(ST.fmtNewsDate(n))}</span><strong>${ST.esc(ST.pick(n.title))}</strong><span class="nl-go" aria-hidden="true">↗</span></button></li>`).join('')}</ol></section>
+      <section class="ev-group ev-propose" id="show-events-propose"><p>${ST.esc(ST.text('evProposeNote'))}</p><a class="evc-btn" href="#support/idea">${ST.esc(ST.text('evPropose'))} →</a></section>
     </div>`;
   }
   /* Impact / Trust: their memory bank (projects, reports) */
@@ -460,6 +464,10 @@
     intro.addEventListener('click', e => { const m = e.target.closest('[data-media]'); if (m) ST.openMedia(m.dataset.media, m.dataset.mediaTitle); });
     main.addEventListener('click', e => {
       const head = e.target.closest('.pc-head');
+      const nb = e.target.closest('[data-news]');
+      if (nb) { const list = ST.news(); ST.openShowcase(ST.newsCard(list[+nb.dataset.news]), +nb.dataset.news, list.length); return; }
+      const eo = e.target.closest('[data-ev-open]');
+      if (eo) { const [kind, k] = eo.dataset.evOpen.split(':'), ev = ST.events()[kind === 'up' ? 'upcoming' : 'past']; ST.openShowcase(ST.eventCard(ev[+k]), +k, ev.length); return; }
       const sc = e.target.closest('.pc-show-card');
       if (sc && !e.target.closest('.psc-links a')) {
         const [sid, cid] = sc.closest('.pc-show').dataset.showKey.split('/'), sec = SITE_CONTENT.sections.find(x => x.id === sid);

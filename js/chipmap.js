@@ -13,7 +13,7 @@
    ========================================================================== */
 (function () {
   /* a block's cells: its side paths, or (About) the cards on its main road */
-  const cellsOf = s => (s.children && s.children.length ? s.children : s.showcase || []);
+  const cellsOf = s => (s.children && s.children.length ? s.children : s.showcase && s.showcase.length ? s.showcase : s.cells || []);
   const ST = window.ST;
   const sections = SITE_CONTENT.sections;
   const L = buildChipLayout(sections, CHIP_LAYOUT, SITE_CONTENT.partners || []);

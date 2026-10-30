@@ -52,7 +52,7 @@
     return { index, node, path: [...path] };
   };
   /* section/card: a card on a section's main road (About) */
-  ST.isShowcase = p => p.length === 2 && !!(sections.find(s => s.id === p[0])?.showcase || []).find(c => c.id === p[1]);
+  ST.isShowcase = p => { const sec = p.length === 2 && sections.find(s => s.id === p[0]); return !!sec && [...(sec.showcase || []), ...(sec.cells || [])].some(c => c.id === p[1]); };
   ST.readHash = () => {
     try { const p = decodeURIComponent(location.hash.slice(1)).split('/').filter(Boolean); return ST.resolve(p) || ST.isShowcase(p) ? p : ['overview']; }
     catch (e) { return ['overview']; }
@@ -102,6 +102,16 @@
     const all = (SITE_CONTENT.events || []).map(e => ({ ...e, when: new Date(e.date + 'T12:00:00') }))
       .filter(e => !isNaN(e.when)).sort((a, b) => a.when - b.when);
     return { upcoming: all.filter(e => e.when >= ST.today), past: all.filter(e => e.when < ST.today) };
+  };
+  /* News: newest first; a date may be a day (YYYY-MM-DD) or only a month (YYYY-MM) */
+  ST.news = () => (SITE_CONTENT.news || []).map(n => ({ ...n, when: new Date((n.date.length === 7 ? n.date + '-01' : n.date) + 'T12:00:00'), monthOnly: n.date.length === 7 }))
+    .filter(n => !isNaN(n.when)).sort((a, b) => b.when - a.when);
+  ST.fmtNewsDate = n => n.monthOnly ? new Intl.DateTimeFormat(state.lang === 'hy' ? 'hy-AM' : 'en-GB', { month: 'long', year: 'numeric' }).format(n.when) : ST.fmtDate(n.when);
+  /* a news item or an event as a card that opens large (the same window as the other cards) */
+  ST.newsCard = n => ({ id: n.id, title: n.title, intro: [ST.fmtNewsDate(n), ST.fmtNewsDate(n)], details: n.text || [], items: [], links: n.links || [], media: n.media, gallery: [n.media] });
+  ST.eventCard = e => {
+    const t = (SITE_CONTENT.eventTypes || {})[e.type] || {}, media = e.media || t.media;
+    return { id: e.id, title: e.title, intro: [`${ST.fmtDate(e.when)} · ${ST.pick(e.place || '')}`, `${ST.fmtDate(e.when)} · ${ST.pick(e.place || '')}`], details: [e.text || e.recap || ['', '']].filter(Boolean), items: [], links: e.link ? [e.link] : [], media, gallery: e.photos || [media] };
   };
   ST.fmtDate = d => new Intl.DateTimeFormat(state.lang === 'hy' ? 'hy-AM' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).format(d);
   ST.address = d => `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}`;

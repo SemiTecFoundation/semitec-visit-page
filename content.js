@@ -1067,99 +1067,37 @@ const SITE_CONTENT = {
           "Մենք ձգտում ենք ստեղծել տարածքներ, որտեղ մարդիկ կարող են փոխանակել գիտելիք, քննարկել նոր գաղափարներ, հաստատել կապեր և բացահայտել համագործակցության հնարավորություններ ուսանողների, դասախոսների, հետազոտողների, արդյունաբերության մասնագետների և կազմակերպությունների միջև։"
         ]
       ],
-      "items": [
-        [
-          "Upcoming events",
-          "Առաջիկա միջոցառումներ"
-        ],
-        [
-          "Past activities",
-          "Անցած միջոցառումներ"
-        ],
-        [
-          "News",
-          "Նորություններ"
-        ],
-        [
-          "Propose an event",
-          "Առաջարկել միջոցառում"
-        ]
-      ],
+      "items": [],
       "media": "gathering",
-      "children": [
+      "children": [],
+      "cells": [
         {
           "id": "upcoming",
           "title": [
             "Upcoming events",
             "Առաջիկա միջոցառումներ"
-          ],
-          "intro": [
-            "Planned technical workshops, seminars, discussions, conferences, and community activities.",
-            "Նախատեսված տեխնիկական սեմինարներ, դասախոսություններ, քննարկումներ, համաժողովներ և համայնքային միջոցառումներ։"
-          ],
-          "items": [],
-          "children": [],
-          "text": [
-            [
-              "Each announcement will give the date and time, the place or online format, the agenda, the intended audience, the speakers or organizers, and how to register.",
-              "Յուրաքանչյուր հայտարարություն կներառի ամսաթիվը և ժամը, վայրը կամ առցանց ձևաչափը, օրակարգը, թիրախային լսարանը, բանախոսներին կամ կազմակերպիչներին և գրանցման կարգը։"
-            ]
-          ],
-          "media": "gathering"
+          ]
         },
         {
           "id": "past",
           "title": [
-            "Past activities",
+            "Past events",
             "Անցած միջոցառումներ"
-          ],
-          "intro": [
-            "Previous activities, discussions, and events organized or supported by SemiTec.",
-            "SemiTec-ի կազմակերպած կամ աջակցած նախորդ միջոցառումներն ու քննարկումները։"
-          ],
-          "items": [],
-          "children": [],
-          "text": [
-            [
-              "Where available, summaries will include key topics, speakers, photographs, presentations, and the opportunities for collaboration that followed.",
-              "Հնարավորության դեպքում ամփոփումները կներառեն հիմնական թեմաները, բանախոսներին, լուսանկարները, ներկայացումները և դրանց հետևած համագործակցության հնարավորությունները։"
-            ]
-          ],
-          "media": "gathering"
+          ]
         },
         {
           "id": "news",
           "title": [
-            "News and announcements",
-            "Նորություններ և հայտարարություններ"
-          ],
-          "intro": [
-            "New initiatives, organizational developments, collaboration opportunities, educational resources, and other relevant updates.",
-            "Նոր նախաձեռնություններ, կազմակերպական զարգացումներ, համագործակցության հնարավորություններ, կրթական ռեսուրսներ և այլ կարևոր թարմացումներ։"
-          ],
-          "items": [],
-          "children": [],
-          "media": "gathering"
+            "News",
+            "Նորություններ"
+          ]
         },
         {
           "id": "propose",
           "title": [
             "Propose an event",
             "Առաջարկել միջոցառում"
-          ],
-          "intro": [
-            "We welcome suggestions for technical discussions, educational workshops, research seminars, and other activities aligned with the foundation's mission.",
-            "Մենք ողջունում ենք տեխնիկական քննարկումների, կրթական սեմինարների, հետազոտական դասախոսությունների և հիմնադրամի առաքելությանը համապատասխան այլ միջոցառումների առաջարկներ։"
-          ],
-          "items": [],
-          "children": [],
-          "text": [
-            [
-              "Individuals and organizations interested in contributing can contact SemiTec to discuss potential opportunities.",
-              "Մասնակցել ցանկացող անհատներն ու կազմակերպությունները կարող են կապվել SemiTec-ի հետ՝ հնարավորությունները քննարկելու համար։"
-            ]
-          ],
-          "media": "gathering"
+          ]
         }
       ]
     },
@@ -2322,6 +2260,36 @@ const SITE_CONTENT = {
         "Illustration",
         "Պատկերազարդում"
       ]
+    },
+    "event-workshop": {
+      "src": "assets/events/workshop.svg",
+      "alt": [
+        "A workbench with notes and tools",
+        "Աշխատասեղան՝ նշումներով և գործիքներով"
+      ],
+      "title": [
+        "Workshop",
+        "Սեմինար"
+      ],
+      "caption": [
+        "Illustration",
+        "Պատկերազարդում"
+      ]
+    },
+    "event-news": {
+      "src": "assets/events/news.svg",
+      "alt": [
+        "A news page",
+        "Նորությունների էջ"
+      ],
+      "title": [
+        "News",
+        "Նորություններ"
+      ],
+      "caption": [
+        "Illustration",
+        "Պատկերազարդում"
+      ]
     }
   },
   "ui": {
@@ -2952,6 +2920,46 @@ const SITE_CONTENT = {
     "readLess": [
       "Show less ↑",
       "Ցույց տալ ավելի քիչ ↑"
+    ],
+    "evUpcoming": [
+      "Upcoming",
+      "Առաջիկա"
+    ],
+    "evPast": [
+      "Took place",
+      "Կայացած"
+    ],
+    "evNews": [
+      "News",
+      "Նորություններ"
+    ],
+    "evNoneUpcoming": [
+      "Next events will be announced here.",
+      "Հաջորդ միջոցառումները կհայտարարվեն այստեղ։"
+    ],
+    "evNonePast": [
+      "Photos and recaps of past events will appear here.",
+      "Անցած միջոցառումների լուսանկարներն ու ամփոփումները կհայտնվեն այստեղ։"
+    ],
+    "evPropose": [
+      "Propose an event",
+      "Առաջարկել միջոցառում"
+    ],
+    "evProposeNote": [
+      "Have an idea for a lecture, workshop or meeting? Tell us.",
+      "Գաղափար ունե՞ք դասախոսության, սեմինարի կամ հանդիպման համար։ Գրեք մեզ։"
+    ],
+    "evRegister": [
+      "Register",
+      "Գրանցվել"
+    ],
+    "evNext": [
+      "Next event",
+      "Հաջորդ միջոցառումը"
+    ],
+    "evNoNext": [
+      "No upcoming events yet",
+      "Առաջիկա միջոցառումներ դեռ չկան"
     ]
   },
   "partners": [],
@@ -3250,6 +3258,117 @@ const SITE_CONTENT = {
       "Other",
       "Այլ"
     ]
+  ],
+  "eventTypes": {
+    "lecture": {
+      "label": [
+        "Guest lecture",
+        "Հյուր դասախոսություն"
+      ],
+      "media": "prog-lectures"
+    },
+    "meeting": {
+      "label": [
+        "Meeting with engineers",
+        "Հանդիպում ինժեներների հետ"
+      ],
+      "media": "prog-meet"
+    },
+    "workshop": {
+      "label": [
+        "Workshop",
+        "Սեմինար"
+      ],
+      "media": "event-workshop"
+    },
+    "news": {
+      "label": [
+        "News",
+        "Նորություն"
+      ],
+      "media": "event-news"
+    }
+  },
+  "news": [
+    {
+      "id": "academy-release",
+      "date": "2026-10-20",
+      "title": [
+        "SemiTec Academy 2.2.0 released",
+        "Թողարկվեց SemiTec Ակադեմիա 2.2.0"
+      ],
+      "text": [
+        [
+          "The first public release of SemiTec Academy, the foundation's free, open-source learning app, is available for Windows, macOS and Linux. Students install it once, add course packages and study on their own computer.",
+          "Թողարկվել է SemiTec Ակադեմիայի՝ հիմնադրամի անվճար, բաց կոդով ուսումնական հավելվածի առաջին հրապարակային տարբերակը Windows, macOS և Linux համակարգերի համար։ Ուսանողները մեկ անգամ տեղադրում են այն, ավելացնում դասընթացային փաթեթներ և սովորում իրենց համակարգչում։"
+        ]
+      ],
+      "links": [
+        {
+          "label": [
+            "Download the app",
+            "Ներբեռնել հավելվածը"
+          ],
+          "href": "https://github.com/SemiTecFoundation/semitec-academy/releases/latest"
+        },
+        {
+          "label": [
+            "See the introduction",
+            "Դիտել ներածությունը"
+          ],
+          "href": "https://semitecfoundation.github.io/semitec-academy/"
+        }
+      ],
+      "media": "academy-app"
+    },
+    {
+      "id": "first-course",
+      "date": "2026-10",
+      "title": [
+        "First course published: BIST and MBIST",
+        "Հրապարակվեց առաջին դասընթացը՝ BIST և MBIST"
+      ],
+      "text": [
+        [
+          "The first course package, BIST and MBIST for bachelor students, is in the foundation catalog. It appears in every SemiTec Academy app automatically.",
+          "Առաջին դասընթացային փաթեթը՝ BIST և MBIST բակալավրիատի ուսանողների համար, հիմնադրամի կատալոգում է։ Այն ինքնաշխատ հայտնվում է յուրաքանչյուր SemiTec Ակադեմիա հավելվածում։"
+        ]
+      ],
+      "links": [
+        {
+          "label": [
+            "Browse materials",
+            "Դիտել նյութերը"
+          ],
+          "href": "https://semitecfoundation.github.io/semitec-academy-materials/"
+        }
+      ],
+      "media": "academy-training"
+    },
+    {
+      "id": "templates",
+      "date": "2026-10",
+      "title": [
+        "Academy Templates available",
+        "Հասանելի են Ակադեմիայի ձևանմուշները"
+      ],
+      "text": [
+        [
+          "Lecturers and companies can create trainings, lab manuals, project briefs and course packages with the Academy Templates, and publish them without an agreement or approval from the foundation.",
+          "Դասախոսներն ու ընկերությունները կարող են Ակադեմիայի ձևանմուշներով ստեղծել դասընթացներ, լաբորատոր ձեռնարկներ, նախագծային առաջադրանքներ և դասընթացային փաթեթներ և հրապարակել դրանք առանց հիմնադրամի համաձայնության կամ հաստատման։"
+        ]
+      ],
+      "links": [
+        {
+          "label": [
+            "Academy Templates on GitHub",
+            "Ձևանմուշները GitHub-ում"
+          ],
+          "href": "https://github.com/SemiTecFoundation/semitec-academy-skills"
+        }
+      ],
+      "media": "academy-lab"
+    }
   ]
 };
 

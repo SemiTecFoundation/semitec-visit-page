@@ -30,6 +30,8 @@ Placeholders in the page are marked "(example)" or "to be confirmed".
 - [ ] Replace the illustrations (section pictures, program icons) with real photos or a consistent illustration set.
 
 ## Content
+- [ ] **News & Events records:** confirm the dates of the news items (the Academy release is 20 Oct 2026; *First course* and *Academy Templates* are dated October 2026), and add real events to `SITE_CONTENT.events` (`id`, `date`, `type`: lecture / meeting / workshop, `title`, `place`, `text`, optional `link`, `photos`) and news to `SITE_CONTENT.news`. Later both come from the database.
+- [ ] Filters on News & Events (All · Lectures · Meetings · Workshops · News) once there are enough items; "Add to calendar" for upcoming events (see the server section).
 - [ ] **Meetings with industry engineers:** define the series: how often (e.g. monthly), where, who hosts, the first topics and engineers; then add each meeting to `SITE_CONTENT.events`.
 - [ ] **Programs: update the texts of paths 2, 3, 4 and 5** (Mentorship and project supervision, Research and technical challenges, Meetings with industry engineers, Hackathons). Review the new texts for *Mentorship and project supervision*, *Research and technical challenges* (grants) and *Meetings with industry engineers*; replace the illustrations in `assets/programs/` with photos of real lectures and meetings when there are some.
 - [ ] Programs merged: *Educational programs* and *Open knowledge* are now part of **Education and open knowledge: SemiTec Academy**; review the combined text.

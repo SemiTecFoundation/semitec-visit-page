@@ -254,3 +254,5 @@ html[lang=hy][data-mode="3d"] .breadcrumbs { font-size: 7px; }
 [data-mode="3d"] .gate-layer { z-index: 1; }
 [data-mode="3d"] .scene-media { z-index: 2; }
 @media (max-width: 760px) { [data-mode="3d"] .show-board { width: 230px; } [data-mode="3d"] .show-board strong { font-size: 16px; } }
+[data-mode="3d"] .panel-next { display: flex; flex-direction: column; gap: 3px; max-width: 340px; margin: 0 0 16px; padding: 10px 12px; border-left: 2px solid var(--accent); background: #0a2228aa; font-size: 11px; color: #a9c0c0; }
+[data-mode="3d"] .panel-next strong { color: #f1eee6; font-weight: 400; font-size: 13px; }

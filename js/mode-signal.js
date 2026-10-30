@@ -289,6 +289,7 @@ function renderCard(force=false){
  if(route.index===0){const lines=pick(node.title).split('\n');title.append(document.createTextNode(lines[0]),document.createElement('br'),element('span','',lines.slice(1).join(' ')));}
  else title.textContent=pick(node.title);
  card.append(title,element('p','panel-intro',pick(node.intro)));
+ if(!inLoop&&node.id==='events'){const up=ST.events().upcoming[0],nx=element('p','panel-next');nx.append(element('span','',text(up?'evNext':'evNoNext')));if(up)nx.append(element('strong','',`${ST.fmtDate(up.when)} · ${pick(up.title)}`));card.append(nx);}
  if(inLoop&&(node.text||[]).length){   // the path's text, in a scrolling area that fits above the buttons
   const more=element('div','panel-more');node.text.forEach(t=>more.append(element('p','panel-text',pick(t))));card.append(more);
  }
@@ -565,7 +566,7 @@ function updateEvents(dt){
   el.style.opacity=String(a*(q.x<readingRight+40?.15:1));
  };
  eventLayer.querySelectorAll('[data-ev]').forEach((el,k)=>show(el,g.markers[k].point,g.site.idx));
- eventLayer.querySelectorAll('[data-board]').forEach((el,k)=>show(el,g.memories[k].point,g.memories[k].idx));
+ eventLayer.querySelectorAll('[data-board]').forEach((el,k)=>{if(!ST.memoryItems(g.memories[k].bank).length){el.style.visibility='hidden';el.style.pointerEvents='none';return;}show(el,g.memories[k].point,g.memories[k].idx);});   // an empty archive shows no board
 }
 function openMedia(id,title){const data=SITE_CONTENT.media[id];document.querySelector('#media-large').src=data.src;document.querySelector('#media-large').alt=pick(data.alt);document.querySelector('#media-title').textContent=pick(title||data.title);document.querySelector('#media-caption').textContent=pick(data.caption);mediaDialog.showModal();}
 function buildMap(){
@@ -660,7 +661,7 @@ function tweenLift(from,to,ms,ease){lift=from;wake();return ST.tween(ms,t=>{lift
    near (it comes up as you approach and fades once passed), so they never pile up */
 function addMainShowcase(){
  sections.forEach((section,index)=>{
-  const list=section.showcase||[];if(!list.length||index<1)return;
+  const list=section.showcase&&section.showcase.length?section.showcase:section.id==='events'?ST.news().slice(0,4).map(ST.newsCard):[];if(!list.length||index<1)return;   // News & Events: the latest news
   const sd=timeline.main.distanceAt(index/(sections.length-1)),gap=JOURNEY_SETTINGS.mainCardGap,n=list.length,from=sd-JOURNEY_SETTINGS.arriveBeforeMiddle+10;
   list.forEach((item,k)=>{
    const pose=timeline.main.pose(from+gap*k),r=[-pose.direction[2],0,pose.direction[0]];

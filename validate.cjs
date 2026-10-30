@@ -101,8 +101,8 @@ check(fastCleanup.removed.length===2,'Fast scroll releases parent and nested chi
 poseEqual(fast.locate(fastCleanup.distance).pose,overshootPose,'Fast scroll cleanup preserves main position');
 // Explicit map/deep-link navigation may prepare a future branch. Cancelling
 // that navigation before arrival must remove it too.
-const pending=new JourneyTimeline();pending.insertLoop(['events','past'],junction);
-check(pending.pruneInactive(0,['events','past'])===null,'Explicit pending destination is retained');
+const pending=new JourneyTimeline();pending.insertLoop(['purpose','values'],junction);
+check(pending.pruneInactive(0,['purpose','values'])===null,'Explicit pending destination is retained');
 check(pending.pruneInactive(0).removed.length===1,'Cancelled future branch is removed before scrolling can enter it');
 // Headings away from the main axis must also close without a camera snap.
 for (const angle of [0, .3, 1.4, 2.8, 4.1]) {
@@ -223,7 +223,13 @@ console.log(`Passed ${checks} checks: content, assets, curve speed, forward loop
     assert.ok(!!SITE_CONTENT.media[e.media], 'Event media exists: ' + e.id);
   }
   assert.ok(new Set(list.map(e => e.id)).size === list.length, 'Unique event ids');
-  console.log('Passed event checks (' + list.length + ' events).');
+  for (const n of SITE_CONTENT.news || []) {
+    assert.ok(/^\d{4}-\d{2}(-\d{2})?$/.test(n.date), 'News date YYYY-MM or YYYY-MM-DD: ' + n.id);
+    bilingual(n.title, 'news ' + n.id + ' title'); (n.text || []).forEach(t => bilingual(t, 'news ' + n.id + ' text'));
+    assert.ok(!!SITE_CONTENT.media[n.media], 'News media exists: ' + n.id);
+  }
+  for (const [k, t] of Object.entries(SITE_CONTENT.eventTypes || {})) assert.ok(!!SITE_CONTENT.media[t.media], 'Event type media: ' + k);
+  console.log('Passed event checks (' + list.length + ' events, ' + (SITE_CONTENT.news || []).length + ' news).');
 }
 /* VisitPageMemory: memory banks and their items */
 {

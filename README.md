@@ -152,6 +152,15 @@ Focus works the same way (education, research, industry collaboration, community
 - **3D:** the cards stand along About's road one after another (`JOURNEY_SETTINGS.mainCardGap` apart); each comes up as you approach it and fades once passed, so only one or two show at a time. A card opens large.
 - `validate.cjs` uses a test-only nested path under About for its journey geometry checks.
 
+## News & Events
+
+No side paths: the section shows records.
+- **Upcoming events** (`SITE_CONTENT.events`, date in the future): cards with a date badge; with none, an honest "Next events will be announced here" and *Propose an event*. In 3D they are the gold posts on the approach to the section, and the reading panel shows the next one.
+- **Past events** (date passed): photo cards and the gallery; with none, a short note. An empty archive shows no board in 3D.
+- **News** (`SITE_CONTENT.news`, date `YYYY-MM-DD` or `YYYY-MM`): a dated list in 2D, newest first; in 3D the latest four stand along the section's road as cards.
+- Every event and news item opens large (details, pictures, links). Event pictures come from `photos`, or from its type (`SITE_CONTENT.eventTypes`) until there are photos.
+- The chip-map block lists Upcoming, Past, News and Propose (`cells`); a cell scrolls to that group.
+
 ## Menu during the opening story (3D)
 
 Choosing a section in the bottom menu while the opening story is on screen leaves the story and travels to that section; the start (◉) goes back to the story's first step.
