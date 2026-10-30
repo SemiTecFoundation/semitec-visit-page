@@ -13,6 +13,7 @@ const JOURNEY_SETTINGS = Object.freeze({
   branchSignAhead: 20,
   mainBranchAhead: 2,       // on the main route the paths branch off around the middle of a section, between its gates (0 = the exact middle)
   arriveBeforeMiddle: 18,   // choosing a section arrives just past its gate (the gate is half a section spacing before the middle)
+  mainCardGap: 6,           // cards on a section's own road (About): distance between them
   loopReturnBack: 22,       // a side path off the main route comes back this far before where it left, so its sign is ahead again
   branchSignLeft: 2.8,
   nestedBranchReveal: 0.24,

@@ -149,8 +149,12 @@ Support sits between Trust and Connect, so the reports are right before it. On t
 
 About's topics (who we are, why we exist, mission, vision, values, our story) are `showcase` cards on the section itself (`SITE_CONTENT.sections[purpose].showcase`), not side paths:
 - **2D:** a row of cards (three per line) under the section text; a card opens large (details + picture). The About block on the chip map lists them; a cell scrolls to its card (`#purpose/values`).
-- **3D:** while the About section is on screen, a wall of six cards stands on the right of the road (a swipeable row on phones); a card opens large.
+- **3D:** the cards stand along About's road one after another (`JOURNEY_SETTINGS.mainCardGap` apart); each comes up as you approach it and fades once passed, so only one or two show at a time. A card opens large.
 - `validate.cjs` uses a test-only nested path under About for its journey geometry checks.
+
+## Menu during the opening story (3D)
+
+Choosing a section in the bottom menu while the opening story is on screen leaves the story and travels to that section; the start (◉) goes back to the story's first step.
 
 ## Gates, section names and side paths (3D)
 

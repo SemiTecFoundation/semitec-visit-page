@@ -467,7 +467,7 @@ function updateMedia(time,dt){
   const p=scene.project(mobile?board.mobilePoint:board.point);let alpha=0;
   const scale=p?clamp((mobile?15:24)/p.depth,.27,mobile?.8:1.1):1;
   const belongsHere=board.visit?active.segment.visit?.id===board.visit.id:active.segment.kind==='main';
-  const far=board.far||110;if(belongsHere&&p&&p.depth>5&&p.depth<far&&p.x>innerWidth*(mobile?-.1:.4)&&p.x<innerWidth*1.2&&p.y>100&&p.y<innerHeight*(mobile?.4:.72))alpha=clamp((p.depth-5)/(board.far?6:14),0,1)*clamp((far-p.depth)/(board.far?8:30),0,1);
+  const far=board.far||110,near=board.far?4:5;if(belongsHere&&p&&p.depth>near&&p.depth<far&&p.x>innerWidth*(mobile?-.1:.4)&&p.x<innerWidth*1.25&&p.y>(board.far?(mobile?150:60):100)&&p.y<innerHeight*(mobile?(board.far?.5:.4):.72))alpha=clamp((p.depth-near)/(board.far?2.5:14),0,1)*clamp((far-p.depth)/(board.far?4:30),0,1);
   if(p&&!mobile)alpha*=clamp((p.x-board.width*scale/2-readingRight-20)/40,0,1);
   if(board.visit)alpha*=clamp((time-board.visit.createdAt)/650,0,1);
   board.alpha+=(alpha-board.alpha)*(1-Math.exp(-dt*9));
@@ -578,7 +578,7 @@ function setLanguage(lang){ // ▸DUAL brand, bottom bar and [data-ui] are handl
  panel.setAttribute('aria-label',text('content'));
  document.querySelector('#map-close').setAttribute('aria-label',text('close'));document.querySelector('#media-close').setAttribute('aria-label',text('close'));
  for(const b of mediaBoards){if(b.relabel){b.relabel();continue;}b.image.alt=pick(b.data.alt);b.heading.textContent=pick(b.title||b.data.title);b.kicker.textContent=text('mediaType');b.view.firstChild.textContent=text('viewImage');}
- updateMotionButton();textFinale();textEvents();textGates();wallFor=null;if(eco3d){eco3d.render(eco3dEl);}if(introRoot){const was=introOn,P=introT;introRoot=null;renderIntro();if(was){introOn=false;openIntro(P);}else introEl.classList.remove('is-on');}if(on){renderCard(true);if(mapDialog.open)buildMap();wake();}
+ updateMotionButton();textFinale();textEvents();textGates();if(eco3d){eco3d.render(eco3dEl);}if(introRoot){const was=introOn,P=introT;introRoot=null;renderIntro();if(was){introOn=false;openIntro(P);}else introEl.classList.remove('is-on');}if(on){renderCard(true);if(mapDialog.open)buildMap();wake();}
 }
 function updateMotionButton(){const b=document.querySelector('#motion-toggle');b.setAttribute('aria-pressed',String(still));b.setAttribute('aria-label',still?text('resume'):text('pause'));b.querySelector('span').textContent=still?text('motion'):text('still');}
 function setStill(value){still=value;document.body.classList.toggle('still-view',still);if(!still)displayedFrame=null;updateMotionButton();wake();}
@@ -608,7 +608,7 @@ function frame(time){
  const L=Math.max(lift,endLift);
  const sceneFrame={pose:active.pose,sample:offset=>timeline.locate(clamp(distance+offset,0,timeline.length)).pose,visits:visibleVisits,still,lift:L,power};
  if(!still||!displayedFrame)displayedFrame=sceneFrame;
- if(scene){scene.render({...displayedFrame,visits:visibleVisits,still,lift:L,power},time);updateMedia(time,dt);updateWall(dt);updateBranchEntrances(dt);updateFinale(dt);updateEvents(dt);}
+ if(scene){scene.render({...displayedFrame,visits:visibleVisits,still,lift:L,power},time);updateMedia(time,dt);updateBranchEntrances(dt);updateFinale(dt);updateEvents(dt);}
  if(!still||glide||Math.abs(targetDistance-currentDistance)>.001||Math.abs(scrollSpace.offset)>1e-6)wake();
 }
 function wake(){if(on&&!animation&&!document.hidden)animation=requestAnimationFrame(frame);}
@@ -656,23 +656,20 @@ function resetJourney(){
 }
 function tweenLift(from,to,ms,ease){lift=from;wake();return ST.tween(ms,t=>{lift=from+(to-from)*t;wake();},ease);}
 
-/* a section's own cards (About): a wall of small cards on the right while that section is on screen; click opens one */
-const wall=element('div','section-wall');wall.setAttribute('aria-label','');document.querySelector('#scene-media').after(wall);
-let wallFor=null,wallAlpha=0;
-function buildWall(section){
- wallFor=section.id;const list=section.showcase||[];
- wall.innerHTML=`<p class="sw-kicker"></p><div class="sw-grid">${list.map((it,k)=>{const m=SITE_CONTENT.media[it.media];return `<button type="button" class="sw-card" data-k="${k}" style="--k:${k}">${m?`<img src="${ST.esc(m.src)}" alt="">`:''}<span class="sw-n">${String(k+1).padStart(2,'0')}</span><strong>${ST.esc(pick(it.title))}</strong><small>${ST.esc(pick(it.intro))}</small></button>`;}).join('')}</div>`;
- wall.querySelector('.sw-kicker').textContent=text('showMore');
- wall.querySelectorAll('.sw-card').forEach(b=>b.addEventListener('click',()=>ST.openShowcase(list[+b.dataset.k],+b.dataset.k,list.length)));
+/* a section's own cards (About): they stand along its road one after another; each shows only while it is
+   near (it comes up as you approach and fades once passed), so they never pile up */
+function addMainShowcase(){
+ sections.forEach((section,index)=>{
+  const list=section.showcase||[];if(!list.length||index<1)return;
+  const sd=timeline.main.distanceAt(index/(sections.length-1)),gap=JOURNEY_SETTINGS.mainCardGap,n=list.length,from=sd-JOURNEY_SETTINGS.arriveBeforeMiddle+10;
+  list.forEach((item,k)=>{
+   const pose=timeline.main.pose(from+gap*k),r=[-pose.direction[2],0,pose.direction[0]];
+   createShow(item,k,n,[pose.point[0]+r[0]*2.8,3.9,pose.point[2]+r[2]*2.8],null,[pose.point[0]+r[0]*.9,2.3,pose.point[2]+r[2]*.9]);
+   mediaBoards.at(-1).far=JOURNEY_SETTINGS.mainCardGap*2.05;
+  });
+ });
 }
-function updateWall(dt){
- const sec=sections[active.index],has=active.segment.kind==='main'&&(sec.showcase||[]).length&&Math.max(lift,endLift)<.05&&!introOn;
- if(has&&wallFor!==sec.id)buildWall(sec);
- const target=has?1:0;wallAlpha=still?target:wallAlpha+(target-wallAlpha)*(1-Math.exp(-dt*7));
- wall.style.opacity=String(wallAlpha);wall.style.visibility=wallAlpha>.02?'visible':'hidden';wall.inert=wallAlpha<.5;
- wall.style.transform=`translateY(${((1-wallAlpha)*14).toFixed(1)}px)`;
- if(Math.abs(target-wallAlpha)>.01)wake();
-}
+addMainShowcase();
 setStill(still);
 const V=ST.modes['3d']={
  init(){ if('requestIdleCallback' in window)requestIdleCallback(()=>ensureScene(),{timeout:4000});else setTimeout(ensureScene,1500); },
@@ -720,7 +717,11 @@ const V=ST.modes['3d']={
  currentPath(){return [...active.path];},
  currentEnd(){return on?endStage:0;},
  isPlain(){return introOn;},
- go(path){navigate(path,{focus:false});},
+ go(path){
+  /* the menu during the opening story: the start goes back to its first step, a section leaves the story and travels there */
+  if(introOn){if(pathKey(path)==='overview'){introT=0;wake();return;}finishIntro(true);}
+  navigate(path,{focus:false});
+ },
  openMap(){buildMap();mapDialog.showModal();},
  onLanguage(lang){setLanguage(lang);}
 };
