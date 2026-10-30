@@ -233,6 +233,14 @@
         }
       });
       this.storyPads = pads;
+      /* the edge contacts are not links (nor hover tips) until they are on the chip */
+      const padsPending = pads < .95;
+      if (padsPending !== f.classList.contains('pads-pending')) {
+        f.classList.toggle('pads-pending', padsPending);
+        f.querySelectorAll('.cm-pad,.cm-sup-label').forEach(x => { if (padsPending) x.setAttribute('tabindex', '-1'); else x.removeAttribute('tabindex'); });
+        if (padsPending && this.tipPad) { this.tipPad = null; this.draw(); }
+        if (padsPending) this.showPad(null);
+      }
       /* the name and logo on the empty chip fade away as the first section lands on it */
       const first = this.blocks.length ? blocks[this.blocks[0].i] || 0 : 1;
       set(f, '--brand', 1 - ST.smoothstep(ST.clamp(first)));
@@ -353,7 +361,7 @@
       };
       v.addEventListener('pointerup', up); v.addEventListener('pointercancel', up);
       /* free pads: a tip on hover says what they are */
-      v.addEventListener('pointerover', e => { const pad = e.target.closest('.cm-pad.is-free'); const id = pad ? pad.dataset.pad : null; if (id !== this.tipPad) { this.tipPad = id; this.draw(); } });
+      v.addEventListener('pointerover', e => { if (this.frame.classList.contains('pads-pending')) return; const pad = e.target.closest('.cm-pad.is-free'); const id = pad ? pad.dataset.pad : null; if (id !== this.tipPad) { this.tipPad = id; this.draw(); } });
       v.addEventListener('pointerleave', () => { if (this.tipPad) { this.tipPad = null; this.draw(); } });
       v.addEventListener('click', e => {
         if (this.moved > 5) { e.preventDefault(); e.stopPropagation(); return; }

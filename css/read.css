@@ -848,3 +848,4 @@ html.travel-intro .gate-layer,html.travel-end .gate-layer{opacity:0!important;tr
 
 /* the story: blocks not yet on the chip are not links */
 .chipmap .is-pending,.chipmap .is-pending *{cursor:default!important;pointer-events:none}
+.chipmap.pads-pending :is(.cm-pad,.cm-sup-label){pointer-events:none;cursor:default}
