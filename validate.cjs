@@ -45,8 +45,10 @@ const origin = timeline.locate(junction).pose;
 const mainLength = timeline.length;
 const loop = timeline.insertLoop(['purpose', 'values'], junction);
 poseEqual(loop.curve.pose(0), origin, 'Loop starts at original junction');
-poseEqual(loop.curve.pose(loop.curve.length), origin, 'Loop closes at original junction');
-check(Math.abs(timeline.length - mainLength - loop.curve.length) < 1e-7, 'Loop adds scroll distance');
+const backPose = timeline.main.pose(junction - loop.back);   /* a side path off the main route rejoins it a little before where it left */
+check(loop.back > 0, 'Main-route side paths come back a little earlier');
+poseEqual(loop.curve.pose(loop.curve.length), backPose, 'Loop closes a little before its junction');
+check(Math.abs(timeline.length - mainLength - loop.curve.length - loop.back) < 1e-7, 'Loop adds scroll distance');
 check(timeline.locate(junction + 1).path.join('/') === 'purpose/values', 'Scrolling enters the selected loop');
 const nestedAt = junction + loop.curve.length * .37;
 const nestedOrigin = timeline.locate(nestedAt).pose;
@@ -55,10 +57,10 @@ poseEqual(nested.curve.pose(nested.curve.length), nestedOrigin, 'Nested loop ret
 const nestedEnd = timeline.bounds(nested.id).end;
 check(timeline.locate(nestedEnd + .01).path.join('/') === 'purpose/values', 'Scrolling out of nested loop resumes parent');
 const loopEnd = timeline.bounds(loop.id).end;
-poseEqual(timeline.locate(loopEnd).pose, origin, 'Parent returns to original main junction after nested detour');
+poseEqual(timeline.locate(loopEnd).pose, backPose, 'Parent returns to the main route (before its junction) after nested detour');
 check(timeline.locate(loopEnd + .01).segment.kind === 'main', 'Scrolling exits parent loop to main route');
 check(timeline.locate(loopEnd - .01).segment.visit.id === loop.id, 'Active loop geometry reaches its return junction');
-check(timeline.locate(loopEnd + 30).path[0] === 'focus', 'Main route continues to next section');
+check(timeline.locate(loopEnd + 30 + loop.back).path[0] === 'focus', 'Main route continues to next section');
 check(timeline.locate(timeline.mainLocation(eventsIndex)).segment.kind === 'main', 'Main menu selects About after its loop, not the submenu');
 check(timeline.locate(timeline.visitLocation(loop,loop.curve.length*.37)).segment.visit.id === loop.id, 'Parent navigation chooses the parent side of a nested junction');
 for (let i = 1; i < timeline.segments.length; i++) {
@@ -115,7 +117,7 @@ const endOrigin = ending.locate(ending.length).pose;
 const finalLoop = ending.insertLoop(['support', 'contact'], ending.length);
 check(ending.locate(ending.length).segment.kind === 'main', 'Loop at page end returns to main endpoint');
 poseEqual(ending.locate(ending.length).pose, endOrigin, 'End-of-page loop closure');
-check(ending.bounds(finalLoop.id).end === ending.length, 'End loop bounds remain reachable');
+check(Math.abs(ending.bounds(finalLoop.id).end + finalLoop.back - ending.length) < 1e-7, 'End loop bounds remain reachable');
 const endpointCleanup=ending.pruneInactive(ending.length);
 check(ending.visits.length===0,'Final-section loop also leaves no history');
 poseEqual(ending.locate(endpointCleanup.distance).pose,endOrigin,'Final cleanup preserves endpoint');

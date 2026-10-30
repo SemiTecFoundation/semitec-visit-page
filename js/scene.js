@@ -8,7 +8,8 @@ class SignalScene {
     this.palette={board:color('--chip-board','#10232a'),chip:color('--chip-body','#21383e'),metal:color('--chip-metal','#526264'),gold:color('--chip-signal','#eac883'),teal:color('--chip-trace','#397b80'),fog:color('--chip-fog','#071419')};
     this.active=true;this.mesh=[];this.buildPrograms();this.buildWorld();this.buildDetail();this.buildEvents();this.buildFinale();
     this.worldBuffer=this.upload(this.mesh);this.worldCount=this.mesh.length/10;
-    this.mesh=[];this.buildLoop();this.loopBuffer=this.upload(this.mesh);this.loopCount=this.mesh.length/10;this.mesh=null;
+    this.mesh=[];this.buildLoop();this.loopBuffer=this.upload(this.mesh);this.loopCount=this.mesh.length/10;
+    this.mesh=[];this.buildLoop(JOURNEY_SETTINGS.loopReturnBack);this.loopBackBuffer=this.upload(this.mesh);this.loopBackCount=this.mesh.length/10;this.mesh=null;
     this.sparkBuffer=this.gl.createBuffer();this.resize();
     canvas.addEventListener('webglcontextlost',event=>{event.preventDefault();this.active=false;onError();});
   }
@@ -297,8 +298,9 @@ class SignalScene {
     // the main trace runs on to the centre of the pad row
     this.trace([[ex,.04,sealZ+1],[ex,.04,padZ+1.4]],.085,gold,2);
   }
-  buildLoop(){
-    const points=[],gold=this.palette.gold;
+  buildLoop(back=0){
+    const points=[],gold=this.palette.gold,W=JOURNEY_SETTINGS.loopWidth,D=JOURNEY_SETTINGS.loopDepth;
+    const localLoopPoint=(t)=>window.localLoopPoint(t,W,D,back),localLoopTangent=(t)=>window.localLoopTangent(t,W,D,back);
     for(let i=0;i<=220;i++)points.push(localLoopPoint(i/220));
     for(let i=1;i<points.length;i++){
       const a=points[i-1],b=points[i],d=localLoopTangent(i/220),r=[-d[2],0,d[0]];
@@ -338,14 +340,14 @@ class SignalScene {
     const u=this.uniforms,signal=frame.sample(8).point;
     gl.uniformMatrix4fv(u.Matrix,false,this.matrix);gl.uniformMatrix4fv(u.Model,false,identity());gl.uniform3fv(u.Eye,eye);gl.uniform3fv(u.Fog,this.palette.fog);gl.uniform1f(u.Time,frame.still?0:time*.001);gl.uniform1f(u.SignalZ,signal[2]);gl.uniform1f(u.SignalX,signal[0]);gl.uniform1f(u.Opacity,1);gl.uniform1f(u.Level,0);gl.uniform1f(u.Power,frame.power||0);
     gl.drawArrays(gl.TRIANGLES,0,this.worldCount);
-    this.bindMesh(this.loopBuffer);
     for(const visit of frame.visits){
+      this.bindMesh(visit.back?this.loopBackBuffer:this.loopBuffer);
       if(length(sub(visit.origin.point,eye))>240)continue;
       const f=visit.origin.direction,sd=visit.side||1,r=[-f[2]*sd,0,f[0]*sd],p=visit.origin.point,k=visit.scale; // ▸DUAL mirrored for right-hand loops
       const model=new Float32Array([r[0]*k,0,r[2]*k,0,0,1,0,0,-f[0]*k,0,-f[2]*k,0,p[0],.025,p[2],1]);
       const opacity=visit.retiredAt!==undefined?(frame.still?0:clamp(1-(time-visit.retiredAt)/500,0,1)):(frame.still?1:clamp((time-visit.createdAt)/650,0,1));
       gl.enable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);gl.depthMask(opacity>.99);
-      gl.uniform1f(u.Opacity,opacity);gl.uniform1f(u.Level,sd<0?1:0);gl.uniformMatrix4fv(u.Model,false,model);gl.drawArrays(gl.TRIANGLES,0,this.loopCount);gl.uniform1f(u.Level,0);
+      gl.uniform1f(u.Opacity,opacity);gl.uniform1f(u.Level,sd<0?1:0);gl.uniformMatrix4fv(u.Model,false,model);gl.drawArrays(gl.TRIANGLES,0,visit.back?this.loopBackCount:this.loopCount);gl.uniform1f(u.Level,0);
     }
     gl.depthMask(true);gl.disable(gl.BLEND);Object.values(this.attributes).forEach(loc=>gl.disableVertexAttribArray(loc));this.drawSparks(frame,time);
   }

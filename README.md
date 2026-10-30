@@ -149,6 +149,7 @@ Support sits between Trust and Connect, so the reports are right before it. On t
 
 - Each section's **name stands on its gate** (`.gate-name`, projected onto the gate's beam). Crossing a gate is where the reading panel changes to that section. The section pictures that used to float on the right of the main route are gone.
 - On the main route the **side paths branch off around the middle of a section**, between its gates (`JOURNEY_SETTINGS.mainBranchAhead`, 0 = the middle). Choosing a section arrives just past its gate (`arriveBeforeMiddle`), with the paths sign ahead.
+- A side path off the main route **comes back a little before where it left** (`loopReturnBack`, near the start of the section), so after it the paths sign is ahead again and another path can be chosen. Its last stretch settles exactly onto the main route; the repeated stretch is joined back into one when the visit is cleaned up.
 - When the camera is past the branch point without having seen the sign (coming back from a side path, or arriving there), the sign stays a little ahead of the camera until the next gate, so another path can be chosen without scrolling back.
 - Choosing a side path from the reading panel before that middle point travels on to the middle first, then turns onto the path; after the middle it turns where you are.
 - A long path text (over ~600 characters) stays behind **Read more** in the 3D reading panel; on phones every path text does.

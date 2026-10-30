@@ -11,8 +11,9 @@ const JOURNEY_SETTINGS = Object.freeze({
   fieldOfView: 62,
   lookAhead: 18,
   branchSignAhead: 20,
-  mainBranchAhead: -4,      // on the main route the paths branch off around the middle of a section, between its gates (0 = the exact middle)
+  mainBranchAhead: 2,       // on the main route the paths branch off around the middle of a section, between its gates (0 = the exact middle)
   arriveBeforeMiddle: 18,   // choosing a section arrives just past its gate (the gate is half a section spacing before the middle)
+  loopReturnBack: 22,       // a side path off the main route comes back this far before where it left, so its sign is ahead again
   branchSignLeft: 2.8,
   nestedBranchReveal: 0.24,
   scrollIdleMs: 240,
@@ -60,23 +61,33 @@ function makeMainCurve(){
   const span=(SITE_CONTENT.sections.length-1)*JOURNEY_SETTINGS.sectionSpacing;
   return new Curve(t=>{const z=JOURNEY_SETTINGS.initialZ-t*span;return [chipPath(z),0,z];},t=>{const z=JOURNEY_SETTINGS.initialZ-t*span;return [-chipSlope(z),0,-1];},1400);
 }
-function localLoopPoint(t,width=JOURNEY_SETTINGS.loopWidth,depth=JOURNEY_SETTINGS.loopDepth){
-  if(t<=0||t>=1)return [0,0,0];const angle=t*Math.PI*2;
-  return [-width*Math.pow((1-Math.cos(angle))/2,2),0,-depth*Math.sin(angle)];
+/* back > 0: the loop's second half is drawn back so it rejoins the route that far before where it left */
+const loopBackWeight=t=>{const u=clamp((t-.5)/.5,0,1);return u*u*(3-2*u);};
+function localLoopPoint(t,width=JOURNEY_SETTINGS.loopWidth,depth=JOURNEY_SETTINGS.loopDepth,back=0){
+  if(t<=0)return [0,0,0];if(t>=1)return [0,0,back];const angle=t*Math.PI*2;
+  return [-width*Math.pow((1-Math.cos(angle))/2,2),0,-depth*Math.sin(angle)+back*loopBackWeight(t)];
 }
-function localLoopTangent(t,width=JOURNEY_SETTINGS.loopWidth,depth=JOURNEY_SETTINGS.loopDepth){
-  const angle=t*Math.PI*2;
-  return unit([-width*.5*(1-Math.cos(angle))*Math.sin(angle),0,-depth*Math.cos(angle)]);
+function localLoopTangent(t,width=JOURNEY_SETTINGS.loopWidth,depth=JOURNEY_SETTINGS.loopDepth,back=0){
+  const angle=t*Math.PI*2,u=clamp((t-.5)/.5,0,1),dw=t>.5&&t<1?6*u*(1-u)/.5/(Math.PI*2):0;   // d(weight)/d(angle)
+  return unit([-width*.5*(1-Math.cos(angle))*Math.sin(angle),0,-depth*Math.cos(angle)+back*dw]);
 }
 /* ▸DUAL loops alternate sides by depth: level 1 turns left, level 2 right, level 3 left…
    side = +1 keeps the original (left) shape, −1 mirrors it to the right. */
 function loopSide(path){return (path.length-1)%2===1?1:-1;}
-function makeLoopCurve(origin,scale=1,side=1){
+function makeLoopCurve(origin,scale=1,side=1,back=0,route=null,cut=0){
   const forward=unit(origin.direction),right=[-forward[2],0,forward[0]];
   const world=v=>v.map((_,i)=>right[i]*v[0]*side-forward[i]*v[2]);
   const width=JOURNEY_SETTINGS.loopWidth*scale,depth=JOURNEY_SETTINGS.loopDepth*scale;
-  const curve=new Curve(t=>world(localLoopPoint(t,width,depth)).map((v,i)=>v+origin.point[i]),t=>world(localLoopTangent(t,width,depth)));
-  curve.origin=origin;curve.scale=scale;curve.side=side;return curve;
+  const loopPoint=t=>world(localLoopPoint(t,width,depth,back)).map((v,i)=>v+origin.point[i]);
+  let point=loopPoint,tangent=t=>world(localLoopTangent(t,width,depth,back));
+  if(back>0&&route){
+    /* the last tenth of the loop settles exactly onto the route it rejoins, `back` before the junction */
+    const T=.9,tail=12,W=t=>{const u=clamp((t-T)/(1-T),0,1);return u*u*(3-2*u);};
+    point=t=>{const w=W(t);if(w<=0)return loopPoint(t);const m=route.pose(Math.max(0,cut-back-tail*(1-t)/(1-T))).point,l=loopPoint(t);return l.map((v,i)=>v+(m[i]-v)*w);};
+    tangent=t=>{if(t>=1)return route.pose(cut-back).direction;if(t<T)return world(localLoopTangent(t,width,depth,back));const h=1e-4,a=point(Math.max(0,t-h)),c=point(Math.min(1,t+h));return unit(c.map((v,i)=>v-a[i]));};
+  }
+  const curve=new Curve(point,tangent);
+  curve.origin=origin;curve.scale=scale;curve.side=side;curve.back=back;return curve;
 }
 class JourneyTimeline {
   constructor(){this.main=makeMainCurve();this.segments=[{kind:'main',curve:this.main,from:0,to:this.main.length}];this.visits=[];this.nextId=1;this.reindex();}
@@ -93,11 +104,12 @@ class JourneyTimeline {
     const at=this.locate(distance),segment=at.segment,cut=at.curveDistance,index=this.segments.indexOf(segment);
     const scale=Math.pow(JOURNEY_SETTINGS.nestedLoopScale,path.length-2);
     const side=loopSide(path);
-    const visit={id:this.nextId++,path:[...path],parentPath:[...at.path],parentVisit:segment.visit?.id??null,origin:at.pose,scale,side,curve:makeLoopCurve(at.pose,scale,side),createdAt:0};
+    const back=segment.kind==='main'&&path.length===2?Math.min(JOURNEY_SETTINGS.loopReturnBack,cut):0;
+    const visit={id:this.nextId++,path:[...path],parentPath:[...at.path],parentVisit:segment.visit?.id??null,origin:at.pose,scale,side,back,curve:makeLoopCurve(at.pose,scale,side,back,segment.curve,cut),createdAt:0};
     const replacement=[];
     if(cut-segment.from>1e-7)replacement.push({...segment,to:cut});
     replacement.push({kind:'loop',curve:visit.curve,from:0,to:visit.curve.length,visit});
-    replacement.push({...segment,from:cut});
+    replacement.push({...segment,from:cut-back});
     this.segments.splice(index,1,...replacement);this.visits.push(visit);this.reindex();return visit;
   }
   mainLocation(index){
@@ -123,18 +135,26 @@ class JourneyTimeline {
     }
     const removed=this.visits.filter(v=>!keep.has(v.id));if(!removed.length)return null;
     const ids=new Set(removed.map(v=>v.id));
-    const ranges=this.segments.filter(s=>ids.has(s.visit?.id)).map(s=>({start:s.start,end:s.end}));
-    // Rebase every scroll coordinate, preserving the exact world pose and any
-    // forward overshoot beyond the return junction.
-    const remap=value=>value-ranges.reduce((sum,r)=>sum+clamp(value-r.start,0,r.end-r.start),0);
+    const old=this.segments.map(s=>({...s}));
     const remaining=[];
     for(const segment of this.segments){
       if(ids.has(segment.visit?.id))continue;
       const previous=remaining.at(-1);
-      if(previous&&previous.curve===segment.curve&&Math.abs(previous.to-segment.from)<1e-7)previous.to=segment.to;
+      // a loop that came back a little before where it left leaves two overlapping pieces of the same route: join them
+      if(previous&&previous.curve===segment.curve&&segment.from<=previous.to+1e-7&&segment.to>=previous.to-1e-7)previous.to=segment.to;
       else remaining.push({...segment});
     }
     this.segments=remaining;this.visits=this.visits.filter(v=>keep.has(v.id));this.reindex();
+    // Rebase every scroll coordinate by where it is on its curve, so the world pose stays exactly the same.
+    const remap=value=>{
+      value=clamp(value,0,old.at(-1)?.end??0);
+      let k=old.findIndex(s=>value<s.end-1e-7);if(k<0)k=old.length-1;
+      let s=old[k],cd=s.from+(value-s.start);
+      while(k>0&&ids.has(s.visit?.id)){k--;s=old[k];cd=s.to;}   // inside a removed loop: back to where it left
+      const kept=this.segments.filter(n=>n.curve===s.curve&&cd>=n.from-1e-7&&cd<=n.to+1e-7);
+      const n=kept.length?kept.reduce((best,x)=>Math.abs(x.start-(s.start))<Math.abs(best.start-s.start)?x:best):null;
+      return n?n.start+cd-n.from:clamp(value,0,this.length);
+    };
     return {removed,remap,distance:clamp(remap(distance),0,this.length)};
   }
 }
