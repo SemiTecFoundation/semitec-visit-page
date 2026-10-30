@@ -12,20 +12,20 @@
     (function(){var m=new URLSearchParams(location.search).get('mode');try{m=m||localStorage.getItem('st-mode')}catch(e){}
     document.documentElement.dataset.mode=(m==='3d')?'3d':'2d';})();
   </script>
-  <link rel="stylesheet" href="css/base.css?v=s2610301643">
-  <link rel="stylesheet" href="css/read.css?v=s2610301643">
-  <link rel="stylesheet" href="css/signal.css?v=s2610301643">
-  <script src="content.js?v=s2610301643" defer></script>
-  <script src="js/journey.js?v=s2610301643" defer></script>
-  <script src="js/scene.js?v=s2610301643" defer></script>
-  <script src="js/core.js?v=s2610301643" defer></script>
-  <script src="js/sound.js?v=s2610301643" defer></script>
-  <script src="js/chiplayout.js?v=s2610301643" defer></script>
-  <script src="js/chipmap.js?v=s2610301643" defer></script>
-  <script src="js/ecosystem.js?v=s2610301643" defer></script>
-  <script src="js/story.js?v=s2610301643" defer></script>
-  <script src="js/mode-read.js?v=s2610301643" defer></script>
-  <script src="js/mode-signal.js?v=s2610301643" defer></script>
+  <link rel="stylesheet" href="css/base.css?v=s2610302047">
+  <link rel="stylesheet" href="css/read.css?v=s2610302047">
+  <link rel="stylesheet" href="css/signal.css?v=s2610302047">
+  <script src="content.js?v=s2610302047" defer></script>
+  <script src="js/journey.js?v=s2610302047" defer></script>
+  <script src="js/scene.js?v=s2610302047" defer></script>
+  <script src="js/core.js?v=s2610302047" defer></script>
+  <script src="js/sound.js?v=s2610302047" defer></script>
+  <script src="js/chiplayout.js?v=s2610302047" defer></script>
+  <script src="js/chipmap.js?v=s2610302047" defer></script>
+  <script src="js/ecosystem.js?v=s2610302047" defer></script>
+  <script src="js/story.js?v=s2610302047" defer></script>
+  <script src="js/mode-read.js?v=s2610302047" defer></script>
+  <script src="js/mode-signal.js?v=s2610302047" defer></script>
 </head>
 <body>
   <a class="skip" href="#main" data-ui="skip"></a>
@@ -44,6 +44,7 @@
         <button type="button" data-mode="3d" aria-pressed="false"><span class="ms-icon ms-3d" aria-hidden="true"></span><b>3D</b><span class="ms-word" data-ui="mode3d"></span></button>
         <i class="ms-thumb" aria-hidden="true"></i>
       </div>
+      <a id="academy-link" class="text-button" href="https://semitecfoundation.github.io/semitec-academy/" target="_blank" rel="noopener" data-ui="academyLink"></a>
       <button type="button" id="map-toggle" class="text-button" aria-haspopup="dialog" data-ui="map"></button>
       <button type="button" id="sound-toggle" class="sound-toggle" aria-pressed="false"><svg viewBox="0 0 20 20" aria-hidden="true"><path class="spk" d="M3 8h3l4-3v10l-4-3H3z"/><path class="sw sw1" d="M13 7.5a3.5 3.5 0 0 1 0 5"/><path class="sw sw2" d="M15.5 5.2a7 7 0 0 1 0 9.6"/><path class="sx" d="M13.2 8.2l3.6 3.6M16.8 8.2l-3.6 3.6"/></svg></button>
       <div class="languages" role="group"><button type="button" data-lang="en" aria-pressed="true">EN</button><span>/</span><button type="button" data-lang="hy" aria-pressed="false">ՀԱՅ</button></div>
@@ -79,7 +80,7 @@
       <div id="read-outro" class="outro"></div>
       <aside class="map-dock"><div id="chipmap"></div></aside>
     </div>
-    <footer class="site-foot"><span><b>SemiTec Foundation</b> · <span data-ui="footerLine"></span></span><span data-ui="prototype"></span></footer>
+    <footer class="site-foot"><span><b>SemiTec Foundation</b> · <span data-ui="footerLine"></span> · <a href="https://semitecfoundation.github.io/semitec-academy/" target="_blank" rel="noopener" data-ui="academyLink"></a></span><span data-ui="prototype"></span></footer>
     <noscript><section class="no-script"><h1>SemiTec Foundation</h1><p>Enable JavaScript to explore this prototype. Sections: Purpose, Focus, Initiatives, Events, Impact, People, Trust and Connect.</p></section></noscript>
   </main>
 

@@ -490,11 +490,15 @@ const SITE_CONTENT = {
       ],
       "text": [
         [
-          "Our programs are designed to encourage active participation, promote knowledge exchange, and support long-term educational and technological development. The programs below are planned; each will show its status as it starts.",
-          "Մեր ծրագրերը նախատեսված են խրախուսելու ակտիվ մասնակցությունը, նպաստելու գիտելիքի փոխանակմանը և աջակցելու երկարաժամկետ կրթական և տեխնոլոգիական զարգացմանը։ Ստորև ներկայացված ծրագրերը նախատեսված են․ յուրաքանչյուրի կարգավիճակը կցուցադրվի դրա մեկնարկին զուգընթաց։"
+          "Our programs are designed to encourage active participation, promote knowledge exchange, and support long-term educational and technological development. SemiTec Academy is available now; the other programs below are planned, and each will show its status as it starts.",
+          "Մեր ծրագրերը նախատեսված են խրախուսելու ակտիվ մասնակցությունը, նպաստելու գիտելիքի փոխանակմանը և աջակցելու երկարաժամկետ կրթական և տեխնոլոգիական զարգացմանը։ SemiTec Ակադեմիան արդեն հասանելի է․ ստորև ներկայացված մյուս ծրագրերը նախատեսված են, և յուրաքանչյուրի կարգավիճակը կցուցադրվի դրա մեկնարկին զուգընթաց։"
         ]
       ],
       "items": [
+        [
+          "SemiTec Academy",
+          "SemiTec Ակադեմիա"
+        ],
         [
           "Educational programs",
           "Կրթական ծրագրեր"
@@ -522,6 +526,178 @@ const SITE_CONTENT = {
       ],
       "media": "learning",
       "children": [
+        {
+          "id": "academy",
+          "title": [
+            "SemiTec Academy",
+            "SemiTec Ակադեմիա"
+          ],
+          "intro": [
+            "A free, open-source learning app with course packages for students.",
+            "Անվճար, բաց կոդով ուսումնական հավելված՝ ուսանողների համար դասընթացային փաթեթներով։"
+          ],
+          "items": [
+            [
+              "Status: available · version 2.2.0, initial public release",
+              "Կարգավիճակ՝ հասանելի · տարբերակ 2.2.0, առաջին հրապարակային թողարկում"
+            ],
+            [
+              "Free and open source (Apache-2.0)",
+              "Անվճար և բաց կոդով (Apache-2.0)"
+            ],
+            [
+              "Windows · macOS · Linux",
+              "Windows · macOS · Linux"
+            ]
+          ],
+          "text": [
+            [
+              "SemiTec Academy is the foundation's desktop learning app. Students install it once, add course packages and study on their own computer: interactive trainings with quizzes, labs with source files, readings, videos and projects. Progress stays on the student's computer; no server or sign-up is needed.",
+              "SemiTec Ակադեմիան հիմնադրամի ուսումնական համակարգչային հավելվածն է։ Ուսանողները մեկ անգամ տեղադրում են այն, ավելացնում դասընթացային փաթեթներ և սովորում իրենց համակարգչում՝ ինտերակտիվ դասընթացներ թեստերով, լաբորատոր աշխատանքներ աղբյուր ֆայլերով, ընթերցանյութեր, տեսանյութեր և նախագծեր։ Առաջընթացը պահվում է ուսանողի համակարգչում․ սերվեր կամ գրանցում պետք չէ։"
+            ],
+            [
+              "The app, the course materials and the templates for creating them are three open projects, so universities and companies can use them and publish their own courses.",
+              "Հավելվածը, դասընթացային նյութերը և դրանք ստեղծելու ձևանմուշները երեք բաց նախագծեր են, որպեսզի համալսարաններն ու ընկերությունները կարողանան օգտագործել դրանք և հրապարակել իրենց սեփական դասընթացները։"
+            ]
+          ],
+          "links": [
+            {
+              "label": [
+                "Download the app",
+                "Ներբեռնել հավելվածը"
+              ],
+              "href": "https://github.com/SemiTecFoundation/semitec-academy/releases/latest"
+            },
+            {
+              "label": [
+                "See the introduction",
+                "Դիտել ներածությունը"
+              ],
+              "href": "https://semitecfoundation.github.io/semitec-academy/"
+            }
+          ],
+          "children": [
+            {
+              "id": "app",
+              "title": [
+                "Academy app",
+                "Ակադեմիա հավելված"
+              ],
+              "intro": [
+                "Install once, add packages, study offline and resume where you left off.",
+                "Տեղադրեք մեկ անգամ, ավելացրեք փաթեթներ, սովորեք առանց համացանցի և շարունակեք այնտեղից, որտեղ կանգ եք առել։"
+              ],
+              "items": [
+                [
+                  "Trainings, labs, readings, videos and projects",
+                  "Դասընթացներ, լաբորատոր աշխատանքներ, ընթերցանյութեր, տեսանյութեր և նախագծեր"
+                ],
+                [
+                  "Study plans, calendar and optional certificates",
+                  "Ուսումնական պլաններ, օրացույց և ըստ ցանկության՝ վկայականներ"
+                ]
+              ],
+              "links": [
+                {
+                  "label": [
+                    "Download",
+                    "Ներբեռնել"
+                  ],
+                  "href": "https://github.com/SemiTecFoundation/semitec-academy/releases/latest"
+                },
+                {
+                  "label": [
+                    "Introduction",
+                    "Ներածություն"
+                  ],
+                  "href": "https://semitecfoundation.github.io/semitec-academy/"
+                },
+                {
+                  "label": [
+                    "Source code",
+                    "Աղբյուր կոդ"
+                  ],
+                  "href": "https://github.com/SemiTecFoundation/semitec-academy"
+                }
+              ],
+              "children": [],
+              "media": "learning"
+            },
+            {
+              "id": "materials",
+              "title": [
+                "Learning materials",
+                "Ուսումնական նյութեր"
+              ],
+              "intro": [
+                "Courses published by the foundation appear in the app's catalog automatically.",
+                "Հիմնադրամի հրապարակած դասընթացները ինքնաշխատ հայտնվում են հավելվածի կատալոգում։"
+              ],
+              "items": [
+                [
+                  "First course: BIST and MBIST, for bachelor students",
+                  "Առաջին դասընթաց՝ BIST և MBIST, բակալավրիատի ուսանողների համար"
+                ],
+                [
+                  "Free trainings that also open in a browser",
+                  "Անվճար դասընթացներ, որոնք բացվում են նաև դիտարկիչում"
+                ]
+              ],
+              "links": [
+                {
+                  "label": [
+                    "Browse materials",
+                    "Դիտել նյութերը"
+                  ],
+                  "href": "https://semitecfoundation.github.io/semitec-academy-materials/"
+                },
+                {
+                  "label": [
+                    "Materials on GitHub",
+                    "Նյութերը GitHub-ում"
+                  ],
+                  "href": "https://github.com/SemiTecFoundation/semitec-academy-materials"
+                }
+              ],
+              "children": [],
+              "media": "learning"
+            },
+            {
+              "id": "templates",
+              "title": [
+                "Academy Templates",
+                "Ակադեմիայի ձևանմուշներ"
+              ],
+              "intro": [
+                "Templates and AI-assistant skills for lecturers and companies who want to publish their own courses.",
+                "Ձևանմուշներ և AI օգնականի հմտություններ դասախոսների և ընկերությունների համար, որոնք ցանկանում են հրապարակել իրենց դասընթացները։"
+              ],
+              "items": [
+                [
+                  "Trainings, lab manuals, project briefs and course packages",
+                  "Դասընթացներ, լաբորատոր ձեռնարկներ, նախագծային առաջադրանքներ և դասընթացային փաթեթներ"
+                ],
+                [
+                  "No agreement or approval from the foundation needed",
+                  "Հիմնադրամի համաձայնություն կամ հաստատում պետք չէ"
+                ]
+              ],
+              "links": [
+                {
+                  "label": [
+                    "Academy Templates on GitHub",
+                    "Ձևանմուշները GitHub-ում"
+                  ],
+                  "href": "https://github.com/SemiTecFoundation/semitec-academy-skills"
+                }
+              ],
+              "children": [],
+              "media": "learning"
+            }
+          ],
+          "media": "learning",
+          "branchAfter": 0.3
+        },
         {
           "id": "education-programs",
           "title": [
@@ -1434,7 +1610,16 @@ const SITE_CONTENT = {
               "Ուսանողները կարող են հետաքրքրություն հայտնել կրթական գործողությունների, տեխնիկական սեմինարների, հետազոտական նախագծերի, համայնքային միջոցառումների և կամավորական հնարավորությունների նկատմամբ։ Մենք ձգտում ենք խրախուսել ակտիվ ուսումը և օգնել ուսանողներին կապել ակադեմիական գիտելիքը գործնական փորձի հետ։"
             ]
           ],
-          "media": "gathering"
+          "media": "gathering",
+          "links": [
+            {
+              "label": [
+                "Start learning with SemiTec Academy",
+                "Սկսեք սովորել SemiTec Ակադեմիայով"
+              ],
+              "href": "https://github.com/SemiTecFoundation/semitec-academy/releases/latest"
+            }
+          ]
         },
         {
           "id": "professionals",
@@ -1498,7 +1683,23 @@ const SITE_CONTENT = {
               "Ընկերություններն ու կազմակերպությունները կարող են աջակցել կրթական նախաձեռնություններին, կիսվել տեխնիկական խնդիրներով, տրամադրել փորձառություն, սարքավորումներ կամ ռեսուրսներ և մասնակցել համատեղ գործողություններին։ Մենք ձգտում ենք կառուցել հարաբերություններ՝ հիմնված ընդհանուր նպատակների, գործնական ներդրման և երկարաժամկետ արժեքի վրա։"
             ]
           ],
-          "media": "gathering"
+          "media": "gathering",
+          "links": [
+            {
+              "label": [
+                "Use SemiTec Academy in your courses",
+                "Օգտագործեք SemiTec Ակադեմիան ձեր դասընթացներում"
+              ],
+              "href": "https://semitecfoundation.github.io/semitec-academy/"
+            },
+            {
+              "label": [
+                "Publish your own materials",
+                "Հրապարակեք ձեր նյութերը"
+              ],
+              "href": "https://github.com/SemiTecFoundation/semitec-academy-skills"
+            }
+          ]
         },
         {
           "id": "volunteer",
@@ -2214,6 +2415,14 @@ const SITE_CONTENT = {
     "formUnavailable": [
       "The form cannot send messages yet. Until it does, please use the contact details.",
       "Ձևը դեռ չի կարող հաղորդագրություններ ուղարկել։ Մինչ այդ օգտվեք կոնտակտային տվյալներից։"
+    ],
+    "academyLink": [
+      "Academy ↗",
+      "Ակադեմիա ↗"
+    ],
+    "academyHref": [
+      "https://semitecfoundation.github.io/semitec-academy/",
+      "https://semitecfoundation.github.io/semitec-academy/"
     ]
   },
   "partners": [],

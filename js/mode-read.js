@@ -26,12 +26,15 @@
       <figcaption><span class="sm-kicker">${ST.esc(ST.text('mediaType'))}</span><strong>${ST.esc(ST.pick(m.title))}</strong><span class="sm-view">${ST.esc(ST.text('viewImage'))} ↗</span></figcaption>
     </button></figure>`;
   }
+  /* outside links (e.g. SemiTec Academy): open in a new tab */
+  const linksHTML = (links, cls) => (links || []).length ? `<p class="${cls}">${links.map(l => `<a href="${ST.esc(l.href)}" target="_blank" rel="noopener">${ST.esc(ST.pick(l.label))} ↗</a>`).join('')}</p>` : '';
   function pathCard(section, child, c) {
     const p = `${section.id}/${child.id}`;
     const items = (child.items || []).map(it => `<li>${ST.esc(ST.pick(it))}</li>`).join('');
     const sub = (child.children || []).map(g => `<div class="pc-sub-item">
         <strong>${ST.esc(ST.pick(g.title))}</strong>
         <span>${g.items && g.items.length ? g.items.map(it => ST.esc(ST.pick(it))).join(' · ') : ST.esc(ST.pick(g.intro || ''))}</span>
+        ${linksHTML(g.links, 'pc-sub-links')}
       </div>`).join('');
     return `<article class="path-card" id="card-${section.id}-${child.id}" data-path="${p}" style="--c:${c}">
       <button type="button" class="pc-head" aria-expanded="false" aria-controls="body-${section.id}-${child.id}">
@@ -42,6 +45,7 @@
         <p class="pc-intro">${ST.esc(ST.pick(child.intro))}</p>
         ${(child.text || []).map(t => `<p class="pc-text">${ST.esc(ST.pick(t))}</p>`).join('')}
         ${items ? `<ul class="pc-items">${items}</ul>` : ''}
+        ${linksHTML(child.links, 'pc-links')}
         ${sub ? `<p class="pc-sub-label">${ST.esc(ST.text('further'))}</p><div class="pc-sub">${sub}</div>` : ''}
       </div></div>
     </article>`;
