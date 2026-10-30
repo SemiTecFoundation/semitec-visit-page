@@ -225,7 +225,7 @@ function navigate(path,{historyMode='push',focus=false,instant=false}={}){
  const route=resolveRoute(path);if(!route)return;
  const here=timeline.locate(currentDistance),parent=path.slice(0,-1);
  let destination;
- if(path.length===1){destination=timeline.mainLocation(route.index);}
+ if(path.length===1){destination=route.index>1?Math.max(0,timeline.mainLocation(route.index)-JOURNEY_SETTINGS.arriveBeforeMiddle):timeline.mainLocation(route.index);} // just past the section's gate, with its paths ahead
  else if(pathKey(here.path)===pathKey(parent)){
   // Insert at the exact displayed camera position, without moving or rebuilding it.
   // ▸DUAL …then travel forward into it, so the turn onto the side path is visible.
@@ -325,8 +325,13 @@ function renderCard(force=false){
  if(!navigationTarget)history.replaceState(null,'','#'+pathKey(active.path));
 }
 function updatePanelSize(){if(currentCard)panel.style.height=currentCard.offsetHeight+'px';}
+/* after a side path returns to the main route, the sign comes back just ahead of the camera, so the
+   other paths can be chosen without scrolling back */
+let entranceEpoch=0,lastEntranceKind='main';
 function renderBranchEntrances(route,ready){
- const key=pathKey(active.path)+':'+(active.segment.visit?.id||0);
+ if(active.segment.kind==='main'&&lastEntranceKind==='loop')entranceEpoch++;
+ lastEntranceKind=active.segment.kind;
+ const key=pathKey(active.path)+':'+(active.segment.visit?.id||0)+':'+entranceEpoch;
  let entrance=currentEntrance?.key===key?currentEntrance:null;
  if(!route.children.length||!ready){currentEntrance=null;return;}
  if(!entrance){
@@ -349,6 +354,13 @@ function renderBranchEntrances(route,ready){
 function updateBranchEntrances(dt){
  if(!scene)return;
  const mobile=innerWidth<=760,readingRight=panel.getBoundingClientRect().right;
+ /* arriving at (or coming back to) a section past its branch point puts the sign behind the camera: it then
+    stays a little ahead of the camera until the next gate, so the other paths can be chosen without scrolling back */
+ const ce=currentEntrance;
+ if(ce&&!ce.seen&&active.segment.kind==='main'&&!navigationTarget){
+  const sd=timeline.main.distanceAt(active.index/(sections.length-1)),gate=sd+JOURNEY_SETTINGS.sectionSpacing*.5;
+  if(active.curveDistance>sd+JOURNEY_SETTINGS.mainBranchAhead-6&&active.curveDistance<gate-8){ce.follow=true;ce.pose=timeline.main.pose(Math.min(active.curveDistance+20,gate-2));}
+ }
  for(let i=branchEntrances.length-1;i>=0;i--){
   const b=branchEntrances[i],r=[-b.pose.direction[2],0,b.pose.direction[0]],left=mobile?.8:JOURNEY_SETTINGS.branchSignLeft;
   const point=[b.pose.point[0]-r[0]*left*b.side,mobile?.45:1.5,b.pose.point[2]-r[2]*left*b.side];
@@ -361,6 +373,7 @@ function updateBranchEntrances(dt){
   }
   alpha*=1-finaleAlpha; // ▸DUAL the finale's partner names take this space
   b.alpha=still?alpha:b.alpha+(alpha-b.alpha)*(1-Math.exp(-dt*10));
+  if(b===currentEntrance&&b.alpha>.5&&!navigationTarget&&!b.follow)b.seen=true;
   const visible=b.alpha>.025;
   b.layer.style.opacity=String(b.alpha);b.layer.style.visibility=visible?'visible':'hidden';b.layer.setAttribute('aria-hidden',String(!visible));b.sign.inert=b!==currentEntrance||b.alpha<.3;
   if(p&&visible){

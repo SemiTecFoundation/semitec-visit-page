@@ -11,7 +11,8 @@ const JOURNEY_SETTINGS = Object.freeze({
   fieldOfView: 62,
   lookAhead: 18,
   branchSignAhead: 20,
-  mainBranchAhead: 0,       // on the main route the paths branch off in the middle of a section, between its gates
+  mainBranchAhead: -4,      // on the main route the paths branch off around the middle of a section, between its gates (0 = the exact middle)
+  arriveBeforeMiddle: 18,   // choosing a section arrives just past its gate (the gate is half a section spacing before the middle)
   branchSignLeft: 2.8,
   nestedBranchReveal: 0.24,
   scrollIdleMs: 240,
