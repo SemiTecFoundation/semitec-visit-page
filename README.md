@@ -37,7 +37,7 @@ The 3D view starts with the same story over the risen 3D chip: the empty chip wi
 - **Into the journey:** after the last card, scrolling on dives into the chip: the cards fade, the topology zooms in towards the middle of the screen and opens into the 3D chip as the camera comes down to the journey. **Start the journey** plays the same dive; **Skip the intro** in the corner or Esc fade straight to the journey.
 - **Back:** scrolling up at the very start of the journey plays the dive in reverse: the 3D chip zooms out into the topology and "Building connections. Creating opportunities." returns.
 - **Switching views:** during the story, switching between 2D and 3D keeps the same step and the same picture.
-- **Direct links:** opening 3D at a section (a link, the section bar, "Travel this path in 3D") skips the story.
+- **Direct links:** opening 3D at a section (a link, or the 2D / 3D switch while reading a section) skips the story.
 
 **Code:** `js/story.js` (shared by both views) and `mode-signal.js` (marked ▸STORY).
 
@@ -139,7 +139,7 @@ The gold trace and signal move with your reading position, and the block you're 
 
 ## The 2D page
 
-Each section has a scroll-linked reveal: title words rise, the image unmasks with a small parallax, chips and cards appear one after another, and the large section number moves more slowly than the page. These play backwards when you scroll up. Submenus are expandable **path cards** showing their items and nested paths. Each card has **Travel this path in 3D ↗**, which opens the 3D view directly inside that loop.
+Each section has a scroll-linked reveal: title words rise, the image unmasks with a small parallax, chips and cards appear one after another, and the large section number moves more slowly than the page. These play backwards when you scroll up. Submenus are expandable **path cards** showing their items and nested paths. The 2D page has no separate "3D" links: the 2D / 3D switch at the top is the only way in, and it keeps your place.
 
 ## Support (donations)
 

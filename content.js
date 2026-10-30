@@ -2180,8 +2180,8 @@ const SITE_CONTENT = {
       "Ոլորեք՝ կարդալու համար"
     ],
     "chooseReadNote": [
-      "The map moves aside and follows you, section by section.",
-      "Քարտեզը տեղաշարժվում է և հետևում է ձեզ՝ բաժին առ բաժին։"
+      "The map moves aside and follows you, section by section. To travel through the chip, use the 2D / 3D switch at the top.",
+      "Քարտեզը տեղաշարժվում է և հետևում է ձեզ՝ բաժին առ բաժին։ Չիպի միջով ճամփորդելու համար օգտագործեք վերևի 2D / 3D փոխանջատիչը։"
     ],
     "choose3dNote": [
       "Travel along the signal, through the chip.",

@@ -32,7 +32,6 @@
     const sub = (child.children || []).map(g => `<div class="pc-sub-item">
         <strong>${ST.esc(ST.pick(g.title))}</strong>
         <span>${g.items && g.items.length ? g.items.map(it => ST.esc(ST.pick(it))).join(' · ') : ST.esc(ST.pick(g.intro || ''))}</span>
-        <a href="#${p}/${g.id}" data-travel="${p}/${g.id}" aria-label="${ST.esc(ST.text('travel3d'))}: ${ST.esc(ST.pick(g.title))}">3D ↗</a>
       </div>`).join('');
     return `<article class="path-card" id="card-${section.id}-${child.id}" data-path="${p}" style="--c:${c}">
       <button type="button" class="pc-head" aria-expanded="false" aria-controls="body-${section.id}-${child.id}">
@@ -44,7 +43,6 @@
         ${(child.text || []).map(t => `<p class="pc-text">${ST.esc(ST.pick(t))}</p>`).join('')}
         ${items ? `<ul class="pc-items">${items}</ul>` : ''}
         ${sub ? `<p class="pc-sub-label">${ST.esc(ST.text('further'))}</p><div class="pc-sub">${sub}</div>` : ''}
-        <a class="pc-travel" href="#${p}" data-travel="${p}"><span>${ST.esc(ST.text('travel3d'))}</span><span aria-hidden="true">↗</span></a>
       </div></div>
     </article>`;
   }
@@ -149,8 +147,7 @@
           ${s.id === CHIP_LAYOUT.power ? givePanel() : ''}
           ${s.id === 'support' ? contactPanel() : ''}
           ${kids.length ? `<div class="paths"><p class="paths-label">${ST.esc(ST.text('pathsLabel'))}</p><div class="path-grid">${kids.map((k, c) => pathCard(s, k, c)).join('')}</div></div>` : ''}
-          ${s.id === 'people' ? padStrip() : ''}
-          <div class="sec-foot"><a href="#${s.id}" data-travel="${s.id}" class="sec-travel">${ST.esc(ST.text('travel3d'))} ↗</a></div>`}
+          ${s.id === 'people' ? padStrip() : ''}`}
         </div>
       </section>`;
     });

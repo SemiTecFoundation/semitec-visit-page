@@ -48,7 +48,6 @@
         <p class="sc-k">${ST.esc(ST.text('chooseKicker'))}</p><h3 class="sc-t">${ST.esc(ST.text('chooseTitle'))}</h3>
         <div class="choose-options">
           <div class="choose-opt"><span class="scroll-mouse" aria-hidden="true"><i></i></span><span><strong>${ST.esc(ST.text('chooseRead'))} ↓</strong><small>${ST.esc(ST.text('chooseReadNote'))}</small></span></div>
-          <a class="choose-opt is-3d" href="#overview" data-travel="overview"><span class="ms-icon ms-3d" aria-hidden="true"></span><span><strong>${ST.esc(ST.text('enter3d'))} ↗</strong><small>${ST.esc(ST.text('choose3dNote'))}</small></span></a>
         </div></article>`);
     return cards.join('');
   }
