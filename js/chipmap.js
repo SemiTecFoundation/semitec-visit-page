@@ -224,7 +224,14 @@
       this.built = route >= 1 && pads >= 1 && blocks.every((v, i) => !i || !L.blocks[sections[i].id] || v >= 1) ? 1 : .5;
       f.classList.toggle('is-building', this.built < 1);
       /* a block that has not landed yet (or a pad not yet shown) is not a link */
-      this.blocks.forEach(({ el, i }) => { set(el, '--show', blocks[i] || 0); el.classList.toggle('is-pending', (blocks[i] || 0) < .95); });
+      this.blocks.forEach(({ el, i }) => {
+        const pending = (blocks[i] || 0) < .95;
+        set(el, '--show', blocks[i] || 0);
+        if (pending !== el.classList.contains('is-pending')) {
+          el.classList.toggle('is-pending', pending); el.inert = pending;
+          el.querySelectorAll('[data-path]').forEach(x => { if (pending) x.setAttribute('tabindex', '-1'); else x.removeAttribute('tabindex'); });
+        }
+      });
       this.storyPads = pads;
       /* the name and logo on the empty chip fade away as the first section lands on it */
       const first = this.blocks.length ? blocks[this.blocks[0].i] || 0 : 1;
