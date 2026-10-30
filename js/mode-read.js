@@ -31,7 +31,7 @@
     const items = (child.items || []).map(it => `<li>${ST.esc(ST.pick(it))}</li>`).join('');
     const sub = (child.children || []).map(g => `<div class="pc-sub-item">
         <strong>${ST.esc(ST.pick(g.title))}</strong>
-        <span>${(g.items || []).map(it => ST.esc(ST.pick(it))).join(' · ')}</span>
+        <span>${g.items && g.items.length ? g.items.map(it => ST.esc(ST.pick(it))).join(' · ') : ST.esc(ST.pick(g.intro || ''))}</span>
         <a href="#${p}/${g.id}" data-travel="${p}/${g.id}" aria-label="${ST.esc(ST.text('travel3d'))}: ${ST.esc(ST.pick(g.title))}">3D ↗</a>
       </div>`).join('');
     return `<article class="path-card" id="card-${section.id}-${child.id}" data-path="${p}" style="--c:${c}">
@@ -41,6 +41,7 @@
       </button>
       <div class="pc-body" id="body-${section.id}-${child.id}"><div class="pc-inner">
         <p class="pc-intro">${ST.esc(ST.pick(child.intro))}</p>
+        ${(child.text || []).map(t => `<p class="pc-text">${ST.esc(ST.pick(t))}</p>`).join('')}
         ${items ? `<ul class="pc-items">${items}</ul>` : ''}
         ${sub ? `<p class="pc-sub-label">${ST.esc(ST.text('further'))}</p><div class="pc-sub">${sub}</div>` : ''}
         <a class="pc-travel" href="#${p}" data-travel="${p}"><span>${ST.esc(ST.text('travel3d'))}</span><span aria-hidden="true">↗</span></a>
@@ -104,35 +105,24 @@
       <form class="cp-form" onsubmit="return false"><p class="cp-head">${ST.esc(ST.text('feedbackTitle'))}</p>
         <label>${ST.esc(ST.text('fName'))}<input type="text" name="name" autocomplete="name"></label>
         <label>${ST.esc(ST.text('fEmail'))}<input type="email" name="email" autocomplete="email"></label>
+        <label>${ST.esc(ST.text('fOrg'))}<input type="text" name="organization" autocomplete="organization"></label>
+        <label>${ST.esc(ST.text('fCategory'))}<select name="category">${(SITE_CONTENT.formCategories || []).map(c => `<option>${ST.esc(ST.pick(c))}</option>`).join('')}</select></label>
+        <label>${ST.esc(ST.text('fArea'))}<input type="text" name="area"></label>
         <label>${ST.esc(ST.text('fMessage'))}<textarea name="message"></textarea></label>
+        <label class="cp-consent"><input type="checkbox" name="consent"> ${ST.esc(ST.text('fConsent'))}</label>
+        <p class="cp-unavailable">${ST.esc(ST.text('formUnavailable'))}</p>
         <button type="submit" class="cp-send" disabled>${ST.esc(ST.text('fSend'))}</button></form>
     </div>`;
   }
-  /* The second screen of the opening is pinned while you scroll: the chip builds itself in the
-     centre — sections, then connections, then the partners' and supporters' edge contacts. Only then
-     do the two ways to explore appear (scroll to read / enter the 3D journey). */
+  /* The opening story (pinned while you scroll; the page itself does not move):
+       0  the empty chip floats in the middle
+       1  it moves aside; on the right, the foundation at a glance (numbers, what's next)
+       2… one card per section introduces it, then flies into the chip and becomes its block
+       …  the connections (one signal through every section), then the edge contacts (partners, supporters, free)
+       last the two ways to explore. Then the page releases and the map docks on the left.
+     In this part the chip is a fixed object: no zoom or drag, only a slow float. Its blocks can be clicked. */
   function chooseBlock() {
-    const steps = [1, 2, 3].map(k => `<li data-step="${k}"><span class="bs-n">${k}</span><span class="bs-t">${ST.esc(ST.text('build' + k))}</span></li>`).join('');
-    return `<div class="choose" id="choose">
-      <div class="choose-pin">
-        <div class="choose-heads">
-          <div class="choose-head is-build"><p class="sec-eyebrow"><span class="sec-rule" aria-hidden="true"></span><span>${ST.esc(ST.text('buildKicker'))}</span></p>
-            <h2 class="choose-title">${ST.esc(ST.text('buildTitle'))}</h2></div>
-          <div class="choose-head is-ready" aria-hidden="true"><p class="sec-eyebrow"><span class="sec-rule" aria-hidden="true"></span><span>${ST.esc(ST.text('chooseKicker'))}</span></p>
-            <h2 class="choose-title">${ST.esc(ST.text('chooseTitle'))}</h2></div>
-        </div>
-        <div class="choose-stage" aria-hidden="true"></div>
-        <div class="choose-foot">
-          <div class="build-steps"><ol>${steps}</ol>
-            <p class="bs-note" aria-live="polite"></p>
-            <p class="bs-hint"><span class="scroll-mouse" aria-hidden="true"><i></i></span>${ST.esc(ST.text('buildScroll'))}</p></div>
-          <div class="choose-options">
-            <div class="choose-opt"><span class="scroll-mouse" aria-hidden="true"><i></i></span><span><strong>${ST.esc(ST.text('chooseRead'))} ↓</strong><small>${ST.esc(ST.text('chooseReadNote'))}</small></span></div>
-            <a class="choose-opt is-3d" href="#overview" data-travel="overview" tabindex="-1"><span class="ms-icon ms-3d" aria-hidden="true"></span><span><strong>${ST.esc(ST.text('enter3d'))} ↗</strong><small>${ST.esc(ST.text('choose3dNote'))}</small></span></a>
-          </div>
-        </div>
-      </div>
-    </div>`;
+    return `<div class="choose story" id="choose"><div class="choose-pin">${ST.story.html('2d')}</div></div>`;
   }
   function render() {
     const html = sections.map((s, i) => {
@@ -146,6 +136,7 @@
           <p class="sec-eyebrow"><span class="sec-num">${ST.pad(i)}</span><span class="sec-rule" aria-hidden="true"></span><span>${ST.esc(eyebrow)}</span></p>
           <${H} class="sec-title" id="h-${s.id}">${title(ST.pick(s.title))}</${H}>
           <p class="sec-intro">${ST.esc(ST.pick(s.intro))}</p>
+          ${(s.text || []).map(t => `<p class="sec-text">${ST.esc(ST.pick(t))}</p>`).join('')}
           ${i === 0 ? `<ul class="hero-tags">${items}</ul>
              <div class="hero-actions">
                <span class="hero-cue"><span class="scroll-mouse" aria-hidden="true"><i></i></span>${ST.esc(ST.text('scrollBegin'))}</span>
@@ -159,11 +150,11 @@
           ${s.id === 'support' ? contactPanel() : ''}
           ${kids.length ? `<div class="paths"><p class="paths-label">${ST.esc(ST.text('pathsLabel'))}</p><div class="path-grid">${kids.map((k, c) => pathCard(s, k, c)).join('')}</div></div>` : ''}
           ${s.id === 'people' ? padStrip() : ''}
-          <div class="sec-foot"><a href="#${s.id}" data-travel="${s.id}" class="sec-travel">${ST.esc(ST.text('travel3d'))} ↗</a><span>${ST.esc(ST.text('prototype'))}</span></div>`}
+          <div class="sec-foot"><a href="#${s.id}" data-travel="${s.id}" class="sec-travel">${ST.esc(ST.text('travel3d'))} ↗</a></div>`}
         </div>
       </section>`;
     });
-    intro.innerHTML = html[0]; buildStep = 0;
+    intro.innerHTML = html[0]; storyLast = -1;
     main.innerHTML = html.slice(1).join('');
     ST.eco.render(outro);
     cache = new WeakMap();
@@ -248,7 +239,7 @@
   }
   let state = 'center', anim = null, cur = null, dockRaf = 0;
   function dockRects() {
-    const stage = $('.choose-stage'), space = $('.map-space');
+    const stage = $('.choose .choose-stage'), space = $('.map-space');
     const vw = innerWidth, vh = innerHeight, header = $('.header').offsetHeight, nav = $('.chapter-nav').offsetHeight;
     const st = stage.getBoundingClientRect();
     const center = { l: st.left, t: st.top, w: st.width, h: st.height };
@@ -269,7 +260,7 @@
   let snap = false;   /* entering the view: place the map without animating it */
   let ecoQ = 0, endStage = 0, endAnim = null, endFade = null, endShow = 1;
   function placeDock() {
-    const dock = $('.map-dock'), stage = $('.choose-stage'); if (!dock || !stage) return;
+    const dock = $('.map-dock'), stage = $('.choose .choose-stage'); if (!dock || !stage) return;
     const { center, left, st, vh, header } = dockRects();
     const line = header + 16;                                   /* the switching point of the opening */
     const want = st.top < line + (state !== 'center' ? 8 : 0) ? 'left' : 'center';
@@ -336,6 +327,7 @@
       if ((endAnim || endFade) && !dockRaf) dockRaf = requestAnimationFrame(() => { dockRaf = 0; placeDock(); });
     }
     /* phones, while reading: the badge shows the whole chip in top view, without controls or names */
+    map.setLocked(state === 'center' && !map.expanded);   /* the opening: a fixed object */
     const phone = narrow.matches && state === 'left' && endStage === 0 && !map.expanded;
     dock.classList.toggle('is-badge', phone && mini === 'badge');
     dock.classList.toggle('is-strip', phone && mini === 'strip');
@@ -352,27 +344,26 @@
     cur = r; applyRect(r, show);
     dockShown = show;
   }
-  /* the opening build-up: b 0…1 while the "two ways" screen is pinned */
-  let buildStep = 0;
-  function placeBuild() {
+  /* the opening story, scrubbed by the scroll: P runs 0 … number of steps through the pinned screen */
+  /* the opening story, scrubbed by the scroll (the steps themselves are in js/story.js, shared with the 3D view) */
+  function placeStory() {
     const ch = $('.choose'), pin = ch && ch.firstElementChild; if (!pin) return;
     const r = ch.getBoundingClientRect(), header = $('.header').offsetHeight;
-    const b = ST.clamp((header - r.top) / Math.max(1, r.height - pin.offsetHeight) / .88);
-    map.setBuild(b);
-    const step = b >= .92 ? 4 : b < .44 ? 1 : b < .7 ? 2 : 3;
-    if (step !== buildStep) {
-      if (buildStep && ST.sound) ST.sound.tick();
-      buildStep = step;
-      ch.dataset.step = step;
-      ch.querySelectorAll('.build-steps li').forEach(li => { li.classList.toggle('is-on', +li.dataset.step === step); li.classList.toggle('is-done', +li.dataset.step < step); });
-      const note = ch.querySelector('.bs-note'); if (note) note.textContent = step < 4 ? ST.text('build' + step + 'Note') : '';
-      const ready = step === 4;
-      ch.classList.toggle('is-ready', ready);
-      ch.querySelector('.choose-head.is-ready').setAttribute('aria-hidden', String(!ready));
-      ch.querySelector('.choose-head.is-build').setAttribute('aria-hidden', String(ready));
-      ch.querySelector('.choose-opt.is-3d').tabIndex = ready ? 0 : -1;
-    }
+    const raw = ST.clamp((header - r.top) / Math.max(1, r.height - pin.offsetHeight));
+    const P = raw * ST.story.length(pin);
+    const cr = ST.story.apply(pin, P, map, narrow.matches);
+    const stage = pin.querySelector('.choose-stage');
+    Object.assign(stage.style, { left: cr.l.toFixed(1) + 'px', top: cr.t.toFixed(1) + 'px', width: cr.w.toFixed(1) + 'px', height: cr.h.toFixed(1) + 'px' });
+    /* where the reader is in the story, so the 3D view can open at the same step */
+    ST.state.storyP = state === 'center' && raw < 1 ? P : null;
   }
+  /* open the story at step P (switching from the 3D view during its opening) */
+  function scrollToStory(P) {
+    const ch = $('.choose'), pin = ch.firstElementChild, header = $('.header').offsetHeight;
+    const top = ch.getBoundingClientRect().top + scrollY - header + (P / ST.story.length(pin)) * (ch.offsetHeight - pin.offsetHeight);
+    scrollTo({ top: Math.max(0, Math.round(top)), behavior: 'instant' });
+  }
+  R.isPlain = () => ST.state.storyP != null && ST.state.storyP > .05;   /* during the story both views show the same chip */
   /* the ending's progress 0…1 while its sticky stage is pinned */
   function placeEco() {
     const r = outro.getBoundingClientRect(), header = $('.header').offsetHeight;
@@ -380,7 +371,7 @@
     ecoQ = ST.clamp((header - r.top) / Math.max(1, r.height - stageH));
   }
   function reveal() {
-    placeBuild();
+    placeStory();
     placeEco();
     placeDock();
     const vh = innerHeight;
@@ -461,8 +452,9 @@
   R.enter = function (path, from, end) {
     on = true;
     measure();
-    if (end) { anim = endAnim = endFade = null; ST.eco.snap(); scrollToEnd(end); } else
-    scrollToPath(path, true);
+    if (end) { anim = endAnim = endFade = null; ST.eco.snap(); scrollToEnd(end); }
+    else if (path[0] === 'overview' && from === '3d' && ST.state.storyP != null) scrollToStory(ST.state.storyP);
+    else scrollToPath(path, true);
     measure(); readScroll();
     snap = true; smooth = target; reveal(); map.resize(); map.setScroll(mapP()); reveal(); snap = false;
   };

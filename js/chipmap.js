@@ -127,6 +127,7 @@
               <path class="cm-flow" d="${L.route}"/><path class="cm-draw" d="${L.route}" pathLength="1"/><path class="cm-active" d="${L.route}"/>
               <circle class="cm-halo" r="16"/><circle class="cm-signal" r="5"/>
             </svg>
+            <div class="cm-brand" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M5 29 17 9l6 10 4-6 9 16H5Z"/><path d="m12 29 7-11 6 11"/></svg><span><strong>SEMITEC</strong><em class="cm-brand-sub"></em></span></div>
             <div class="cm-die-label" aria-hidden="true"><strong>SEMITEC</strong><span>EDUCATION · SCIENCE · TECHNOLOGY</span></div>
             <div class="cm-blocks"></div>
             <div class="cm-under">${underHTML()}</div>
@@ -175,7 +176,7 @@
         Object.assign(el.style, { left: b.x + 'px', top: b.y + 'px', width: b.w + 'px', height: b.h + 'px' });
         el.innerHTML = `<button type="button" class="cm-top" data-path="${s.id}">
             <span class="cm-num">${ST.pad(i)} /${b.kind === 'power' ? ' <b class="cm-kicker"></b>' : ''}</span><span class="cm-name"></span></button>
-          <div class="cm-cells">${(s.children || []).map(c => `<button type="button" data-path="${s.id}/${c.id}"><span></span>${c.children && c.children.length ? `<em>+${c.children.length}</em>` : ''}</button>`).join('')}</div>`;
+          <div class="cm-cells${(s.children || []).length > 4 ? ' is-dense' : ''}">${(s.children || []).map(c => `<button type="button" data-path="${s.id}/${c.id}"><span></span>${c.children && c.children.length ? `<em>+${c.children.length}</em>` : ''}</button>`).join('')}</div>`;
         const bank = ST.bankFor && ST.bankFor(s.id);
         if (bank) {   /* memory bits: one lit bit per item stored in this section's memory bank */
           const n = ST.memoryItems(bank.id).length, size = Math.max(16, Math.ceil(n / 8) * 8);
@@ -215,6 +216,43 @@
       set(f, '--wire', ST.clamp((b - .72) / .16));
       return b < .44 ? 1 : b < .7 ? 2 : 3;
     }
+    /* the opening story: which blocks are built (0…1 each, by section index), the signal route and the edge pads */
+    setStory({ blocks, route, pads }) {
+      const key = blocks.map(v => v.toFixed(2)).join() + route.toFixed(3) + pads.toFixed(3);
+      if (key === this.storyKey) return; this.storyKey = key;
+      const f = this.frame, set = (el, k, v) => el.style.setProperty(k, v.toFixed(3));
+      this.built = route >= 1 && pads >= 1 && blocks.every((v, i) => !i || !L.blocks[sections[i].id] || v >= 1) ? 1 : .5;
+      f.classList.toggle('is-building', this.built < 1);
+      this.blocks.forEach(({ el, i }) => set(el, '--show', blocks[i] || 0));
+      /* the name and logo on the empty chip fade away as the first section lands on it */
+      const first = this.blocks.length ? blocks[this.blocks[0].i] || 0 : 1;
+      set(f, '--brand', 1 - ST.smoothstep(ST.clamp(first)));
+      set(f, '--lbl', ST.clamp(route * 3));
+      this.drawPath.style.strokeDashoffset = (1 - ST.clamp(route / .75)).toFixed(4);
+      set(f, '--drawn', 1 - ST.clamp((route - .8) / .2));
+      set(f, '--conn', ST.clamp((route - .6) / .4));
+      set(f, '--rail', ST.clamp((route - .7) / .3));
+      set(f, '--sig', ST.clamp((route - .8) / .2));
+      const m = this.padEls.length;
+      this.padEls.forEach((el, k) => set(el, '--show', ST.clamp((pads - k * .7 / Math.max(1, m - 1)) / .3)));
+      set(f, '--wire', ST.clamp((pads - .2) / .6));
+      this.draw();
+    }
+    /* a block's rectangle on the screen (for the story cards that fly into it) */
+    blockRect(i) {
+      const b = L.blocks[(sections[i] || {}).id]; if (!b || !this.W) return null;
+      const v = this.viewport.getBoundingClientRect();
+      const pts = [[b.x, b.y], [b.x + b.w, b.y], [b.x, b.y + b.h], [b.x + b.w, b.y + b.h]].map(([x, y]) => this.project(x, y));
+      const xs = pts.map(p => p.x), ys = pts.map(p => p.y), l = Math.min(...xs), t = Math.min(...ys);
+      return { l: v.left + l, t: v.top + t, w: Math.max(...xs) - l, h: Math.max(...ys) - t };
+    }
+    /* the opening: the chip is a fixed object — no drag, zoom or keys (its blocks can still be clicked) */
+    setLocked(on) {
+      if (on === !!this.locked) return;
+      this.locked = on; this.frame.classList.toggle('is-locked', on);
+      if (on) { this.following = true; this.paintStatus(); }
+      this.applyFollow(); this.wake();
+    }
     /* the ending (v 0…1, scroll-scrubbed): the camera blends from following the page to the whole chip in top view */
     setOutro(v) {
       v = ST.clamp(v);
@@ -229,6 +267,7 @@
         el.querySelector('.cm-name').textContent = ST.pick(s.label);
         el.querySelectorAll('.cm-cells button').forEach((btn, k) => btn.firstElementChild.textContent = ST.pick(s.children[k].title));
         const kick = el.querySelector('.cm-kicker'); if (kick) kick.textContent = ST.text('powerUnit');
+        const sub = this.frame.querySelector('.cm-brand-sub'); if (sub) sub.textContent = ST.pick(SITE_CONTENT.brand.subtitle);
         el.querySelector('.cm-top').setAttribute('aria-label', ST.pick(s.label));
       });
       this.frame.querySelectorAll('.cm-pad[data-pad]').forEach(el => {
@@ -284,6 +323,7 @@
         const p = this.pointers.get(e.pointerId); if (!p) return;
         const dx = e.clientX - p.x, dy = e.clientY - p.y;
         p.x = e.clientX; p.y = e.clientY;
+        if (this.locked) { this.moved += Math.abs(dx) + Math.abs(dy); return; }
         if (this.pointers.size === 1) {
           this.moved += Math.abs(dx) + Math.abs(dy);
           if (this.moved > 5) {
@@ -312,8 +352,9 @@
         const pad = e.target.closest('[data-pad]'); if (pad) { this.showPad(pad.dataset.pad); return; }
         const b = e.target.closest('[data-path]'); if (b) this.onSelect(b.dataset.path.split('/'));
       }, true);
-      v.addEventListener('dblclick', e => { if (e.target.closest('[data-path]')) return; this.free(); this.zoomAt(e.clientX, e.clientY, 1.8); });
+      v.addEventListener('dblclick', e => { if (this.locked || e.target.closest('[data-path]')) return; this.free(); this.zoomAt(e.clientX, e.clientY, 1.8); });
       v.addEventListener('wheel', e => {
+        if (this.locked) return;   /* the page scrolls on */
         if (this.expanded || e.ctrlKey || e.metaKey) {
           e.preventDefault(); this.free();
           const k = e.ctrlKey && Math.abs(e.deltaY) < 40 ? .012 : .0025;   // trackpad pinch arrives as ctrl+wheel
@@ -321,6 +362,7 @@
         } else this.flashHint(ST.text('zoomHint'));
       }, { passive: false });
       v.addEventListener('keydown', e => {
+        if (this.locked) return;
         const step = 70, map = { ArrowLeft: [step, 0], ArrowRight: [-step, 0], ArrowUp: [0, step], ArrowDown: [0, -step] };
         if (map[e.key]) { e.preventDefault(); this.free(); this.panBy(...map[e.key]); }
         else if (e.key === '+' || e.key === '=') { this.free(); this.zoomBy(1.35); }
@@ -467,8 +509,9 @@
         return;
       }
       if (this.showcase) { Object.assign(this.tgt, { x: L.width / 2, y: L.height / 2, z: .9, tilt: 1 }); return; }
+      if (this.locked) { Object.assign(this.tgt, { x: L.width / 2, y: L.height / 2 - 30, z: .9, tilt: 1 }); return; }   /* the opening object */
       /* the ending shows the whole chip; Top / 3D still applies (except while it goes into the package: top view) */
-      const c = cameraAt(this.p), o = ST.smoothstep(this.outro || 0), v = this.packing ? 0 : this.view === 'tilt' ? 1 : 0;
+      const c = cameraAt(this.p), o = ST.smoothstep(this.outro || 0), v = this.packing ? 0 : (this.locked || this.view === 'tilt') ? 1 : 0;
       Object.assign(this.tgt, { x: ST.lerp(c.x, L.width / 2, o), y: ST.lerp(c.y, L.height / 2, o), z: ST.lerp(c.z, 1, o), tilt: v });
     }
     setView(v) {

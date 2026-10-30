@@ -1,19 +1,45 @@
-# SemiTec — Read or Travel · Memory (VisitPageMemory)
+# SemiTec Foundation — Visit page
 
-The foundation page. The older prototype folders (VisitPage, VisitPage3D, VisitPageCircuit, VisitPageSignal, VisitPageDual) have been removed. Open `index.html`. Open items that need a server or real content are in **[TODO.md](TODO.md)**.
+The SemiTec Foundation website: one page with a 2D reading view and a 3D journey. Open `index.html`, or the live preview at https://semitecfoundation.github.io/semitec-visit-page/. Open items that need a server or real content are in **[TODO.md](TODO.md)**.
 
-## The 2D opening
+## Content source (Oct 2026)
 
-The 2D page opens in **one column** with the overview text, centred. Below it is a **pinned screen where the chip builds itself** while you scroll (or press the arrow keys). The page stays still while the chip map in the centre assembles in three steps, shown as 1 · 2 · 3 under the map:
-1. **Sections:** the blocks appear one by one, in reading order.
-2. **Connections:** the signal route draws itself through every section, then the bus lanes and the power rails from Support appear.
-3. **Partners & supporters:** the bond pads appear around the edge, with bond wires. Free pads stay dashed.
+All text comes from the document "SemiTec Foundation — Public Website Content & Structure".
+- Section ids are unchanged; long texts are paragraphs (`text`) in sections and path cards.
+- Partners, events and archive items are empty on purpose: add only confirmed records.
+- Programs are marked "Status: planned" until they start.
+- The contact form does not send yet; it says so on the page.
+- The Armenian text is a draft and needs a native review before publishing.
 
-Only when the chip is complete does the title change to **"Read the page, or travel through the chip"**, with the two buttons **Scroll to read** and **Enter the 3D journey**. The hero's own 3D button was removed so the journey starts after the build. The 2D/3D switch in the header still works at any time.
+## The 2D opening: the story of the chip
 
-Scrolling on releases the screen. At the **switching point** the map slides into the left column and zooms in to Purpose in about half a second (`DOCK_MS`). Scrolling back above the point returns it to the centre with the whole chip in view. On phones the text gets the whole screen and the map becomes a **slim strip** under the header: the current section's block, zoomed in (the camera moves block to block as you read), with the section's name and title. **_** minimises it to a **badge** in the bottom-right corner; a **double tap** on the badge brings the strip back (the choice is remembered). One tap on either opens the full-screen map.
+The first screen after the overview is pinned while you scroll, so the page itself stays still:
 
-**Code:** the build is `setBuild()` in `js/chipmap.js`, driven by `placeBuild()` in `js/mode-read.js`. The length of the pinned screen is the height of `.choose` in `css/read.css`.
+1. **The empty chip** floats in the middle as an object, with the SemiTec Foundation name and logo on it: no window, no zoom or drag, only a slow float. The name and logo stay through "At a glance" and fade away as the first section lands on the chip.
+2. **At a glance:** the chip moves aside (to the left, or to the top on phones). On the right comes "SemiTec in brief": the mission, the four directions (education, research, collaboration, community) and the vision. The next event shows only when a real one exists. Numbers come later (see TODO.md).
+3. **One card per section:** each card introduces a section (title and a short text). Then it **flies into the chip and becomes that section's block**, from Purpose to Connect, with Support as the power unit.
+4. **Connections:** the signal route draws itself through every block, and Support's power rails appear.
+5. **Edge contacts:** the pads appear around the edge. Gold is for partners, copper for supporters, and **+** marks a free contact, with links to become a partner or supporter.
+6. **Two ways to explore:** read on, or enter the 3D journey.
+
+In this part the chip's blocks show only their section's name (the subsections appear once the page continues). Scrolling back un-builds the chip. You can click a block at any time to go to its section. Then the page releases, and at the switching point the map docks on the left (desktop) or becomes the strip or badge (phones).
+
+**Edit:**
+- The brief, the four directions and the vision are in `SITE_CONTENT.story` in `content.js`.
+- The next event comes from `SITE_CONTENT.events`.
+- The length of the story is the height of `.choose.story` in `css/read.css`, about 60% of a screen per card.
+
+## The 3D opening: the same story, then the journey
+
+The 3D view starts with the same story over the risen 3D chip: the empty chip with the SemiTec Foundation name, "At a glance", the section cards flying into their blocks, the connections and the edge contacts. The last card is **Start the journey**.
+
+- **Moving through it:** while the story shows, the wheel, a swipe, the arrow keys or Space move through it, and the page itself doesn't scroll.
+- **Into the journey:** after the last card, scrolling on (or **Start the journey**, or **Skip the intro** in the corner, or Esc) fades the story and glides the camera down into the journey.
+- **Back:** scrolling up at the very start of the journey opens the story again at its last steps.
+- **Switching views:** during the story, switching between 2D and 3D keeps the same step and the same picture.
+- **Direct links:** opening 3D at a section (a link, the section bar, "Travel this path in 3D") skips the story.
+
+**Code:** `js/story.js` (shared by both views) and `mode-signal.js` (marked ▸STORY).
 
 ## The 2D ending: the package and the ecosystem
 
@@ -53,9 +79,9 @@ Every edge of the chip carries contact pads. **Gold** pads (top and left edges) 
 
 As partners are added to `SITE_CONTENT.partners`, they take the free slots automatically.
 
-## Memory: gallery, projects, reports
+## Archive: gallery, projects, reports
 
-The chip's memory is the foundation's archive. Each section with a **memory bank** gets a memory block. An item is "written" into its bank once its date has passed, and each cell is addressed by year.month (e.g. `2026.06`).
+The chip's archive blocks hold the foundation's records. Each section with an archive bank gets its own block. (In the code these are called `memoryBanks` and `memory`.) An item is "written" into its bank once its date has passed, and each cell is addressed by year.month (e.g. `2026.06`).
 
 | Bank | Section | Colour | Source |
 |---|---|---|---|
@@ -63,9 +89,9 @@ The chip's memory is the foundation's archive. Each section with a **memory bank
 | Project archive | Impact | teal | `SITE_CONTENT.memory` items with `bank: "projects"` |
 | Reports archive | Trust | copper | `SITE_CONTENT.memory` items with `bank: "reports"` |
 
-- **3D:** each bank is a memory block standing just after its section's gate, with one lit cell per item and a board with "Open …". **Upcoming events** are gold posts on the approach to Events; the soonest is met first.
-- **2D:** Events shows the upcoming timeline next to the gallery. Impact and Trust show their memory panels, and each section's tile on the map shows one lit bit per stored item.
-- **Memory view** (dialog) switches between all banks. Opening a cell shows its image, date and summary.
+- **3D:** each bank is an archive block standing just after its section's gate, with one lit cell per item and a board with "Open …". **Upcoming events** are gold posts on the approach to Events; the soonest is met first.
+- **2D:** Events shows the upcoming timeline next to the gallery. Impact and Trust show their archive panels, and each section's tile on the map shows one lit bit per stored item.
+- **Archive view** (dialog) switches between all banks. Opening a cell shows its image, date and summary.
 - Add a bank in `SITE_CONTENT.memoryBanks` (`id`, `section`, `color`: gold / teal / copper, `title`, `intro`, `open`), then add items to `SITE_CONTENT.memory` (`id`, `bank`, `date`, `title`, `summary`, `media`, optional `url`).
 - Preview another day: add `?today=2027-01-15` to the address.
 
@@ -74,7 +100,7 @@ The chip's memory is the foundation's archive. Each section with a **memory bank
 Off by default. The speaker button in the header turns it on, and the choice is remembered. Everything is synthesised in the browser (`js/sound.js`, no audio files):
 - a low electrical hum that rises and brightens while you travel
 - a clock tick when you reach a new section
-- soft tones when the memory view opens or a cell is read
+- soft tones when the archive view opens or a cell is read
 - a rising chord when the chip powers on (Support and the finale)
 - a filtered whoosh when switching between 2D and 3D
 

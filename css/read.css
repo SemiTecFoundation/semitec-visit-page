@@ -366,7 +366,6 @@ html[lang=hy] .sec-hero .sec-title{font-size:clamp(34px,3.8vw,56px)}
   .map-dock.is-strip .cm-viewport{pointer-events:none}
   .map-dock.is-strip .chipmap :is(.cm-controls,.cm-top-ui,.cm-sup-labels,.cm-pad-card,.cm-hint){display:none!important}
   .map-dock.is-strip .chipmap .cm-viewport{bottom:4px!important;top:4px}
-  .dock-strip,.dock-min{display:none}
   .map-dock.is-strip .dock-strip{display:flex;flex-direction:column;justify-content:center;gap:3px;position:absolute;left:126px;right:52px;top:0;bottom:0;min-width:0}
   .ds-k{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .ds-t{font-size:15px;font-weight:600;letter-spacing:-.01em;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -558,7 +557,7 @@ html[lang=hy] .sec-hero .sec-title{font-size:clamp(34px,3.8vw,56px)}
 [data-mode="3d"] .eco-3d.is-live{visibility:visible}
 .eco-3d .eco-stage{position:absolute;inset:0;height:auto;top:0}
 .eco-3d.st-pack .eco-pin,.eco-3d.st-eco .eco-mod,.eco-3d.st-eco .eco-end{pointer-events:auto}
-html.travel-end #reading-panel,html.travel-end .travel-status,html.travel-end .scroll-cue,html.travel-end #branch-entrances,html.travel-end #scene-media,html.travel-end #event-layer,html.travel-end #finale-pads{opacity:0!important;pointer-events:none!important;transition:opacity .4s}
+html.travel-intro #reading-panel,html.travel-intro .travel-status,html.travel-intro .scroll-cue,html.travel-intro #branch-entrances,html.travel-intro #scene-media,html.travel-intro #event-layer,html.travel-intro #finale-pads,html.travel-end #reading-panel,html.travel-end .travel-status,html.travel-end .scroll-cue,html.travel-end #branch-entrances,html.travel-end #scene-media,html.travel-end #event-layer,html.travel-end #finale-pads{opacity:0!important;pointer-events:none!important;transition:opacity .4s}
 html.map-end .map-dock:before{opacity:0}
 .map-dock:before{transition:opacity .3s}
 /* 3D: a visible zoom out first — the camera rises (about .8 s), then the topology takes over from a large
@@ -701,3 +700,117 @@ html.map-end .map-dock:before{opacity:0}
 /* going into the package: no toolbar, no names (the chip is about to be sealed) */
 .chipmap.is-packing .cm-controls,.chipmap.is-packing .cm-top-ui{opacity:0!important;pointer-events:none!important}
 .chipmap.is-packing .cm-sup-labels{display:none}
+
+/* ==========================================================================
+   The opening story (mode-read.js placeStory): the chip floats as a fixed object, cards introduce the
+   foundation and each section; section cards fly into the chip and become its blocks.
+   ========================================================================== */
+.choose.story{height:calc(100vh - var(--header) - var(--nav) + 860vh)}
+.story .choose-pin{display:block;position:sticky;padding:0}
+.story-head{position:absolute;left:0;right:0;top:22px;text-align:center;padding:0 6vw}
+.story-head .sec-eyebrow{justify-content:center}
+.story .choose-stage{position:absolute;margin:0;flex:none}
+.story-cards{position:absolute;right:4vw;top:52%;width:min(500px,38vw);height:min(460px,60%);transform:translateY(-44%)}
+.story-card{position:absolute;inset:0;overflow:hidden;display:flex;flex-direction:column;gap:12px;padding:26px 28px;border-radius:16px;transform-origin:0 0;
+  background:var(--surface);border:1px solid var(--line);box-shadow:0 24px 50px -30px #0b1c2266;opacity:0;will-change:transform,opacity}
+.story-card.is-section{background:linear-gradient(135deg,#24464b,#183338);border-color:#4f8487;color:#e7efe9}
+.story-card.is-power{background:linear-gradient(135deg,#6a5631,#3a3020);border-color:#9a7b42}
+.story-card.is-section>*{opacity:calc(1 - var(--fly,0) * 1.8)}
+.sc-k{display:flex;align-items:center;gap:8px;margin:0;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+.story-card.is-section .sc-k{color:#eac883}
+.sc-t{margin:0;font-size:clamp(22px,2.1vw,30px);font-weight:500;letter-spacing:-.03em;line-height:1.12}
+.sc-p{margin:0;font-size:14px;line-height:1.6;color:var(--muted)}
+.story-card.is-section .sc-p{color:#b7cbca}
+.sc-kids{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 0;padding:0;list-style:none}
+.sc-kids li{padding:5px 10px;border-radius:6px;font-size:12px;background:#0b1c2266;border:1px solid #ffffff1f;color:#d6e2dd}
+.sc-go{margin-top:auto;font-size:13px;color:#eac883}
+.sc-nums{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.sn{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border-radius:10px;background:var(--background);border:1px solid var(--line)}
+.sn strong{font-size:24px;font-weight:600;letter-spacing:-.03em;color:var(--text)}
+.sn span{font-size:11px;color:var(--muted);line-height:1.3}
+.sc-next{display:flex;flex-direction:column;gap:6px}
+.sx{display:flex;gap:10px;align-items:baseline;font-size:12px;color:var(--text)}
+.sx span{flex:none;width:96px;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.sx b{font-weight:500}
+.sx:hover b{text-decoration:underline}
+.sc-note{margin:auto 0 0;font-size:10px;color:var(--faint)}
+.sc-legend{display:flex;flex-wrap:wrap;gap:14px;margin:4px 0 0;padding:0;list-style:none;font-size:13px}
+.sc-legend li{display:flex;align-items:center;gap:8px}
+.sc-legend i{display:grid;place-items:center;width:22px;height:16px;border-radius:2px;background:linear-gradient(135deg,#efd697,#a8864a);font-style:normal;font-size:13px;color:#b08a45}
+.sc-legend .is-supporter i{background:linear-gradient(135deg,#e2a27a,#8a4f2e)}
+.sc-legend .is-free i{background:none;border:1.5px dashed #b08a45}
+.sc-links{display:flex;flex-wrap:wrap;gap:10px 18px;margin:auto 0 0;font-size:13px}
+.sc-links a{color:#8a6a2f}
+.story-card.is-final{justify-content:center}
+.story-card.is-final .choose-options{opacity:1;transform:none;pointer-events:auto;flex-direction:column;align-items:stretch}
+.story-hint{position:absolute;left:0;right:0;bottom:16px;display:flex;justify-content:center;align-items:center;gap:8px;margin:0;font-size:11px;color:var(--muted)}
+/* the chip in the opening: a fixed object with a slow float (no window, no toolbar, no drag or zoom) */
+.chipmap.is-locked :is(.cm-controls,.cm-top-ui){display:none!important}
+.chipmap.is-locked .cm-viewport{bottom:0!important;cursor:default;animation:cm-float 7s ease-in-out infinite}
+@keyframes cm-float{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-8px) rotate(-.35deg)}}
+@media (prefers-reduced-motion:reduce){.chipmap.is-locked .cm-viewport{animation:none}}
+@media (max-width:900px){
+  .story-head{top:12px}
+  .story-cards{left:12px;right:12px;width:auto;top:calc(88px + 36%);bottom:64px;height:auto;transform:none}
+  .story-card{padding:18px 18px;gap:8px}
+  .sc-t{font-size:20px}.sc-p{font-size:13px}
+  .sc-nums{grid-template-columns:repeat(3,1fr);gap:6px}.sn{padding:6px 8px}.sn strong{font-size:18px}.sn span{font-size:10px}
+  .sx span{width:80px}
+}
+
+.dock-strip,.dock-min{display:none}
+/* the floating object may reach past its box (no window to cut it) */
+.chipmap.is-locked,.chipmap.is-locked .cm-viewport{overflow:visible}
+
+/* the name and logo on the empty chip (opening story); --brand fades from 1 to 0 as the first section lands */
+.cm-brand{position:absolute;left:0;top:0;width:1000px;height:760px;display:flex;align-items:center;justify-content:center;gap:34px;color:#eac883;pointer-events:none;
+  transform:translateZ(2px);opacity:var(--brand,0);transition:opacity .2s linear}
+.cm-brand svg{width:120px;height:120px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linejoin:round;filter:drop-shadow(0 0 14px #eac88355)}
+.cm-brand span{display:flex;flex-direction:column;line-height:1}
+.cm-brand strong{font-size:96px;font-weight:500;letter-spacing:.2em;color:#efe6cf}
+.cm-brand em{margin-top:14px;font-style:normal;font-size:28px;letter-spacing:.5em;color:#eac883}
+
+/* opening story: the chip's blocks show only their section's name (no subsection cells), large and centred */
+.chipmap.is-locked .cm-cells,.chipmap.is-locked .cm-bits{display:none}
+.chipmap.is-locked .cm-block .cm-top{justify-content:center;align-items:center;text-align:center;padding:14px}
+.chipmap.is-locked .cm-num{font-size:14px}
+.chipmap.is-locked .cm-name{font-size:34px;margin-top:8px}
+.chipmap.is-locked .cm-power .cm-top{flex-direction:column;justify-content:center;align-items:center;gap:6px}
+.chipmap.is-locked .cm-power .cm-name{font-size:30px}
+
+/* the 3D view's opening story (mode-signal.js ▸STORY): the same chip and cards over the risen 3D chip */
+.intro-3d{display:none}
+[data-mode="3d"] .intro-3d.is-on{display:block;position:absolute;inset:0 0 var(--nav);z-index:7;pointer-events:auto;transition:opacity .6s ease}
+[data-mode="3d"] .intro-3d.is-leaving{opacity:0;pointer-events:none}
+.intro-3d.is-snap .story-card{transition:none!important}
+.intro-board{position:absolute;inset:0;background:radial-gradient(ellipse at 40% 45%,#13323aee 0,#0b1e24f2 60%,#06131af7 100%)}
+.intro-root{position:absolute;inset:0}
+.intro-3d .story-head .choose-title{color:#f1eee6}
+.intro-3d .story-head .sec-eyebrow{color:#eac883}
+.intro-3d .story-hint{color:#a9c0c0}
+.intro-3d .cm-sup-label{background:transparent;color:#ead9aa}
+.intro-3d .cm-sup-label.is-supporter{color:#efb48f}
+.story-skip{position:absolute;right:22px;bottom:16px;z-index:3;padding:8px 14px;border-radius:99px;border:1px solid #a1cbcc40;background:#0b1c22aa;color:#d6e2dd;font-size:12px;cursor:pointer}
+.story-skip:hover{background:#21383e}
+.story-start{cursor:pointer;border:0;font:inherit;text-align:left;width:100%}
+.intro-3d .story-start{background:#eac883;border-color:#eac883;color:#14262c}
+.intro-3d .story-start small{color:#3a3020}
+.intro-3d .story-start:hover{background:#f3d695}
+
+/* blocks with more than four paths: the cells sit in two columns */
+.cm-cells.is-dense{display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:30px;gap:6px}
+.cm-cells.is-dense button{height:30px;padding:0 7px;font-size:11px}
+
+/* longer texts from the content document */
+.sec-text{--a:clamp(0,calc(var(--enter) * 2.2 - .9),1);margin-top:14px;max-width:560px;font-size:15px;line-height:1.75;color:var(--muted);opacity:var(--a)}
+.sec-hero .sec-text{margin-left:auto;margin-right:auto;max-width:640px}
+.pc-text{margin:10px 0 0;font-size:14px;line-height:1.7;color:var(--muted)}
+.sc-nums.is-dirs{grid-template-columns:repeat(2,1fr)}
+.sc-nums.is-dirs strong{font-size:17px}
+.cp-form select{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--text);font:inherit;font-size:14px}
+.cp-consent{display:flex!important;flex-direction:row!important;align-items:flex-start;gap:8px;font-size:12px}
+.cp-consent input{width:auto!important;margin-top:2px}
+.cp-unavailable{margin:0;font-size:12px;color:#8e4a26}
+.site-foot b{font-weight:600;color:var(--text)}
+
+.mem-none{margin:0 0 12px;font-size:13px;color:var(--muted,#6b7a7a);font-style:italic}

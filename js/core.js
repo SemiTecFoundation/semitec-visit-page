@@ -124,7 +124,8 @@
         ? `<button type="button" class="mem-cell is-on" data-mem="${bank.id}:${e.id}"><span class="mem-addr">${ST.address(e.when)}</span><span class="mem-title">${ST.esc(ST.pick(e.title))}</span></button>`
         : `<span class="mem-cell" title="${ST.esc(ST.text('memoryEmpty'))}"><span class="mem-addr">${k === items.length ? '▸' : '—'}</span></span>`;
     }
-    return `<div class="mem-grid" data-bank-color="${bank.color || 'gold'}">${html}</div>`;
+    const none = items.length ? '' : `<p class="mem-none">${ST.esc(ST.text('noProjects'))}</p>`;
+    return `${none}<div class="mem-grid" data-bank-color="${bank.color || 'gold'}">${html}</div>`;
   };
   /* the memory view: one bank at a time, with a switch between banks */
   ST.openMemory = (bankId = 'gallery') => {
@@ -182,7 +183,7 @@
     const end = opts.path ? 0 : (from.currentEnd ? from.currentEnd() : 0);
     state.switching = true; root.classList.add('is-switching');
     /* inside the ending (topology / package / ecosystem) both views show the same picture: switch with a plain fade, no zoom */
-    root.classList.toggle('switch-plain', end > 0);
+    root.classList.toggle('switch-plain', end > 0 || !!(from.isPlain && from.isPlain() && !opts.path));
     ST.sound && ST.sound.sweep();
     try {
       if (!state.reduced && from.beforeLeave) await from.beforeLeave(m, path);

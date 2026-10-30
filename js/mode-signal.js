@@ -108,6 +108,74 @@ function updateOutro(dt){
  endEl.style.pointerEvents=endStage>=1&&endStage<=2?'auto':'none';
 }
 const eco3dEl=document.querySelector('#eco-3d');
+/* ▸STORY the opening story before the journey: the same chip and cards as the 2D page (js/story.js).
+   While it shows, the wheel, touch and keys move through its steps; the page does not scroll. After the
+   last card the chip dives into the journey. Scrolling up at the very start of the journey opens it again. */
+const introEl=document.querySelector('#intro-3d');
+let introMap=null,introOn=false,introP=0,introT=0,introRoot=null,touchY=null;
+const introLen=()=>introRoot?ST.story.length(introRoot):1;
+function renderIntro(){
+ introEl.innerHTML=`<div class="intro-board" aria-hidden="true"></div><div class="intro-root story">${ST.story.html('3d')}</div><button type="button" class="story-skip">${ST.esc(text('storySkip'))} →</button>`;
+ introRoot=introEl.querySelector('.intro-root');
+ const stage=introRoot.querySelector('.choose-stage');stage.innerHTML='<div class="chipmap"></div>';
+ introMap=new ST.ChipMap(stage.firstElementChild,{onSelect:p=>{finishIntro(true);navigate(p);}});
+ introMap.setLocked(true);introMap.setScroll(0);
+}
+function openIntro(P){
+ if(!introRoot)renderIntro();
+ introOn=true;introP=introT=clamp(P,0,introLen());lift=.6;
+ introEl.classList.remove('is-leaving');introEl.classList.add('is-on');document.documentElement.classList.add('travel-intro');
+ updateIntro(0,true);wake();
+}
+function finishIntro(quiet){
+ if(!introOn)return;introOn=false;ST.state.storyP=null;
+ introEl.classList.add('is-leaving');document.documentElement.classList.remove('travel-intro');
+ setTimeout(()=>{if(!introOn)introEl.classList.remove('is-on','is-leaving');},650);
+ window.scrollTo({top:0,behavior:'instant'});targetDistance=currentDistance=0;
+ if(!quiet&&!still)tweenLift(.6,0,1400,ST.easeOut);else lift=0;
+ if(ST.sound)ST.sound.sweep();wake();
+}
+function updateIntro(dt,force){
+ if(!introOn||!introRoot)return;
+ introP=still||force?introT:introP+(introT-introP)*(1-Math.exp(-dt*7));
+ if(Math.abs(introT-introP)<.0005)introP=introT;
+ const cr=ST.story.apply(introRoot,introP,introMap,innerWidth<=900);
+ Object.assign(introRoot.querySelector('.choose-stage').style,{left:cr.l.toFixed(1)+'px',top:cr.t.toFixed(1)+'px',width:cr.w.toFixed(1)+'px',height:cr.h.toFixed(1)+'px'});
+ ST.state.storyP=introP;lift=.6;
+}
+function introMove(steps){
+ const L=introLen();
+ if(steps>0&&introT>=L-.001&&introP>L-.15){finishIntro();return;}
+ introT=clamp(introT+steps,0,L);wake();
+}
+const atJourneyStart=()=>on&&!introOn&&scrollY<=2&&currentDistance<.5&&introRoot!==undefined;
+window.addEventListener('wheel',e=>{
+ if(!on||ST.state.switching)return;
+ if(introOn){e.preventDefault();introMove(e.deltaY/(innerHeight*.6));return;}
+ if(e.deltaY<0&&atJourneyStart()&&lift<.05){e.preventDefault();openIntro(introLen()-.4);}
+},{passive:false,capture:true});
+window.addEventListener('touchstart',e=>{touchY=e.touches[0].clientY;},{passive:true,capture:true});
+window.addEventListener('touchmove',e=>{
+ if(!on||touchY==null)return;const y=e.touches[0].clientY,dy=touchY-y;
+ if(introOn){e.preventDefault();touchY=y;introMove(dy/(innerHeight*.55));return;}
+ if(dy<-30&&atJourneyStart()){touchY=null;openIntro(introLen()-.4);}
+},{passive:false,capture:true});
+window.addEventListener('keydown',e=>{
+ if(!on||!introOn||e.metaKey||e.ctrlKey||e.altKey)return;
+ if(e.target.closest&&e.target.closest('input,textarea,select,dialog'))return;
+ const fwd=['ArrowDown','PageDown'].includes(e.key)||(e.key===' '&&!e.shiftKey),back=['ArrowUp','PageUp'].includes(e.key)||(e.key===' '&&e.shiftKey);
+ if(e.key==='Escape'){e.preventDefault();finishIntro();return;}
+ if(!fwd&&!back)return;
+ if(e.key===' '&&e.target.closest&&e.target.closest('button,a'))return;
+ e.preventDefault();e.stopImmediatePropagation();
+ introMove(fwd?Math.floor(introT+1e-3)+1-introT:-(introT-Math.ceil(introT-1e-3)+1));
+},{capture:true});
+introEl.addEventListener('click',e=>{
+ if(e.target.closest('.story-skip,.story-start')){e.preventDefault();finishIntro();return;}
+ const go=e.target.closest('.sc-go[data-path]');
+ if(go){e.preventDefault();e.stopPropagation();finishIntro(true);navigate(go.dataset.path.split('/'));}
+},true);
+
 eco3dEl.addEventListener('click',e=>{const top=e.target.closest('[data-top]');if(top){e.preventDefault();navigate(['overview']);}});
 function insertVisit(path,distance,instant=false){
  const visit=timeline.insertLoop(path,distance);visit.createdAt=performance.now()-(instant?1000:0);
@@ -409,7 +477,7 @@ function setLanguage(lang){ // ▸DUAL brand, bottom bar and [data-ui] are handl
  panel.setAttribute('aria-label',text('content'));
  document.querySelector('#map-close').setAttribute('aria-label',text('close'));document.querySelector('#media-close').setAttribute('aria-label',text('close'));
  for(const b of mediaBoards){b.image.alt=pick(b.data.alt);b.heading.textContent=pick(b.title||b.data.title);b.kicker.textContent=text('mediaType');b.view.firstChild.textContent=text('viewImage');}
- updateMotionButton();textFinale();textEvents();if(eco3d){eco3d.render(eco3dEl);}if(on){renderCard(true);if(mapDialog.open)buildMap();wake();}
+ updateMotionButton();textFinale();textEvents();if(eco3d){eco3d.render(eco3dEl);}if(introRoot){const was=introOn,P=introT;introRoot=null;renderIntro();if(was){introOn=false;openIntro(P);}else introEl.classList.remove('is-on');}if(on){renderCard(true);if(mapDialog.open)buildMap();wake();}
 }
 function updateMotionButton(){const b=document.querySelector('#motion-toggle');b.setAttribute('aria-pressed',String(still));b.setAttribute('aria-label',still?text('resume'):text('pause'));b.querySelector('span').textContent=still?text('motion'):text('still');}
 function setStill(value){still=value;document.body.classList.toggle('still-view',still);if(!still)displayedFrame=null;updateMotionButton();wake();}
@@ -434,6 +502,7 @@ function frame(time){
  if(powerBefore<.6&&power>=.6&&ST.sound)ST.sound.power(); // ▸SOUND the chip powers on
  if(ST.sound)ST.sound.motion(Math.abs(targetDistance-currentDistance)/6+Math.abs(lift-(frame.lastLift??lift))*8);frame.lastLift=lift;
  document.documentElement.style.setProperty('--power',power.toFixed(3));
+ updateIntro(dt);
  updateOutro(dt);
  const L=Math.max(lift,endLift);
  const sceneFrame={pose:active.pose,sample:offset=>timeline.locate(clamp(distance+offset,0,timeline.length)).pose,visits:visibleVisits,still,lift:L,power};
@@ -496,12 +565,16 @@ const V=ST.modes['3d']={
   mediaBoards.forEach(b=>b.width=b.figure.offsetWidth);
   updateTrack();
   navigate(path,{historyMode:'replace',instant:true});
+  /* ▸STORY the journey opens with the story at the start (or at the reader's step when switching from 2D) */
+  const storyAt=!end&&path[0]==='overview'?(from==='2d'?ST.state.storyP:0):null;
+  if(storyAt!=null){openIntro(storyAt);if(from==='2d'&&introRoot)introEl.classList.add('is-snap');setTimeout(()=>introEl.classList.remove('is-snap'),100);}
+  else if(introOn){introOn=false;introEl.classList.remove('is-on','is-leaving');document.documentElement.classList.remove('travel-intro');}
   if(end){ // ▸ENDING switching views inside the ending: open at the same step of it
    navigationTarget=null;glide=null;currentDistance=targetDistance=timeline.length;active=timeline.locate(currentDistance);
    window.scrollTo({top:scrollSpace.toPixels(timeline.length)+Math.round([0,.12,.33,.56,.85][end]*outroPx()),behavior:'instant'});
    endLift=1;eco3d.snap();
   }
-  else if(from&&!still){
+  else if(from&&!still&&!introOn){
    /* arrival: start a little behind the section and above the chip, then glide in */
    if(path.length===1){currentDistance=Math.max(0,currentDistance-16);}
    lift=.55;document.documentElement.classList.add('is-arriving');
@@ -509,23 +582,26 @@ const V=ST.modes['3d']={
   lastTime=performance.now();frame(lastTime);     // draw now, so the view transition captures the 3D frame
  },
  afterEnter(from){
+  if(introOn){document.documentElement.classList.remove('is-arriving');wake();return;}
   if(from&&!still)tweenLift(lift,0,1300,ST.easeOut).then(()=>document.documentElement.classList.remove('is-arriving'));
   else{lift=0;document.documentElement.classList.remove('is-arriving');}
   wake();
  },
  beforeLeave(){
   if(mapDialog.open)mapDialog.close();if(mediaDialog.open)mediaDialog.close();
-  if(still||endStage)return Promise.resolve(); // ▸ENDING the package stays put: no rise
+  if(still||endStage||introOn)return Promise.resolve(); // ▸ENDING / ▸STORY the picture stays put: no rise
   document.documentElement.classList.add('is-rising');
   return tweenLift(0,1,800,ST.easeInOut);
  },
  leave(){
   on=false;cancelAnimationFrame(animation);animation=0;lift=0;glide=null;endLift=0;
+  introOn=false;introEl.classList.remove('is-on','is-leaving');document.documentElement.classList.remove('travel-intro');
   document.documentElement.classList.remove('is-rising','is-arriving','travel-end');eco3dEl.classList.remove('is-live');if(endEl){endEl.style.visibility='hidden';endMap.setFlip(false);endMap.setPacking(false);}
   if(mapDialog.open)mapDialog.close();if(mediaDialog.open)mediaDialog.close();
  },
  currentPath(){return [...active.path];},
  currentEnd(){return on?endStage:0;},
+ isPlain(){return introOn;},
  go(path){navigate(path,{focus:false});},
  openMap(){buildMap();mapDialog.showModal();},
  onLanguage(lang){setLanguage(lang);}

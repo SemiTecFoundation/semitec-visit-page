@@ -3,8 +3,10 @@
    once the date has passed, the event is "written" into the Events memory bank (the gallery).
    Memory banks: one per section (memoryBanks). Items in `memory` name their bank and appear
    once their date has passed — projects in Impact, reports in Trust.
+   Story: the numbers and the "what's next" items at the start of the 2D page (placeholders).
    Ecosystem: the modules that connect to the chip package at the end of the 2D page.
-   All events and memory items below are placeholders: replace or delete them. */
+   Events, memory items and partners are empty until real ones are confirmed: never add invented ones.
+   Section texts come from the foundation's website content document (EN); the Armenian is a draft for review. */
 const SITE_CONTENT = {
   "brand": {
     "name": "SemiTec",
@@ -13,8 +15,8 @@ const SITE_CONTENT = {
       "ՀԻՄՆԱԴՐԱՄ"
     ],
     "tagline": [
-      "A WORLD OF CONNECTIONS",
-      "ԿԱՊԵՐԻ ԱՇԽԱՐՀ"
+      "ADVANCING ARMENIA’S SEMICONDUCTOR FUTURE",
+      "ՀԱՅԱՍՏԱՆԻ ԿԻՍԱՀԱՂՈՐԴՉԱՅԻՆ ԱՊԱԳԱՆ"
     ]
   },
   "sections": [
@@ -22,28 +24,34 @@ const SITE_CONTENT = {
       "id": "overview",
       "label": [
         "Overview",
-        "Ընդհանուր տեսք"
+        "Ընդհանուր"
       ],
       "title": [
-        "Follow a spark.\nDiscover SemiTec.",
-        "Հետևեք կայծին։\nԲացահայտեք Սեմիթեքը։"
+        "Advancing Armenia's\nsemiconductor future.",
+        "Զարգացնելով Հայաստանի\nկիսահաղորդչային ապագան։"
       ],
       "intro": [
-        "A journey through the people, ideas and work of SemiTec Foundation.",
-        "Ճանապարհորդություն Սեմիթեք հիմնադրամի մարդկանց, գաղափարների և աշխատանքի միջով։"
+        "Connecting people, knowledge, and opportunities.",
+        "Կապում ենք մարդկանց, գիտելիքն ու հնարավորությունները։"
+      ],
+      "text": [
+        [
+          "SemiTec Foundation is dedicated to advancing Armenia's semiconductor ecosystem by strengthening connections between education, scientific research, industry, and the wider community.",
+          "SemiTec հիմնադրամը նպատակ ունի զարգացնել Հայաստանի կիսահաղորդչային էկոհամակարգը՝ ամրապնդելով կապերը կրթության, գիտական հետազոտությունների, արդյունաբերության և լայն հանրության միջև։"
+        ]
       ],
       "items": [
         [
-          "Education",
-          "Կրթություն"
+          "Building connections",
+          "Կառուցում ենք կապեր"
         ],
         [
-          "Science",
-          "Գիտություն"
+          "Creating opportunities",
+          "Ստեղծում ենք հնարավորություններ"
         ],
         [
-          "Technology",
-          "Տեխնոլոգիա"
+          "Advancing together",
+          "Առաջ ենք գնում միասին"
         ]
       ],
       "media": "wafer",
@@ -52,55 +60,112 @@ const SITE_CONTENT = {
     {
       "id": "purpose",
       "label": [
-        "Purpose",
-        "Նպատակ"
+        "About",
+        "Մեր մասին"
       ],
       "title": [
-        "Our purpose.",
-        "Մեր նպատակը։"
+        "A shared commitment to\ntechnological progress.",
+        "Ընդհանուր նվիրում\nտեխնոլոգիական առաջընթացին։"
       ],
       "intro": [
-        "Our story, our mission and our vision.",
-        "Մեր պատմությունը, առաքելությունը և տեսլականը։"
+        "SemiTec Foundation is an initiative dedicated to supporting the long-term development of Armenia's semiconductor ecosystem.",
+        "SemiTec հիմնադրամը նախաձեռնություն է, որը նպատակ ունի աջակցել Հայաստանի կիսահաղորդչային էկոհամակարգի երկարաժամկետ զարգացմանը։"
+      ],
+      "text": [
+        [
+          "We believe that sustainable progress requires more than technical expertise. It depends on strong connections between people, educational institutions, research communities, and industry. Our goal is to help build an environment where knowledge is shared, talent is developed, and ideas have the opportunity to become meaningful achievements.",
+          "Մենք համոզված ենք, որ կայուն առաջընթացի համար միայն տեխնիկական փորձառությունը բավարար չէ։ Այն պահանջում է ամուր կապեր մարդկանց, կրթական հաստատությունների, հետազոտական համայնքների և արդյունաբերության միջև։ Մեր նպատակն է օգնել ստեղծել միջավայր, որտեղ գիտելիքը կիսվում է, տաղանդը զարգանում է, իսկ գաղափարները հնարավորություն են ստանում դառնալու իմաստալից ձեռքբերումներ։"
+        ]
       ],
       "items": [
         [
-          "Our mission",
-          "Մեր առաքելությունը"
+          "Who we are",
+          "Ովքեր ենք մենք"
         ],
         [
-          "Our vision",
-          "Մեր տեսլականը"
+          "Mission & vision",
+          "Առաքելություն և տեսլական"
+        ],
+        [
+          "Our values",
+          "Մեր արժեքները"
+        ],
+        [
+          "Our story",
+          "Մեր պատմությունը"
         ]
       ],
       "media": "wafer",
       "children": [
+        {
+          "id": "who",
+          "title": [
+            "Who we are",
+            "Ովքեր ենք մենք"
+          ],
+          "intro": [
+            "A nonprofit initiative for Armenia's semiconductor and microelectronics ecosystem.",
+            "Ոչ առևտրային նախաձեռնություն՝ Հայաստանի կիսահաղորդչային և միկրոէլեկտրոնիկայի էկոհամակարգի համար։"
+          ],
+          "items": [],
+          "children": [],
+          "text": [
+            [
+              "SemiTec Foundation is a nonprofit initiative established to contribute to the development of Armenia's semiconductor and microelectronics ecosystem.",
+              "SemiTec հիմնադրամը ոչ առևտրային նախաձեռնություն է, որը ստեղծվել է նպաստելու Հայաստանի կիսահաղորդչային և միկրոէլեկտրոնիկայի էկոհամակարգի զարգացմանը։"
+            ],
+            [
+              "The foundation seeks to bring together individuals and organizations who share an interest in advancing technological education, scientific research, engineering expertise, and innovation.",
+              "Հիմնադրամը ձգտում է համախմբել անհատների և կազմակերպությունների, որոնց հետաքրքրում է տեխնոլոգիական կրթության, գիտական հետազոտությունների, ինժեներական փորձառության և նորարարության զարգացումը։"
+            ],
+            [
+              "We believe that Armenia's technological future can be strengthened through collaboration, accessible knowledge, and opportunities that encourage people to learn, experiment, research, and create.",
+              "Մենք հավատում ենք, որ Հայաստանի տեխնոլոգիական ապագան կարելի է ամրապնդել համագործակցության, հասանելի գիտելիքի և այնպիսի հնարավորությունների միջոցով, որոնք մարդկանց խրախուսում են սովորել, փորձարկել, հետազոտել և ստեղծել։"
+            ]
+          ],
+          "media": "wafer"
+        },
+        {
+          "id": "why",
+          "title": [
+            "Why we exist",
+            "Ինչու ենք մենք գոյություն ունենում"
+          ],
+          "intro": [
+            "Education, research and industry do not always develop in close coordination.",
+            "Կրթությունը, հետազոտությունը և արդյունաբերությունը միշտ չէ, որ զարգանում են սերտ համագործակցությամբ։"
+          ],
+          "items": [],
+          "children": [],
+          "text": [
+            [
+              "The semiconductor industry is built upon a complex relationship between scientific discovery, engineering expertise, education, and industrial innovation.",
+              "Կիսահաղորդչային արդյունաբերությունը հիմնված է գիտական հայտնագործությունների, ինժեներական փորձառության, կրթության և արդյունաբերական նորարարության բարդ փոխկապակցվածության վրա։"
+            ],
+            [
+              "However, these areas do not always develop in close coordination. Educational programs may lack exposure to current engineering challenges, researchers may have limited opportunities to collaborate with industry, and talented individuals may struggle to find the resources or professional networks needed to develop their ideas.",
+              "Սակայն այս ոլորտները միշտ չէ, որ զարգանում են սերտ համաձայնեցվածությամբ։ Կրթական ծրագրերը կարող են կտրված լինել այսօրվա ինժեներական խնդիրներից, հետազոտողները կարող են սահմանափակ հնարավորություններ ունենալ արդյունաբերության հետ համագործակցելու համար, իսկ տաղանդավոր մարդիկ կարող են դժվարությամբ գտնել իրենց գաղափարները զարգացնելու համար անհրաժեշտ ռեսուրսներն ու մասնագիտական կապերը։"
+            ],
+            [
+              "SemiTec Foundation aims to help address these challenges by encouraging cooperation, supporting educational and research initiatives, and creating opportunities for knowledge exchange.",
+              "SemiTec հիմնադրամը ձգտում է օգնել լուծելու այս խնդիրները՝ խրախուսելով համագործակցությունը, աջակցելով կրթական և հետազոտական նախաձեռնություններին և ստեղծելով գիտելիքի փոխանակման հնարավորություններ։"
+            ]
+          ],
+          "media": "wafer"
+        },
         {
           "id": "mission",
           "title": [
             "Our mission",
             "Մեր առաքելությունը"
           ],
-          "items": [
-            [
-              "Our mission goes here",
-              "Մեր առաքելությունը՝ այստեղ"
-            ],
-            [
-              "Who we serve",
-              "Ում համար ենք աշխատում"
-            ],
-            [
-              "Why the foundation exists",
-              "Ինչու է ստեղծվել հիմնադրամը"
-            ]
-          ],
-          "children": [],
-          "media": "wafer",
           "intro": [
-            "Information for this destination goes here.",
-            "Այս նպատակակետի տեղեկությունները՝ այստեղ։"
-          ]
+            "To strengthen Armenia's semiconductor ecosystem by connecting education, research, industry, and community through collaborative initiatives, knowledge sharing, and opportunities for technological development.",
+            "Ամրապնդել Հայաստանի կիսահաղորդչային էկոհամակարգը՝ կապելով կրթությունը, հետազոտությունը, արդյունաբերությունը և համայնքը համատեղ նախաձեռնությունների, գիտելիքի փոխանակման և տեխնոլոգիական զարգացման հնարավորությունների միջոցով։"
+          ],
+          "items": [],
+          "children": [],
+          "media": "wafer"
         },
         {
           "id": "vision",
@@ -108,22 +173,141 @@ const SITE_CONTENT = {
             "Our vision",
             "Մեր տեսլականը"
           ],
-          "items": [
+          "intro": [
+            "An Armenia with a dynamic, interconnected, and internationally engaged semiconductor ecosystem, where talented individuals have the knowledge, resources, and opportunities to contribute to scientific and technological advancement.",
+            "Հայաստան՝ դինամիկ, փոխկապակցված և միջազգայնորեն ներգրավված կիսահաղորդչային էկոհամակարգով, որտեղ տաղանդավոր մարդիկ ունեն գիտելիք, ռեսուրսներ և հնարավորություններ՝ նպաստելու գիտական և տեխնոլոգիական առաջընթացին։"
+          ],
+          "items": [],
+          "children": [],
+          "media": "wafer"
+        },
+        {
+          "id": "values",
+          "title": [
+            "Our values",
+            "Մեր արժեքները"
+          ],
+          "intro": [
+            "Six values guide how we work.",
+            "Վեց արժեք, որոնք ուղղորդում են մեր աշխատանքը։"
+          ],
+          "items": [],
+          "children": [
+            {
+              "id": "knowledge",
+              "title": [
+                "Knowledge and education",
+                "Գիտելիք և կրթություն"
+              ],
+              "intro": [
+                "Accessible, high-quality knowledge is essential for technological progress.",
+                "Հասանելի և որակյալ գիտելիքը տեխնոլոգիական առաջընթացի հիմքն է։"
+              ],
+              "items": [],
+              "children": [],
+              "media": "wafer"
+            },
+            {
+              "id": "collaboration",
+              "title": [
+                "Collaboration",
+                "Համագործակցություն"
+              ],
+              "intro": [
+                "Cooperation between individuals, universities, research institutions, companies, and professional communities.",
+                "Անհատների, համալսարանների, հետազոտական հաստատությունների, ընկերությունների և մասնագիտական համայնքների միջև։"
+              ],
+              "items": [],
+              "children": [],
+              "media": "wafer"
+            },
+            {
+              "id": "innovation",
+              "title": [
+                "Innovation",
+                "Նորարարություն"
+              ],
+              "intro": [
+                "Curiosity, experimentation, research, and practical solutions to meaningful challenges.",
+                "Հետաքրքրասիրություն, փորձարկում, հետազոտություն և գործնական լուծումներ իմաստալից խնդիրների համար։"
+              ],
+              "items": [],
+              "children": [],
+              "media": "wafer"
+            },
+            {
+              "id": "openness",
+              "title": [
+                "Openness",
+                "Բացություն"
+              ],
+              "intro": [
+                "The responsible exchange of knowledge, ideas, and experiences that benefit the broader community.",
+                "Գիտելիքի, գաղափարների և փորձի պատասխանատու փոխանակում՝ ի օգուտ լայն համայնքի։"
+              ],
+              "items": [],
+              "children": [],
+              "media": "wafer"
+            },
+            {
+              "id": "integrity",
+              "title": [
+                "Integrity and responsibility",
+                "Ազնվություն և պատասխանատվություն"
+              ],
+              "intro": [
+                "Transparent governance, responsible use of resources, and accountability to our community and supporters.",
+                "Թափանցիկ կառավարում, ռեսուրսների պատասխանատու օգտագործում և հաշվետվողականություն մեր համայնքի ու աջակիցների առջև։"
+              ],
+              "items": [],
+              "children": [],
+              "media": "wafer"
+            },
+            {
+              "id": "long-term",
+              "title": [
+                "Long-term development",
+                "Երկարաժամկետ զարգացում"
+              ],
+              "intro": [
+                "Initiatives that create lasting educational, scientific, and technological value.",
+                "Նախաձեռնություններ, որոնք ստեղծում են տևական կրթական, գիտական և տեխնոլոգիական արժեք։"
+              ],
+              "items": [],
+              "children": [],
+              "media": "wafer"
+            }
+          ],
+          "media": "wafer",
+          "branchAfter": 0.3
+        },
+        {
+          "id": "story",
+          "title": [
+            "Our story: Mount Aragats",
+            "Մեր պատմությունը՝ Արագած լեռը"
+          ],
+          "intro": [
+            "Mount Aragats symbolizes the foundation's connection to Armenia and its belief in the country's technological potential.",
+            "Արագած լեռը խորհրդանշում է հիմնադրամի կապը Հայաստանի հետ և հավատը երկրի տեխնոլոգիական ներուժին։"
+          ],
+          "items": [],
+          "children": [],
+          "text": [
             [
-              "The future we want to build",
-              "Ապագան, որը ցանկանում ենք կառուցել"
+              "Its four peaks represent four interconnected strategic directions: education, research, collaboration, and community. The journey toward these peaks symbolizes collective effort, continuous learning, and the pursuit of ambitious objectives.",
+              "Նրա չորս գագաթները ներկայացնում են չորս փոխկապակցված ռազմավարական ուղղություն՝ կրթություն, հետազոտություն, համագործակցություն և համայնք։ Այս գագաթներին տանող ճանապարհը խորհրդանշում է համատեղ ջանքը, շարունակական ուսումը և հավակնոտ նպատակների ձգտումը։"
             ],
             [
-              "Our long-term goals",
-              "Մեր երկարաժամկետ նպատակները"
+              "Quartz found in the Aragats region provides an additional symbolic connection to silicon and semiconductor technology. This symbolism does not imply that the local quartz is suitable for semiconductor manufacturing.",
+              "Արագածի տարածաշրջանում հայտնաբերվող քվարցը լրացուցիչ խորհրդանշական կապ է ստեղծում սիլիցիումի և կիսահաղորդչային տեխնոլոգիաների հետ։ Այս խորհրդանիշը չի ենթադրում, որ տեղական քվարցը պիտանի է կիսահաղորդիչների արտադրության համար։"
+            ],
+            [
+              "Together, these elements express a central idea: meaningful progress is achieved when people combine their knowledge, abilities, and determination toward shared goals.",
+              "Միասին այս տարրերն արտահայտում են մեկ հիմնական գաղափար՝ իմաստալից առաջընթացը ձեռք է բերվում, երբ մարդիկ միավորում են իրենց գիտելիքը, կարողություններն ու վճռականությունը ընդհանուր նպատակների համար։"
             ]
           ],
-          "children": [],
-          "media": "wafer",
-          "intro": [
-            "Information for this destination goes here.",
-            "Այս նպատակակետի տեղեկությունները՝ այստեղ։"
-          ]
+          "media": "wafer"
         }
       ]
     },
@@ -134,12 +318,18 @@ const SITE_CONTENT = {
         "Ուղղություններ"
       ],
       "title": [
-        "Ideas into action.",
-        "Գաղափարից՝ գործ։"
+        "Four interconnected directions.\nOne shared future.",
+        "Չորս փոխկապակցված ուղղություն։\nՄեկ ընդհանուր ապագա։"
       ],
       "intro": [
-        "Our aims and the four directions of our work.",
-        "Մեր նպատակները և աշխատանքի չորս ուղղությունները։"
+        "We concentrate on the foundations of long-term technological development: education, scientific research, industry collaboration, and community engagement.",
+        "Մենք կենտրոնանում ենք երկարաժամկետ տեխնոլոգիական զարգացման հիմքերի վրա՝ կրթություն, գիտական հետազոտություն, համագործակցություն արդյունաբերության հետ և համայնքի ներգրավվածություն։"
+      ],
+      "text": [
+        [
+          "By strengthening these interconnected areas, SemiTec aims to help create an ecosystem where knowledge, experience, and opportunities can flow between people and institutions. Rather than addressing these areas independently, we aim to encourage collaboration between them.",
+          "Ամրապնդելով այս փոխկապակցված ոլորտները՝ SemiTec-ը ձգտում է օգնել ստեղծել էկոհամակարգ, որտեղ գիտելիքը, փորձը և հնարավորությունները կարող են շրջանառվել մարդկանց և հաստատությունների միջև։ Այս ոլորտներին առանձին-առանձին անդրադառնալու փոխարեն մենք ձգտում ենք խրախուսել դրանց միջև համագործակցությունը։"
+        ]
       ],
       "items": [
         [
@@ -151,8 +341,8 @@ const SITE_CONTENT = {
           "Հետազոտություն"
         ],
         [
-          "Industry",
-          "Արդյունաբերություն"
+          "Collaboration",
+          "Համագործակցություն"
         ],
         [
           "Community",
@@ -164,280 +354,406 @@ const SITE_CONTENT = {
         {
           "id": "education",
           "title": [
-            "Education",
-            "Կրթություն"
+            "Education and talent development",
+            "Կրթություն և տաղանդների զարգացում"
+          ],
+          "intro": [
+            "Empowering the next generation of engineers and researchers.",
+            "Աջակցում ենք ինժեներների և հետազոտողների նոր սերնդին։"
           ],
           "items": [
             [
-              "Our educational aims",
-              "Մեր կրթական նպատակները"
+              "Semiconductor fundamentals",
+              "Կիսահաղորդիչների հիմունքներ"
             ],
             [
-              "Learning opportunities",
-              "Ուսուցման հնարավորություններ"
+              "Microelectronics",
+              "Միկրոէլեկտրոնիկա"
+            ],
+            [
+              "Digital design",
+              "Թվային նախագծում"
+            ],
+            [
+              "Verification",
+              "Վերիֆիկացիա"
+            ],
+            [
+              "FPGA technologies",
+              "FPGA տեխնոլոգիաներ"
+            ],
+            [
+              "Electronic design automation",
+              "Էլեկտրոնային նախագծման ավտոմատացում"
             ]
           ],
           "children": [],
-          "media": "learning",
-          "intro": [
-            "Information for this destination goes here.",
-            "Այս նպատակակետի տեղեկությունները՝ այստեղ։"
-          ]
+          "text": [
+            [
+              "Education is the foundation of technological progress. SemiTec aims to support technical knowledge and practical engineering skills through educational resources, workshops, training activities, and cooperation with academic institutions.",
+              "Կրթությունը տեխնոլոգիական առաջընթացի հիմքն է։ SemiTec-ը ձգտում է աջակցել տեխնիկական գիտելիքներին և գործնական ինժեներական հմտություններին՝ կրթական ռեսուրսների, սեմինարների, վերապատրաստումների և ակադեմիական հաստատությունների հետ համագործակցության միջոցով։"
+            ],
+            [
+              "We seek to connect theoretical foundations with practical experience and real-world engineering challenges.",
+              "Մենք ձգտում ենք կապել տեսական հիմքերը գործնական փորձի և իրական ինժեներական խնդիրների հետ։"
+            ]
+          ],
+          "media": "learning"
         },
         {
           "id": "research",
           "title": [
-            "Research",
-            "Հետազոտություն"
+            "Research and innovation",
+            "Հետազոտություն և նորարարություն"
           ],
-          "items": [
+          "intro": [
+            "Transforming scientific curiosity into meaningful discoveries and solutions.",
+            "Գիտական հետաքրքրասիրությունը վերածում ենք իմաստալից բացահայտումների և լուծումների։"
+          ],
+          "items": [],
+          "children": [],
+          "text": [
             [
-              "Research directions",
-              "Հետազոտական ուղղություններ"
+              "Research plays a critical role in advancing technology and developing new capabilities. SemiTec aims to encourage research activities connecting academic interests with emerging technological challenges and practical engineering needs.",
+              "Հետազոտությունը կարևոր դեր ունի տեխնոլոգիաների զարգացման և նոր կարողությունների ստեղծման գործում։ SemiTec-ը ձգտում է խրախուսել հետազոտական աշխատանքներ, որոնք ակադեմիական հետաքրքրությունները կապում են նոր տեխնոլոգիական մարտահրավերների և գործնական ինժեներական կարիքների հետ։"
             ],
             [
-              "Labs and collaborations",
-              "Լաբորատորիաներ և համագործակցություն"
+              "We seek to support research ideas, collaborative projects, experimental development, and opportunities to investigate relevant technical problems.",
+              "Մենք ձգտում ենք աջակցել հետազոտական գաղափարներին, համատեղ նախագծերին, փորձարարական մշակումներին և արդիական տեխնիկական խնդիրներ ուսումնասիրելու հնարավորություններին։"
             ]
           ],
-          "children": [],
-          "media": "learning",
-          "intro": [
-            "Information for this destination goes here.",
-            "Այս նպատակակետի տեղեկությունները՝ այստեղ։"
-          ]
+          "media": "learning"
         },
         {
           "id": "industry",
           "title": [
-            "Industry",
-            "Արդյունաբերություն"
+            "Industry and academic collaboration",
+            "Արդյունաբերության և ակադեմիայի համագործակցություն"
           ],
-          "items": [
+          "intro": [
+            "Connecting knowledge with real-world challenges.",
+            "Կապում ենք գիտելիքը իրական խնդիրների հետ։"
+          ],
+          "items": [],
+          "children": [],
+          "text": [
             [
-              "Industry connections",
-              "Կապեր արդյունաբերության հետ"
+              "Cooperation between academia and industry creates opportunities for educational improvement and technological innovation. SemiTec seeks to facilitate dialogue between universities, researchers, engineers, and companies to identify challenges, exchange expertise, and explore joint initiatives.",
+              "Ակադեմիայի և արդյունաբերության համագործակցությունը հնարավորություններ է ստեղծում կրթության բարելավման և տեխնոլոգիական նորարարության համար։ SemiTec-ը ձգտում է նպաստել երկխոսությանը համալսարանների, հետազոտողների, ինժեներների և ընկերությունների միջև՝ խնդիրները բացահայտելու, փորձ փոխանակելու և համատեղ նախաձեռնություններ քննարկելու համար։"
             ],
             [
-              "Applied projects",
-              "Կիրառական նախագծեր"
+              "We aim to help transform practical industry observations into educational projects, research questions, and collaborative activities.",
+              "Մենք ձգտում ենք օգնել արդյունաբերության գործնական դիտարկումները վերածել կրթական նախագծերի, հետազոտական հարցերի և համատեղ գործողությունների։"
             ]
           ],
-          "children": [],
-          "media": "learning",
-          "intro": [
-            "Information for this destination goes here.",
-            "Այս նպատակակետի տեղեկությունները՝ այստեղ։"
-          ]
+          "media": "learning"
         },
         {
           "id": "community",
           "title": [
-            "Community",
-            "Համայնք"
+            "Community and knowledge exchange",
+            "Համայնք և գիտելիքի փոխանակում"
           ],
-          "items": [
+          "intro": [
+            "Building a connected and engaged technological community.",
+            "Կառուցում ենք փոխկապակցված և ներգրավված տեխնոլոգիական համայնք։"
+          ],
+          "items": [],
+          "children": [],
+          "text": [
             [
-              "Students and engineers",
-              "Ուսանողներ և ինժեներներ"
+              "Technological progress benefits from communities where people exchange ideas, learn from different experiences, and work toward shared objectives. SemiTec aims to bring together students, educators, researchers, engineers, and organizations through discussions, events, mentorship, and community activities.",
+              "Տեխնոլոգիական առաջընթացին նպաստում են համայնքները, որտեղ մարդիկ փոխանակում են գաղափարներ, սովորում տարբեր փորձից և աշխատում ընդհանուր նպատակների համար։ SemiTec-ը ձգտում է համախմբել ուսանողներին, դասախոսներին, հետազոտողներին, ինժեներներին և կազմակերպություններին քննարկումների, միջոցառումների, մենթորության և համայնքային գործողությունների միջոցով։"
             ],
             [
-              "Researchers and professors",
-              "Հետազոտողներ և դասախոսներ"
+              "We seek to encourage continuous learning, constructive discussion, and shared responsibility for technological development.",
+              "Մենք ձգտում ենք խրախուսել շարունակական ուսումը, կառուցողական քննարկումը և տեխնոլոգիական զարգացման համար ընդհանուր պատասխանատվությունը։"
             ]
           ],
-          "children": [],
-          "media": "learning",
-          "intro": [
-            "Information for this destination goes here.",
-            "Այս նպատակակետի տեղեկությունները՝ այստեղ։"
-          ]
+          "media": "learning"
         }
       ]
     },
     {
       "id": "initiatives",
       "label": [
-        "Initiatives",
-        "Նախաձեռնություններ"
+        "Programs",
+        "Ծրագրեր"
       ],
       "title": [
-        "Our initiatives.",
-        "Մեր նախաձեռնությունները։"
+        "Turning ideas into\nopportunities for growth.",
+        "Գաղափարները վերածում ենք\nաճի հնարավորությունների։"
       ],
       "intro": [
-        "Our platforms, programs and learning resources.",
-        "Մեր հարթակները, ծրագրերը և ուսումնական նյութերը։"
+        "Meaningful progress begins when ideas are transformed into action. SemiTec develops and supports initiatives that encourage learning, research, experimentation, and cooperation.",
+        "Իմաստալից առաջընթացը սկսվում է, երբ գաղափարները վերածվում են գործողության։ SemiTec-ը մշակում և աջակցում է նախաձեռնություններ, որոնք խրախուսում են ուսումը, հետազոտությունը, փորձարկումը և համագործակցությունը։"
+      ],
+      "text": [
+        [
+          "Our programs are designed to encourage active participation, promote knowledge exchange, and support long-term educational and technological development. The programs below are planned; each will show its status as it starts.",
+          "Մեր ծրագրերը նախատեսված են խրախուսելու ակտիվ մասնակցությունը, նպաստելու գիտելիքի փոխանակմանը և աջակցելու երկարաժամկետ կրթական և տեխնոլոգիական զարգացմանը։ Ստորև ներկայացված ծրագրերը նախատեսված են․ յուրաքանչյուրի կարգավիճակը կցուցադրվի դրա մեկնարկին զուգընթաց։"
+        ]
       ],
       "items": [
         [
-          "SemiTec Academy",
-          "SemiTec Academy"
+          "Educational programs",
+          "Կրթական ծրագրեր"
         ],
         [
-          "Community platform",
-          "Համայնքային հարթակ"
+          "Technical challenges",
+          "Տեխնիկական մարտահրավերներ"
         ],
         [
-          "Learning resources",
-          "Ուսումնական նյութեր"
+          "Industry–academia dialogue",
+          "Արդյունաբերություն–ակադեմիա երկխոսություն"
+        ],
+        [
+          "Hackathons",
+          "Հաքաթոններ"
+        ],
+        [
+          "Open knowledge",
+          "Բաց գիտելիք"
+        ],
+        [
+          "Mentorship",
+          "Մենթորություն"
         ]
       ],
       "media": "learning",
       "children": [
         {
-          "id": "academy",
+          "id": "education-programs",
           "title": [
-            "SemiTec Academy",
-            "SemiTec Academy"
+            "Educational programs",
+            "Կրթական ծրագրեր"
           ],
-          "items": [
-            [
-              "Who the Academy serves",
-              "Ում համար է Ակադեմիան"
-            ],
-            [
-              "Learning formats and topics",
-              "Ուսուցման ձևաչափեր և թեմաներ"
-            ],
-            [
-              "An Academy photo or project example",
-              "Ակադեմիայի լուսանկար կամ նախագծի օրինակ"
-            ]
-          ],
-          "children": [
-            {
-              "id": "programs",
-              "title": [
-                "Programs",
-                "Ծրագրեր"
-              ],
-              "items": [
-                [
-                  "Program examples",
-                  "Ծրագրերի օրինակներ"
-                ],
-                [
-                  "Who can participate",
-                  "Ով կարող է մասնակցել"
-                ]
-              ],
-              "children": [],
-              "media": "learning",
-              "intro": [
-                "Information for this destination goes here.",
-                "Այս նպատակակետի տեղեկությունները՝ այստեղ։"
-              ]
-            },
-            {
-              "id": "resources",
-              "title": [
-                "Learning resources",
-                "Ուսումնական նյութեր"
-              ],
-              "items": [
-                [
-                  "Materials and courses",
-                  "Նյութեր և դասընթացներ"
-                ],
-                [
-                  "Resource links go here",
-                  "Նյութերի հղումները՝ այստեղ"
-                ]
-              ],
-              "children": [],
-              "media": "learning",
-              "intro": [
-                "Information for this destination goes here.",
-                "Այս նպատակակետի տեղեկությունները՝ այստեղ։"
-              ]
-            }
-          ],
-          "media": "learning",
           "intro": [
-            "Introduce SemiTec Academy and its learning approach here.",
-            "Այստեղ ներկայացրեք SemiTec Academy-ն և ուսուցման մոտեցումը։"
-          ],
-          "branchAfter": 0.24
-        },
-        {
-          "id": "platform",
-          "title": [
-            "Community platform",
-            "Համայնքային հարթակ"
+            "Making technical knowledge more accessible and practical.",
+            "Տեխնիկական գիտելիքը դարձնում ենք ավելի հասանելի և գործնական։"
           ],
           "items": [
             [
-              "Platform introduction",
-              "Հարթակի ներկայացում"
+              "Status: planned",
+              "Կարգավիճակ՝ նախատեսված"
             ],
             [
-              "Who it connects",
-              "Ում է միավորում"
+              "Technical courses",
+              "Տեխնիկական դասընթացներ"
             ],
             [
-              "Development status",
-              "Մշակման կարգավիճակ"
+              "Hands-on workshops",
+              "Գործնական սեմինարներ"
+            ],
+            [
+              "Laboratory exercises",
+              "Լաբորատոր աշխատանքներ"
+            ],
+            [
+              "Educational materials",
+              "Կրթական նյութեր"
+            ],
+            [
+              "Collaborative learning projects",
+              "Համատեղ ուսումնական նախագծեր"
             ]
           ],
           "children": [],
-          "media": "learning",
-          "intro": [
-            "Information for this destination goes here.",
-            "Այս նպատակակետի տեղեկությունները՝ այստեղ։"
-          ]
+          "text": [
+            [
+              "We aim to support educational activities that help students and professionals develop technical foundations, practical skills, and an understanding of modern semiconductor technologies.",
+              "Մենք ձգտում ենք աջակցել կրթական գործողություններին, որոնք օգնում են ուսանողներին և մասնագետներին զարգացնել տեխնիկական հիմքեր, գործնական հմտություններ և ժամանակակից կիսահաղորդչային տեխնոլոգիաների ըմբռնում։"
+            ]
+          ],
+          "media": "learning"
         },
         {
-          "id": "resources",
+          "id": "challenges",
           "title": [
-            "Open resources",
-            "Բաց նյութեր"
+            "Research and technical challenges",
+            "Հետազոտական և տեխնիկական մարտահրավերներ"
+          ],
+          "intro": [
+            "Connecting research interests with meaningful engineering problems.",
+            "Կապում ենք հետազոտական հետաքրքրությունները իմաստալից ինժեներական խնդիրների հետ։"
           ],
           "items": [
             [
-              "Resource collections",
-              "Նյութերի հավաքածուներ"
-            ],
-            [
-              "Access and contribution",
-              "Հասանելիություն և ներդրում"
+              "Status: planned",
+              "Կարգավիճակ՝ նախատեսված"
             ]
           ],
           "children": [],
-          "media": "learning",
+          "text": [
+            [
+              "We seek to create opportunities for students, researchers, and industry professionals to identify, discuss, and investigate relevant technical challenges. Through collaborative research topics, experimental projects, and problem-solving activities, we aim to encourage practical innovation and scientific exploration.",
+              "Մենք ձգտում ենք ստեղծել հնարավորություններ, որպեսզի ուսանողները, հետազոտողները և արդյունաբերության մասնագետները բացահայտեն, քննարկեն և ուսումնասիրեն արդիական տեխնիկական խնդիրներ։ Համատեղ հետազոտական թեմաների, փորձարարական նախագծերի և խնդիրների լուծման միջոցով մենք ձգտում ենք խրախուսել գործնական նորարարությունը և գիտական որոնումը։"
+            ]
+          ],
+          "media": "learning"
+        },
+        {
+          "id": "dialogue",
+          "title": [
+            "Industry–academia dialogue",
+            "Արդյունաբերություն–ակադեմիա երկխոսություն"
+          ],
           "intro": [
-            "Information for this destination goes here.",
-            "Այս նպատակակետի տեղեկությունները՝ այստեղ։"
-          ]
+            "Creating conversations that lead to action.",
+            "Ստեղծում ենք զրույցներ, որոնք հանգեցնում են գործողության։"
+          ],
+          "items": [
+            [
+              "Status: planned",
+              "Կարգավիճակ՝ նախատեսված"
+            ]
+          ],
+          "children": [],
+          "text": [
+            [
+              "SemiTec aims to organize discussions where industry professionals, students, educators, and researchers can exchange experiences and explore technological challenges. These discussions may help identify educational gaps, emerging technical needs, potential research topics, and opportunities for collaborative projects.",
+              "SemiTec-ը ձգտում է կազմակերպել քննարկումներ, որտեղ արդյունաբերության մասնագետները, ուսանողները, դասախոսները և հետազոտողները կարող են կիսվել փորձով և քննարկել տեխնոլոգիական խնդիրներ։ Այս քննարկումները կարող են օգնել բացահայտել կրթական բացերը, նոր տեխնիկական կարիքները, հնարավոր հետազոտական թեմաները և համատեղ նախագծերի հնարավորությունները։"
+            ],
+            [
+              "Our goal is to encourage follow-up activities that transform valuable discussions into practical outcomes.",
+              "Մեր նպատակն է խրախուսել շարունակական գործողություններ, որոնք արժեքավոր քննարկումները վերածում են գործնական արդյունքների։"
+            ]
+          ],
+          "media": "learning"
+        },
+        {
+          "id": "hackathons",
+          "title": [
+            "Hackathons and engineering challenges",
+            "Հաքաթոններ և ինժեներական մրցույթներ"
+          ],
+          "intro": [
+            "Learning through experimentation and collaborative problem-solving.",
+            "Սովորում ենք փորձարկման և խնդիրների համատեղ լուծման միջոցով։"
+          ],
+          "items": [
+            [
+              "Status: planned",
+              "Կարգավիճակ՝ նախատեսված"
+            ]
+          ],
+          "children": [],
+          "text": [
+            [
+              "We envision technical competitions and collaborative challenges where participants can apply their knowledge to real engineering problems. Such activities can encourage creativity, teamwork, experimentation, and the development of practical solutions.",
+              "Մենք նախատեսում ենք տեխնիկական մրցույթներ և համատեղ մարտահրավերներ, որտեղ մասնակիցները կարող են իրենց գիտելիքը կիրառել իրական ինժեներական խնդիրների վրա։ Նման գործողությունները կարող են խթանել ստեղծագործականությունը, թիմային աշխատանքը, փորձարկումը և գործնական լուծումների մշակումը։"
+            ]
+          ],
+          "media": "learning"
+        },
+        {
+          "id": "open-knowledge",
+          "title": [
+            "Open knowledge and educational resources",
+            "Բաց գիտելիք և կրթական ռեսուրսներ"
+          ],
+          "intro": [
+            "Sharing knowledge for the benefit of the wider community.",
+            "Կիսվում ենք գիտելիքով՝ ի օգուտ լայն համայնքի։"
+          ],
+          "items": [
+            [
+              "Status: planned",
+              "Կարգավիճակ՝ նախատեսված"
+            ]
+          ],
+          "children": [],
+          "text": [
+            [
+              "SemiTec aims to encourage the creation, organization, and responsible sharing of technical resources, including educational materials, research publications, project documentation, and open-source engineering examples.",
+              "SemiTec-ը ձգտում է խրախուսել տեխնիկական ռեսուրսների ստեղծումը, կազմակերպումը և պատասխանատու տարածումը, այդ թվում՝ կրթական նյութերի, հետազոտական հրապարակումների, նախագծային փաստաթղթերի և բաց կոդով ինժեներական օրինակների։"
+            ],
+            [
+              "We believe that well-organized, accessible knowledge can support independent learning and long-term community development.",
+              "Մենք համոզված ենք, որ լավ կազմակերպված և հասանելի գիտելիքը կարող է աջակցել ինքնուրույն ուսմանը և համայնքի երկարաժամկետ զարգացմանը։"
+            ]
+          ],
+          "media": "learning"
+        },
+        {
+          "id": "mentorship",
+          "title": [
+            "Mentorship and professional exchange",
+            "Մենթորություն և մասնագիտական փոխանակում"
+          ],
+          "intro": [
+            "Connecting experience with potential.",
+            "Կապում ենք փորձը ներուժի հետ։"
+          ],
+          "items": [
+            [
+              "Status: planned",
+              "Կարգավիճակ՝ նախատեսված"
+            ],
+            [
+              "Technical consultations",
+              "Տեխնիկական խորհրդատվություններ"
+            ],
+            [
+              "Career discussions",
+              "Կարիերային զրույցներ"
+            ],
+            [
+              "Project guidance",
+              "Նախագծերի ուղղորդում"
+            ],
+            [
+              "Research-oriented collaboration",
+              "Հետազոտական համագործակցություն"
+            ]
+          ],
+          "children": [],
+          "text": [
+            [
+              "We seek to create opportunities for experienced professionals and researchers to share knowledge, provide guidance, and support emerging talent.",
+              "Մենք ձգտում ենք հնարավորություններ ստեղծել, որպեսզի փորձառու մասնագետներն ու հետազոտողները կիսվեն գիտելիքով, ուղղորդեն և աջակցեն նոր տաղանդներին։"
+            ]
+          ],
+          "media": "learning"
         }
       ]
     },
     {
       "id": "events",
       "label": [
-        "Events",
-        "Միջոցառումներ"
+        "News & Events",
+        "Նորություններ"
       ],
       "title": [
-        "Meet. Connect.",
-        "Հանդիպել։ Կապվել։"
+        "Where ideas\nmeet people.",
+        "Որտեղ գաղափարները\nհանդիպում են մարդկանց։"
       ],
       "intro": [
-        "Upcoming gatherings, past events and shared experiences.",
-        "Առաջիկա հանդիպումներ, անցած միջոցառումներ և ընդհանուր փորձառություններ։"
+        "Discover upcoming events, technical discussions, educational activities, and the latest developments from SemiTec Foundation.",
+        "Բացահայտեք SemiTec հիմնադրամի առաջիկա միջոցառումները, տեխնիկական քննարկումները, կրթական գործողությունները և վերջին նորությունները։"
+      ],
+      "text": [
+        [
+          "We aim to create spaces where people can exchange knowledge, explore new ideas, establish connections, and discover opportunities for collaboration between students, educators, researchers, industry professionals, and organizations.",
+          "Մենք ձգտում ենք ստեղծել տարածքներ, որտեղ մարդիկ կարող են փոխանակել գիտելիք, քննարկել նոր գաղափարներ, հաստատել կապեր և բացահայտել համագործակցության հնարավորություններ ուսանողների, դասախոսների, հետազոտողների, արդյունաբերության մասնագետների և կազմակերպությունների միջև։"
+        ]
       ],
       "items": [
         [
-          "Upcoming event example",
-          "Առաջիկա միջոցառման օրինակ"
+          "Upcoming events",
+          "Առաջիկա միջոցառումներ"
         ],
         [
-          "Past event example",
-          "Անցած միջոցառման օրինակ"
+          "Past activities",
+          "Անցած միջոցառումներ"
         ],
         [
-          "Dates, photographs & recaps",
-          "Ամսաթվեր, լուսանկարներ և ամփոփումներ"
+          "News",
+          "Նորություններ"
+        ],
+        [
+          "Propose an event",
+          "Առաջարկել միջոցառում"
         ]
       ],
       "media": "gathering",
@@ -448,182 +764,73 @@ const SITE_CONTENT = {
             "Upcoming events",
             "Առաջիկա միջոցառումներ"
           ],
-          "items": [
+          "intro": [
+            "Planned technical workshops, seminars, discussions, conferences, and community activities.",
+            "Նախատեսված տեխնիկական սեմինարներ, դասախոսություններ, քննարկումներ, համաժողովներ և համայնքային միջոցառումներ։"
+          ],
+          "items": [],
+          "children": [],
+          "text": [
             [
-              "Introduce this collection",
-              "Ներկայացրեք այս հավաքածուն"
-            ],
-            [
-              "Highlights and an image example",
-              "Կարևոր կետեր և պատկերի օրինակ"
+              "Each announcement will give the date and time, the place or online format, the agenda, the intended audience, the speakers or organizers, and how to register.",
+              "Յուրաքանչյուր հայտարարություն կներառի ամսաթիվը և ժամը, վայրը կամ առցանց ձևաչափը, օրակարգը, թիրախային լսարանը, բանախոսներին կամ կազմակերպիչներին և գրանցման կարգը։"
             ]
           ],
-          "children": [
-            {
-              "id": "workshop",
-              "title": [
-                "Workshop example",
-                "Աշխատաժողովի օրինակ"
-              ],
-              "items": [
-                [
-                  "Event title and introduction",
-                  "Միջոցառման անվանում և ներկայացում"
-                ],
-                [
-                  "Date, venue and speakers",
-                  "Ամսաթիվ, վայր և խոսնակներ"
-                ],
-                [
-                  "Agenda and registration information",
-                  "Օրակարգ և գրանցման տեղեկություն"
-                ]
-              ],
-              "children": [],
-              "media": "gathering",
-              "intro": [
-                "Information for this destination goes here.",
-                "Այս նպատակակետի տեղեկությունները՝ այստեղ։"
-              ]
-            },
-            {
-              "id": "meetup",
-              "title": [
-                "Community meetup example",
-                "Համայնքային հանդիպման օրինակ"
-              ],
-              "items": [
-                [
-                  "Meetup title and purpose",
-                  "Հանդիպման անվանում և նպատակ"
-                ],
-                [
-                  "Date and participants",
-                  "Ամսաթիվ և մասնակիցներ"
-                ],
-                [
-                  "How to join",
-                  "Ինչպես միանալ"
-                ]
-              ],
-              "children": [],
-              "media": "gathering",
-              "intro": [
-                "Information for this destination goes here.",
-                "Այս նպատակակետի տեղեկությունները՝ այստեղ։"
-              ]
-            }
-          ],
-          "media": "gathering",
-          "intro": [
-            "Explore the examples in this collection.",
-            "Բացահայտեք այս հավաքածուի օրինակները։"
-          ]
+          "media": "gathering"
         },
         {
           "id": "past",
           "title": [
-            "Past events",
+            "Past activities",
             "Անցած միջոցառումներ"
           ],
-          "items": [
+          "intro": [
+            "Previous activities, discussions, and events organized or supported by SemiTec.",
+            "SemiTec-ի կազմակերպած կամ աջակցած նախորդ միջոցառումներն ու քննարկումները։"
+          ],
+          "items": [],
+          "children": [],
+          "text": [
             [
-              "Introduce this collection",
-              "Ներկայացրեք այս հավաքածուն"
-            ],
-            [
-              "Highlights and an image example",
-              "Կարևոր կետեր և պատկերի օրինակ"
+              "Where available, summaries will include key topics, speakers, photographs, presentations, and the opportunities for collaboration that followed.",
+              "Հնարավորության դեպքում ամփոփումները կներառեն հիմնական թեմաները, բանախոսներին, լուսանկարները, ներկայացումները և դրանց հետևած համագործակցության հնարավորությունները։"
             ]
           ],
-          "children": [
-            {
-              "id": "event-one",
-              "title": [
-                "Past event example",
-                "Անցած միջոցառման օրինակ"
-              ],
-              "items": [
-                [
-                  "Event summary",
-                  "Միջոցառման ամփոփում"
-                ],
-                [
-                  "Speakers and highlights",
-                  "Խոսնակներ և կարևոր դրվագներ"
-                ],
-                [
-                  "Photos and outcomes",
-                  "Լուսանկարներ և արդյունքներ"
-                ]
-              ],
-              "children": [],
-              "media": "gathering",
-              "intro": [
-                "Information for this destination goes here.",
-                "Այս նպատակակետի տեղեկությունները՝ այստեղ։"
-              ]
-            },
-            {
-              "id": "event-two",
-              "title": [
-                "Another event example",
-                "Մեկ այլ միջոցառման օրինակ"
-              ],
-              "items": [
-                [
-                  "Event introduction",
-                  "Միջոցառման ներկայացում"
-                ],
-                [
-                  "What happened",
-                  "Ինչ է տեղի ունեցել"
-                ],
-                [
-                  "Related materials",
-                  "Առնչվող նյութեր"
-                ]
-              ],
-              "children": [],
-              "media": "gathering",
-              "intro": [
-                "Information for this destination goes here.",
-                "Այս նպատակակետի տեղեկությունները՝ այստեղ։"
-              ]
-            }
-          ],
-          "media": "gathering",
-          "intro": [
-            "Explore the examples in this collection.",
-            "Բացահայտեք այս հավաքածուի օրինակները։"
-          ]
+          "media": "gathering"
         },
         {
-          "id": "gallery",
+          "id": "news",
           "title": [
-            "Event gallery",
-            "Միջոցառումների պատկերասրահ"
+            "News and announcements",
+            "Նորություններ և հայտարարություններ"
           ],
-          "items": [
+          "intro": [
+            "New initiatives, organizational developments, collaboration opportunities, educational resources, and other relevant updates.",
+            "Նոր նախաձեռնություններ, կազմակերպական զարգացումներ, համագործակցության հնարավորություններ, կրթական ռեսուրսներ և այլ կարևոր թարմացումներ։"
+          ],
+          "items": [],
+          "children": [],
+          "media": "gathering"
+        },
+        {
+          "id": "propose",
+          "title": [
+            "Propose an event",
+            "Առաջարկել միջոցառում"
+          ],
+          "intro": [
+            "We welcome suggestions for technical discussions, educational workshops, research seminars, and other activities aligned with the foundation's mission.",
+            "Մենք ողջունում ենք տեխնիկական քննարկումների, կրթական սեմինարների, հետազոտական դասախոսությունների և հիմնադրամի առաքելությանը համապատասխան այլ միջոցառումների առաջարկներ։"
+          ],
+          "items": [],
+          "children": [],
+          "text": [
             [
-              "Photo collection",
-              "Լուսանկարների հավաքածու"
-            ],
-            [
-              "Video or recording",
-              "Տեսանյութ կամ ձայնագրություն"
-            ],
-            [
-              "Captions and event links",
-              "Նկարագրություններ և միջոցառումների հղումներ"
+              "Individuals and organizations interested in contributing can contact SemiTec to discuss potential opportunities.",
+              "Մասնակցել ցանկացող անհատներն ու կազմակերպությունները կարող են կապվել SemiTec-ի հետ՝ հնարավորությունները քննարկելու համար։"
             ]
           ],
-          "children": [],
-          "media": "gathering",
-          "intro": [
-            "Information for this destination goes here.",
-            "Այս նպատակակետի տեղեկությունները՝ այստեղ։"
-          ]
+          "media": "gathering"
         }
       ]
     },
@@ -631,260 +838,356 @@ const SITE_CONTENT = {
       "id": "impact",
       "label": [
         "Impact",
-        "Արդյունքներ"
+        "Ազդեցություն"
       ],
       "title": [
-        "Work in action.",
-        "Աշխատանքը՝ գործի մեջ։"
+        "Progress that is visible\nand measurable.",
+        "Տեսանելի և չափելի\nառաջընթաց։"
       ],
       "intro": [
-        "Completed work, milestones and results.",
-        "Ավարտված աշխատանքներ, հանգրվաններ և արդյունքներ։"
+        "SemiTec Foundation aims to create lasting value through education, research, technological development, and community collaboration.",
+        "SemiTec հիմնադրամը ձգտում է ստեղծել տևական արժեք կրթության, հետազոտության, տեխնոլոգիական զարգացման և համայնքային համագործակցության միջոցով։"
+      ],
+      "text": [
+        [
+          "As our activities develop, we intend to communicate our progress, achievements, challenges, and use of resources openly.",
+          "Մեր գործունեության զարգացմանը զուգընթաց մենք մտադիր ենք բաց հաղորդել մեր առաջընթացի, ձեռքբերումների, դժվարությունների և ռեսուրսների օգտագործման մասին։"
+        ]
       ],
       "items": [
         [
-          "Project or milestone",
-          "Նախագիծ կամ հանգրվան"
+          "Our progress",
+          "Մեր առաջընթացը"
         ],
         [
-          "Story or collaboration",
-          "Պատմություն կամ համագործակցություն"
+          "Measuring our impact",
+          "Ազդեցության գնահատում"
         ],
         [
-          "Result or publication",
-          "Արդյունք կամ հրապարակում"
+          "Looking ahead",
+          "Հայացք ապագային"
         ]
       ],
       "media": "wafer",
       "children": [
         {
-          "id": "projects",
+          "id": "progress",
           "title": [
-            "Completed work",
-            "Ավարտված աշխատանքներ"
+            "Our progress",
+            "Մեր առաջընթացը"
           ],
-          "items": [
+          "intro": [
+            "Publicly available milestones and activity updates.",
+            "Հրապարակային հանգրվաններ և գործունեության թարմացումներ։"
+          ],
+          "items": [],
+          "children": [],
+          "text": [
             [
-              "Project example",
-              "Նախագծի օրինակ"
-            ],
-            [
-              "What was done",
-              "Ինչ է արվել"
-            ],
-            [
-              "Verified outcome",
-              "Հաստատված արդյունք"
+              "We aim to document the development of the foundation and its initiatives. These may include educational programs, research projects, technical events, collaborative initiatives, and community contributions.",
+              "Մենք ձգտում ենք փաստագրել հիմնադրամի և նրա նախաձեռնությունների զարգացումը՝ կրթական ծրագրեր, հետազոտական նախագծեր, տեխնիկական միջոցառումներ, համատեղ նախաձեռնություններ և համայնքային ներդրումներ։"
             ]
           ],
-          "children": [],
-          "media": "wafer",
-          "intro": [
-            "Information for this destination goes here.",
-            "Այս նպատակակետի տեղեկությունները՝ այստեղ։"
-          ]
+          "media": "wafer"
         },
         {
-          "id": "milestones",
+          "id": "measuring",
           "title": [
-            "Milestones",
-            "Հանգրվաններ"
+            "Measuring our impact",
+            "Ազդեցության գնահատում"
+          ],
+          "intro": [
+            "Our objective is not simply to organize activities, but to understand the value they create.",
+            "Մեր նպատակը ոչ միայն միջոցառումներ կազմակերպելն է, այլև հասկանալը, թե ինչ արժեք են դրանք ստեղծում։"
           ],
           "items": [
             [
-              "Timeline of our work",
-              "Մեր աշխատանքի ժամանակագրությունը"
+              "Participants",
+              "Մասնակիցներ"
             ],
             [
-              "Key achievements",
-              "Կարևոր ձեռքբերումներ"
+              "Educational resources created",
+              "Ստեղծված կրթական ռեսուրսներ"
+            ],
+            [
+              "Research outcomes",
+              "Հետազոտական արդյունքներ"
+            ],
+            [
+              "Completed projects",
+              "Ավարտված նախագծեր"
+            ],
+            [
+              "Collaborative initiatives",
+              "Համատեղ նախաձեռնություններ"
+            ],
+            [
+              "Community contributions",
+              "Համայնքային ներդրումներ"
+            ],
+            [
+              "Opportunities generated",
+              "Ստեղծված հնարավորություններ"
             ]
           ],
           "children": [],
-          "media": "wafer",
-          "intro": [
-            "Information for this destination goes here.",
-            "Այս նպատակակետի տեղեկությունները՝ այստեղ։"
-          ]
+          "text": [
+            [
+              "We intend to evaluate activities using relevant qualitative and quantitative indicators. Depending on the initiative, these may include:",
+              "Մենք մտադիր ենք գնահատել գործունեությունը համապատասխան որակական և քանակական ցուցանիշներով։ Կախված նախաձեռնությունից՝ դրանք կարող են ներառել․"
+            ]
+          ],
+          "media": "wafer"
         },
         {
-          "id": "stories",
+          "id": "ahead",
           "title": [
-            "Stories",
-            "Պատմություններ"
+            "Looking ahead",
+            "Հայացք ապագային"
           ],
-          "items": [
+          "intro": [
+            "Building a sustainable technological ecosystem is a long-term process.",
+            "Կայուն տեխնոլոգիական էկոհամակարգի կառուցումը երկարաժամկետ գործընթաց է։"
+          ],
+          "items": [],
+          "children": [],
+          "text": [
             [
-              "A collaboration story",
-              "Համագործակցության պատմություն"
-            ],
-            [
-              "People and outcomes",
-              "Մարդիկ և արդյունքներ"
+              "SemiTec intends to develop its activities progressively, learn from experience, evaluate outcomes, and improve its approaches as the foundation grows.",
+              "SemiTec-ը մտադիր է զարգացնել իր գործունեությունը աստիճանաբար, սովորել փորձից, գնահատել արդյունքները և կատարելագործել իր մոտեցումները հիմնադրամի աճին զուգընթաց։"
             ]
           ],
-          "children": [],
-          "media": "wafer",
-          "intro": [
-            "Information for this destination goes here.",
-            "Այս նպատակակետի տեղեկությունները՝ այստեղ։"
-          ]
+          "media": "wafer"
         }
       ]
     },
     {
       "id": "people",
       "label": [
-        "People",
-        "Մարդիկ"
+        "Community",
+        "Համայնք"
       ],
       "title": [
-        "Better together.",
-        "Միասին՝ ավելի ուժեղ։"
+        "Progress is built\nby people.",
+        "Առաջընթացը կառուցում\nեն մարդիկ։"
       ],
       "intro": [
-        "Our team, trustees and partners.",
-        "Մեր թիմը, հոգաբարձուները և գործընկերները։"
+        "Behind every technological achievement are individuals who learn, question, explore, create, and share their knowledge.",
+        "Յուրաքանչյուր տեխնոլոգիական ձեռքբերման հետևում կան մարդիկ, ովքեր սովորում են, հարցեր տալիս, որոնում, ստեղծում և կիսվում իրենց գիտելիքով։"
+      ],
+      "text": [
+        [
+          "SemiTec aims to bring together students, educators, researchers, engineers, institutions, and organizations who believe in advancing Armenia's semiconductor ecosystem. Meaningful technological development requires cooperation between people with different experiences, perspectives, and expertise.",
+          "SemiTec-ը ձգտում է համախմբել ուսանողներին, դասախոսներին, հետազոտողներին, ինժեներներին, հաստատություններին և կազմակերպություններին, ովքեր հավատում են Հայաստանի կիսահաղորդչային էկոհամակարգի զարգացմանը։ Իմաստալից տեխնոլոգիական զարգացումը պահանջում է համագործակցություն տարբեր փորձ, տեսակետ և մասնագիտացում ունեցող մարդկանց միջև։"
+        ]
       ],
       "items": [
         [
-          "Leadership & team",
-          "Ղեկավարություն և թիմ"
+          "Founders",
+          "Հիմնադիրներ"
         ],
         [
-          "Board of trustees",
-          "Հոգաբարձուների խորհուրդ"
+          "Leadership",
+          "Ղեկավարություն"
         ],
         [
-          "Partners & collaborators",
+          "Mentors",
+          "Մենթորներ"
+        ],
+        [
+          "Universities",
+          "Համալսարաններ"
+        ],
+        [
+          "Partners",
           "Գործընկերներ"
+        ],
+        [
+          "The wider community",
+          "Լայն համայնք"
         ]
       ],
       "media": "gathering",
       "children": [
         {
-          "id": "team",
+          "id": "founders",
           "title": [
-            "Our team",
-            "Մեր թիմը"
+            "Our founders",
+            "Մեր հիմնադիրները"
+          ],
+          "intro": [
+            "SemiTec was initiated by individuals who believe in strengthening Armenia's semiconductor ecosystem through education, research, and cooperation.",
+            "SemiTec-ը նախաձեռնել են մարդիկ, ովքեր հավատում են Հայաստանի կիսահաղորդչային էկոհամակարգի ամրապնդմանը կրթության, հետազոտության և համագործակցության միջոցով։"
           ],
           "items": [
             [
-              "Names and roles",
-              "Անուններ և դերեր"
-            ],
-            [
-              "Short introductions",
-              "Կարճ ներկայացումներ"
+              "Founder profiles will be published here once confirmed.",
+              "Հիմնադիրների մասին տեղեկությունը կհրապարակվի այստեղ՝ հաստատվելուց հետո։"
             ]
           ],
           "children": [],
-          "media": "gathering",
-          "intro": [
-            "Information for this destination goes here.",
-            "Այս նպատակակետի տեղեկությունները՝ այստեղ։"
-          ]
+          "text": [
+            [
+              "The founders' vision is to help establish a lasting foundation for collaborative technological development and community-driven initiatives.",
+              "Հիմնադիրների տեսլականն է օգնել ստեղծել տևական հիմք համատեղ տեխնոլոգիական զարգացման և համայնքի կողմից առաջնորդվող նախաձեռնությունների համար։"
+            ]
+          ],
+          "media": "gathering"
         },
         {
-          "id": "trustees",
+          "id": "leadership",
           "title": [
-            "Trustees",
-            "Հոգաբարձուներ"
+            "Leadership and governance",
+            "Ղեկավարություն և կառավարում"
+          ],
+          "intro": [
+            "The foundation's governing bodies are responsible for strategic direction, organizational oversight, and responsible operation.",
+            "Հիմնադրամի կառավարման մարմինները պատասխանատու են ռազմավարական ուղղության, կազմակերպական վերահսկողության և պատասխանատու գործունեության համար։"
           ],
           "items": [
             [
-              "Board members",
-              "Խորհրդի անդամներ"
-            ],
-            [
-              "Governance roles",
-              "Կառավարման դերեր"
+              "Appointed members and their responsibilities will be listed here.",
+              "Նշանակված անդամներն ու նրանց պարտականությունները կներկայացվեն այստեղ։"
             ]
           ],
           "children": [],
-          "media": "gathering",
+          "media": "gathering"
+        },
+        {
+          "id": "mentors",
+          "title": [
+            "Professionals and mentors",
+            "Մասնագետներ և մենթորներ"
+          ],
           "intro": [
-            "Information for this destination goes here.",
-            "Այս նպատակակետի տեղեկությունները՝ այստեղ։"
-          ]
+            "Experienced engineers, researchers, educators, and other professionals can support knowledge exchange and the development of emerging talent.",
+            "Փորձառու ինժեներները, հետազոտողները, դասախոսները և այլ մասնագետներ կարող են աջակցել գիտելիքի փոխանակմանը և նոր տաղանդների զարգացմանը։"
+          ],
+          "items": [],
+          "children": [],
+          "text": [
+            [
+              "SemiTec seeks to encourage their involvement in educational activities, technical discussions, mentorship, and collaborative initiatives.",
+              "SemiTec-ը ձգտում է խրախուսել նրանց մասնակցությունը կրթական գործողություններին, տեխնիկական քննարկումներին, մենթորությանը և համատեղ նախաձեռնություններին։"
+            ]
+          ],
+          "media": "gathering"
+        },
+        {
+          "id": "universities",
+          "title": [
+            "Universities and research institutions",
+            "Համալսարաններ և հետազոտական հաստատություններ"
+          ],
+          "intro": [
+            "Academic and research institutions are essential contributors to scientific discovery and technical education.",
+            "Ակադեմիական և հետազոտական հաստատությունները գիտական բացահայտումների և տեխնիկական կրթության կարևոր մասնակիցներ են։"
+          ],
+          "items": [],
+          "children": [],
+          "text": [
+            [
+              "We aim to develop constructive relationships with institutions interested in collaborative learning, research activities, and knowledge exchange.",
+              "Մենք ձգտում ենք կառուցողական հարաբերություններ զարգացնել այն հաստատությունների հետ, որոնց հետաքրքրում են համատեղ ուսումը, հետազոտական աշխատանքը և գիտելիքի փոխանակումը։"
+            ]
+          ],
+          "media": "gathering"
         },
         {
           "id": "partners",
           "title": [
-            "Partners",
-            "Գործընկերներ"
+            "Industry and organizational partners",
+            "Արդյունաբերական և կազմակերպական գործընկերներ"
           ],
-          "items": [
+          "intro": [
+            "Companies and organizations can contribute experience, technical challenges, resources, and opportunities for cooperation.",
+            "Ընկերություններն ու կազմակերպությունները կարող են ներդնել փորձ, տեխնիկական խնդիրներ, ռեսուրսներ և համագործակցության հնարավորություններ։"
+          ],
+          "items": [],
+          "children": [],
+          "text": [
             [
-              "Confirmed partners",
-              "Հաստատված գործընկերներ"
-            ],
-            [
-              "Our collaborations",
-              "Մեր համագործակցությունները"
+              "SemiTec welcomes discussions with organizations interested in supporting educational, scientific, and technological initiatives. Partners are shown on the chip only with their authorization.",
+              "SemiTec-ը ողջունում է քննարկումները այն կազմակերպությունների հետ, որոնք հետաքրքրված են կրթական, գիտական և տեխնոլոգիական նախաձեռնություններին աջակցելով։ Գործընկերները չիպի վրա ցուցադրվում են միայն իրենց համաձայնությամբ։"
             ]
           ],
-          "children": [],
-          "media": "gathering",
+          "media": "gathering"
+        },
+        {
+          "id": "wider",
+          "title": [
+            "The wider community",
+            "Լայն համայնք"
+          ],
           "intro": [
-            "Information for this destination goes here.",
-            "Այս նպատակակետի տեղեկությունները՝ այստեղ։"
-          ]
+            "Students, independent researchers, professionals, volunteers, and anyone interested in semiconductor technologies are invited to take part.",
+            "Ուսանողները, անկախ հետազոտողները, մասնագետները, կամավորները և բոլոր նրանք, ում հետաքրքրում են կիսահաղորդչային տեխնոլոգիաները, հրավիրված են մասնակցելու։"
+          ],
+          "items": [],
+          "children": [],
+          "text": [
+            [
+              "We believe a connected community can create opportunities that would be difficult to achieve individually.",
+              "Մենք հավատում ենք, որ փոխկապակցված համայնքը կարող է ստեղծել հնարավորություններ, որոնց դժվար է հասնել առանձին։"
+            ]
+          ],
+          "media": "gathering"
         }
       ]
     },
     {
       "id": "transparency",
       "label": [
-        "Trust",
-        "Վստահություն"
+        "Transparency",
+        "Թափանցիկություն"
       ],
       "title": [
-        "Built on trust.",
-        "Վստահության հիմքով։"
+        "Building trust through\naction and accountability.",
+        "Վստահություն՝ գործողության\nև հաշվետվողականության միջոցով։"
       ],
       "intro": [
-        "Our charter, governance and reports.",
-        "Մեր կանոնադրությունը, կառավարումը և հաշվետվությունները։"
+        "We believe that meaningful progress should be visible, measurable, and supported by responsible organizational practices.",
+        "Մենք համոզված ենք, որ իմաստալից առաջընթացը պետք է լինի տեսանելի, չափելի և հիմնված պատասխանատու կազմակերպական պրակտիկայի վրա։"
+      ],
+      "text": [
+        [
+          "SemiTec is committed to transparent governance, responsible use of resources, and communicating the progress, outcomes, and challenges of its initiatives.",
+          "SemiTec-ը հավատարիմ է թափանցիկ կառավարմանը, ռեսուրսների պատասխանատու օգտագործմանը և իր նախաձեռնությունների առաջընթացի, արդյունքների ու դժվարությունների մասին բաց հաղորդակցությանը։"
+        ]
       ],
       "items": [
         [
-          "Foundation details",
-          "Հիմնադրամի տվյալներ"
+          "Our commitment",
+          "Մեր պարտավորությունը"
         ],
         [
-          "Charter & governance",
-          "Կանոնադրություն և կառավարում"
+          "Governance",
+          "Կառավարում"
         ],
         [
-          "Reports & updates",
-          "Հաշվետվություններ և նորություններ"
+          "Public documents",
+          "Հրապարակային փաստաթղթեր"
+        ],
+        [
+          "Use of resources",
+          "Ռեսուրսների օգտագործում"
         ]
       ],
       "media": "learning",
       "children": [
         {
-          "id": "charter",
+          "id": "commitment",
           "title": [
-            "Charter",
-            "Կանոնադրություն"
+            "Our commitment",
+            "Մեր պարտավորությունը"
           ],
-          "items": [
-            [
-              "Public charter document",
-              "Հանրային կանոնադրության փաստաթուղթ"
-            ],
-            [
-              "Foundation aims",
-              "Հիմնադրամի նպատակները"
-            ]
-          ],
-          "children": [],
-          "media": "learning",
           "intro": [
-            "Information for this destination goes here.",
-            "Այս նպատակակետի տեղեկությունները՝ այստեղ։"
-          ]
+            "Trust must be earned through responsible decisions, transparent operations, and demonstrable results.",
+            "Վստահությունը պետք է վաստակել պատասխանատու որոշումներով, թափանցիկ գործունեությամբ և ապացուցելի արդյունքներով։"
+          ],
+          "items": [],
+          "children": [],
+          "media": "learning"
         },
         {
           "id": "governance",
@@ -892,45 +1195,78 @@ const SITE_CONTENT = {
             "Governance",
             "Կառավարում"
           ],
-          "items": [
+          "intro": [
+            "The foundation operates through its governing bodies and in accordance with its charter and applicable legislation.",
+            "Հիմնադրամը գործում է իր կառավարման մարմինների միջոցով՝ համաձայն իր կանոնադրության և գործող օրենսդրության։"
+          ],
+          "items": [],
+          "children": [],
+          "text": [
             [
-              "How decisions are made",
-              "Ինչպես են ընդունվում որոշումները"
-            ],
-            [
-              "Foundation details",
-              "Հիմնադրամի տվյալներ"
+              "We seek to maintain clear responsibilities, transparent decision-making, and appropriate oversight.",
+              "Մենք ձգտում ենք պահպանել հստակ պարտականություններ, թափանցիկ որոշումների կայացում և պատշաճ վերահսկողություն։"
             ]
           ],
-          "children": [],
-          "media": "learning",
-          "intro": [
-            "Information for this destination goes here.",
-            "Այս նպատակակետի տեղեկությունները՝ այստեղ։"
-          ]
+          "media": "learning"
         },
         {
           "id": "reports",
           "title": [
-            "Reports",
-            "Հաշվետվություններ"
+            "Public documents",
+            "Հրապարակային փաստաթղթեր"
+          ],
+          "intro": [
+            "Organizational documents will be published here when available.",
+            "Կազմակերպական փաստաթղթերը կհրապարակվեն այստեղ՝ հասանելի դառնալուն պես։"
           ],
           "items": [
             [
-              "Activity reports",
-              "Գործունեության հաշվետվություններ"
+              "Foundation charter",
+              "Հիմնադրամի կանոնադրություն"
             ],
             [
-              "Financial reports",
+              "Registration information",
+              "Գրանցման տվյալներ"
+            ],
+            [
+              "Governance structure",
+              "Կառավարման կառուցվածք"
+            ],
+            [
+              "Annual activity reports",
+              "Տարեկան գործունեության հաշվետվություններ"
+            ],
+            [
+              "Financial reports and disclosures",
               "Ֆինանսական հաշվետվություններ"
+            ],
+            [
+              "Organizational policies",
+              "Կազմակերպական քաղաքականություններ"
             ]
           ],
           "children": [],
-          "media": "learning",
+          "media": "learning"
+        },
+        {
+          "id": "resources",
+          "title": [
+            "Responsible use of resources",
+            "Ռեսուրսների պատասխանատու օգտագործում"
+          ],
           "intro": [
-            "Information for this destination goes here.",
-            "Այս նպատակակետի տեղեկությունները՝ այստեղ։"
-          ]
+            "Financial, material, and professional contributions are essential to supporting the foundation's objectives.",
+            "Ֆինանսական, նյութական և մասնագիտական ներդրումները էական են հիմնադրամի նպատակներին աջակցելու համար։"
+          ],
+          "items": [],
+          "children": [],
+          "text": [
+            [
+              "We aim to use available resources responsibly, in alignment with our mission, and to communicate how they contribute to educational, scientific, and community initiatives.",
+              "Մենք ձգտում ենք օգտագործել առկա ռեսուրսները պատասխանատու կերպով՝ մեր առաքելությանը համապատասխան, և հաղորդել, թե ինչպես են դրանք նպաստում կրթական, գիտական և համայնքային նախաձեռնություններին։"
+            ]
+          ],
+          "media": "learning"
         }
       ]
     },
@@ -941,217 +1277,288 @@ const SITE_CONTENT = {
         "Աջակցել"
       ],
       "title": [
-        "Power what comes next.",
-        "Սնուցեք այն, ինչ գալիս է հետո։"
+        "Help create opportunities\nfor others.",
+        "Օգնեք հնարավորություններ\nստեղծել ուրիշների համար։"
       ],
       "intro": [
-        "Every block of this chip runs on support. Choose how you would like to power the work.",
-        "Այս չիպի յուրաքանչյուր բլոկ աշխատում է աջակցության շնորհիվ։ Ընտրեք, թե ինչպես եք ցանկանում սնուցել աշխատանքը։"
+        "Individuals and organizations can support SemiTec through expertise, equipment, infrastructure, sponsorship, or financial assistance when suitable arrangements are available.",
+        "Անհատներն ու կազմակերպությունները կարող են աջակցել SemiTec-ին փորձառությամբ, սարքավորումներով, ենթակառուցվածքով, հովանավորությամբ կամ ֆինանսական օգնությամբ, երբ համապատասխան պայմանավորվածությունները հասանելի լինեն։"
+      ],
+      "text": [
+        [
+          "We aim to ensure contributions support clearly defined initiatives and are managed responsibly.",
+          "Մենք ձգտում ենք, որ ներդրումները աջակցեն հստակ սահմանված նախաձեռնություններին և կառավարվեն պատասխանատու կերպով։"
+        ]
       ],
       "items": [
         [
-          "Give once or monthly",
-          "Միանվագ կամ ամսական"
+          "Expertise and time",
+          "Փորձառություն և ժամանակ"
         ],
         [
-          "See where support goes",
-          "Տեսեք, ուր է գնում աջակցությունը"
+          "Equipment and infrastructure",
+          "Սարքավորում և ենթակառուցվածք"
         ],
         [
-          "Payment options will be added",
-          "Վճարման եղանակները կավելացվեն"
+          "Sponsorship",
+          "Հովանավորություն"
+        ],
+        [
+          "Financial support",
+          "Ֆինանսական աջակցություն"
         ]
       ],
       "media": "learning",
       "children": [
         {
-          "id": "pulse",
+          "id": "expertise",
           "title": [
-            "Give once · Pulse",
-            "Միանվագ · Իմպուլս"
+            "Expertise and time",
+            "Փորձառություն և ժամանակ"
           ],
           "intro": [
-            "A single gift that powers the work right now.",
-            "Մեկանգամյա նվիրատվություն, որն այժմ է սնուցում աշխատանքը։"
+            "Share knowledge, mentor, or help at events.",
+            "Կիսվեք գիտելիքով, դարձեք մենթոր կամ օգնեք միջոցառումներին։"
           ],
-          "items": [
-            [
-              "Amounts to be confirmed",
-              "Գումարները կհաստատվեն"
-            ],
-            [
-              "Secure payment link to be added",
-              "Անվտանգ վճարման հղումը կավելացվի"
-            ]
-          ],
-          "children": [],
-          "media": "learning"
-        },
-        {
-          "id": "clock",
-          "title": [
-            "Give monthly · Clock",
-            "Ամսական · Տակտ"
-          ],
-          "intro": [
-            "A steady monthly gift, like a clock signal that keeps the chip running.",
-            "Կայուն ամսական աջակցություն՝ տակտային ազդանշանի պես, որը պահում է չիպի աշխատանքը։"
-          ],
-          "items": [
-            [
-              "Amounts to be confirmed",
-              "Գումարները կհաստատվեն"
-            ],
-            [
-              "Change or stop at any time",
-              "Կարելի է փոխել կամ դադարեցնել ցանկացած պահի"
-            ]
-          ],
-          "children": [],
-          "media": "learning"
-        },
-        {
-          "id": "lab-kit",
-          "title": [
-            "Fund a lab kit",
-            "Ֆինանսավորել լաբորատոր հավաքածու"
-          ],
-          "intro": [
-            "Equip one student for hands-on chip-design labs.",
-            "Ապահովեք մեկ ուսանողի չիպերի նախագծման գործնական աշխատանքները։"
-          ],
-          "items": [
-            [
-              "What a kit contains goes here",
-              "Հավաքածուի բովանդակությունը՝ այստեղ"
-            ],
-            [
-              "Cost to be confirmed",
-              "Արժեքը կհաստատվի"
-            ]
-          ],
+          "items": [],
           "children": [],
           "media": "learning"
         },
         {
           "id": "equipment",
           "title": [
-            "Donate equipment",
-            "Նվիրաբերել սարքավորում"
+            "Equipment and infrastructure",
+            "Սարքավորում և ենթակառուցվածք"
           ],
           "intro": [
-            "Boards, instruments and computers for teaching labs.",
-            "Սալիկներ, սարքեր և համակարգիչներ ուսումնական լաբորատորիաների համար։"
+            "Boards, instruments, computers, or space for learning and research.",
+            "Տախտակներ, սարքեր, համակարգիչներ կամ տարածք՝ ուսման և հետազոտության համար։"
           ],
-          "items": [
-            [
-              "Equipment we need goes here",
-              "Անհրաժեշտ սարքավորումները՝ այստեղ"
-            ],
-            [
-              "How to arrange a donation",
-              "Ինչպես կազմակերպել նվիրատվությունը"
-            ]
-          ],
+          "items": [],
           "children": [],
-          "media": "wafer"
+          "media": "learning"
         },
         {
-          "id": "time",
+          "id": "sponsorship",
           "title": [
-            "Give your time",
-            "Նվիրեք ձեր ժամանակը"
+            "Sponsorship",
+            "Հովանավորություն"
           ],
           "intro": [
-            "Teach, mentor students or help at events.",
-            "Դասավանդեք, ուղղորդեք ուսանողներին կամ օգնեք միջոցառումներում։"
+            "Support a clearly defined initiative or event.",
+            "Աջակցեք հստակ սահմանված նախաձեռնության կամ միջոցառման։"
           ],
-          "items": [
-            [
-              "Guest lectures and mentoring",
-              "Հրավիրյալ դասախոսություններ և ուղղորդում"
-            ],
-            [
-              "Event volunteering",
-              "Կամավորություն միջոցառումներում"
-            ]
-          ],
+          "items": [],
           "children": [],
-          "media": "gathering"
+          "media": "learning"
+        },
+        {
+          "id": "financial",
+          "title": [
+            "Financial support",
+            "Ֆինանսական աջակցություն"
+          ],
+          "intro": [
+            "Financial contributions will open when suitable arrangements are in place.",
+            "Ֆինանսական ներդրումները հասանելի կլինեն, երբ համապատասխան պայմանավորվածությունները ձևավորվեն։"
+          ],
+          "items": [],
+          "children": [],
+          "media": "learning"
         }
       ]
     },
     {
       "id": "support",
       "label": [
-        "Connect",
-        "Միանալ"
+        "Get Involved",
+        "Միացեք"
       ],
       "title": [
-        "The next connection.",
-        "Հաջորդ կապը։"
+        "Your knowledge, experience,\nand ideas can make a difference.",
+        "Ձեր գիտելիքը, փորձը և\nգաղափարները կարող են փոփոխություն բերել։"
       ],
       "intro": [
-        "Become a partner or get in touch. To support the work, see Support.",
-        "Դառնալ գործընկեր կամ կապ հաստատել։ Աշխատանքին աջակցելու համար՝ տե՛ս «Աջակցել» բաժինը։"
+        "The development of a strong semiconductor ecosystem requires people and organizations with different backgrounds, skills, and perspectives.",
+        "Ուժեղ կիսահաղորդչային էկոհամակարգի զարգացումը պահանջում է տարբեր նախապատմություն, հմտություններ և տեսակետներ ունեցող մարդկանց և կազմակերպությունների։"
+      ],
+      "text": [
+        [
+          "Whether you are a student, researcher, engineer, educator, organization, or someone who shares our vision, there are opportunities to contribute. Meaningful technological progress is a collective effort.",
+          "Անկախ նրանից՝ դուք ուսանող եք, հետազոտող, ինժեներ, դասախոս, կազմակերպություն, թե պարզապես կիսում եք մեր տեսլականը, ներդրում ունենալու հնարավորություններ կան։ Իմաստալից տեխնոլոգիական առաջընթացը համատեղ ջանքի արդյունք է։"
+        ]
       ],
       "items": [
         [
-          "Become a partner",
-          "Դառնալ գործընկեր"
+          "Students",
+          "Ուսանողներ"
         ],
         [
-          "Contact us",
-          "Կապ հաստատել"
+          "Professionals",
+          "Մասնագետներ"
+        ],
+        [
+          "Researchers & educators",
+          "Հետազոտողներ և դասախոսներ"
+        ],
+        [
+          "Institutions & companies",
+          "Հաստատություններ և ընկերություններ"
+        ],
+        [
+          "Volunteers",
+          "Կամավորներ"
+        ],
+        [
+          "Propose an idea",
+          "Առաջարկեք գաղափար"
         ]
       ],
       "media": "gathering",
       "children": [
         {
-          "id": "partner",
+          "id": "students",
           "title": [
-            "Become a partner",
-            "Դառնալ գործընկեր"
+            "For students",
+            "Ուսանողների համար"
           ],
-          "items": [
+          "intro": [
+            "Learn, explore, and discover opportunities.",
+            "Սովորեք, որոնեք և բացահայտեք հնարավորություններ։"
+          ],
+          "items": [],
+          "children": [],
+          "text": [
             [
-              "Partnership opportunities",
-              "Համագործակցության հնարավորություններ"
-            ],
-            [
-              "How to start a conversation",
-              "Ինչպես սկսել զրույցը"
+              "Students can express interest in educational activities, technical workshops, research projects, community events, and volunteering opportunities. We aim to encourage active learning and help students connect academic knowledge with practical experience.",
+              "Ուսանողները կարող են հետաքրքրություն հայտնել կրթական գործողությունների, տեխնիկական սեմինարների, հետազոտական նախագծերի, համայնքային միջոցառումների և կամավորական հնարավորությունների նկատմամբ։ Մենք ձգտում ենք խրախուսել ակտիվ ուսումը և օգնել ուսանողներին կապել ակադեմիական գիտելիքը գործնական փորձի հետ։"
             ]
           ],
-          "children": [],
-          "media": "gathering",
+          "media": "gathering"
+        },
+        {
+          "id": "professionals",
+          "title": [
+            "For engineers and industry professionals",
+            "Ինժեներների և արդյունաբերության մասնագետների համար"
+          ],
           "intro": [
-            "Information for this destination goes here.",
-            "Այս նպատակակետի տեղեկությունները՝ այստեղ։"
-          ]
+            "Share your experience. Inspire new ideas.",
+            "Կիսվեք ձեր փորձով։ Ոգեշնչեք նոր գաղափարներ։"
+          ],
+          "items": [],
+          "children": [],
+          "text": [
+            [
+              "Industry professionals can contribute by sharing technical knowledge, participating in discussions, proposing engineering challenges, mentoring students, or supporting collaborative initiatives. Your experience can help connect education and research with real-world technological needs.",
+              "Արդյունաբերության մասնագետները կարող են ներդրում ունենալ՝ կիսվելով տեխնիկական գիտելիքով, մասնակցելով քննարկումներին, առաջարկելով ինժեներական խնդիրներ, ուղղորդելով ուսանողներին կամ աջակցելով համատեղ նախաձեռնություններին։ Ձեր փորձը կարող է օգնել կապել կրթությունն ու հետազոտությունը իրական տեխնոլոգիական կարիքների հետ։"
+            ]
+          ],
+          "media": "gathering"
+        },
+        {
+          "id": "researchers",
+          "title": [
+            "For researchers and educators",
+            "Հետազոտողների և դասախոսների համար"
+          ],
+          "intro": [
+            "Connect scientific exploration with collaboration.",
+            "Կապեք գիտական որոնումը համագործակցության հետ։"
+          ],
+          "items": [],
+          "children": [],
+          "text": [
+            [
+              "Researchers and educators are welcome to propose research topics, educational activities, technical seminars, and opportunities for cooperation. We seek to encourage scientific knowledge exchange and collaborative research.",
+              "Հետազոտողներն ու դասախոսները կարող են առաջարկել հետազոտական թեմաներ, կրթական գործողություններ, տեխնիկական դասախոսություններ և համագործակցության հնարավորություններ։ Մենք ձգտում ենք խրախուսել գիտական գիտելիքի փոխանակումը և համատեղ հետազոտությունը։"
+            ]
+          ],
+          "media": "gathering"
+        },
+        {
+          "id": "partner",
+          "title": [
+            "For universities, companies and organizations",
+            "Համալսարանների, ընկերությունների և կազմակերպությունների համար"
+          ],
+          "intro": [
+            "Explore institutional cooperation and contribute to the development of the ecosystem.",
+            "Քննարկեք հաստատությունների համագործակցությունը և նպաստեք էկոհամակարգի զարգացմանը։"
+          ],
+          "items": [],
+          "children": [],
+          "text": [
+            [
+              "Academic institutions can engage with SemiTec to discuss educational programs, research activities, knowledge-sharing initiatives, and community events.",
+              "Ակադեմիական հաստատությունները կարող են SemiTec-ի հետ քննարկել կրթական ծրագրեր, հետազոտական աշխատանքներ, գիտելիքի փոխանակման նախաձեռնություններ և համայնքային միջոցառումներ։"
+            ],
+            [
+              "Companies and organizations can support educational initiatives, share technical challenges, provide expertise, contribute equipment or resources, and take part in collaborative activities. We aim to build relationships based on shared objectives, practical contributions, and long-term value.",
+              "Ընկերություններն ու կազմակերպությունները կարող են աջակցել կրթական նախաձեռնություններին, կիսվել տեխնիկական խնդիրներով, տրամադրել փորձառություն, սարքավորումներ կամ ռեսուրսներ և մասնակցել համատեղ գործողություններին։ Մենք ձգտում ենք կառուցել հարաբերություններ՝ հիմնված ընդհանուր նպատակների, գործնական ներդրման և երկարաժամկետ արժեքի վրա։"
+            ]
+          ],
+          "media": "gathering"
+        },
+        {
+          "id": "volunteer",
+          "title": [
+            "Volunteer with us",
+            "Կամավորեք մեզ հետ"
+          ],
+          "intro": [
+            "Contribute your time and skills.",
+            "Տրամադրեք ձեր ժամանակն ու հմտությունները։"
+          ],
+          "items": [],
+          "children": [],
+          "text": [
+            [
+              "Volunteers can support event organization, educational materials, communication activities, technical initiatives, and other foundation activities. Contributions from technical and nontechnical backgrounds are welcome.",
+              "Կամավորները կարող են աջակցել միջոցառումների կազմակերպմանը, կրթական նյութերին, հաղորդակցությանը, տեխնիկական նախաձեռնություններին և հիմնադրամի այլ գործողություններին։ Ողջունելի են ինչպես տեխնիկական, այնպես էլ ոչ տեխնիկական ոլորտների մասնագետների ներդրումները։"
+            ]
+          ],
+          "media": "gathering"
+        },
+        {
+          "id": "idea",
+          "title": [
+            "Propose an idea",
+            "Առաջարկեք գաղափար"
+          ],
+          "intro": [
+            "Every meaningful initiative begins with an idea.",
+            "Յուրաքանչյուր իմաստալից նախաձեռնություն սկսվում է գաղափարից։"
+          ],
+          "items": [],
+          "children": [],
+          "text": [
+            [
+              "We welcome proposals for educational programs, research topics, technical discussions, collaborative projects, and other activities aligned with the foundation's mission. If you have identified a challenge, opportunity, or idea that could benefit the semiconductor community, we encourage you to share it.",
+              "Մենք ողջունում ենք կրթական ծրագրերի, հետազոտական թեմաների, տեխնիկական քննարկումների, համատեղ նախագծերի և հիմնադրամի առաքելությանը համապատասխան այլ գործողությունների առաջարկներ։ Եթե դուք նկատել եք խնդիր, հնարավորություն կամ գաղափար, որը կարող է օգտակար լինել կիսահաղորդչային համայնքին, խնդրում ենք կիսվել։"
+            ]
+          ],
+          "media": "gathering"
         },
         {
           "id": "contact",
           "title": [
             "Contact us",
-            "Կապ հաստատել"
+            "Կապ մեզ հետ"
           ],
-          "items": [
+          "intro": [
+            "Interested in learning more, contributing, or exploring a potential collaboration?",
+            "Ցանկանո՞ւմ եք ավելին իմանալ, ներդրում ունենալ կամ քննարկել համագործակցության հնարավորություն։"
+          ],
+          "items": [],
+          "children": [],
+          "text": [
             [
-              "Public email address",
-              "Հանրային էլեկտրոնային հասցե"
-            ],
-            [
-              "Social channels",
-              "Սոցիալական հարթակներ"
+              "Reach out to SemiTec Foundation and tell us about your interests, experience, or proposal. We look forward to connecting with people who share our commitment to technological development.",
+              "Կապվեք SemiTec հիմնադրամի հետ և պատմեք ձեր հետաքրքրությունների, փորձի կամ առաջարկի մասին։ Մենք անհամբեր սպասում ենք կապ հաստատել այն մարդկանց հետ, ովքեր կիսում են մեր նվիրումը տեխնոլոգիական զարգացմանը։"
             ]
           ],
-          "children": [],
-          "media": "gathering",
-          "intro": [
-            "Information for this destination goes here.",
-            "Այս նպատակակետի տեղեկությունները՝ այստեղ։"
-          ]
+          "media": "gathering"
         }
       ]
     }
@@ -1305,8 +1712,8 @@ const SITE_CONTENT = {
       "Գլխավոր ուղու ավարտը · Ոլորեք վեր՝ վերադառնալու համար"
     ],
     "prototype": [
-      "Design exploration · Example content",
-      "Դիզայնի նախագիծ · Օրինակային բովանդակություն"
+      "© SemiTec Foundation. All rights reserved.",
+      "© SemiTec հիմնադրամ։ Բոլոր իրավունքները պաշտպանված են։"
     ],
     "inside": [
       "INSIDE SEMITEC",
@@ -1493,12 +1900,12 @@ const SITE_CONTENT = {
       "ԳՈՐԾԸՆԿԵՐՆԵՐ ԵՎ ԱՋԱԿԻՑՆԵՐ"
     ],
     "padsIntro": [
-      "The gold contacts on the edge of the chip — where SemiTec connects with the world.",
-      "Չիպի եզրի ոսկե կոնտակտները՝ այնտեղ, որտեղ Սեմիթեքը կապվում է աշխարհի հետ։"
+      "The contacts on the edge of the chip are where SemiTec connects with the world. Each partner and supporter gets one.",
+      "Չիպի եզրի կոնտակտներն այն տեղն են, որտեղ SemiTec-ը կապվում է աշխարհի հետ։ Յուրաքանչյուր գործընկեր և աջակից ստանում է մեկը։"
     ],
     "padsNote": [
-      "Placeholder names · shown only with each partner’s permission",
-      "Անունները օրինակային են · ցուցադրվում են միայն համաձայնությամբ"
+      "Shown only with each partner’s permission.",
+      "Ցուցադրվում է միայն յուրաքանչյուր գործընկերոջ համաձայնությամբ։"
     ],
     "openPartners": [
       "Partners section",
@@ -1569,8 +1976,8 @@ const SITE_CONTENT = {
       "պահված"
     ],
     "exampleNote": [
-      "Examples · replace them in content.js",
-      "Օրինակներ · փոխարինեք content.js-ում"
+      "Only confirmed activities are shown here.",
+      "Այստեղ ցուցադրվում են միայն հաստատված գործողություններ։"
     ],
     "memoryView": [
       "Memory view",
@@ -1600,6 +2007,54 @@ const SITE_CONTENT = {
       "The chip turned over: its I/O side. Every partner and supporter is one of its contacts; the ones marked + are still free and one of them can be yours.",
       "Չիպը շրջված է՝ դեպի իր մուտք/ելքի կողմը։ Յուրաքանչյուր գործընկեր և աջակից դրա կոնտակտներից մեկն է․ + նշանով կոնտակտները դեռ ազատ են, և դրանցից մեկը կարող է ձերը լինել։"
     ],
+    "glanceKicker": [
+      "At a glance",
+      "Ակնարկ"
+    ],
+    "glanceTitle": [
+      "SemiTec in brief",
+      "SemiTec-ը համառոտ"
+    ],
+    "nextEvent": [
+      "Next event",
+      "Հաջորդ միջոցառումը"
+    ],
+    "openSection": [
+      "Open this section",
+      "Բացել բաժինը"
+    ],
+    "connTitle": [
+      "One signal through every section",
+      "Մեկ ազդանշան բոլոր բաժիններով"
+    ],
+    "connPower": [
+      "Support is the power unit along the bottom edge: its rails feed every block.",
+      "Աջակցությունը սնուցման բլոկն է ներքևի եզրին․ նրա գծերը սնում են բոլոր բլոկները։"
+    ],
+    "padsCardTitle": [
+      "The contacts on the edge",
+      "Կոնտակտները եզրին"
+    ],
+    "storySkip": [
+      "Skip the intro",
+      "Բաց թողնել ներածությունը"
+    ],
+    "storyJourneyKicker": [
+      "The journey",
+      "Ճամփորդությունը"
+    ],
+    "storyJourneyTitle": [
+      "Now travel through the chip.",
+      "Իսկ հիմա ճամփորդեք չիպի միջով։"
+    ],
+    "storyStart": [
+      "Start the journey",
+      "Սկսել ճամփորդությունը"
+    ],
+    "storyStartNote": [
+      "Or keep scrolling",
+      "Կամ շարունակեք ոլորել"
+    ],
     "endKicker": [
       "SemiTec Foundation · the package",
       "SemiTec հիմնադրամ · կորպուսը"
@@ -1625,8 +2080,8 @@ const SITE_CONTENT = {
       "Մեկ չիպ, բազմաթիվ կապեր"
     ],
     "ecoText": [
-      "Universities, industry, researchers and schools connect to SemiTec, module by module.",
-      "Համալսարանները, արդյունաբերությունը, հետազոտողները և դպրոցները միանում են SemiTec-ին՝ մոդուլ առ մոդուլ։"
+      "The ecosystem we aim to connect: universities, research institutions, industry, researchers, schools and the wider community.",
+      "Էկոհամակարգը, որը մենք ձգտում ենք կապել՝ համալսարաններ, հետազոտական հաստատություններ, արդյունաբերություն, հետազոտողներ, դպրոցներ և լայն հանրություն։"
     ],
     "ecoFree": [
       "Your organisation",
@@ -1681,8 +2136,8 @@ const SITE_CONTENT = {
       "Ինչպես է կառուցված SemiTec-ը"
     ],
     "buildTitle": [
-      "Every part of the foundation is part of one chip.",
-      "Հիմնադրամի յուրաքանչյուր մաս մեկ չիպի մասն է։"
+      "Building connections. Creating opportunities.",
+      "Կառուցում ենք կապեր։ Ստեղծում ենք հնարավորություններ։"
     ],
     "buildScroll": [
       "Scroll or use the arrow keys to build the chip",
@@ -1731,100 +2186,89 @@ const SITE_CONTENT = {
     "choose3dNote": [
       "Travel along the signal, through the chip.",
       "Ճամփորդեք ազդանշանի հետ՝ չիպի միջով։"
+    ],
+    "footerLine": [
+      "Advancing Armenia's semiconductor future through education, research, collaboration, and community.",
+      "Զարգացնելով Հայաստանի կիսահաղորդչային ապագան կրթության, հետազոտության, համագործակցության և համայնքի միջոցով։"
+    ],
+    "noProjects": [
+      "Nothing published yet: entries appear here as activities are completed.",
+      "Դեռ ոչինչ չի հրապարակվել․ գրառումները կհայտնվեն այստեղ՝ գործողությունների ավարտին զուգընթաց։"
+    ],
+    "fOrg": [
+      "Organization or university (optional)",
+      "Կազմակերպություն կամ համալսարան (ըստ ցանկության)"
+    ],
+    "fCategory": [
+      "I am a…",
+      "Ես…"
+    ],
+    "fArea": [
+      "Area of interest",
+      "Հետաքրքրության ոլորտ"
+    ],
+    "fConsent": [
+      "I agree that my data is used to answer this message.",
+      "Համաձայն եմ, որ իմ տվյալներն օգտագործվեն այս հաղորդագրությանը պատասխանելու համար։"
+    ],
+    "formUnavailable": [
+      "The form cannot send messages yet. Until it does, please use the contact details.",
+      "Ձևը դեռ չի կարող հաղորդագրություններ ուղարկել։ Մինչ այդ օգտվեք կոնտակտային տվյալներից։"
     ]
   },
-  "partners": [
-    {
-      "id": "university",
-      "kind": "partner",
-      "name": [
-        "University partner",
-        "Համալսարան գործընկեր"
-      ],
-      "url": ""
-    },
-    {
-      "id": "industry",
-      "kind": "partner",
-      "name": [
-        "Industry partner",
-        "Արդյունաբերական գործընկեր"
-      ],
-      "url": ""
-    },
-    {
-      "id": "research",
-      "kind": "partner",
-      "name": [
-        "Research institute",
-        "Գիտահետազոտական ինստիտուտ"
-      ],
-      "url": ""
-    },
-    {
-      "id": "technology",
-      "kind": "partner",
-      "name": [
-        "Technology company",
-        "Տեխնոլոգիական ընկերություն"
-      ],
-      "url": ""
-    },
-    {
-      "id": "education",
-      "kind": "partner",
-      "name": [
-        "Education partner",
-        "Կրթական գործընկեր"
-      ],
-      "url": ""
-    },
-    {
-      "id": "community",
-      "kind": "partner",
-      "name": [
-        "Community partner",
-        "Համայնքային գործընկեր"
-      ],
-      "url": ""
-    },
-    {
-      "id": "supporter-1",
-      "kind": "supporter",
-      "name": [
-        "Supporter name",
-        "Աջակցի անուն"
-      ],
-      "url": ""
-    },
-    {
-      "id": "supporter-2",
-      "kind": "supporter",
-      "name": [
-        "Supporter name",
-        "Աջակցի անուն"
-      ],
-      "url": ""
-    },
-    {
-      "id": "supporter-3",
-      "kind": "supporter",
-      "name": [
-        "Supporter name",
-        "Աջակցի անուն"
-      ],
-      "url": ""
-    },
-    {
-      "id": "supporter-4",
-      "kind": "supporter",
-      "name": [
-        "Supporter name",
-        "Աջակցի անուն"
-      ],
-      "url": ""
-    }
-  ],
+  "partners": [],
+  "story": {
+    "brief": [
+      "To strengthen Armenia's semiconductor ecosystem by connecting education, research, industry, and community.",
+      "Ամրապնդել Հայաստանի կիսահաղորդչային էկոհամակարգը՝ կապելով կրթությունը, հետազոտությունը, արդյունաբերությունը և համայնքը։"
+    ],
+    "directions": [
+      {
+        "title": [
+          "Education",
+          "Կրթություն"
+        ],
+        "text": [
+          "Empowering the next generation",
+          "Աջակցում ենք նոր սերնդին"
+        ]
+      },
+      {
+        "title": [
+          "Research",
+          "Հետազոտություն"
+        ],
+        "text": [
+          "From curiosity to solutions",
+          "Հետաքրքրասիրությունից՝ լուծումներ"
+        ]
+      },
+      {
+        "title": [
+          "Collaboration",
+          "Համագործակցություն"
+        ],
+        "text": [
+          "Knowledge meets real challenges",
+          "Գիտելիքը՝ իրական խնդիրների հետ"
+        ]
+      },
+      {
+        "title": [
+          "Community",
+          "Համայնք"
+        ],
+        "text": [
+          "A connected, engaged community",
+          "Փոխկապակցված և ներգրավված համայնք"
+        ]
+      }
+    ],
+    "vision": [
+      "Inspired by the four peaks of Mount Aragats.",
+      "Ոգեշնչված Արագածի չորս գագաթներով։"
+    ]
+  },
   "ecosystem": [
     {
       "id": "universities",
@@ -1979,144 +2423,7 @@ const SITE_CONTENT = {
       }
     ]
   },
-  "events": [
-    {
-      "id": "open-lab-2026",
-      "date": "2026-02-14",
-      "title": [
-        "Open lab day (example)",
-        "Բաց լաբորատորիայի օր (օրինակ)"
-      ],
-      "place": [
-        "Place to be added",
-        "Վայրը կավելացվի"
-      ],
-      "recap": [
-        "Recap, photos and participants go here.",
-        "Ամփոփումը, լուսանկարները և մասնակիցները՝ այստեղ։"
-      ],
-      "media": "learning"
-    },
-    {
-      "id": "student-meetup-2026",
-      "date": "2026-04-18",
-      "title": [
-        "Student meetup (example)",
-        "Ուսանողական հանդիպում (օրինակ)"
-      ],
-      "place": [
-        "Place to be added",
-        "Վայրը կավելացվի"
-      ],
-      "recap": [
-        "Recap, photos and participants go here.",
-        "Ամփոփումը, լուսանկարները և մասնակիցները՝ այստեղ։"
-      ],
-      "media": "gathering"
-    },
-    {
-      "id": "fpga-workshop-2026",
-      "date": "2026-06-06",
-      "title": [
-        "FPGA workshop (example)",
-        "FPGA աշխատարան (օրինակ)"
-      ],
-      "place": [
-        "Place to be added",
-        "Վայրը կավելացվի"
-      ],
-      "recap": [
-        "Recap, photos and participants go here.",
-        "Ամփոփումը, լուսանկարները և մասնակիցները՝ այստեղ։"
-      ],
-      "media": "learning"
-    },
-    {
-      "id": "summer-school-2026",
-      "date": "2026-07-20",
-      "title": [
-        "Summer school (example)",
-        "Ամառային դպրոց (օրինակ)"
-      ],
-      "place": [
-        "Place to be added",
-        "Վայրը կավելացվի"
-      ],
-      "recap": [
-        "Recap, photos and participants go here.",
-        "Ամփոփումը, լուսանկարները և մասնակիցները՝ այստեղ։"
-      ],
-      "media": "gathering"
-    },
-    {
-      "id": "chip-talk-2026",
-      "date": "2026-09-26",
-      "title": [
-        "Chip design talk (example)",
-        "Դասախոսություն չիպերի նախագծման մասին (օրինակ)"
-      ],
-      "place": [
-        "Place to be added",
-        "Վայրը կավելացվի"
-      ],
-      "recap": [
-        "Recap, photos and participants go here.",
-        "Ամփոփումը, լուսանկարները և մասնակիցները՝ այստեղ։"
-      ],
-      "media": "wafer"
-    },
-    {
-      "id": "rtl-workshop-2026",
-      "date": "2026-11-14",
-      "title": [
-        "RTL workshop (example)",
-        "RTL աշխատարան (օրինակ)"
-      ],
-      "place": [
-        "Place to be added",
-        "Վայրը կավելացվի"
-      ],
-      "recap": [
-        "Recap, photos and participants go here.",
-        "Ամփոփումը, լուսանկարները և մասնակիցները՝ այստեղ։"
-      ],
-      "media": "learning"
-    },
-    {
-      "id": "demo-day-2026",
-      "date": "2026-12-05",
-      "title": [
-        "Student demo day (example)",
-        "Ուսանողական ցուցադրության օր (օրինակ)"
-      ],
-      "place": [
-        "Place to be added",
-        "Վայրը կավելացվի"
-      ],
-      "recap": [
-        "Recap, photos and participants go here.",
-        "Ամփոփումը, լուսանկարները և մասնակիցները՝ այստեղ։"
-      ],
-      "media": "gathering"
-    },
-    {
-      "id": "partner-meetup-2027",
-      "date": "2027-02-20",
-      "title": [
-        "Partner meetup (example)",
-        "Գործընկերների հանդիպում (օրինակ)"
-      ],
-      "place": [
-        "Place to be added",
-        "Վայրը կավելացվի"
-      ],
-      "recap": [
-        "Recap, photos and participants go here.",
-        "Ամփոփումը, լուսանկարները և մասնակիցները՝ այստեղ։"
-      ],
-      "media": "gathering"
-    }
-  ],
+  "events": [],
   "memoryBanks": [
     {
       "id": "gallery",
@@ -2171,112 +2478,40 @@ const SITE_CONTENT = {
       ]
     }
   ],
-  "memory": [
-    {
-      "id": "foundation-start",
-      "bank": "projects",
-      "date": "2025-09-15",
-      "title": [
-        "Foundation registered (example)",
-        "Հիմնադրամի գրանցում (օրինակ)"
-      ],
-      "summary": [
-        "A short summary and a link go here.",
-        "Կարճ ամփոփումը և հղումը՝ այստեղ։"
-      ],
-      "media": "wafer",
-      "url": ""
-    },
-    {
-      "id": "fpga-lab",
-      "bank": "projects",
-      "date": "2025-12-10",
-      "title": [
-        "FPGA teaching lab equipped (example)",
-        "FPGA ուսումնական լաբորատորիայի կահավորում (օրինակ)"
-      ],
-      "summary": [
-        "A short summary and a link go here.",
-        "Կարճ ամփոփումը և հղումը՝ այստեղ։"
-      ],
-      "media": "learning",
-      "url": ""
-    },
-    {
-      "id": "course-materials",
-      "bank": "projects",
-      "date": "2026-03-20",
-      "title": [
-        "Open course materials published (example)",
-        "Բաց ուսումնական նյութերի հրապարակում (օրինակ)"
-      ],
-      "summary": [
-        "A short summary and a link go here.",
-        "Կարճ ամփոփումը և հղումը՝ այստեղ։"
-      ],
-      "media": "learning",
-      "url": ""
-    },
-    {
-      "id": "student-tapeout",
-      "bank": "projects",
-      "date": "2026-08-28",
-      "title": [
-        "First student chip design submitted (example)",
-        "Ուսանողական առաջին չիպի նախագծի ներկայացում (օրինակ)"
-      ],
-      "summary": [
-        "A short summary and a link go here.",
-        "Կարճ ամփոփումը և հղումը՝ այստեղ։"
-      ],
-      "media": "wafer",
-      "url": ""
-    },
-    {
-      "id": "annual-2025",
-      "bank": "reports",
-      "date": "2026-03-31",
-      "title": [
-        "Annual report 2025 (example)",
-        "Տարեկան հաշվետվություն 2025 (օրինակ)"
-      ],
-      "summary": [
-        "A short summary and a link go here.",
-        "Կարճ ամփոփումը և հղումը՝ այստեղ։"
-      ],
-      "media": "wafer",
-      "url": ""
-    },
-    {
-      "id": "financial-2025",
-      "bank": "reports",
-      "date": "2026-04-30",
-      "title": [
-        "Financial statement 2025 (example)",
-        "Ֆինանսական ամփոփագիր 2025 (օրինակ)"
-      ],
-      "summary": [
-        "A short summary and a link go here.",
-        "Կարճ ամփոփումը և հղումը՝ այստեղ։"
-      ],
-      "media": "wafer",
-      "url": ""
-    },
-    {
-      "id": "update-q2-2026",
-      "bank": "reports",
-      "date": "2026-07-15",
-      "title": [
-        "Activity update, Q2 2026 (example)",
-        "Գործունեության թարմացում, 2026 Q2 (օրինակ)"
-      ],
-      "summary": [
-        "A short summary and a link go here.",
-        "Կարճ ամփոփումը և հղումը՝ այստեղ։"
-      ],
-      "media": "learning",
-      "url": ""
-    }
+  "memory": [],
+  "formCategories": [
+    [
+      "Student",
+      "Ուսանող"
+    ],
+    [
+      "Engineer / industry professional",
+      "Ինժեներ / արդյունաբերության մասնագետ"
+    ],
+    [
+      "Researcher / educator",
+      "Հետազոտող / դասախոս"
+    ],
+    [
+      "University / research institution",
+      "Համալսարան / հետազոտական հաստատություն"
+    ],
+    [
+      "Company / organization",
+      "Ընկերություն / կազմակերպություն"
+    ],
+    [
+      "Volunteer",
+      "Կամավոր"
+    ],
+    [
+      "Supporter",
+      "Աջակից"
+    ],
+    [
+      "Other",
+      "Այլ"
+    ]
   ]
 };
 

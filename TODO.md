@@ -9,9 +9,20 @@ Placeholders in the page are marked "(example)" or "to be confirmed".
 - [ ] **"Save the date" on upcoming events.** A button per upcoming event that adds it to the visitor's calendar (.ics file / Google Calendar link). Can be generated in the page, but publish together with the server so links and times are final.
 - [ ] **Live view on event days.** On the day of an event, a "LIVE" light on the Events gate in 3D and on the timeline in 2D; optionally a live stream or photo feed. Needs a source for live content.
 
+## At a glance with real numbers (once there is work to show)
+- [ ] Turn "SemiTec in brief" (the "At a glance" card in the opening, 2D and 3D) into **SemiTec today** with real, confirmed figures only:
+  - students reached, volunteers, mentors
+  - published papers and student projects
+  - partner universities and companies
+  - events held, and the **next upcoming event** (already shown automatically from `SITE_CONTENT.events`)
+  - the latest **annual report** (link to the PDF in the reports archive)
+  - open calls: roles, programmes, deadlines
+- [ ] Keep the mission and the four directions as the fallback when a figure is not yet available; never show estimated numbers.
+- [ ] Add the figures to `SITE_CONTENT.story` (e.g. `numbers: [{value, label}]`, `next: [...]`) and render them in `js/story.js` next to the brief.
+
 ## Content
 - [ ] Real events (dates, places, recaps, photos) in `SITE_CONTENT.events`.
-- [ ] Real projects and reports in `SITE_CONTENT.memory` (with links to PDFs for reports).
+- [ ] Real projects and reports in the archive (`SITE_CONTENT.memory`) (with links to PDFs for reports).
 - [ ] Real partners and supporters, with permission, in `SITE_CONTENT.partners`.
 - [ ] Contact details in `SITE_CONTENT.contact`.
 - [ ] Ecosystem modules at the end of the 2D page (`SITE_CONTENT.ecosystem`): confirm the kinds of organisations; later each module could open a list of real members (with permission) and link to its own page.
@@ -21,7 +32,7 @@ Placeholders in the page are marked "(example)" or "to be confirmed".
 ## Blog (separate site)
 - [ ] **Blog as its own page / site**, outside this page (e.g. `blog.<domain>` or `/blog`). This page only links to it: a "Blog" link in the header and in Connect, and later the latest 2–3 posts as cards in Impact or Events.
 - [ ] Design the blog later in the same visual language (paper + chip palette, EN/HY). Decide the platform (static site generator, or a hosted blog with a custom domain) together with the server.
-- [ ] Topics to plan: foundation news, student project write-ups, event recaps (can link back to the memory gallery), "how chips are made" explainers.
+- [ ] Topics to plan: foundation news, student project write-ups, event recaps (can link back to the gallery), "how chips are made" explainers.
 
 ## Other things foundations usually have
 - [ ] **Legal and trust basics:** registration details, charter, board, privacy policy, code of conduct; a safeguarding policy if school students attend events.
