@@ -288,13 +288,10 @@ function renderCard(force=false){
  if(route.index===0){const lines=pick(node.title).split('\n');title.append(document.createTextNode(lines[0]),document.createElement('br'),element('span','',lines.slice(1).join(' ')));}
  else title.textContent=pick(node.title);
  card.append(title,element('p','panel-intro',pick(node.intro)));
- if(inLoop&&(node.text||[]).length){
-  const more=element('div','panel-more');node.text.forEach(t=>more.append(element('p','panel-text',pick(t))));
-  const tog=element('button','panel-more-toggle',text('readMore'));tog.type='button';
-  tog.addEventListener('click',()=>{if(innerWidth<=760){ST.openTextSheet(pick(node.title),node.text);return;}const o=card.classList.toggle('is-more');tog.textContent=text(o?'readLess':'readMore');updatePanelSize();});
-  card.append(more,tog);
-  if(node.text.reduce((n,t)=>n+pick(t).length,0)>600)card.classList.add('has-long');
+ if(inLoop&&(node.text||[]).length){   // the path's text, in a scrolling area that fits above the buttons
+  const more=element('div','panel-more');node.text.forEach(t=>more.append(element('p','panel-text',pick(t))));card.append(more);
  }
+
  if(inLoop){
   const status=element('div','loop-status');const ring=element('div','loop-ring');ring.setAttribute('role','progressbar');ring.setAttribute('aria-label',text('loopProgress'));ring.setAttribute('aria-valuemin','0');ring.setAttribute('aria-valuemax','100');
   const detail=element('div');detail.append(element('span','',text('back')+labelFor(active.segment.visit.parentPath)),element('small','',text('loopHint')));status.append(ring,detail);card.append(status);
@@ -331,7 +328,7 @@ function updatePanelSize(){
     Shorter content leaves a gap above them; longer content gives up height (the path list or the read-more text scroll). */
  const acts=currentCard.querySelector('.panel-actions');
  if(acts&&innerWidth>760){
-  const ro=currentCard.querySelector('.route-options'),more=currentCard.classList.contains('is-more')?currentCard.querySelector('.panel-more'):null;
+  const ro=currentCard.querySelector('.route-options'),more=currentCard.querySelector('.panel-more');
   acts.style.paddingTop='';if(ro)ro.style.maxHeight='';if(more)more.style.maxHeight='';
   const nav=document.querySelector('.chapter-nav'),target=(nav?nav.getBoundingClientRect().top:innerHeight)-18,top=panel.getBoundingClientRect().top;
   const bottom=()=>acts.getBoundingClientRect().bottom-(currentCard.getBoundingClientRect().top-top);   // without the card's entrance slide

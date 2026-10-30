@@ -242,3 +242,11 @@ html[lang=hy][data-mode="3d"] .breadcrumbs { font-size: 7px; }
 [data-mode="3d"] body[data-cue-text="0"] .scroll-cue .scroll-icon, [data-mode="3d"] body[data-cue-text="0"] #scroll-hint { display: none; }
 @media (min-width: 761px) { [data-mode="3d"] .prototype-note { display: none; } }
 @media (max-width: 760px) { [data-mode="3d"] body[data-cue-text="0"] .reading-panel { bottom: 92px; } }
+
+/* no "Read more": a path's text always shows, scrolling inside a fixed height */
+[data-mode="3d"] .panel-more, [data-mode="3d"] .has-long:not(.is-more) .panel-more { display: block; overflow-y: auto; overscroll-behavior: contain; padding-right: 6px; scrollbar-width: thin; scrollbar-color: #4d6b6b transparent; }
+[data-mode="3d"] .panel-more-toggle, [data-mode="3d"] .has-long .panel-more-toggle { display: none; }
+@media (max-width: 760px) { [data-mode="3d"] .panel-more { display: block; max-height: 18vh; margin-bottom: 10px; -webkit-mask: linear-gradient(#000 85%,transparent); mask: linear-gradient(#000 85%,transparent); } }
+[data-mode="3d"] .panel-more { margin: 0 0 16px; }
+[data-mode="3d"] .panel-more .panel-text { margin: 0 0 10px; }
+[data-mode="3d"] .panel-more .panel-text:last-child { margin-bottom: 0; }

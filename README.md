@@ -152,7 +152,7 @@ Support sits between Trust and Connect, so the reports are right before it. On t
 - A side path off the main route **comes back a little before where it left** (`loopReturnBack`, near the start of the section), so after it the paths sign is ahead again and another path can be chosen. Its last stretch settles exactly onto the main route; the repeated stretch is joined back into one when the visit is cleaned up.
 - When the camera is past the branch point without having seen the sign (coming back from a side path, or arriving there), the sign stays a little ahead of the camera until the next gate, so another path can be chosen without scrolling back.
 - Choosing a side path from the reading panel before that middle point travels on to the middle first, then turns onto the path; after the middle it turns where you are.
-- A long path text (over ~600 characters) stays behind **Read more** in the 3D reading panel; on phones every path text does.
+- A path's text always shows in the 3D reading panel, in an area that scrolls within a fixed height (no "Read more"); the buttons keep a fixed place above the bottom bar.
 
 ## 3D journey changes
 
