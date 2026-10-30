@@ -113,7 +113,9 @@ const eco3dEl=document.querySelector('#eco-3d');
    last card the chip dives into the journey. Scrolling up at the very start of the journey opens it again. */
 const introEl=document.querySelector('#intro-3d');
 let introMap=null,introOn=false,introP=0,introT=0,introRoot=null,touchY=null;
-const introLen=()=>introRoot?ST.story.length(introRoot):1;
+const storyLen=()=>introRoot?ST.story.length(introRoot):1;
+/* the story, then one more step: the dive, where the chip's topology zooms in and opens into the 3D chip */
+const introLen=()=>storyLen()+1;
 function renderIntro(){
  introEl.innerHTML=`<div class="intro-board" aria-hidden="true"></div><div class="intro-root story">${ST.story.html('3d')}</div><button type="button" class="story-skip">${ST.esc(text('storySkip'))} →</button>`;
  introRoot=introEl.querySelector('.intro-root');
@@ -132,33 +134,47 @@ function finishIntro(quiet){
  introEl.classList.add('is-leaving');document.documentElement.classList.remove('travel-intro');
  setTimeout(()=>{if(!introOn)introEl.classList.remove('is-on','is-leaving');},650);
  window.scrollTo({top:0,behavior:'instant'});targetDistance=currentDistance=0;
- if(!quiet&&!still)tweenLift(.6,0,1400,ST.easeOut);else lift=0;
+ if(!quiet&&!still&&lift>.01)tweenLift(lift,0,1400,ST.easeOut);else lift=0;
  if(ST.sound)ST.sound.sweep();wake();
 }
 function updateIntro(dt,force){
  if(!introOn||!introRoot)return;
  introP=still||force?introT:introP+(introT-introP)*(1-Math.exp(-dt*7));
  if(Math.abs(introT-introP)<.0005)introP=introT;
- const cr=ST.story.apply(introRoot,introP,introMap,innerWidth<=900);
- Object.assign(introRoot.querySelector('.choose-stage').style,{left:cr.l.toFixed(1)+'px',top:cr.t.toFixed(1)+'px',width:cr.w.toFixed(1)+'px',height:cr.h.toFixed(1)+'px'});
- ST.state.storyP=introP;lift=.6;
+ const S=storyLen(),d=clamp(introP-S,0,1);
+ const cr=ST.story.apply(introRoot,Math.min(introP,S),introMap,innerWidth<=900);
+ const stage=introRoot.querySelector('.choose-stage');
+ Object.assign(stage.style,{left:cr.l.toFixed(1)+'px',top:cr.t.toFixed(1)+'px',width:cr.w.toFixed(1)+'px',height:cr.h.toFixed(1)+'px'});
+ /* the dive: the topology grows towards the middle of the screen and fades as the 3D chip comes up close */
+ const z=d*d*(3-2*d),zi=Math.pow(d,1.6),rr=introRoot.getBoundingClientRect();
+ const dx=(rr.width/2-(cr.l+cr.w/2))*z,dy=(rr.height/2-(cr.t+cr.h/2))*z;
+ stage.style.transform=d>0?`translate(${dx.toFixed(1)}px,${dy.toFixed(1)}px) scale(${(1+zi*5).toFixed(3)})`:'';
+ stage.style.opacity=d>0?(1-clamp((d-.45)/.5,0,1)).toFixed(3):'';
+ const rest=d>0?(1-clamp(d/.3,0,1)).toFixed(3):'';
+ introRoot.querySelectorAll('.story-head,.story-cards,.story-hint').forEach(el=>{el.style.opacity=rest;el.style.pointerEvents=d>.2?'none':'';});
+ const board=introEl.querySelector('.intro-board');if(board)board.style.opacity=d>0?(1-clamp((d-.15)/.75,0,1)).toFixed(3):'';
+ const skip=introEl.querySelector('.story-skip');if(skip)skip.style.opacity=rest;
+ introEl.style.pointerEvents=d>.6?'none':'';
+ document.documentElement.classList.toggle('travel-intro',d<.85);
+ ST.state.storyP=d>0?null:introP;lift=.6*(1-z);
+ if(introT>=introLen()-1e-3&&introP>=introLen()-.004&&!force)finishIntro(true);
 }
 function introMove(steps){
  const L=introLen();
- if(steps>0&&introT>=L-.001&&introP>L-.15){finishIntro();return;}
+ if(steps>0&&introT>=L-.001&&introP>L-.15){finishIntro(true);return;}
  introT=clamp(introT+steps,0,L);wake();
 }
 const atJourneyStart=()=>on&&!introOn&&scrollY<=2&&currentDistance<.5&&introRoot!==undefined;
 window.addEventListener('wheel',e=>{
  if(!on||ST.state.switching)return;
  if(introOn){e.preventDefault();introMove(e.deltaY/(innerHeight*.6));return;}
- if(e.deltaY<0&&atJourneyStart()&&lift<.05){e.preventDefault();openIntro(introLen()-.4);}
+ if(e.deltaY<0&&atJourneyStart()&&lift<.05){e.preventDefault();openIntro(introLen()-.02);}
 },{passive:false,capture:true});
 window.addEventListener('touchstart',e=>{touchY=e.touches[0].clientY;},{passive:true,capture:true});
 window.addEventListener('touchmove',e=>{
  if(!on||touchY==null)return;const y=e.touches[0].clientY,dy=touchY-y;
  if(introOn){e.preventDefault();touchY=y;introMove(dy/(innerHeight*.55));return;}
- if(dy<-30&&atJourneyStart()){touchY=null;openIntro(introLen()-.4);}
+ if(dy<-30&&atJourneyStart()){touchY=null;openIntro(introLen()-.02);}
 },{passive:false,capture:true});
 window.addEventListener('keydown',e=>{
  if(!on||!introOn||e.metaKey||e.ctrlKey||e.altKey)return;
@@ -171,7 +187,7 @@ window.addEventListener('keydown',e=>{
  introMove(fwd?Math.floor(introT+1e-3)+1-introT:-(introT-Math.ceil(introT-1e-3)+1));
 },{capture:true});
 introEl.addEventListener('click',e=>{
- if(e.target.closest('.story-skip,.story-start')){e.preventDefault();finishIntro();return;}
+ if(e.target.closest('.story-skip,.story-start')){e.preventDefault();if(still)finishIntro();else{introT=introLen();wake();}return;}
  const go=e.target.closest('.sc-go[data-path]');
  if(go){e.preventDefault();e.stopPropagation();finishIntro(true);navigate(go.dataset.path.split('/'));}
 },true);

@@ -34,8 +34,8 @@ In this part the chip's blocks show only their section's name (the subsections a
 The 3D view starts with the same story over the risen 3D chip: the empty chip with the SemiTec Foundation name, "At a glance", the section cards flying into their blocks, the connections and the edge contacts. The last card is **Start the journey**.
 
 - **Moving through it:** while the story shows, the wheel, a swipe, the arrow keys or Space move through it, and the page itself doesn't scroll.
-- **Into the journey:** after the last card, scrolling on (or **Start the journey**, or **Skip the intro** in the corner, or Esc) fades the story and glides the camera down into the journey.
-- **Back:** scrolling up at the very start of the journey opens the story again at its last steps.
+- **Into the journey:** after the last card, scrolling on dives into the chip: the cards fade, the topology zooms in towards the middle of the screen and opens into the 3D chip as the camera comes down to the journey. **Start the journey** plays the same dive; **Skip the intro** in the corner or Esc fade straight to the journey.
+- **Back:** scrolling up at the very start of the journey plays the dive in reverse: the 3D chip zooms out into the topology and "Building connections. Creating opportunities." returns.
 - **Switching views:** during the story, switching between 2D and 3D keeps the same step and the same picture.
 - **Direct links:** opening 3D at a section (a link, the section bar, "Travel this path in 3D") skips the story.
 

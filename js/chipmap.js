@@ -576,8 +576,9 @@
 
     /* ---------- drawing ---------- */
     resize() {
-      const r = this.viewport.getBoundingClientRect();
-      this.W = r.width; this.H = r.height;
+      /* layout size, not the on-screen box: the 3D intro's dive scales the stage with a CSS transform */
+      const v = this.viewport, r = v.getBoundingClientRect();
+      this.W = v.offsetWidth || r.width; this.H = v.offsetHeight || r.height;
       this.fit = Math.max(.05, Math.min(this.W / 1080, this.H / 820));
       if (this.following && this.focusBlock) { this.applyFollow(); this.wake(); }
       this.draw();
