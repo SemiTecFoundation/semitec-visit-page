@@ -849,3 +849,8 @@ html.travel-intro .gate-layer,html.travel-end .gate-layer{opacity:0!important;tr
 /* the story: blocks not yet on the chip are not links */
 .chipmap .is-pending,.chipmap .is-pending *{cursor:default!important;pointer-events:none}
 .chipmap.pads-pending :is(.cm-pad,.cm-sup-label){pointer-events:none;cursor:default}
+
+/* a section's own cards (About): rows of three */
+.sec .pc-show{margin:22px 0 10px}
+.pc-show-card.is-pulse{animation:pscPulse 1.6s ease 2}
+@keyframes pscPulse{0%,100%{box-shadow:none}50%{box-shadow:0 0 0 3px #eac883aa,0 12px 30px #14262c2a}}

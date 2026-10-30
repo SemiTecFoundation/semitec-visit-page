@@ -145,6 +145,13 @@ Each section has a scroll-linked reveal: title words rise, the image unmasks wit
 
 Support sits between Trust and Connect, so the reports are right before it. On the 2D page it has a power-unit panel: **Pulse · give once** / **Clock · give monthly**, three amount slots, a Donate button and "Where the support goes" (which opens Trust → Reports). The amounts and the payment link are placeholders: the button stays disabled until a payment provider is chosen. Its submenus: give once, give monthly, fund a lab kit, donate equipment, give your time. In 3D, reaching Support powers on the chip: every trace brightens.
 
+## About: cards instead of side paths
+
+About's topics (who we are, why we exist, mission, vision, values, our story) are `showcase` cards on the section itself (`SITE_CONTENT.sections[purpose].showcase`), not side paths:
+- **2D:** a row of cards (three per line) under the section text; a card opens large (details + picture). The About block on the chip map lists them; a cell scrolls to its card (`#purpose/values`).
+- **3D:** while the About section is on screen, a wall of six cards stands on the right of the road (a swipeable row on phones); a card opens large.
+- `validate.cjs` uses a test-only nested path under About for its journey geometry checks.
+
 ## Gates, section names and side paths (3D)
 
 - Each section's **name stands on its gate** (`.gate-name`, projected onto the gate's beam). Crossing a gate is where the reading panel changes to that section. The section pictures that used to float on the right of the main route are gone.

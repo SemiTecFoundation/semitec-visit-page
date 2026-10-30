@@ -77,26 +77,10 @@ const SITE_CONTENT = {
           "Մենք համոզված ենք, որ կայուն առաջընթացի համար միայն տեխնիկական փորձառությունը բավարար չէ։ Այն պահանջում է ամուր կապեր մարդկանց, կրթական հաստատությունների, հետազոտական համայնքների և արդյունաբերության միջև։ Մեր նպատակն է օգնել ստեղծել միջավայր, որտեղ գիտելիքը կիսվում է, տաղանդը զարգանում է, իսկ գաղափարները հնարավորություն են ստանում դառնալու իմաստալից ձեռքբերումներ։"
         ]
       ],
-      "items": [
-        [
-          "Who we are",
-          "Ովքեր ենք մենք"
-        ],
-        [
-          "Mission & vision",
-          "Առաքելություն և տեսլական"
-        ],
-        [
-          "Our values",
-          "Մեր արժեքները"
-        ],
-        [
-          "Our story",
-          "Մեր պատմությունը"
-        ]
-      ],
+      "items": [],
       "media": "wafer",
-      "children": [
+      "children": [],
+      "showcase": [
         {
           "id": "who",
           "title": [
@@ -107,9 +91,7 @@ const SITE_CONTENT = {
             "A nonprofit initiative for Armenia's semiconductor and microelectronics ecosystem.",
             "Ոչ առևտրային նախաձեռնություն՝ Հայաստանի կիսահաղորդչային և միկրոէլեկտրոնիկայի էկոհամակարգի համար։"
           ],
-          "items": [],
-          "children": [],
-          "text": [
+          "details": [
             [
               "SemiTec Foundation is a nonprofit initiative established to contribute to the development of Armenia's semiconductor and microelectronics ecosystem.",
               "SemiTec հիմնադրամը ոչ առևտրային նախաձեռնություն է, որը ստեղծվել է նպաստելու Հայաստանի կիսահաղորդչային և միկրոէլեկտրոնիկայի էկոհամակարգի զարգացմանը։"
@@ -123,7 +105,12 @@ const SITE_CONTENT = {
               "Մենք հավատում ենք, որ Հայաստանի տեխնոլոգիական ապագան կարելի է ամրապնդել համագործակցության, հասանելի գիտելիքի և այնպիսի հնարավորությունների միջոցով, որոնք մարդկանց խրախուսում են սովորել, փորձարկել, հետազոտել և ստեղծել։"
             ]
           ],
-          "media": "wafer"
+          "items": [],
+          "links": [],
+          "media": "about-who",
+          "gallery": [
+            "about-who"
+          ]
         },
         {
           "id": "why",
@@ -135,9 +122,7 @@ const SITE_CONTENT = {
             "Education, research and industry do not always develop in close coordination.",
             "Կրթությունը, հետազոտությունը և արդյունաբերությունը միշտ չէ, որ զարգանում են սերտ համագործակցությամբ։"
           ],
-          "items": [],
-          "children": [],
-          "text": [
+          "details": [
             [
               "The semiconductor industry is built upon a complex relationship between scientific discovery, engineering expertise, education, and industrial innovation.",
               "Կիսահաղորդչային արդյունաբերությունը հիմնված է գիտական հայտնագործությունների, ինժեներական փորձառության, կրթության և արդյունաբերական նորարարության բարդ փոխկապակցվածության վրա։"
@@ -151,7 +136,12 @@ const SITE_CONTENT = {
               "SemiTec հիմնադրամը ձգտում է օգնել լուծելու այս խնդիրները՝ խրախուսելով համագործակցությունը, աջակցելով կրթական և հետազոտական նախաձեռնություններին և ստեղծելով գիտելիքի փոխանակման հնարավորություններ։"
             ]
           ],
-          "media": "wafer"
+          "items": [],
+          "links": [],
+          "media": "about-why",
+          "gallery": [
+            "about-why"
+          ]
         },
         {
           "id": "mission",
@@ -160,12 +150,21 @@ const SITE_CONTENT = {
             "Մեր առաքելությունը"
           ],
           "intro": [
-            "To strengthen Armenia's semiconductor ecosystem by connecting education, research, industry, and community through collaborative initiatives, knowledge sharing, and opportunities for technological development.",
-            "Ամրապնդել Հայաստանի կիսահաղորդչային էկոհամակարգը՝ կապելով կրթությունը, հետազոտությունը, արդյունաբերությունը և համայնքը համատեղ նախաձեռնությունների, գիտելիքի փոխանակման և տեխնոլոգիական զարգացման հնարավորությունների միջոցով։"
+            "What we work for.",
+            "Ինչի համար ենք աշխատում։"
+          ],
+          "details": [
+            [
+              "To strengthen Armenia's semiconductor ecosystem by connecting education, research, industry, and community through collaborative initiatives, knowledge sharing, and opportunities for technological development.",
+              "Ամրապնդել Հայաստանի կիսահաղորդչային էկոհամակարգը՝ կապելով կրթությունը, հետազոտությունը, արդյունաբերությունը և համայնքը համատեղ նախաձեռնությունների, գիտելիքի փոխանակման և տեխնոլոգիական զարգացման հնարավորությունների միջոցով։"
+            ]
           ],
           "items": [],
-          "children": [],
-          "media": "wafer"
+          "links": [],
+          "media": "about-mission",
+          "gallery": [
+            "about-mission"
+          ]
         },
         {
           "id": "vision",
@@ -174,12 +173,21 @@ const SITE_CONTENT = {
             "Մեր տեսլականը"
           ],
           "intro": [
-            "An Armenia with a dynamic, interconnected, and internationally engaged semiconductor ecosystem, where talented individuals have the knowledge, resources, and opportunities to contribute to scientific and technological advancement.",
-            "Հայաստան՝ դինամիկ, փոխկապակցված և միջազգայնորեն ներգրավված կիսահաղորդչային էկոհամակարգով, որտեղ տաղանդավոր մարդիկ ունեն գիտելիք, ռեսուրսներ և հնարավորություններ՝ նպաստելու գիտական և տեխնոլոգիական առաջընթացին։"
+            "Where we want Armenia's semiconductor field to be.",
+            "Որտեղ ենք ուզում տեսնել Հայաստանի կիսահաղորդչային ոլորտը։"
+          ],
+          "details": [
+            [
+              "An Armenia with a dynamic, interconnected, and internationally engaged semiconductor ecosystem, where talented individuals have the knowledge, resources, and opportunities to contribute to scientific and technological advancement.",
+              "Հայաստան՝ դինամիկ, փոխկապակցված և միջազգայնորեն ներգրավված կիսահաղորդչային էկոհամակարգով, որտեղ տաղանդավոր մարդիկ ունեն գիտելիք, ռեսուրսներ և հնարավորություններ՝ նպաստելու գիտական և տեխնոլոգիական առաջընթացին։"
+            ]
           ],
           "items": [],
-          "children": [],
-          "media": "wafer"
+          "links": [],
+          "media": "about-vision",
+          "gallery": [
+            "about-vision"
+          ]
         },
         {
           "id": "values",
@@ -191,95 +199,38 @@ const SITE_CONTENT = {
             "Six values guide how we work.",
             "Վեց արժեք, որոնք ուղղորդում են մեր աշխատանքը։"
           ],
-          "items": [],
-          "children": [
-            {
-              "id": "knowledge",
-              "title": [
-                "Knowledge and education",
-                "Գիտելիք և կրթություն"
-              ],
-              "intro": [
-                "Accessible, high-quality knowledge is essential for technological progress.",
-                "Հասանելի և որակյալ գիտելիքը տեխնոլոգիական առաջընթացի հիմքն է։"
-              ],
-              "items": [],
-              "children": [],
-              "media": "wafer"
-            },
-            {
-              "id": "collaboration",
-              "title": [
-                "Collaboration",
-                "Համագործակցություն"
-              ],
-              "intro": [
-                "Cooperation between individuals, universities, research institutions, companies, and professional communities.",
-                "Անհատների, համալսարանների, հետազոտական հաստատությունների, ընկերությունների և մասնագիտական համայնքների միջև։"
-              ],
-              "items": [],
-              "children": [],
-              "media": "wafer"
-            },
-            {
-              "id": "innovation",
-              "title": [
-                "Innovation",
-                "Նորարարություն"
-              ],
-              "intro": [
-                "Curiosity, experimentation, research, and practical solutions to meaningful challenges.",
-                "Հետաքրքրասիրություն, փորձարկում, հետազոտություն և գործնական լուծումներ իմաստալից խնդիրների համար։"
-              ],
-              "items": [],
-              "children": [],
-              "media": "wafer"
-            },
-            {
-              "id": "openness",
-              "title": [
-                "Openness",
-                "Բացություն"
-              ],
-              "intro": [
-                "The responsible exchange of knowledge, ideas, and experiences that benefit the broader community.",
-                "Գիտելիքի, գաղափարների և փորձի պատասխանատու փոխանակում՝ ի օգուտ լայն համայնքի։"
-              ],
-              "items": [],
-              "children": [],
-              "media": "wafer"
-            },
-            {
-              "id": "integrity",
-              "title": [
-                "Integrity and responsibility",
-                "Ազնվություն և պատասխանատվություն"
-              ],
-              "intro": [
-                "Transparent governance, responsible use of resources, and accountability to our community and supporters.",
-                "Թափանցիկ կառավարում, ռեսուրսների պատասխանատու օգտագործում և հաշվետվողականություն մեր համայնքի ու աջակիցների առջև։"
-              ],
-              "items": [],
-              "children": [],
-              "media": "wafer"
-            },
-            {
-              "id": "long-term",
-              "title": [
-                "Long-term development",
-                "Երկարաժամկետ զարգացում"
-              ],
-              "intro": [
-                "Initiatives that create lasting educational, scientific, and technological value.",
-                "Նախաձեռնություններ, որոնք ստեղծում են տևական կրթական, գիտական և տեխնոլոգիական արժեք։"
-              ],
-              "items": [],
-              "children": [],
-              "media": "wafer"
-            }
+          "details": [
+            [
+              "Knowledge and education: Accessible, high-quality knowledge is essential for technological progress.",
+              "Գիտելիք և կրթություն՝ Հասանելի և որակյալ գիտելիքը տեխնոլոգիական առաջընթացի հիմքն է։"
+            ],
+            [
+              "Collaboration: Cooperation between individuals, universities, research institutions, companies, and professional communities.",
+              "Համագործակցություն՝ Անհատների, համալսարանների, հետազոտական հաստատությունների, ընկերությունների և մասնագիտական համայնքների միջև։"
+            ],
+            [
+              "Innovation: Curiosity, experimentation, research, and practical solutions to meaningful challenges.",
+              "Նորարարություն՝ Հետաքրքրասիրություն, փորձարկում, հետազոտություն և գործնական լուծումներ իմաստալից խնդիրների համար։"
+            ],
+            [
+              "Openness: The responsible exchange of knowledge, ideas, and experiences that benefit the broader community.",
+              "Բացություն՝ Գիտելիքի, գաղափարների և փորձի պատասխանատու փոխանակում՝ ի օգուտ լայն համայնքի։"
+            ],
+            [
+              "Integrity and responsibility: Transparent governance, responsible use of resources, and accountability to our community and supporters.",
+              "Ազնվություն և պատասխանատվություն՝ Թափանցիկ կառավարում, ռեսուրսների պատասխանատու օգտագործում և հաշվետվողականություն մեր համայնքի ու աջակիցների առջև։"
+            ],
+            [
+              "Long-term development: Initiatives that create lasting educational, scientific, and technological value.",
+              "Երկարաժամկետ զարգացում՝ Նախաձեռնություններ, որոնք ստեղծում են տևական կրթական, գիտական և տեխնոլոգիական արժեք։"
+            ]
           ],
-          "media": "wafer",
-          "branchAfter": 0.3
+          "items": [],
+          "links": [],
+          "media": "about-values",
+          "gallery": [
+            "about-values"
+          ]
         },
         {
           "id": "story",
@@ -291,9 +242,7 @@ const SITE_CONTENT = {
             "Mount Aragats symbolizes the foundation's connection to Armenia and its belief in the country's technological potential.",
             "Արագած լեռը խորհրդանշում է հիմնադրամի կապը Հայաստանի հետ և հավատը երկրի տեխնոլոգիական ներուժին։"
           ],
-          "items": [],
-          "children": [],
-          "text": [
+          "details": [
             [
               "Its four peaks represent four interconnected strategic directions: education, research, collaboration, and community. The journey toward these peaks symbolizes collective effort, continuous learning, and the pursuit of ambitious objectives.",
               "Նրա չորս գագաթները ներկայացնում են չորս փոխկապակցված ռազմավարական ուղղություն՝ կրթություն, հետազոտություն, համագործակցություն և համայնք։ Այս գագաթներին տանող ճանապարհը խորհրդանշում է համատեղ ջանքը, շարունակական ուսումը և հավակնոտ նպատակների ձգտումը։"
@@ -307,7 +256,12 @@ const SITE_CONTENT = {
               "Միասին այս տարրերն արտահայտում են մեկ հիմնական գաղափար՝ իմաստալից առաջընթացը ձեռք է բերվում, երբ մարդիկ միավորում են իրենց գիտելիքը, կարողություններն ու վճռականությունը ընդհանուր նպատակների համար։"
             ]
           ],
-          "media": "wafer"
+          "items": [],
+          "links": [],
+          "media": "about-story",
+          "gallery": [
+            "about-story"
+          ]
         }
       ]
     },
@@ -2217,6 +2171,96 @@ const SITE_CONTENT = {
       "title": [
         "A regular series",
         "Կանոնավոր շարք"
+      ],
+      "caption": [
+        "Illustration",
+        "Պատկերազարդում"
+      ]
+    },
+    "about-who": {
+      "src": "assets/about/who.svg",
+      "alt": [
+        "People connected along one line",
+        "Մեկ գծով կապված մարդիկ"
+      ],
+      "title": [
+        "Who we are",
+        "Ովքեր ենք մենք"
+      ],
+      "caption": [
+        "Illustration",
+        "Պատկերազարդում"
+      ]
+    },
+    "about-why": {
+      "src": "assets/about/why.svg",
+      "alt": [
+        "Three separate blocks joined by a dashed line",
+        "Երեք առանձին բլոկ՝ միացված կետագծով"
+      ],
+      "title": [
+        "Why we exist",
+        "Ինչու ենք մենք"
+      ],
+      "caption": [
+        "Illustration",
+        "Պատկերազարդում"
+      ]
+    },
+    "about-mission": {
+      "src": "assets/about/mission.svg",
+      "alt": [
+        "A target with an arrow",
+        "Թիրախ և սլաք"
+      ],
+      "title": [
+        "Our mission",
+        "Մեր առաքելությունը"
+      ],
+      "caption": [
+        "Illustration",
+        "Պատկերազարդում"
+      ]
+    },
+    "about-vision": {
+      "src": "assets/about/vision.svg",
+      "alt": [
+        "A sun rising over the horizon",
+        "Հորիզոնից բարձրացող արև"
+      ],
+      "title": [
+        "Our vision",
+        "Մեր տեսլականը"
+      ],
+      "caption": [
+        "Illustration",
+        "Պատկերազարդում"
+      ]
+    },
+    "about-values": {
+      "src": "assets/about/values.svg",
+      "alt": [
+        "Six connected circles around a centre",
+        "Կենտրոնի շուրջ վեց կապված շրջան"
+      ],
+      "title": [
+        "Our values",
+        "Մեր արժեքները"
+      ],
+      "caption": [
+        "Illustration",
+        "Պատկերազարդում"
+      ]
+    },
+    "about-story": {
+      "src": "assets/about/story.svg",
+      "alt": [
+        "The four peaks of Mount Aragats",
+        "Արագած լեռան չորս գագաթները"
+      ],
+      "title": [
+        "Mount Aragats",
+        "Արագած լեռ"
       ],
       "caption": [
         "Illustration",

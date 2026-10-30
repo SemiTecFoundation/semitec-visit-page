@@ -250,3 +250,25 @@ html[lang=hy][data-mode="3d"] .breadcrumbs { font-size: 7px; }
 [data-mode="3d"] .panel-more { margin: 0 0 16px; }
 [data-mode="3d"] .panel-more .panel-text { margin: 0 0 10px; }
 [data-mode="3d"] .panel-more .panel-text:last-child { margin-bottom: 0; }
+
+/* About: its topics as a wall of cards on the right of the road */
+.section-wall{display:none}
+[data-mode="3d"] .section-wall{display:block;position:fixed;z-index:3;right:4%;top:50%;width:min(560px,40vw);margin-top:-210px;opacity:0;visibility:hidden;pointer-events:auto}
+[data-mode="3d"] .sw-kicker{margin:0 0 10px;font-size:9px;letter-spacing:1.6px;text-transform:uppercase;color:var(--accent)}
+[data-mode="3d"] .sw-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+[data-mode="3d"] .sw-card{display:flex;flex-direction:column;gap:4px;padding:0 0 11px;text-align:left;color:#f1eee6;border:1px solid #98ceca55;background:#0a2228e6;box-shadow:0 12px 30px #0005;cursor:pointer;overflow:hidden;transition:transform .3s cubic-bezier(.2,.8,.2,1),border-color .3s}
+[data-mode="3d"] .sw-card:hover,[data-mode="3d"] .sw-card:focus-visible{transform:translateY(-4px) scale(1.05);border-color:var(--accent);z-index:2}
+[data-mode="3d"] .sw-card img{display:block;width:100%;aspect-ratio:1.6;object-fit:cover;opacity:.9}
+[data-mode="3d"] .sw-n{padding:6px 11px 0;font-size:8px;letter-spacing:1.4px;color:var(--accent)}
+[data-mode="3d"] .sw-card strong{padding:0 11px;font-size:13px;font-weight:400;line-height:1.3}
+[data-mode="3d"] .sw-card small{padding:0 11px;font-size:10px;line-height:1.45;color:#a9c0c0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+html.travel-intro .section-wall,html.travel-end .section-wall{opacity:0!important;pointer-events:none!important}
+@media (max-width:760px){
+ [data-mode="3d"] .section-wall{left:0;right:0;top:auto;bottom:auto;top:96px;margin:0;width:auto;padding:0 6%}
+ [data-mode="3d"] .sw-grid{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin:0 -6%;padding:0 6% 4px}
+ [data-mode="3d"] .sw-card{flex:0 0 42%;scroll-snap-align:start}
+ [data-mode="3d"] .sw-card img{aspect-ratio:2}
+ [data-mode="3d"] .sw-card small{display:none}
+}
+[data-mode="3d"] .experience > .section-wall { transition: none; }
+@media (max-width:760px){ [data-mode="3d"] .sw-card{flex-basis:36%} [data-mode="3d"] .sw-card strong{font-size:11.5px} [data-mode="3d"] .sw-card img{aspect-ratio:2.2} }

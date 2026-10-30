@@ -12,6 +12,8 @@
    • minimap + full-screen mode for exploring
    ========================================================================== */
 (function () {
+  /* a block's cells: its side paths, or (About) the cards on its main road */
+  const cellsOf = s => (s.children && s.children.length ? s.children : s.showcase || []);
   const ST = window.ST;
   const sections = SITE_CONTENT.sections;
   const L = buildChipLayout(sections, CHIP_LAYOUT, SITE_CONTENT.partners || []);
@@ -176,7 +178,7 @@
         Object.assign(el.style, { left: b.x + 'px', top: b.y + 'px', width: b.w + 'px', height: b.h + 'px' });
         el.innerHTML = `<button type="button" class="cm-top" data-path="${s.id}">
             <span class="cm-num">${ST.pad(i)} /${b.kind === 'power' ? ' <b class="cm-kicker"></b>' : ''}</span><span class="cm-name"></span></button>
-          <div class="cm-cells${(s.children || []).length > 4 ? ' is-dense' : ''}">${(s.children || []).map(c => `<button type="button" data-path="${s.id}/${c.id}"><span></span>${c.children && c.children.length ? `<em>+${c.children.length}</em>` : ''}</button>`).join('')}</div>`;
+          <div class="cm-cells${cellsOf(s).length > 4 ? ' is-dense' : ''}">${cellsOf(s).map(c => `<button type="button" data-path="${s.id}/${c.id}"><span></span>${c.children && c.children.length ? `<em>+${c.children.length}</em>` : ''}</button>`).join('')}</div>`;
         /* no archive bits on the blocks: they overlapped the path cells (the archive is in the section itself) */
         box.append(el); this.blocks.push({ el, i, s });
         const r = document.createElementNS(NS, 'rect');
@@ -278,7 +280,7 @@
     text() {
       this.blocks.forEach(({ el, s }) => {
         el.querySelector('.cm-name').textContent = ST.pick(s.label);
-        el.querySelectorAll('.cm-cells button').forEach((btn, k) => btn.firstElementChild.textContent = ST.pick(s.children[k].title));
+        el.querySelectorAll('.cm-cells button').forEach((btn, k) => btn.firstElementChild.textContent = ST.pick(cellsOf(s)[k].title));
         const kick = el.querySelector('.cm-kicker'); if (kick) kick.textContent = ST.text('powerUnit');
         const sub = this.frame.querySelector('.cm-brand-sub'); if (sub) sub.textContent = ST.pick(SITE_CONTENT.brand.subtitle);
         el.querySelector('.cm-top').setAttribute('aria-label', ST.pick(s.label));

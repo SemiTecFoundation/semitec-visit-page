@@ -38,6 +38,12 @@ for (const [id, media] of Object.entries(SITE_CONTENT.media)) {
   check(fs.existsSync(path.join(__dirname, media.src)), 'Local image exists: ' + id);
   for (const field of ['title', 'caption', 'alt']) bilingual(media[field], id + ' ' + field);
 }
+/* About has no side paths of its own any more (its topics are cards on the main road); the journey geometry
+   tests below need a nested path, so they use this test-only one under About. */
+const fixtureSection = SITE_CONTENT.sections.find(s => s.id === 'purpose');
+const nestedFixture = { id: 'values', title: ['Test', 'Test'], intro: ['', ''], items: [], branchAfter: .3, children: [{ id: 'knowledge', title: ['Test', 'Test'], intro: ['', ''], items: [], children: [] }] };
+const savedChildren = fixtureSection.children;
+fixtureSection.children = [...(savedChildren || []), nestedFixture];
 const timeline = new JourneyTimeline();
 const eventsIndex = SITE_CONTENT.sections.findIndex(s => s.id === 'purpose');   /* a section with a nested path (About → Our values → …) */
 const junction = timeline.mainLocation(eventsIndex);
@@ -157,6 +163,7 @@ const program=academyTimeline.insertLoop(['purpose','values','knowledge'],academ
 const programReturn=academyTimeline.bounds(program.id).end;
 const programCleanup=academyTimeline.pruneInactive(programReturn+.1);
 check(branchesReady(academyTimeline.locate(programCleanup.distance)),'Returning from a child preserves the parent content stage');
+fixtureSection.children = savedChildren;
 console.log(`Passed ${checks} checks: content, assets, curve speed, forward loop joins, momentum-safe cleanup, staged nested entrances and nested returns.`);
 
 /* VisitPageDual additions: the generated chip-map floorplan must fit the die without overlaps. */
@@ -184,6 +191,7 @@ console.log(`Passed ${checks} checks: content, assets, curve speed, forward loop
   console.log('Passed ' + extra + ' chip-map floorplan checks.');
 }
 {
+  fixtureSection.children = [...(savedChildren || []), nestedFixture];
   const t = new JourneyTimeline(), i = SITE_CONTENT.sections.findIndex(s => s.id === 'purpose'), at = t.mainLocation(i);
   const a = t.insertLoop(['purpose', 'values'], at);
   const nestedAt = at + a.curve.length * .5, origin = t.locate(nestedAt).pose;
@@ -193,6 +201,7 @@ console.log(`Passed ${checks} checks: content, assets, curve speed, forward loop
   const offset = (mid[0] - origin.point[0]) * right[0] + (mid[2] - origin.point[2]) * right[2];
   assert.ok(offset > 1, 'Level 2 loop bends to the right of its junction');
   poseEqual(b.curve.pose(b.curve.length), origin, 'Right-hand loop still closes at its junction');
+  fixtureSection.children = savedChildren;
   console.log('Passed alternating-side loop checks.');
 }
 

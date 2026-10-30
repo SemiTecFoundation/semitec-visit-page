@@ -51,8 +51,10 @@
     for (const id of path.slice(1)) { node = (node.children || []).find(c => c.id === id); if (!node) return null; }
     return { index, node, path: [...path] };
   };
+  /* section/card: a card on a section's main road (About) */
+  ST.isShowcase = p => p.length === 2 && !!(sections.find(s => s.id === p[0])?.showcase || []).find(c => c.id === p[1]);
   ST.readHash = () => {
-    try { const p = decodeURIComponent(location.hash.slice(1)).split('/').filter(Boolean); return ST.resolve(p) ? p : ['overview']; }
+    try { const p = decodeURIComponent(location.hash.slice(1)).split('/').filter(Boolean); return ST.resolve(p) || ST.isShowcase(p) ? p : ['overview']; }
     catch (e) { return ['overview']; }
   };
   /* a tiny tween helper: ST.tween(ms, t => …) → Promise */

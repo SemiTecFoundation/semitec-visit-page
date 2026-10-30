@@ -29,9 +29,9 @@
   /* outside links (e.g. SemiTec Academy): open in a new tab */
   const linksHTML = (links, cls) => (links || []).length ? `<p class="${cls}">${links.map(l => l.href[0] === '#' ? `<a href="${ST.esc(l.href)}">${ST.esc(ST.pick(l.label))} →</a>` : `<a href="${ST.esc(l.href)}" target="_blank" rel="noopener">${ST.esc(ST.pick(l.label))} ↗</a>`).join('')}</p>` : '';
   /* a row of product cards inside a path (e.g. SemiTec Academy): picture, title, short text and links */
-  const showcaseHTML = list => (list || []).length ? `<div class="pc-show" style="--n:${list.length}">${list.map((it, k) => {
+  const showcaseHTML = (list, key) => (list || []).length ? `<div class="pc-show${list.length > 3 ? ' is-many' : ''}" style="--n:${Math.min(list.length, 3)}" data-show-key="${key}">${list.map((it, k) => {
     const m = SITE_CONTENT.media[it.media];
-    return `<article class="pc-show-card" style="--k:${k}" data-show="${k}">
+    return `<article class="pc-show-card" style="--k:${k}" data-show="${k}" id="show-${key.replace('/', '-')}-${it.id}">
       ${m ? `<div class="psc-img"><img src="${ST.esc(m.src)}" alt="${ST.esc(ST.pick(m.alt))}" loading="lazy" decoding="async"></div>` : ''}
       <div class="psc-body"><strong>${ST.esc(ST.pick(it.title))}</strong><p>${ST.esc(ST.pick(it.intro))}</p>
       ${linksHTML(it.links, 'psc-links')}<button type="button" class="psc-more">${ST.esc(ST.text('showMore'))} ↗</button></div></article>`;
@@ -54,7 +54,7 @@
         ${(child.text || []).map(t => `<p class="pc-text">${ST.esc(ST.pick(t))}</p>`).join('')}
         ${items ? `<ul class="pc-items">${items}</ul>` : ''}
         ${linksHTML(child.links, 'pc-links')}
-        ${showcaseHTML(child.showcase)}
+        ${showcaseHTML(child.showcase, p)}
         ${sub ? `<p class="pc-sub-label">${ST.esc(ST.text('further'))}</p><div class="pc-sub">${sub}</div>` : ''}
       </div></div>
     </article>`;
@@ -148,6 +148,7 @@
           <${H} class="sec-title" id="h-${s.id}">${title(ST.pick(s.title))}</${H}>
           <p class="sec-intro">${ST.esc(ST.pick(s.intro))}</p>
           ${(s.text || []).map(t => `<p class="sec-text">${ST.esc(ST.pick(t))}</p>`).join('')}
+          ${showcaseHTML(s.showcase, s.id)}
           ${i === 0 ? `<ul class="hero-tags">${items}</ul>
              <div class="hero-actions">
                <span class="hero-cue"><span class="scroll-mouse" aria-hidden="true"><i></i></span>${ST.esc(ST.text('scrollBegin'))}</span>
@@ -402,6 +403,13 @@
     });
   }
   function scrollToPath(path, instant) {
+    /* a card on a section's main road (About): scroll to it and let it glow */
+    const shown = path.length === 2 && document.getElementById(`show-${path[0]}-${path[1]}`);
+    if (shown) {
+      requestAnimationFrame(() => { measure(); scrollTo({ top: Math.max(0, shown.getBoundingClientRect().top + scrollY - innerHeight * .3), behavior: instant || ST.state.reduced ? 'instant' : 'smooth' }); if (instant) readScroll(); });
+      shown.classList.remove('is-pulse'); void shown.offsetWidth; shown.classList.add('is-pulse');
+      return;
+    }
     const r = ST.resolve(path); if (!r) return;
     const behavior = instant || ST.state.reduced ? 'instant' : 'smooth';
     if (path.length > 1) {
@@ -454,8 +462,8 @@
       const head = e.target.closest('.pc-head');
       const sc = e.target.closest('.pc-show-card');
       if (sc && !e.target.closest('.psc-links a')) {
-        const pc = sc.closest('.path-card'), [sid, cid] = pc.dataset.path.split('/');
-        const node = SITE_CONTENT.sections.find(x => x.id === sid).children.find(x => x.id === cid), list = node.showcase || [];
+        const [sid, cid] = sc.closest('.pc-show').dataset.showKey.split('/'), sec = SITE_CONTENT.sections.find(x => x.id === sid);
+        const node = cid ? sec.children.find(x => x.id === cid) : sec, list = node.showcase || [];
         ST.openShowcase(list[+sc.dataset.show], +sc.dataset.show, list.length); return;
       }
       if (head) { const card = head.closest('.path-card'); setCard(card.dataset.path.split('/'), !card.classList.contains('is-open')); return; }

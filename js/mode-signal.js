@@ -222,10 +222,11 @@ function settleScrollSpace(time){
  window.scrollTo({top:scrollSpace.toPixels(targetDistance),behavior:'instant'});lastScrollMotion=time;
 }
 function navigate(path,{historyMode='push',focus=false,instant=false}={}){
+ if(!resolveRoute(path)&&ST.isShowcase(path))path=[path[0]];   // a card on a section's main road: go to that section
  const route=resolveRoute(path);if(!route)return;
  const here=timeline.locate(currentDistance),parent=path.slice(0,-1);
  let destination;
- if(path.length===1){destination=route.index>1?Math.max(0,timeline.mainLocation(route.index)-JOURNEY_SETTINGS.arriveBeforeMiddle):timeline.mainLocation(route.index);} // just past the section's gate, with its paths ahead
+ if(path.length===1){destination=route.index>0?Math.max(0,timeline.mainLocation(route.index)-JOURNEY_SETTINGS.arriveBeforeMiddle):timeline.mainLocation(route.index);} // just past the section's gate, with its paths ahead
  else if(pathKey(here.path)===pathKey(parent)){
   // Insert at the exact displayed camera position, without moving or rebuilding it.
   // ▸DUAL …then travel forward into it, so the turn onto the side path is visible.
@@ -466,7 +467,7 @@ function updateMedia(time,dt){
   const p=scene.project(mobile?board.mobilePoint:board.point);let alpha=0;
   const scale=p?clamp((mobile?15:24)/p.depth,.27,mobile?.8:1.1):1;
   const belongsHere=board.visit?active.segment.visit?.id===board.visit.id:active.segment.kind==='main';
-  if(belongsHere&&p&&p.depth>5&&p.depth<110&&p.x>innerWidth*(mobile?-.1:.4)&&p.x<innerWidth*1.2&&p.y>100&&p.y<innerHeight*(mobile?.4:.72))alpha=clamp((p.depth-5)/14,0,1)*clamp((110-p.depth)/30,0,1);
+  const far=board.far||110;if(belongsHere&&p&&p.depth>5&&p.depth<far&&p.x>innerWidth*(mobile?-.1:.4)&&p.x<innerWidth*1.2&&p.y>100&&p.y<innerHeight*(mobile?.4:.72))alpha=clamp((p.depth-5)/(board.far?6:14),0,1)*clamp((far-p.depth)/(board.far?8:30),0,1);
   if(p&&!mobile)alpha*=clamp((p.x-board.width*scale/2-readingRight-20)/40,0,1);
   if(board.visit)alpha*=clamp((time-board.visit.createdAt)/650,0,1);
   board.alpha+=(alpha-board.alpha)*(1-Math.exp(-dt*9));
@@ -577,11 +578,11 @@ function setLanguage(lang){ // ▸DUAL brand, bottom bar and [data-ui] are handl
  panel.setAttribute('aria-label',text('content'));
  document.querySelector('#map-close').setAttribute('aria-label',text('close'));document.querySelector('#media-close').setAttribute('aria-label',text('close'));
  for(const b of mediaBoards){if(b.relabel){b.relabel();continue;}b.image.alt=pick(b.data.alt);b.heading.textContent=pick(b.title||b.data.title);b.kicker.textContent=text('mediaType');b.view.firstChild.textContent=text('viewImage');}
- updateMotionButton();textFinale();textEvents();textGates();if(eco3d){eco3d.render(eco3dEl);}if(introRoot){const was=introOn,P=introT;introRoot=null;renderIntro();if(was){introOn=false;openIntro(P);}else introEl.classList.remove('is-on');}if(on){renderCard(true);if(mapDialog.open)buildMap();wake();}
+ updateMotionButton();textFinale();textEvents();textGates();wallFor=null;if(eco3d){eco3d.render(eco3dEl);}if(introRoot){const was=introOn,P=introT;introRoot=null;renderIntro();if(was){introOn=false;openIntro(P);}else introEl.classList.remove('is-on');}if(on){renderCard(true);if(mapDialog.open)buildMap();wake();}
 }
 function updateMotionButton(){const b=document.querySelector('#motion-toggle');b.setAttribute('aria-pressed',String(still));b.setAttribute('aria-label',still?text('resume'):text('pause'));b.querySelector('span').textContent=still?text('motion'):text('still');}
 function setStill(value){still=value;document.body.classList.toggle('still-view',still);if(!still)displayedFrame=null;updateMotionButton();wake();}
-function readHash(){try{const p=decodeURIComponent(location.hash.slice(1)).split('/').filter(Boolean);return resolveRoute(p)?.path||['overview'];}catch{return ['overview'];}}
+function readHash(){try{const p=decodeURIComponent(location.hash.slice(1)).split('/').filter(Boolean);return resolveRoute(p)?.path||(ST.isShowcase(p)?[p[0]]:['overview']);}catch{return ['overview'];}}
 function frame(time){
  animation=0;stepGlide();const dt=Math.min((time-lastTime)/1000||.016,.05);lastTime=time;
  targetDistance=clamp(targetDistance,0,timeline.length);
@@ -607,7 +608,7 @@ function frame(time){
  const L=Math.max(lift,endLift);
  const sceneFrame={pose:active.pose,sample:offset=>timeline.locate(clamp(distance+offset,0,timeline.length)).pose,visits:visibleVisits,still,lift:L,power};
  if(!still||!displayedFrame)displayedFrame=sceneFrame;
- if(scene){scene.render({...displayedFrame,visits:visibleVisits,still,lift:L,power},time);updateMedia(time,dt);updateBranchEntrances(dt);updateFinale(dt);updateEvents(dt);}
+ if(scene){scene.render({...displayedFrame,visits:visibleVisits,still,lift:L,power},time);updateMedia(time,dt);updateWall(dt);updateBranchEntrances(dt);updateFinale(dt);updateEvents(dt);}
  if(!still||glide||Math.abs(targetDistance-currentDistance)>.001||Math.abs(scrollSpace.offset)>1e-6)wake();
 }
 function wake(){if(on&&!animation&&!document.hidden)animation=requestAnimationFrame(frame);}
@@ -655,6 +656,23 @@ function resetJourney(){
 }
 function tweenLift(from,to,ms,ease){lift=from;wake();return ST.tween(ms,t=>{lift=from+(to-from)*t;wake();},ease);}
 
+/* a section's own cards (About): a wall of small cards on the right while that section is on screen; click opens one */
+const wall=element('div','section-wall');wall.setAttribute('aria-label','');document.querySelector('#scene-media').after(wall);
+let wallFor=null,wallAlpha=0;
+function buildWall(section){
+ wallFor=section.id;const list=section.showcase||[];
+ wall.innerHTML=`<p class="sw-kicker"></p><div class="sw-grid">${list.map((it,k)=>{const m=SITE_CONTENT.media[it.media];return `<button type="button" class="sw-card" data-k="${k}" style="--k:${k}">${m?`<img src="${ST.esc(m.src)}" alt="">`:''}<span class="sw-n">${String(k+1).padStart(2,'0')}</span><strong>${ST.esc(pick(it.title))}</strong><small>${ST.esc(pick(it.intro))}</small></button>`;}).join('')}</div>`;
+ wall.querySelector('.sw-kicker').textContent=text('showMore');
+ wall.querySelectorAll('.sw-card').forEach(b=>b.addEventListener('click',()=>ST.openShowcase(list[+b.dataset.k],+b.dataset.k,list.length)));
+}
+function updateWall(dt){
+ const sec=sections[active.index],has=active.segment.kind==='main'&&(sec.showcase||[]).length&&Math.max(lift,endLift)<.05&&!introOn;
+ if(has&&wallFor!==sec.id)buildWall(sec);
+ const target=has?1:0;wallAlpha=still?target:wallAlpha+(target-wallAlpha)*(1-Math.exp(-dt*7));
+ wall.style.opacity=String(wallAlpha);wall.style.visibility=wallAlpha>.02?'visible':'hidden';wall.inert=wallAlpha<.5;
+ wall.style.transform=`translateY(${((1-wallAlpha)*14).toFixed(1)}px)`;
+ if(Math.abs(target-wallAlpha)>.01)wake();
+}
 setStill(still);
 const V=ST.modes['3d']={
  init(){ if('requestIdleCallback' in window)requestIdleCallback(()=>ensureScene(),{timeout:4000});else setTimeout(ensureScene,1500); },
