@@ -135,6 +135,13 @@
       dlg = document.createElement('dialog'); dlg.id = 'show-dialog'; dlg.className = 'show-dialog';
       document.body.append(dlg);
       dlg.addEventListener('click', e => { if (e.target === dlg || e.target.closest('.sd-close')) dlg.close(); });
+      /* swipe left / right between slides on touch screens */
+      let sx = null, sy = 0;
+      dlg.addEventListener('touchstart', e => { if (!e.target.closest('.sd-view')) return; sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+      dlg.addEventListener('touchend', e => {
+        if (sx == null) return; const t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy; sx = null;
+        if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.3) dlg._go(dlg._cur + (dx < 0 ? 1 : -1));
+      }, { passive: true });
       dlg.addEventListener('keydown', e => { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); dlg._go(dlg._cur + (e.key === 'ArrowRight' ? 1 : -1)); } });
     }
     const esc = ST.esc, P = ST.pick;

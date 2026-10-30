@@ -193,3 +193,20 @@ html[lang=hy][data-mode="3d"] .breadcrumbs { font-size: 7px; }
 [data-mode="3d"] .sb-more { margin-top: 2px; font-size: 10px; letter-spacing: .4px; color: var(--accent); }
 @media (max-width: 760px) { [data-mode="3d"] .show-board { width: 260px; } }
 [data-mode="3d"] .panel-text { font-size: 11.5px; line-height: 1.75; max-width: 340px; color: var(--muted); margin: -8px 0 14px; }
+
+/* phones: the paths in one swipeable row, and a path's longer text behind "Read more" */
+[data-mode="3d"] .panel-more-toggle { display: none; }
+@media (max-width: 760px) {
+ [data-mode="3d"] .route-options { display: flex; flex-wrap: nowrap; gap: 8px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; margin: 0 -6% 12px 0; padding: 2px 6% 4px 0; scrollbar-width: none; }
+ [data-mode="3d"] .route-options::-webkit-scrollbar { display: none; }
+ [data-mode="3d"] .route-options a, [data-mode="3d"] .route-options a:last-child { flex: 0 0 auto; max-width: 64vw; min-height: 0; padding: 8px 12px; border: 1px solid #98ceca55; border-radius: 999px; background: #0a2228d9; scroll-snap-align: start; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 11px; }
+ [data-mode="3d"] .route-options a > span:nth-child(2) { overflow: hidden; text-overflow: ellipsis; }
+ [data-mode="3d"] .option-symbol { font-size: 12px; margin-left: 4px; }
+ [data-mode="3d"] .route-options-label { display: block !important; }
+ [data-mode="3d"] .panel-more { display: none; }
+ [data-mode="3d"] .is-more .panel-more { display: block; max-height: 24vh; overflow: auto; padding-right: 4px; -webkit-mask: linear-gradient(#000 85%,transparent); mask: linear-gradient(#000 85%,transparent); }
+ [data-mode="3d"] .section-card.is-more::before { content: ''; position: absolute; z-index: -1; inset: -14px -4% -10px; background: #071a1fe8; border-radius: 12px; }
+ body:has(.is-more) .show-board { opacity: 0 !important; pointer-events: none; }
+ [data-mode="3d"] .panel-more-toggle { display: inline-block; margin: -4px 0 12px; padding: 0; border: 0; background: none; color: var(--accent); font-size: 11px; }
+ [data-mode="3d"] .panel-text { font-size: 10.5px; margin: 0 0 10px; }
+}

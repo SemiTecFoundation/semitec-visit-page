@@ -21,6 +21,7 @@ Placeholders in the page are marked "(example)" or "to be confirmed".
 - [ ] Add the figures to `SITE_CONTENT.story` (e.g. `numbers: [{value, label}]`, `next: [...]`) and render them in `js/story.js` next to the brief.
 
 ## Content
+- [ ] Programs merged: *Educational programs* and *Open knowledge* are now part of **Education and open knowledge: SemiTec Academy**; review the combined text.
 - [ ] **Update the logo, colours and styles** to look more professional: a final logo (and its variants), a refined colour palette, consistent typography, spacing and component styles across 2D, 3D and phones.
 - [ ] **Every 3D path with its own boards:** like SemiTec Academy (`showcase`), give each path details, pictures or links along its loop instead of repeating the section picture.
 - [ ] **Fix the frames** (section images and panels): consistent sizes, placement and look across sections, in 2D and 3D.

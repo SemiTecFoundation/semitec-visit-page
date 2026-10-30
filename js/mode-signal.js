@@ -286,7 +286,12 @@ function renderCard(force=false){
  if(route.index===0){const lines=pick(node.title).split('\n');title.append(document.createTextNode(lines[0]),document.createElement('br'),element('span','',lines.slice(1).join(' ')));}
  else title.textContent=pick(node.title);
  card.append(title,element('p','panel-intro',pick(node.intro)));
- if(inLoop)(node.text||[]).forEach(t=>card.append(element('p','panel-text',pick(t))));
+ if(inLoop&&(node.text||[]).length){
+  const more=element('div','panel-more');node.text.forEach(t=>more.append(element('p','panel-text',pick(t))));
+  const tog=element('button','panel-more-toggle',text('readMore'));tog.type='button';
+  tog.addEventListener('click',()=>{const o=card.classList.toggle('is-more');tog.textContent=text(o?'readLess':'readMore');updatePanelSize();});
+  card.append(more,tog);
+ }
  if(inLoop){
   const status=element('div','loop-status');const ring=element('div','loop-ring');ring.setAttribute('role','progressbar');ring.setAttribute('aria-label',text('loopProgress'));ring.setAttribute('aria-valuemin','0');ring.setAttribute('aria-valuemax','100');
   const detail=element('div');detail.append(element('span','',text('back')+labelFor(active.segment.visit.parentPath)),element('small','',text('loopHint')));status.append(ring,detail);card.append(status);

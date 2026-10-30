@@ -238,3 +238,5 @@ html.switch-plain::view-transition-new(root){animation:vt-fade-in .3s ease both}
 .sd-links a{padding:8px 14px;border:1px solid rgba(234,200,131,.6);border-radius:999px;color:#eac883;font-size:13px;text-decoration:none}
 .sd-links a:hover{background:rgba(234,200,131,.14)}
 @media(max-width:700px){.sd-text{padding:18px 22px;font-size:14px}.sd-head h2{font-size:21px}.sd-arrow{display:none}}
+.sd-view{touch-action:pan-y}
+@media(max-width:700px){.show-dialog{width:calc(100vw - 16px);max-height:calc(100dvh - 16px)}.sd-box{max-height:calc(100dvh - 16px)}.sd-slide{height:calc(100dvh - 250px)}.sd-tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}.sd-tabs button{flex:0 0 auto}}

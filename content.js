@@ -496,12 +496,8 @@ const SITE_CONTENT = {
       ],
       "items": [
         [
-          "SemiTec Academy",
-          "SemiTec Ակադեմիա"
-        ],
-        [
-          "Educational programs",
-          "Կրթական ծրագրեր"
+          "Education and SemiTec Academy",
+          "Կրթություն և SemiTec Ակադեմիա"
         ],
         [
           "Technical challenges",
@@ -516,10 +512,6 @@ const SITE_CONTENT = {
           "Հաքաթոններ"
         ],
         [
-          "Open knowledge",
-          "Բաց գիտելիք"
-        ],
-        [
           "Mentorship",
           "Մենթորություն"
         ]
@@ -529,22 +521,30 @@ const SITE_CONTENT = {
         {
           "id": "academy",
           "title": [
-            "SemiTec Academy",
-            "SemiTec Ակադեմիա"
+            "Education and open knowledge: SemiTec Academy",
+            "Կրթություն և բաց գիտելիք՝ SemiTec Ակադեմիա"
           ],
           "intro": [
-            "A free, open-source learning app with course packages for students.",
-            "Անվճար, բաց կոդով ուսումնական հավելված՝ ուսանողների համար դասընթացային փաթեթներով։"
+            "Making technical knowledge accessible and practical: free courses, open materials and the tools to create them.",
+            "Տեխնիկական գիտելիքը դարձնում ենք հասանելի և գործնական՝ անվճար դասընթացներ, բաց նյութեր և դրանք ստեղծելու գործիքներ։"
           ],
           "items": [],
           "text": [
+            [
+              "We aim to support educational activities that help students and professionals develop technical foundations, practical skills, and an understanding of modern semiconductor technologies. SemiTec Academy is where this starts.",
+              "Մենք ձգտում ենք աջակցել կրթական գործողություններին, որոնք օգնում են ուսանողներին և մասնագետներին զարգացնել տեխնիկական հիմքեր, գործնական հմտություններ և ժամանակակից կիսահաղորդչային տեխնոլոգիաների ըմբռնում։ Սա սկսվում է SemiTec Ակադեմիայից։"
+            ],
             [
               "SemiTec Academy is the foundation's desktop learning app. Students install it once, add course packages and study on their own computer: interactive trainings with quizzes, labs with source files, readings, videos and projects. Progress stays on the student's computer; no server or sign-up is needed.",
               "SemiTec Ակադեմիան հիմնադրամի ուսումնական համակարգչային հավելվածն է։ Ուսանողները մեկ անգամ տեղադրում են այն, ավելացնում դասընթացային փաթեթներ և սովորում իրենց համակարգչում՝ ինտերակտիվ դասընթացներ թեստերով, լաբորատոր աշխատանքներ աղբյուր ֆայլերով, ընթերցանյութեր, տեսանյութեր և նախագծեր։ Առաջընթացը պահվում է ուսանողի համակարգչում․ սերվեր կամ գրանցում պետք չէ։"
             ],
             [
-              "The app, the course materials and the templates for creating them are three open projects, so universities and companies can use them and publish their own courses.",
-              "Հավելվածը, դասընթացային նյութերը և դրանք ստեղծելու ձևանմուշները երեք բաց նախագծեր են, որպեսզի համալսարաններն ու ընկերությունները կարողանան օգտագործել դրանք և հրապարակել իրենց սեփական դասընթացները։"
+              "The app, the course materials and the templates for creating them are three open projects, so universities and companies can use them and publish their own courses. We believe that well-organized, accessible knowledge can support independent learning and long-term community development.",
+              "Հավելվածը, դասընթացային նյութերը և դրանք ստեղծելու ձևանմուշները երեք բաց նախագծեր են, որպեսզի համալսարաններն ու ընկերությունները կարողանան օգտագործել դրանք և հրապարակել իրենց սեփական դասընթացները։ Մենք համոզված ենք, որ լավ կազմակերպված և հասանելի գիտելիքը կարող է աջակցել ինքնուրույն ուսմանը և համայնքի երկարաժամկետ զարգացմանը։"
+            ],
+            [
+              "Planned next: hands-on workshops, technical courses and collaborative learning projects.",
+              "Հաջորդ քայլերը (նախատեսված)՝ գործնական սեմինարներ, տեխնիկական դասընթացներ և համատեղ ուսումնական նախագծեր։"
             ]
           ],
           "links": [
@@ -724,51 +724,6 @@ const SITE_CONTENT = {
           ]
         },
         {
-          "id": "education-programs",
-          "title": [
-            "Educational programs",
-            "Կրթական ծրագրեր"
-          ],
-          "intro": [
-            "Making technical knowledge more accessible and practical.",
-            "Տեխնիկական գիտելիքը դարձնում ենք ավելի հասանելի և գործնական։"
-          ],
-          "items": [
-            [
-              "Status: planned",
-              "Կարգավիճակ՝ նախատեսված"
-            ],
-            [
-              "Technical courses",
-              "Տեխնիկական դասընթացներ"
-            ],
-            [
-              "Hands-on workshops",
-              "Գործնական սեմինարներ"
-            ],
-            [
-              "Laboratory exercises",
-              "Լաբորատոր աշխատանքներ"
-            ],
-            [
-              "Educational materials",
-              "Կրթական նյութեր"
-            ],
-            [
-              "Collaborative learning projects",
-              "Համատեղ ուսումնական նախագծեր"
-            ]
-          ],
-          "children": [],
-          "text": [
-            [
-              "We aim to support educational activities that help students and professionals develop technical foundations, practical skills, and an understanding of modern semiconductor technologies.",
-              "Մենք ձգտում ենք աջակցել կրթական գործողություններին, որոնք օգնում են ուսանողներին և մասնագետներին զարգացնել տեխնիկական հիմքեր, գործնական հմտություններ և ժամանակակից կիսահաղորդչային տեխնոլոգիաների ըմբռնում։"
-            ]
-          ],
-          "media": "learning"
-        },
-        {
           "id": "challenges",
           "title": [
             "Research and technical challenges",
@@ -843,35 +798,6 @@ const SITE_CONTENT = {
             [
               "We envision technical competitions and collaborative challenges where participants can apply their knowledge to real engineering problems. Such activities can encourage creativity, teamwork, experimentation, and the development of practical solutions.",
               "Մենք նախատեսում ենք տեխնիկական մրցույթներ և համատեղ մարտահրավերներ, որտեղ մասնակիցները կարող են իրենց գիտելիքը կիրառել իրական ինժեներական խնդիրների վրա։ Նման գործողությունները կարող են խթանել ստեղծագործականությունը, թիմային աշխատանքը, փորձարկումը և գործնական լուծումների մշակումը։"
-            ]
-          ],
-          "media": "learning"
-        },
-        {
-          "id": "open-knowledge",
-          "title": [
-            "Open knowledge and educational resources",
-            "Բաց գիտելիք և կրթական ռեսուրսներ"
-          ],
-          "intro": [
-            "Sharing knowledge for the benefit of the wider community.",
-            "Կիսվում ենք գիտելիքով՝ ի օգուտ լայն համայնքի։"
-          ],
-          "items": [
-            [
-              "Status: planned",
-              "Կարգավիճակ՝ նախատեսված"
-            ]
-          ],
-          "children": [],
-          "text": [
-            [
-              "SemiTec aims to encourage the creation, organization, and responsible sharing of technical resources, including educational materials, research publications, project documentation, and open-source engineering examples.",
-              "SemiTec-ը ձգտում է խրախուսել տեխնիկական ռեսուրսների ստեղծումը, կազմակերպումը և պատասխանատու տարածումը, այդ թվում՝ կրթական նյութերի, հետազոտական հրապարակումների, նախագծային փաստաթղթերի և բաց կոդով ինժեներական օրինակների։"
-            ],
-            [
-              "We believe that well-organized, accessible knowledge can support independent learning and long-term community development.",
-              "Մենք համոզված ենք, որ լավ կազմակերպված և հասանելի գիտելիքը կարող է աջակցել ինքնուրույն ուսմանը և համայնքի երկարաժամկետ զարգացմանը։"
             ]
           ],
           "media": "learning"
@@ -2531,6 +2457,14 @@ const SITE_CONTENT = {
     "showMore": [
       "More details and pictures",
       "Մանրամասներ և նկարներ"
+    ],
+    "readMore": [
+      "Read more ↓",
+      "Կարդալ ավելին ↓"
+    ],
+    "readLess": [
+      "Show less ↑",
+      "Ցույց տալ ավելի քիչ ↑"
     ]
   },
   "partners": [],
