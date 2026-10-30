@@ -31,10 +31,10 @@
   /* a row of product cards inside a path (e.g. SemiTec Academy): picture, title, short text and links */
   const showcaseHTML = list => (list || []).length ? `<div class="pc-show" style="--n:${list.length}">${list.map((it, k) => {
     const m = SITE_CONTENT.media[it.media];
-    return `<article class="pc-show-card" style="--k:${k}">
+    return `<article class="pc-show-card" style="--k:${k}" data-show="${k}">
       ${m ? `<div class="psc-img"><img src="${ST.esc(m.src)}" alt="${ST.esc(ST.pick(m.alt))}" loading="lazy" decoding="async"></div>` : ''}
       <div class="psc-body"><strong>${ST.esc(ST.pick(it.title))}</strong><p>${ST.esc(ST.pick(it.intro))}</p>
-      ${linksHTML(it.links, 'psc-links')}</div></article>`;
+      ${linksHTML(it.links, 'psc-links')}<button type="button" class="psc-more">${ST.esc(ST.text('showMore'))} ↗</button></div></article>`;
   }).join('')}</div>` : '';
   function pathCard(section, child, c) {
     const p = `${section.id}/${child.id}`;
@@ -444,6 +444,12 @@
     intro.addEventListener('click', e => { const m = e.target.closest('[data-media]'); if (m) ST.openMedia(m.dataset.media, m.dataset.mediaTitle); });
     main.addEventListener('click', e => {
       const head = e.target.closest('.pc-head');
+      const sc = e.target.closest('.pc-show-card');
+      if (sc && !e.target.closest('.psc-links a')) {
+        const pc = sc.closest('.path-card'), [sid, cid] = pc.dataset.path.split('/');
+        const node = SITE_CONTENT.sections.find(x => x.id === sid).children.find(x => x.id === cid), list = node.showcase || [];
+        ST.openShowcase(list[+sc.dataset.show], +sc.dataset.show, list.length); return;
+      }
       if (head) { const card = head.closest('.path-card'); setCard(card.dataset.path.split('/'), !card.classList.contains('is-open')); return; }
       const m = e.target.closest('[data-media]'); if (m) ST.openMedia(m.dataset.media, m.dataset.mediaTitle);
       const gb = e.target.closest('[data-give]');

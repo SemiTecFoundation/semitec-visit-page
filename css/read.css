@@ -840,3 +840,7 @@ html.map-end .map-dock:before{opacity:0}
 .psc-links a{padding:4px 9px;border-radius:999px;background:#14262c;color:#f1eee6;font-size:10.5px;text-decoration:none}
 .psc-links a:hover{background:#21383e}
 @media(max-width:700px){.pc-show{grid-template-columns:1fr}.pc-show-card:hover{transform:translateY(-3px) scale(1.02)}}
+
+.pc-show-card{cursor:pointer}
+.psc-more{align-self:flex-start;margin-top:4px;padding:0;border:0;background:none;color:var(--accent);font-size:10.5px;cursor:pointer}
+.psc-more:hover{text-decoration:underline;text-underline-offset:3px}

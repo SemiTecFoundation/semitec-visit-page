@@ -286,6 +286,7 @@ function renderCard(force=false){
  if(route.index===0){const lines=pick(node.title).split('\n');title.append(document.createTextNode(lines[0]),document.createElement('br'),element('span','',lines.slice(1).join(' ')));}
  else title.textContent=pick(node.title);
  card.append(title,element('p','panel-intro',pick(node.intro)));
+ if(inLoop)(node.text||[]).forEach(t=>card.append(element('p','panel-text',pick(t))));
  if(inLoop){
   const status=element('div','loop-status');const ring=element('div','loop-ring');ring.setAttribute('role','progressbar');ring.setAttribute('aria-label',text('loopProgress'));ring.setAttribute('aria-valuemin','0');ring.setAttribute('aria-valuemax','100');
   const detail=element('div');detail.append(element('span','',text('back')+labelFor(active.segment.visit.parentPath)),element('small','',text('loopHint')));status.append(ring,detail);card.append(status);
@@ -389,42 +390,29 @@ function addMainMedia(){
   createBoard(section.media,section.label,[pose.point[0]+r[0]*8,5.5,pose.point[2]+r[2]*8],null,[pose.point[0]+r[0]*2.2,3.7,pose.point[2]+r[2]*2.2]);
  });
 }
-/* product boards along a path (e.g. SemiTec Academy): they come one after another; hovering one swipes
-   through its picture, its details and its links. The reading panel keeps the overview, the boards the details. */
+/* product boards along a path (e.g. SemiTec Academy): text cards that come one after another after the point
+   where a selected path arrives. Clicking one opens it large: details, every picture, and its links. */
 function createShow(item,k,n,point,visit,mobilePoint){
  const figure=element('figure','media-board show-board');figure.id='visual-'+(++mediaCounter);figure.setAttribute('aria-hidden','true');
- const card=element('div','sb-card');card.tabIndex=-1;
- const m=SITE_CONTENT.media[item.media];
- const head=element('div','sb-head');const kick=element('span','sb-kicker'),title=element('strong');head.append(kick,title);
- const track=element('div','sb-track');const slides=[];
- if(m){const sl=element('div','sb-slide sb-pic');const img=element('img');img.src=m.src;img.decoding='async';sl.append(img,element('small','sb-note'));slides.push(sl);}
- const det=element('div','sb-slide sb-text');slides.push(det);
- const links=element('div','sb-slide sb-links');slides.push(links);
- track.append(...slides);
- const dots=element('div','sb-dots');slides.forEach((_,i)=>{const d=element('button');d.type='button';d.setAttribute('aria-label',String(i+1));d.addEventListener('click',e=>{e.stopPropagation();go(i);});dots.append(d);});
- card.append(head,track,dots);figure.append(card);document.querySelector('#scene-media').append(figure);
- let cur=0,timer=0;
- const go=i=>{cur=(i+slides.length)%slides.length;track.style.transform=`translateX(${-cur*100}%)`;[...dots.children].forEach((d,j)=>d.classList.toggle('on',j===cur));};
- const stop=()=>{clearInterval(timer);timer=0;};
- card.addEventListener('pointerenter',()=>{figure.classList.add('is-hover');if(still)return;stop();go(cur+1);timer=setInterval(()=>go(cur+1),2300);});
- card.addEventListener('pointerleave',()=>{figure.classList.remove('is-hover');stop();});
- card.addEventListener('focusin',()=>figure.classList.add('is-hover'));card.addEventListener('focusout',()=>figure.classList.remove('is-hover'));
- const relabel=()=>{
-  kick.textContent=String(k+1).padStart(2,'0')+' / '+String(n).padStart(2,'0');title.textContent=pick(item.title);
-  if(m){const img=slides[0].querySelector('img');img.alt=pick(m.alt);slides[0].querySelector('.sb-note').textContent=pick(m.caption||'');}
-  det.replaceChildren(...(item.details||[]).map(t=>element('p','',pick(t))));
-  if((item.items||[]).length){const ul=element('ul');item.items.forEach(t=>ul.append(element('li','',pick(t))));det.append(ul);}
-  links.replaceChildren(element('p','sb-intro',pick(item.intro)),...(item.links||[]).map(l=>{const a=element('a','',pick(l.label)+' ↗');a.href=l.href;a.target='_blank';a.rel='noopener';return a;}));
- };
- relabel();go(0);
- mediaBoards.push({figure,button:card,point,mobilePoint,visit,width:figure.offsetWidth,alpha:0,relabel,stop});
+ const card=element('button','sb-card');card.type='button';card.tabIndex=-1;
+ const kick=element('span','sb-kicker'),title=element('strong'),intro=element('p','sb-intro'),more=element('span','sb-more');
+ const thumbs=element('span','sb-thumbs');
+ (item.gallery||(item.media?[item.media]:[])).forEach(id=>{const m=SITE_CONTENT.media[id];if(!m)return;const im=element('img');im.src=m.src;im.alt='';im.decoding='async';thumbs.append(im);});
+ card.append(kick,title,intro,thumbs,more);figure.append(card);document.querySelector('#scene-media').append(figure);
+ card.addEventListener('pointerenter',()=>figure.classList.add('is-hover'));card.addEventListener('pointerleave',()=>figure.classList.remove('is-hover'));
+ card.addEventListener('click',()=>ST.openShowcase(item,k,n));
+ const relabel=()=>{kick.textContent=String(k+1).padStart(2,'0')+' / '+String(n).padStart(2,'0');title.textContent=pick(item.title);intro.textContent=pick(item.intro);more.textContent=text('showMore')+' ↗';};
+ relabel();
+ mediaBoards.push({figure,button:card,point,mobilePoint,visit,width:figure.offsetWidth,alpha:0,relabel});
 }
 function addVisitMedia(visit){
  const node=resolveRoute(visit.path).node;
  if((node.showcase||[]).length){
   const n=node.showcase.length;
+  /* a selected path arrives at min(34, 20% of the loop): the first board stands a little after that point */
+  const L=visit.curve.length,from=Math.min(34,L*.2)+26,to=Math.max(from+1,L*.8);
   node.showcase.forEach((item,k)=>{
-   const t=.14+k*(.62/Math.max(1,n-1||1)),pose=visit.curve.pose(visit.curve.distanceAt(Math.min(t,.78))),r=[-pose.direction[2],0,pose.direction[0]];
+   const pose=visit.curve.pose(n>1?from+(to-from)*k/(n-1):from),r=[-pose.direction[2],0,pose.direction[0]];
    createShow(item,k,n,[pose.point[0]+r[0]*7,5.6,pose.point[2]+r[2]*7],visit,[pose.point[0]+r[0]*2.2,3.7,pose.point[2]+r[2]*2.2]);
   });
   return;
@@ -449,7 +437,6 @@ function updateMedia(time,dt){
   const visible=board.alpha>.015;
   board.figure.style.visibility=visible?'visible':'hidden';board.figure.style.opacity=String(board.alpha);board.figure.setAttribute('aria-hidden',String(!visible));board.button.tabIndex=board.alpha>.5?0:-1;
   if(visible&&p){board.figure.style.zIndex=String(1000-Math.round(p.depth));board.figure.style.transform=`translate(${p.x}px,${p.y}px) translate(-50%,-50%) scale(${scale})`;}
-  if(!visible&&board.stop)board.stop();
   if(board.visit?.retiredAt!==undefined&&!visible){board.figure.remove();mediaBoards.splice(i,1);}
  }
 }

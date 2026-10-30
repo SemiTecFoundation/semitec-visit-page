@@ -128,6 +128,32 @@
     return `${none}<div class="mem-grid" data-bank-color="${bank.color || 'gold'}">${html}</div>`;
   };
   /* the memory view: one bank at a time, with a switch between banks */
+  /* A product card opened large (both views): pick any slide (details, then each picture); links always shown */
+  ST.openShowcase = (item, k = 0, n = 1) => {
+    let dlg = document.querySelector('#show-dialog');
+    if (!dlg) {
+      dlg = document.createElement('dialog'); dlg.id = 'show-dialog'; dlg.className = 'show-dialog';
+      document.body.append(dlg);
+      dlg.addEventListener('click', e => { if (e.target === dlg || e.target.closest('.sd-close')) dlg.close(); });
+      dlg.addEventListener('keydown', e => { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); dlg._go(dlg._cur + (e.key === 'ArrowRight' ? 1 : -1)); } });
+    }
+    const esc = ST.esc, P = ST.pick;
+    const pics = (item.gallery || (item.media ? [item.media] : [])).map(id => [id, SITE_CONTENT.media[id]]).filter(x => x[1]);
+    const slides = [`<div class="sd-slide sd-text"><p class="sd-lead">${esc(P(item.intro))}</p>${(item.details || []).map(t => `<p>${esc(P(t))}</p>`).join('')}${(item.items || []).length ? `<ul>${item.items.map(t => `<li>${esc(P(t))}</li>`).join('')}</ul>` : ''}</div>`,
+      ...pics.map(([, m]) => `<figure class="sd-slide sd-pic"><img src="${esc(m.src)}" alt="${esc(P(m.alt))}"><figcaption><strong>${esc(P(m.title))}</strong>${m.caption ? ` · ${esc(P(m.caption))}` : ''}</figcaption></figure>`)];
+    const tabs = [ST.text('showDetails'), ...pics.map(([, m]) => P(m.title))];
+    dlg.innerHTML = `<div class="sd-box"><header class="sd-head"><span class="sd-kicker">${String(k + 1).padStart(2, '0')} / ${String(n).padStart(2, '0')}</span><h2>${esc(P(item.title))}</h2><button type="button" class="sd-close" aria-label="${esc(ST.text('close'))}">×</button></header>
+      <nav class="sd-tabs" role="tablist">${tabs.map((t, i) => `<button type="button" role="tab" data-i="${i}">${esc(t)}</button>`).join('')}</nav>
+      <div class="sd-view"><div class="sd-track">${slides.join('')}</div>
+      <button type="button" class="sd-arrow sd-prev" aria-label="←">‹</button><button type="button" class="sd-arrow sd-next" aria-label="→">›</button></div>
+      <p class="sd-links">${(item.links || []).map(l => `<a href="${esc(l.href)}" target="_blank" rel="noopener">${esc(P(l.label))} ↗</a>`).join('')}</p></div>`;
+    const track = dlg.querySelector('.sd-track'), tabEls = [...dlg.querySelectorAll('.sd-tabs button')];
+    dlg._go = i => { dlg._cur = (i + slides.length) % slides.length; track.style.transform = `translateX(${-dlg._cur * 100}%)`; tabEls.forEach((t, j) => { t.classList.toggle('on', j === dlg._cur); t.setAttribute('aria-selected', String(j === dlg._cur)); }); };
+    tabEls.forEach(t => t.addEventListener('click', () => dlg._go(+t.dataset.i)));
+    dlg.querySelector('.sd-prev').addEventListener('click', () => dlg._go(dlg._cur - 1));
+    dlg.querySelector('.sd-next').addEventListener('click', () => dlg._go(dlg._cur + 1));
+    dlg._go(0); if (!dlg.open) dlg.showModal();
+  };
   ST.openMemory = (bankId = 'gallery') => {
     const bank = ST.bank(bankId), d = $('#memory-dialog');
     $('#memory-title').textContent = `${ST.text('memoryView')} · ${ST.pick(bank.title)}`;

@@ -619,7 +619,12 @@ const SITE_CONTENT = {
                   "href": "https://github.com/SemiTecFoundation/semitec-academy"
                 }
               ],
-              "media": "academy-app"
+              "media": "academy-app",
+              "gallery": [
+                "academy-app",
+                "academy-catalog",
+                "academy-certificate"
+              ]
             },
             {
               "id": "materials",
@@ -667,7 +672,10 @@ const SITE_CONTENT = {
                   "href": "https://github.com/SemiTecFoundation/semitec-academy-materials"
                 }
               ],
-              "media": "academy-training"
+              "media": "academy-training",
+              "gallery": [
+                "academy-training"
+              ]
             },
             {
               "id": "templates",
@@ -708,7 +716,10 @@ const SITE_CONTENT = {
                   "href": "https://github.com/SemiTecFoundation/semitec-academy-skills"
                 }
               ],
-              "media": "academy-lab"
+              "media": "academy-lab",
+              "gallery": [
+                "academy-lab"
+              ]
             }
           ]
         },
@@ -1831,8 +1842,8 @@ const SITE_CONTENT = {
         "SemiTec Ակադեմիայի վահանակը՝ ընթացիկ դասընթացով, օրացույցով և կատալոգով"
       ],
       "title": [
-        "Academy app",
-        "Ակադեմիա հավելված"
+        "Dashboard",
+        "Վահանակ"
       ],
       "caption": [
         "App interface · example course data",
@@ -1846,8 +1857,8 @@ const SITE_CONTENT = {
         "Ինտերակտիվ դասընթաց SemiTec Ակադեմիայում՝ բովանդակությամբ, դասի տեքստով և թեստով"
       ],
       "title": [
-        "Learning materials",
-        "Ուսումնական նյութեր"
+        "Interactive training",
+        "Ինտերակտիվ դասընթաց"
       ],
       "caption": [
         "App interface · example course data",
@@ -1861,8 +1872,38 @@ const SITE_CONTENT = {
         "Լաբորատոր աշխատանք SemiTec Ակադեմիայում՝ քայլերով, ձեռնարկով, աղբյուր ֆայլերով և ստուգման թեստով"
       ],
       "title": [
-        "Academy Templates",
-        "Ակադեմիայի ձևանմուշներ"
+        "Lab",
+        "Լաբորատոր աշխատանք"
+      ],
+      "caption": [
+        "App interface · example course data",
+        "Հավելվածի միջերես · օրինակային դասընթացի տվյալներ"
+      ]
+    },
+    "academy-catalog": {
+      "src": "assets/academy/catalog.jpg",
+      "alt": [
+        "The SemiTec Academy catalog with course packages and filters",
+        "SemiTec Ակադեմիայի կատալոգը՝ դասընթացային փաթեթներով և զտիչներով"
+      ],
+      "title": [
+        "Catalog",
+        "Կատալոգ"
+      ],
+      "caption": [
+        "App interface · example course data",
+        "Հավելվածի միջերես · օրինակային դասընթացի տվյալներ"
+      ]
+    },
+    "academy-certificate": {
+      "src": "assets/academy/certificate.jpg",
+      "alt": [
+        "A course certificate issued in SemiTec Academy",
+        "SemiTec Ակադեմիայում տրված դասընթացի վկայական"
+      ],
+      "title": [
+        "Certificate",
+        "Վկայական"
       ],
       "caption": [
         "App interface · example course data",
@@ -2482,6 +2523,14 @@ const SITE_CONTENT = {
     "academyHref": [
       "https://semitecfoundation.github.io/semitec-academy/",
       "https://semitecfoundation.github.io/semitec-academy/"
+    ],
+    "showDetails": [
+      "Details",
+      "Մանրամասներ"
+    ],
+    "showMore": [
+      "More details and pictures",
+      "Մանրամասներ և նկարներ"
     ]
   },
   "partners": [],
