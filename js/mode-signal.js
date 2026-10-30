@@ -319,7 +319,7 @@ function renderCard(force=false){
  if(old){old.inert=true;old.setAttribute('aria-hidden','true');old.classList.add('is-leaving');old.classList.remove('is-current');setTimeout(()=>old.remove(),panelFadeMs+30);}
  if(still||!old)card.classList.add('is-current');else requestAnimationFrame(()=>card.classList.add('is-current'));
  ST.report(route.index,active.path); // ▸DUAL the shared bottom bar follows this view
- const hint=inLoop?text(route.children.length&&!ready?'contentFirst':'loopHint'):route.index===0?text('introHint'):route.index===sections.length-1?text('doneHint'):''; // no hint in the middle sections
+ const hint=inLoop?'':route.index===0?text('introHint'):route.index===sections.length-1?text('doneHint'):''; // no hint in the middle sections or inside paths
  document.querySelector('#scroll-hint').textContent=hint;document.body.dataset.cueText=hint?'1':'0';
  document.body.dataset.longCard=String((ready&&route.children.length>4)||(node.items||[]).length>4); // ▸DUAL long cards hide the scroll hint
  document.querySelector('#route-announcement').textContent=active.path.map((_,i)=>labelFor(active.path.slice(0,i+1))).join(' / ');
