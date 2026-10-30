@@ -176,7 +176,7 @@
         Object.assign(el.style, { left: b.x + 'px', top: b.y + 'px', width: b.w + 'px', height: b.h + 'px' });
         el.innerHTML = `<button type="button" class="cm-top" data-path="${s.id}">
             <span class="cm-num">${ST.pad(i)} /${b.kind === 'power' ? ' <b class="cm-kicker"></b>' : ''}</span><span class="cm-name"></span></button>
-          <div class="cm-cells">${(s.children || []).map(c => `<button type="button" data-path="${s.id}/${c.id}"><span></span>${c.children && c.children.length ? `<em>+${c.children.length}</em>` : ''}</button>`).join('')}</div>`;
+          <div class="cm-cells${(s.children || []).length > 4 ? ' is-dense' : ''}">${(s.children || []).map(c => `<button type="button" data-path="${s.id}/${c.id}"><span></span>${c.children && c.children.length ? `<em>+${c.children.length}</em>` : ''}</button>`).join('')}</div>`;
         const bank = ST.bankFor && ST.bankFor(s.id);
         if (bank) {   /* memory bits: one lit bit per item stored in this section's memory bank */
           const n = ST.memoryItems(bank.id).length, size = Math.max(16, Math.ceil(n / 8) * 8);

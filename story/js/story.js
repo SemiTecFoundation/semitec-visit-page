@@ -13,17 +13,16 @@
   const ST = window.ST, sections = SITE_CONTENT.sections;
   const storySections = () => sections.slice(1).filter(s => CHIP_LAYOUT && buildChipLayout(sections, CHIP_LAYOUT, SITE_CONTENT.partners || []).blocks[s.id]);
   function storyCards(mode) {
+    /* "SemiTec in brief": the mission and the four directions (no numbers until there are real ones) */
     const st = SITE_CONTENT.story || {}, ev = ST.events().upcoming[0];
-    const nums = (st.numbers || []).map((n, k) => `<div class="sn" style="--k:${k}"><strong>${ST.esc(n.value)}</strong><span>${ST.esc(ST.pick(n.label))}</span></div>`).join('');
-    const next = [
-      ev ? { k: ST.text('nextEvent'), v: `${ST.fmtDate(ev.when)} · ${ST.pick(ev.title)}`, href: '#events/upcoming' } : null,
-      ...(st.now || []).map(n => ({ k: ST.pick(n.kicker), v: ST.pick(n.text), href: '#' + (n.path || '') }))
-    ].filter(Boolean).map(n => `<a class="sx" href="${ST.esc(n.href)}"><span>${ST.esc(n.k)}</span><b>${ST.esc(n.v)}</b></a>`).join('');
+    const dirs = (st.directions || []).map((d, k) => `<div class="sn" style="--k:${k}"><strong>${ST.esc(ST.pick(d.title))}</strong><span>${ST.esc(ST.pick(d.text))}</span></div>`).join('');
+    const next = ev ? `<a class="sx" href="#events/upcoming"><span>${ST.esc(ST.text('nextEvent'))}</span><b>${ST.esc(ST.fmtDate(ev.when))} · ${ST.esc(ST.pick(ev.title))}</b></a>` : '';
     const cards = [`<article class="story-card is-glance" data-card="glance">
         <p class="sc-k"><i class="status-light"></i>${ST.esc(ST.text('glanceKicker'))}</p>
         <h3 class="sc-t">${ST.esc(ST.text('glanceTitle'))}</h3>
-        <div class="sc-nums">${nums}</div><div class="sc-next">${next}</div>
-        <p class="sc-note">${ST.esc(ST.text('exampleNote'))}</p></article>`];
+        <p class="sc-p">${ST.esc(ST.pick(st.brief || ''))}</p>
+        <div class="sc-nums is-dirs">${dirs}</div>${next ? `<div class="sc-next">${next}</div>` : ''}
+        <p class="sc-note">${ST.esc(ST.pick(st.vision || ''))}</p></article>`];
     storySections().forEach((sec, k) => {
       const i = sections.indexOf(sec);
       cards.push(`<article class="story-card is-section${sec.id === CHIP_LAYOUT.power ? ' is-power' : ''}" data-card="sec" data-index="${i}">

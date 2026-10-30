@@ -2,6 +2,15 @@
 
 The foundation page. The older prototype folders (VisitPage, VisitPage3D, VisitPageCircuit, VisitPageSignal, VisitPageDual) have been removed. Open `index.html`. Open items that need a server or real content are in **[TODO.md](TODO.md)**.
 
+## Content source (Oct 2026)
+
+All text comes from the document "SemiTec Foundation — Public Website Content & Structure".
+- Section ids are unchanged; long texts are paragraphs (`text`) in sections and path cards.
+- Partners, events and memory items are empty on purpose: add only confirmed records.
+- Programs are marked "Status: planned" until they start.
+- The contact form does not send yet; it says so on the page.
+- The Armenian text is a draft and needs a native review before publishing.
+
 ## The 2D opening: the story of the chip
 
 This is the **story version** (folder `VisitPageStory`; on GitHub under `/story/`). The first screen after the overview is pinned while you scroll, so the page itself stays still:

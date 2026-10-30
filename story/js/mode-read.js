@@ -31,7 +31,7 @@
     const items = (child.items || []).map(it => `<li>${ST.esc(ST.pick(it))}</li>`).join('');
     const sub = (child.children || []).map(g => `<div class="pc-sub-item">
         <strong>${ST.esc(ST.pick(g.title))}</strong>
-        <span>${(g.items || []).map(it => ST.esc(ST.pick(it))).join(' · ')}</span>
+        <span>${g.items && g.items.length ? g.items.map(it => ST.esc(ST.pick(it))).join(' · ') : ST.esc(ST.pick(g.intro || ''))}</span>
         <a href="#${p}/${g.id}" data-travel="${p}/${g.id}" aria-label="${ST.esc(ST.text('travel3d'))}: ${ST.esc(ST.pick(g.title))}">3D ↗</a>
       </div>`).join('');
     return `<article class="path-card" id="card-${section.id}-${child.id}" data-path="${p}" style="--c:${c}">
@@ -41,6 +41,7 @@
       </button>
       <div class="pc-body" id="body-${section.id}-${child.id}"><div class="pc-inner">
         <p class="pc-intro">${ST.esc(ST.pick(child.intro))}</p>
+        ${(child.text || []).map(t => `<p class="pc-text">${ST.esc(ST.pick(t))}</p>`).join('')}
         ${items ? `<ul class="pc-items">${items}</ul>` : ''}
         ${sub ? `<p class="pc-sub-label">${ST.esc(ST.text('further'))}</p><div class="pc-sub">${sub}</div>` : ''}
         <a class="pc-travel" href="#${p}" data-travel="${p}"><span>${ST.esc(ST.text('travel3d'))}</span><span aria-hidden="true">↗</span></a>
@@ -104,7 +105,12 @@
       <form class="cp-form" onsubmit="return false"><p class="cp-head">${ST.esc(ST.text('feedbackTitle'))}</p>
         <label>${ST.esc(ST.text('fName'))}<input type="text" name="name" autocomplete="name"></label>
         <label>${ST.esc(ST.text('fEmail'))}<input type="email" name="email" autocomplete="email"></label>
+        <label>${ST.esc(ST.text('fOrg'))}<input type="text" name="organization" autocomplete="organization"></label>
+        <label>${ST.esc(ST.text('fCategory'))}<select name="category">${(SITE_CONTENT.formCategories || []).map(c => `<option>${ST.esc(ST.pick(c))}</option>`).join('')}</select></label>
+        <label>${ST.esc(ST.text('fArea'))}<input type="text" name="area"></label>
         <label>${ST.esc(ST.text('fMessage'))}<textarea name="message"></textarea></label>
+        <label class="cp-consent"><input type="checkbox" name="consent"> ${ST.esc(ST.text('fConsent'))}</label>
+        <p class="cp-unavailable">${ST.esc(ST.text('formUnavailable'))}</p>
         <button type="submit" class="cp-send" disabled>${ST.esc(ST.text('fSend'))}</button></form>
     </div>`;
   }
@@ -130,6 +136,7 @@
           <p class="sec-eyebrow"><span class="sec-num">${ST.pad(i)}</span><span class="sec-rule" aria-hidden="true"></span><span>${ST.esc(eyebrow)}</span></p>
           <${H} class="sec-title" id="h-${s.id}">${title(ST.pick(s.title))}</${H}>
           <p class="sec-intro">${ST.esc(ST.pick(s.intro))}</p>
+          ${(s.text || []).map(t => `<p class="sec-text">${ST.esc(ST.pick(t))}</p>`).join('')}
           ${i === 0 ? `<ul class="hero-tags">${items}</ul>
              <div class="hero-actions">
                <span class="hero-cue"><span class="scroll-mouse" aria-hidden="true"><i></i></span>${ST.esc(ST.text('scrollBegin'))}</span>
@@ -143,7 +150,7 @@
           ${s.id === 'support' ? contactPanel() : ''}
           ${kids.length ? `<div class="paths"><p class="paths-label">${ST.esc(ST.text('pathsLabel'))}</p><div class="path-grid">${kids.map((k, c) => pathCard(s, k, c)).join('')}</div></div>` : ''}
           ${s.id === 'people' ? padStrip() : ''}
-          <div class="sec-foot"><a href="#${s.id}" data-travel="${s.id}" class="sec-travel">${ST.esc(ST.text('travel3d'))} ↗</a><span>${ST.esc(ST.text('prototype'))}</span></div>`}
+          <div class="sec-foot"><a href="#${s.id}" data-travel="${s.id}" class="sec-travel">${ST.esc(ST.text('travel3d'))} ↗</a></div>`}
         </div>
       </section>`;
     });

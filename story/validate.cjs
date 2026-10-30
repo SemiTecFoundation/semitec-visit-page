@@ -39,27 +39,27 @@ for (const [id, media] of Object.entries(SITE_CONTENT.media)) {
   for (const field of ['title', 'caption', 'alt']) bilingual(media[field], id + ' ' + field);
 }
 const timeline = new JourneyTimeline();
-const eventsIndex = SITE_CONTENT.sections.findIndex(s => s.id === 'events');
+const eventsIndex = SITE_CONTENT.sections.findIndex(s => s.id === 'purpose');   /* a section with a nested path (About → Our values → …) */
 const junction = timeline.mainLocation(eventsIndex);
 const origin = timeline.locate(junction).pose;
 const mainLength = timeline.length;
-const loop = timeline.insertLoop(['events', 'upcoming'], junction);
+const loop = timeline.insertLoop(['purpose', 'values'], junction);
 poseEqual(loop.curve.pose(0), origin, 'Loop starts at original junction');
 poseEqual(loop.curve.pose(loop.curve.length), origin, 'Loop closes at original junction');
 check(Math.abs(timeline.length - mainLength - loop.curve.length) < 1e-7, 'Loop adds scroll distance');
-check(timeline.locate(junction + 1).path.join('/') === 'events/upcoming', 'Scrolling enters the selected loop');
+check(timeline.locate(junction + 1).path.join('/') === 'purpose/values', 'Scrolling enters the selected loop');
 const nestedAt = junction + loop.curve.length * .37;
 const nestedOrigin = timeline.locate(nestedAt).pose;
-const nested = timeline.insertLoop(['events', 'upcoming', 'workshop'], nestedAt);
+const nested = timeline.insertLoop(['purpose', 'values', 'knowledge'], nestedAt);
 poseEqual(nested.curve.pose(nested.curve.length), nestedOrigin, 'Nested loop returns to its own junction');
 const nestedEnd = timeline.bounds(nested.id).end;
-check(timeline.locate(nestedEnd + .01).path.join('/') === 'events/upcoming', 'Scrolling out of nested loop resumes parent');
+check(timeline.locate(nestedEnd + .01).path.join('/') === 'purpose/values', 'Scrolling out of nested loop resumes parent');
 const loopEnd = timeline.bounds(loop.id).end;
 poseEqual(timeline.locate(loopEnd).pose, origin, 'Parent returns to original main junction after nested detour');
 check(timeline.locate(loopEnd + .01).segment.kind === 'main', 'Scrolling exits parent loop to main route');
 check(timeline.locate(loopEnd - .01).segment.visit.id === loop.id, 'Active loop geometry reaches its return junction');
-check(timeline.locate(loopEnd + 30).path[0] === 'impact', 'Main route continues to next section');
-check(timeline.locate(timeline.mainLocation(eventsIndex)).segment.kind === 'main', 'Main menu selects Events after its loop, not the submenu');
+check(timeline.locate(loopEnd + 30).path[0] === 'focus', 'Main route continues to next section');
+check(timeline.locate(timeline.mainLocation(eventsIndex)).segment.kind === 'main', 'Main menu selects About after its loop, not the submenu');
 check(timeline.locate(timeline.visitLocation(loop,loop.curve.length*.37)).segment.visit.id === loop.id, 'Parent navigation chooses the parent side of a nested junction');
 for (let i = 1; i < timeline.segments.length; i++) {
   const a = timeline.segments[i - 1], b = timeline.segments[i];
@@ -78,23 +78,23 @@ poseEqual(timeline.locate(parentCleanup.distance).pose,beforeParentCleanup,'Pare
 check(Math.abs(timeline.length-mainLength)<1e-7,'Main scroll length is restored');
 check(timeline.visits.length===0&&timeline.segments.length===1,'Completed branches leave no scroll history');
 for(let i=0;i<=100;i++)check(timeline.locate(timeline.length*i/100).segment.kind==='main','Both scrolling directions now visit main route only');
-const reopened=timeline.insertLoop(['events','upcoming'],junction);
+const reopened=timeline.insertLoop(['purpose','values'],junction);
 check(reopened.id!==loop.id,'A branch can be entered again by an explicit click');
 const backwardPose=timeline.locate(junction-.4).pose;
 const backwardCleanup=timeline.pruneInactive(junction-.4);
 poseEqual(timeline.locate(backwardCleanup.distance).pose,backwardPose,'Backing out removes branch without a jump');
 check(timeline.visits.length===0,'Backing out does not leave a future automatic detour');
 // A large scroll can cross several nested returns in a single frame.
-const fast=new JourneyTimeline(),outer=fast.insertLoop(['events','upcoming'],junction);
-fast.insertLoop(['events','upcoming','workshop'],junction+outer.curve.length*.3);
+const fast=new JourneyTimeline(),outer=fast.insertLoop(['purpose','values'],junction);
+fast.insertLoop(['purpose','values','knowledge'],junction+outer.curve.length*.3);
 const overshoot=fast.bounds(outer.id).end+12,overshootPose=fast.locate(overshoot).pose;
 const fastCleanup=fast.pruneInactive(overshoot);
 check(fastCleanup.removed.length===2,'Fast scroll releases parent and nested child together');
 poseEqual(fast.locate(fastCleanup.distance).pose,overshootPose,'Fast scroll cleanup preserves main position');
 // Explicit map/deep-link navigation may prepare a future branch. Cancelling
 // that navigation before arrival must remove it too.
-const pending=new JourneyTimeline();pending.insertLoop(['events','gallery'],junction);
-check(pending.pruneInactive(0,['events','gallery'])===null,'Explicit pending destination is retained');
+const pending=new JourneyTimeline();pending.insertLoop(['events','past'],junction);
+check(pending.pruneInactive(0,['events','past'])===null,'Explicit pending destination is retained');
 check(pending.pruneInactive(0).removed.length===1,'Cancelled future branch is removed before scrolling can enter it');
 // Headings away from the main axis must also close without a camera snap.
 for (const angle of [0, .3, 1.4, 2.8, 4.1]) {
@@ -122,8 +122,8 @@ poseEqual(ending.locate(endpointCleanup.distance).pose,endOrigin,'Final cleanup 
 // Keep the physical browser scroll moving forward while removing a loop.
 // Rewinding scrollY here used to interrupt wheel/touch momentum at the join.
 const moving=new JourneyTimeline(),space=new ScrollSpace();
-const movingLoop=moving.insertLoop(['events','upcoming'],junction);
-const movingNested=moving.insertLoop(['events','upcoming','workshop'],junction+movingLoop.curve.length*.4);
+const movingLoop=moving.insertLoop(['purpose','values'],junction);
+const movingNested=moving.insertLoop(['purpose','values','knowledge'],junction+movingLoop.curve.length*.4);
 for(const visit of [movingNested,movingLoop]){
   const end=moving.bounds(visit.id).end,displayed=end+.2,target=end+1.5;
   const pixels=space.toPixels(target),oldHeight=space.height(moving.length);
@@ -144,14 +144,14 @@ space.offset=0;
 poseEqual(moving.locate(restingDistance).pose,restingPose,'Idle track compaction does not move the camera');
 check(Math.abs(space.fromPixels(space.toPixels(restingDistance))-restingDistance)<=1/JOURNEY_SETTINGS.pixelsPerUnit,'Idle compaction preserves input position within one CSS pixel');
 // Academy must introduce its content before offering third-level navigation.
-const academyTimeline=new JourneyTimeline(),academyIndex=SITE_CONTENT.sections.findIndex(s=>s.id==='initiatives');
-const academyStart=academyTimeline.mainLocation(academyIndex),academy=academyTimeline.insertLoop(['initiatives','academy'],academyStart);
+const academyTimeline=new JourneyTimeline(),academyIndex=SITE_CONTENT.sections.findIndex(s=>s.id==='purpose');
+const academyStart=academyTimeline.mainLocation(academyIndex),academy=academyTimeline.insertLoop(['purpose','values'],academyStart);
 const reveal=branchRevealAt(resolveRoute(academy.path).node,academy.path)*academy.curve.length;
 check(reveal*JOURNEY_SETTINGS.pixelsPerUnit>400,'Academy has a meaningful introductory scroll distance');
 check(!branchesReady(academyTimeline.locate(academyStart)),'No level-three choices at Academy entrance');
 check(!branchesReady(academyTimeline.locate(academyStart+reveal-.1)),'Choices stay hidden through introductory content');
 check(branchesReady(academyTimeline.locate(academyStart+reveal+.1)),'Choices appear after the introduction');
-const program=academyTimeline.insertLoop(['initiatives','academy','programs'],academyStart+reveal+2);
+const program=academyTimeline.insertLoop(['purpose','values','knowledge'],academyStart+reveal+2);
 const programReturn=academyTimeline.bounds(program.id).end;
 const programCleanup=academyTimeline.pruneInactive(programReturn+.1);
 check(branchesReady(academyTimeline.locate(programCleanup.distance)),'Returning from a child preserves the parent content stage');
@@ -172,7 +172,7 @@ console.log(`Passed ${checks} checks: content, assets, curve speed, forward loop
     ok(b.x >= 0 && b.y >= 0 && b.x + b.w <= L.width && b.y + b.h <= L.height, 'Block inside die: ' + id);
     ok(b.w > 120 && b.h > 80, 'Block large enough to read: ' + id);
     const cells = (C.sections.find(s => s.id === id).children || []).length;
-    ok(b.kind === 'power' || 66 + cells * 36 <= b.h, 'Submenu cells fit inside ' + id);
+    ok(b.kind === 'power' || 66 + Math.ceil(cells / (cells > 4 ? 2 : 1)) * 36 <= b.h, 'Submenu cells fit inside ' + id);   /* more than 4: two columns */
   }
   for (let a = 0; a < list.length; a++) for (let c = a + 1; c < list.length; c++) {
     const [ia, A] = list[a], [ic, B] = list[c];
@@ -182,10 +182,10 @@ console.log(`Passed ${checks} checks: content, assets, curve speed, forward loop
   console.log('Passed ' + extra + ' chip-map floorplan checks.');
 }
 {
-  const t = new JourneyTimeline(), i = SITE_CONTENT.sections.findIndex(s => s.id === 'initiatives'), at = t.mainLocation(i);
-  const a = t.insertLoop(['initiatives', 'academy'], at);
+  const t = new JourneyTimeline(), i = SITE_CONTENT.sections.findIndex(s => s.id === 'purpose'), at = t.mainLocation(i);
+  const a = t.insertLoop(['purpose', 'values'], at);
   const nestedAt = at + a.curve.length * .5, origin = t.locate(nestedAt).pose;
-  const b = t.insertLoop(['initiatives', 'academy', 'programs'], nestedAt);
+  const b = t.insertLoop(['purpose', 'values', 'knowledge'], nestedAt);
   assert.ok(a.side === 1 && b.side === -1, 'Level 1 turns left, level 2 turns right');
   const mid = b.curve.pose(b.curve.length / 2).point, right = [-origin.direction[2], 0, origin.direction[0]];
   const offset = (mid[0] - origin.point[0]) * right[0] + (mid[2] - origin.point[2]) * right[2];
