@@ -393,7 +393,7 @@ function updateBranchEntrances(dt){
     stays a little ahead of the camera until the next gate, so the other paths can be chosen without scrolling back */
  const ce=currentEntrance;
  if(ce&&!ce.seen&&active.segment.kind==='main'&&!navigationTarget){
-  const sd=timeline.main.distanceAt(active.index/(sections.length-1)),gate=sd+JOURNEY_SETTINGS.sectionSpacing*.5;
+  const sd=timeline.main.distanceAt(active.index/(sections.length-1)),gate=timeline.main.distanceAt(Math.min(sections.length-1,active.index+1)/(sections.length-1))-JOURNEY_SETTINGS.sectionSpacing*.5;
   if(active.curveDistance>sd+JOURNEY_SETTINGS.mainBranchAhead-6&&active.curveDistance<gate-8){ce.follow=true;ce.pose=timeline.main.pose(Math.min(active.curveDistance+20,gate-2));}
  }
  for(let i=branchEntrances.length-1;i>=0;i--){
@@ -470,7 +470,7 @@ function addVisitMedia(visit){
   /* each board stands on the side of the road that the camera sees on its right while approaching it (the loop turns) */
   const rightness=(d,pt)=>{let sum=0;for(const back of [26,18,10]){const c=visit.curve.pose(Math.max(0,d-back)),f=c.direction,rr=[-f[2],0,f[0]],v=[pt[0]-c.point[0],0,pt[2]-c.point[2]],ahead=v[0]*f[0]+v[2]*f[2];sum+=(v[0]*rr[0]+v[2]*rr[2])/Math.max(4,ahead);}return sum;};
   node.showcase.forEach((item,k)=>{
-   const d=n>2?[from,L*.64,L*.88][Math.round(k*2/(n-1))]:n>1?from+(to-from)*k/(n-1):from,pose=visit.curve.pose(d),r=[-pose.direction[2],0,pose.direction[0]];
+   const d=n>1?from+(L*.88-from)*k/(n-1):from,pose=visit.curve.pose(d),r=[-pose.direction[2],0,pose.direction[0]];
    const at=(sd,o)=>[pose.point[0]+r[0]*o*sd,0,pose.point[2]+r[2]*o*sd];
    const sd=rightness(d,at(1,7))>=rightness(d,at(-1,7))?1:-1,p=at(sd,7),m=at(sd,2.2);
    createShow(item,k,n,[p[0],5.6,p[2]],visit,[m[0],3.7,m[2]]);
@@ -681,11 +681,13 @@ function tweenLift(from,to,ms,ease){lift=from;wake();return ST.tween(ms,t=>{lift
 function addMainShowcase(){
  sections.forEach((section,index)=>{
   const list=section.showcase&&section.showcase.length?section.showcase:section.id==='events'?ST.news().slice(0,4).map(ST.newsCard):[];if(!list.length||index<1)return;   // News & Events: the latest news
-  const sd=timeline.main.distanceAt(index/(sections.length-1)),gap=JOURNEY_SETTINGS.mainCardGap,n=list.length,from=sd-JOURNEY_SETTINGS.arriveBeforeMiddle+10;
+  /* the first card is already in view where a chosen section arrives; each card then has its own stretch of road
+     (mainCardGap long): it comes up, stays for a few scrolls, fades as it is passed, and only then the next comes */
+  const sd=timeline.main.distanceAt(index/(sections.length-1)),gap=JOURNEY_SETTINGS.mainCardGap,n=list.length,from=sd-JOURNEY_SETTINGS.arriveBeforeMiddle+gap-1;
   list.forEach((item,k)=>{
    const pose=timeline.main.pose(from+gap*k),r=[-pose.direction[2],0,pose.direction[0]];
    createShow(item,k,n,[pose.point[0]+r[0]*2.8,3.9,pose.point[2]+r[2]*2.8],null,[pose.point[0]+r[0]*.9,2.3,pose.point[2]+r[2]*.9]);
-   mediaBoards.at(-1).far=JOURNEY_SETTINGS.mainCardGap*2.05;
+   mediaBoards.at(-1).far=gap+3;
   });
  });
 }

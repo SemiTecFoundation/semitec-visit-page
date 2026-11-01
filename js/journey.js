@@ -13,7 +13,7 @@ const JOURNEY_SETTINGS = Object.freeze({
   branchSignAhead: 20,
   mainBranchAhead: 2,       // on the main route the paths branch off around the middle of a section, between its gates (0 = the exact middle)
   arriveBeforeMiddle: 18,   // choosing a section arrives just past its gate (the gate is half a section spacing before the middle)
-  mainCardGap: 6,           // cards on a section's own road (About): distance between them
+  mainCardGap: 16,          // cards on a section's own road (About, Focus, News): distance between them — each stays in view for about this long
   loopReturnBack: 22,       // a side path off the main route comes back this far before where it left, so its sign is ahead again
   branchSignLeft: 2.8,
   nestedBranchReveal: 0.24,
@@ -58,9 +58,22 @@ class Curve {
   pose(distance){const t=this.parameter(distance);return {point:this.point(t),direction:unit(this.tangent(t)),t};}
   distanceAt(t){const f=clamp(t,0,1)*this.samples,i=Math.floor(f);return this.table[i]+((this.table[i+1]??this.table[i])-this.table[i])*(f-i);}
 }
+/* The road between two sections is sectionSpacing long, unless the section has its own cards on the main road
+   (About, Focus, the news in News & Events): then it is long enough for each card to have its own stretch. */
+function mainCards(section){return section.showcase&&section.showcase.length?section.showcase.length:section.id==='events'?Math.min(4,(SITE_CONTENT.news||[]).length):0;}
+const SECTION_OFFSETS=(()=>{
+  const S=SITE_CONTENT.sections,base=JOURNEY_SETTINGS.sectionSpacing,g=JOURNEY_SETTINGS.mainCardGap,off=[0];
+  for(let i=0;i<S.length-1;i++){const n=i>0?mainCards(S[i]):0;off.push(off[i]+Math.max(base,n?(n-1)*g+19:0));}
+  return off;
+})();
+/* z of a section's middle on the main road; offset along the road for a curve parameter t (0…1) */
+function sectionZ(i){return JOURNEY_SETTINGS.initialZ-SECTION_OFFSETS[clamp(Math.round(i),0,SECTION_OFFSETS.length-1)];}
+function sectionGapAfter(i){const o=SECTION_OFFSETS;return i+1<o.length?o[i+1]-o[i]:JOURNEY_SETTINGS.sectionSpacing;}
+function mainOffset(t){const o=SECTION_OFFSETS,u=clamp(t,0,1)*(o.length-1),i=Math.min(o.length-2,Math.floor(u));return o[i]+(o[i+1]-o[i])*(u-i);}
+/* which section a point of the main road belongs to: it changes half a normal spacing before the next section's middle (at its gate) */
+function sectionAtT(t){const o=SECTION_OFFSETS,s=mainOffset(t),h=JOURNEY_SETTINGS.sectionSpacing/2;let k=0;for(let i=1;i<o.length;i++)if(s>=o[i]-Math.min(h,(o[i]-o[i-1])/2)-1e-6)k=i;return k;}
 function makeMainCurve(){
-  const span=(SITE_CONTENT.sections.length-1)*JOURNEY_SETTINGS.sectionSpacing;
-  return new Curve(t=>{const z=JOURNEY_SETTINGS.initialZ-t*span;return [chipPath(z),0,z];},t=>{const z=JOURNEY_SETTINGS.initialZ-t*span;return [-chipSlope(z),0,-1];},1400);
+  return new Curve(t=>{const z=JOURNEY_SETTINGS.initialZ-mainOffset(t);return [chipPath(z),0,z];},t=>{const z=JOURNEY_SETTINGS.initialZ-mainOffset(t);return [-chipSlope(z),0,-1];},2400);
 }
 /* back > 0: the loop's second half is drawn back so it rejoins the route that far before where it left */
 const loopBackWeight=t=>{const u=clamp((t-.5)/.5,0,1);return u*u*(3-2*u);};
@@ -97,7 +110,7 @@ class JourneyTimeline {
     distance=clamp(distance,0,this.length);
     const segment=this.segments.find(s=>distance<s.end-1e-7)||this.segments.at(-1);
     const curveDistance=segment.from+clamp(distance-segment.start,0,segment.to-segment.from),pose=segment.curve.pose(curveDistance);
-    const index=segment.kind==='main'?Math.round(pose.t*(SITE_CONTENT.sections.length-1)):resolveRoute(segment.visit.path).index;
+    const index=segment.kind==='main'?sectionAtT(pose.t):resolveRoute(segment.visit.path).index;
     return {segment,curveDistance,pose,index,path:segment.kind==='main'?[SITE_CONTENT.sections[index].id]:segment.visit.path,progress:curveDistance/segment.curve.length,distance};
   }
   insertLoop(path,distance){

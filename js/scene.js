@@ -118,9 +118,9 @@ class SignalScene {
   }
   buildWorld() {
     const gold=this.palette.gold,teal=this.palette.teal,quiet=[.075,.19,.21];
-    const far=JOURNEY_SETTINGS.initialZ-(SITE_CONTENT.sections.length-1)*JOURNEY_SETTINGS.sectionSpacing-90;
+    const far=sectionZ(SITE_CONTENT.sections.length-1)-90;
     // DUAL: the die ends at a seal ring just after the last section; beyond it are the bond pads and the package
-    const endZ=JOURNEY_SETTINGS.initialZ-(SITE_CONTENT.sections.length-1)*JOURNEY_SETTINGS.sectionSpacing,sealZ=endZ-15;
+    const endZ=sectionZ(SITE_CONTENT.sections.length-1),sealZ=endZ-15;
     this.box(0,-.45,far/2,600,.45,Math.abs(far)+240,this.palette.board);
     // Copper routing below the camera: long traces turn gently with the signal lane.
     for(let lane=-12;lane<=12;lane++){
@@ -163,7 +163,7 @@ class SignalScene {
     this.gates=[];
     for(let i=0;i<SITE_CONTENT.sections.length-1;i++){
       if(i===SITE_CONTENT.sections.length-2)break; // DUAL: after the last section the die ends; the finale replaces this gate
-      const z=JOURNEY_SETTINGS.initialZ-(i+1)*JOURNEY_SETTINGS.sectionSpacing-22,x=this.path(z),height=7.2+(i%3)*.6;
+      const z=sectionZ(i+2)+22,x=this.path(z),height=7.2+(i%3)*.6;
       this.gates.push({x,z,y:height});
       // Raised interconnects: the journey passes underneath, at trace level.
       for(const side of [-1,1]){
@@ -191,7 +191,7 @@ class SignalScene {
   /* DUAL chip detail: crossing metal layers (M1 across the path, M2 along it) with vias,
      and rows of standard cells between power rails on both sides of the signal bus. */
   buildDetail(){
-    const n=SITE_CONTENT.sections.length,endZ=JOURNEY_SETTINGS.initialZ-(n-1)*JOURNEY_SETTINGS.sectionSpacing,sealZ=endZ-15;
+    const n=SITE_CONTENT.sections.length,endZ=sectionZ(n-1),sealZ=endZ-15;
     let seed=7;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
     const m1=[.30,.22,.15],via=[.42,.80,.78],rail=[.34,.42,.39],cellA=[.15,.25,.27],cellB=[.19,.30,.31],cellHi=[.36,.62,.6];
     // M1: short copper stripes across the path, under the M2 lanes, with a via where some cross
@@ -216,7 +216,7 @@ class SignalScene {
   /* MEMORY: where a section sits on the main route; its memory block stands just after its gate */
   sectionSite(id){
     const idx=Math.max(1,SITE_CONTENT.sections.findIndex(s=>s.id===id));
-    const z=JOURNEY_SETTINGS.initialZ-idx*JOURNEY_SETTINGS.sectionSpacing,memZ=z-34;
+    const z=sectionZ(idx),memZ=z-34;
     return {idx,z,memZ,memX:this.path(memZ)+11};
   }
   eventsSite(){return this.sectionSite('events');}
@@ -268,7 +268,7 @@ class SignalScene {
   /* DUAL finale: seal ring, a row of bond pads (partners & supporters) and wire bonds to package leads */
   buildFinale(){
     const gold=this.palette.gold,n=SITE_CONTENT.sections.length;
-    const endZ=JOURNEY_SETTINGS.initialZ-(n-1)*JOURNEY_SETTINGS.sectionSpacing,ex=this.path(endZ),sealZ=endZ-15;
+    const endZ=sectionZ(n-1),ex=this.path(endZ),sealZ=endZ-15;
     const far=endZ-90;
     this.box(ex,0,(sealZ+far)/2,300,.03,Math.abs(far-sealZ),[.045,.1,.115]);        // package mould beyond the die
     this.beam([ex-80,.08,sealZ],[ex+80,.08,sealZ],.14,gold,1);                      // seal ring

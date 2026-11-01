@@ -66,7 +66,7 @@ const loopEnd = timeline.bounds(loop.id).end;
 poseEqual(timeline.locate(loopEnd).pose, backPose, 'Parent returns to the main route (before its junction) after nested detour');
 check(timeline.locate(loopEnd + .01).segment.kind === 'main', 'Scrolling exits parent loop to main route');
 check(timeline.locate(loopEnd - .01).segment.visit.id === loop.id, 'Active loop geometry reaches its return junction');
-check(timeline.locate(loopEnd + 30 + loop.back).path[0] === 'focus', 'Main route continues to next section');
+check(timeline.locate(timeline.mainLocation(SITE_CONTENT.sections.findIndex(s => s.id === 'focus')) + 1).path[0] === 'focus' && timeline.mainLocation(SITE_CONTENT.sections.findIndex(s => s.id === 'focus')) > loopEnd, 'Main route continues to next section');
 check(timeline.locate(timeline.mainLocation(eventsIndex)).segment.kind === 'main', 'Main menu selects About after its loop, not the submenu');
 check(timeline.locate(timeline.visitLocation(loop,loop.curve.length*.37)).segment.visit.id === loop.id, 'Parent navigation chooses the parent side of a nested junction');
 for (let i = 1; i < timeline.segments.length; i++) {
