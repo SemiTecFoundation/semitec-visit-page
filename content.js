@@ -3013,7 +3013,37 @@ const SITE_CONTENT = {
     "vision": [
       "Inspired by the four peaks of Mount Aragats.",
       "Ոգեշնչված Արագածի չորս գագաթներով։"
-    ]
+    ],
+    "groups": [
+      [
+        "purpose"
+      ],
+      [
+        "focus",
+        "initiatives"
+      ],
+      [
+        "events",
+        "impact"
+      ],
+      [
+        "people",
+        "transparency"
+      ],
+      [
+        "donate"
+      ],
+      [
+        "support"
+      ]
+    ],
+    "stepMs": {
+      "card": 700,
+      "connections": 1000,
+      "pads": 900,
+      "journey": 1400,
+      "ending": 1100
+    }
   },
   "ecosystem": [
     {

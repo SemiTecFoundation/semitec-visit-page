@@ -189,6 +189,94 @@
     const open = document.querySelector('dialog[open]'); if (!open) return;
     if (!e.target.closest('.ts-body,.sd-slide,.sd-tabs,.route-map,#map-tree,.memory-grid,#memory-grid')) e.preventDefault();
   }, { passive: false });
+  /* ---------- step-by-step scrolling (the opening story and the ending) ----------
+     A region is a list of scroll positions (one per step). Inside it, one wheel gesture, swipe or key press moves
+     exactly one step: the page glides to the next position while that step's animation plays, and further input is
+     ignored until it has finished and the wheel has been quiet for a moment. Outside the region scrolling is normal.
+     ST.stepRegion({ enabled: () => bool, positions: () => [scrollY…] (ascending), ms: (from, to) => duration }) */
+  const regions = [];
+  let stepBusyUntil = 0, stepAnim = 0, touchY0 = null, touchDone = false;
+  ST.stepRegion = r => { regions.push(r); return r; };
+  ST.stepBusy = () => !!stepAnim || performance.now() < stepBusyUntil;
+  function regionAt(y, dir) {
+    for (const r of regions) {
+      if (!r.enabled()) continue;
+      const pos = r.positions(); if (!pos.length) continue;
+      if (y >= pos[0] - 3 && y <= pos[pos.length - 1] + 3) return { r, pos };
+      /* about to cross into the region with this gesture: stop at its first (or last) step instead */
+      if (dir > 0 && y < pos[0] && y > pos[0] - innerHeight * .6) return { r, pos, entering: pos[0] };
+      if (dir < 0 && y > pos[pos.length - 1] && y < pos[pos.length - 1] + innerHeight * .6) return { r, pos, entering: pos[pos.length - 1] };
+    }
+    return null;
+  }
+  /* hurrying: a new swipe while a step plays means "faster" — the current step speeds up and the next one
+     follows straight after it, also fast; the speed returns to normal once the visitor stops pushing */
+  let glideRate = 1, glideQueued = 0, glideDir = 0;
+  function hurry(dir) {
+    if (dir !== glideDir) return;
+    glideRate = Math.min(4, glideRate * 1.8); glideQueued = dir;
+  }
+  function glideTo(target, ms) {
+    const from = scrollY; let el = 0, last = performance.now();
+    glideDir = Math.sign(target - from);
+    cancelAnimationFrame(stepAnim);
+    const tick = now => {
+      el += (now - last) * glideRate; last = now;
+      const t = Math.min(1, el / ms), y = from + (target - from) * ST.easeInOut(t);
+      scrollTo({ top: Math.round(y), behavior: 'instant' });
+      if (t < 1) { stepAnim = requestAnimationFrame(tick); return; }
+      stepAnim = 0; stepBusyUntil = performance.now() + 200;
+      const q = glideQueued; glideQueued = 0;
+      if (q) { glideRate = Math.max(1.5, glideRate * .8); if (stepInput(q, q * innerHeight, true)) return; }
+      glideRate = 1;
+    };
+    stepAnim = requestAnimationFrame(tick);
+  }
+  /* returns true when the input was taken by a region */
+  /* a wheel event starts a new gesture when the wheel was quiet for a moment, or when it suddenly grows
+     (a fresh swipe on top of the trackpad's fading inertia); inertia alone never starts the next step */
+  let wheelLast = 0, wheelAbs = 0; ST.wheelFresh = true;
+  addEventListener('wheel', e => {
+    const now = performance.now(), a = Math.abs(e.deltaY);
+    ST.wheelFresh = now - wheelLast > 160 || a > wheelAbs * 1.6 + 4;
+    wheelLast = now; wheelAbs = a;
+  }, { capture: true, passive: true });
+  function stepInput(dir, deltaPx, fresh = true) {
+    const y = scrollY, hit = regionAt(y, dir);
+    if (!hit) return false;
+    if (stepAnim) { if (fresh) hurry(dir); return true; }   // the current step is still playing: a new swipe speeds it up
+    if (performance.now() < stepBusyUntil && !fresh) { stepBusyUntil = performance.now() + 200; return true; }   // inertia of the last swipe
+    if (hit.entering != null) {
+      /* close to the region: take the gesture over at once and glide in, instead of letting the trackpad's
+         momentum carry the page past the first step and then pulling it back */
+      glideTo(hit.entering, Math.min(700, 250 + Math.abs(hit.entering - y) * .6)); return true;
+    }
+    const next = dir > 0 ? hit.pos.find(p => p > y + 3) : [...hit.pos].reverse().find(p => p < y - 3);
+    if (next == null) return !!(dir > 0 && hit.r.holdEnd && y >= hit.pos[hit.pos.length - 1] - 3);   // leaving the region: normal scrolling again (unless it is the end of the page)
+    glideTo(next, hit.r.ms(y, next)); return true;
+  }
+  addEventListener('wheel', e => {
+    if (e.ctrlKey || !regions.length || document.querySelector('dialog[open]')) return;
+    if (Math.abs(e.deltaY) < 1) return;
+    const px = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaMode === 2 ? e.deltaY * innerHeight : e.deltaY;
+    if (stepInput(Math.sign(px), px, ST.wheelFresh)) e.preventDefault();
+  }, { passive: false });
+  addEventListener('touchstart', e => { touchY0 = e.touches[0].clientY; touchDone = false; }, { passive: true });
+  addEventListener('touchmove', e => {
+    if (touchY0 == null || document.querySelector('dialog[open]')) return;
+    const dy = touchY0 - e.touches[0].clientY, inside = regionAt(scrollY, Math.sign(dy) || 1);
+    if (!inside) return;
+    if (touchDone) { e.preventDefault(); return; }
+    if (stepAnim) { e.preventDefault(); if (Math.abs(dy) > 28) { touchDone = true; hurry(Math.sign(dy)); } return; }
+    if (Math.abs(dy) > 28) { if (stepInput(Math.sign(dy), dy * 3)) { touchDone = true; e.preventDefault(); } }
+    else if (!inside.entering) e.preventDefault();
+  }, { passive: false });
+  addEventListener('keydown', e => {
+    if (e.metaKey || e.ctrlKey || e.altKey || (e.target.closest && e.target.closest('input,textarea,select,[contenteditable],dialog'))) return;
+    const dir = ['ArrowDown', 'PageDown'].includes(e.key) || (e.key === ' ' && !e.shiftKey) ? 1 : ['ArrowUp', 'PageUp'].includes(e.key) || (e.key === ' ' && e.shiftKey) ? -1 : 0;
+    if (!dir || (e.key === ' ' && e.target.closest && e.target.closest('button,a'))) return;
+    if (stepInput(dir, dir * innerHeight)) e.preventDefault();
+  });
   ST.openMemory = (bankId = 'gallery') => {
     const bank = ST.bank(bankId), d = $('#memory-dialog');
     $('#memory-title').textContent = `${ST.text('memoryView')} · ${ST.pick(bank.title)}`;

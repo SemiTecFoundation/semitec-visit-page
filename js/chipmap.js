@@ -225,6 +225,7 @@
       this.blocks.forEach(({ el, i }) => {
         const pending = (blocks[i] || 0) < .95;
         set(el, '--show', blocks[i] || 0);
+        el.classList.toggle('is-gone', (blocks[i] || 0) < .01);   /* Safari does not fade the 3D faces with the block's opacity: hide it outright */
         if (pending !== el.classList.contains('is-pending')) {
           el.classList.toggle('is-pending', pending); el.inert = pending;
           el.querySelectorAll('[data-path]').forEach(x => { if (pending) x.setAttribute('tabindex', '-1'); else x.removeAttribute('tabindex'); });

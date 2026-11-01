@@ -434,6 +434,33 @@
   }
 
   /* ---------- view API ---------- */
+  /* step-by-step scrolling: the opening story (one step per card: it lands on the chip, the connections, the contacts)
+     and the ending (topology → I/O side → package → ecosystem). Durations: SITE_CONTENT.story.stepMs */
+  const MS = () => Object.assign({ card: 700, connections: 1000, pads: 900, ending: 1100 }, (SITE_CONTENT.story || {}).stepMs || {});
+  function storySteps() {
+    const ch = $('.choose'), pin = ch && ch.firstElementChild; if (!pin || !ch.offsetHeight) return [];
+    const header = $('.header').offsetHeight, top = ch.getBoundingClientRect().top + scrollY - header, span = ch.offsetHeight - pin.offsetHeight, len = ST.story.length(pin);
+    const n = pin.querySelectorAll('.story-card').length, P = [...Array(n + 1).keys(), len];
+    return P.map(p => Math.round(top + (p / len) * span));
+  }
+  ST.stepRegion({
+    enabled: () => on && !map.expanded,
+    positions: storySteps,
+    ms: (from, to) => {
+      const pin = $('.choose .choose-pin') || ($('.choose') || {}).firstElementChild, pos = storySteps(), k = pos.findIndex(p => Math.abs(p - to) < 3);
+      const card = pin && pin.querySelectorAll('.story-card')[k - 2], kind = card && card.dataset.card, m = MS();
+      return kind === 'conn' ? m.connections : kind === 'pads' ? m.pads : k === pos.length - 1 ? 500 : m.card;
+    }
+  });
+  ST.stepRegion({
+    enabled: () => on && !map.expanded && !!outro && !!outro.firstElementChild,
+    positions: () => {
+      const header = $('.header').offsetHeight, top = outro.getBoundingClientRect().top + scrollY - header, span = outro.offsetHeight - outro.firstElementChild.offsetHeight;
+      return [.02, .24, .49, .8].map(q => Math.round(top + q * span));
+    },
+    ms: () => MS().ending,
+    holdEnd: true   /* the ecosystem is the last screen: scrolling on does not push it up under the header */
+  });
   R.init = function () {
     main = $('#read-sections'); intro = $('#read-intro'); outro = $('#read-outro');
     map = new ST.ChipMap($('#chipmap'), { onSelect: path => { if (map.expanded) map.setExpanded(false); R.go(path); } });

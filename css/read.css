@@ -880,3 +880,16 @@ html.travel-intro .gate-layer,html.travel-end .gate-layer{opacity:0!important;tr
 .ev-propose{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:16px 18px;border-radius:12px;background:#14262c;color:#f1eee6}
 .ev-propose p{margin:0;font-size:13.5px}.ev-propose .evc-btn{background:#eac883;color:#14262c}
 @media(max-width:700px){.news-list button{grid-template-columns:1fr auto}.nl-date{grid-column:1/-1}}
+
+/* the opening story: a group of sections on one card, each part flies into its own block */
+.story-card.is-group{background:none!important;border:0!important;box-shadow:none!important;padding:0!important;overflow:visible;gap:12px}
+.sc-part{flex:1 1 0;min-height:0;display:flex;flex-direction:column;gap:9px;padding:20px 24px;border-radius:14px;border:1px solid #4f8487;background:linear-gradient(135deg,#24464b,#183338);color:#e7efe9;transform-origin:0 0;overflow:hidden}
+.sc-part.is-power{background:linear-gradient(135deg,#6a5631,#3a3020);border-color:#9a7b42}
+.sc-part>*{opacity:calc(1 - var(--fly,0) * 1.8)}
+.sc-part .sc-k{color:#eac883}.sc-part .sc-p{color:#b7cbca}
+.story-card.is-pair .sc-t{font-size:clamp(19px,1.7vw,24px)}
+.story-card.is-pair .sc-p{font-size:13px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+@media(max-width:900px){.sc-part{padding:12px 14px;gap:5px}.story-card.is-pair .sc-p{-webkit-line-clamp:2;font-size:12px}.story-card.is-pair .sc-t{font-size:16px}}
+
+/* a block not built yet in the opening story: hidden outright (Safari keeps 3D-transformed children visible at opacity 0) */
+.chipmap .cm-block.is-gone{visibility:hidden}

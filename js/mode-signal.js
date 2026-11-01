@@ -79,6 +79,12 @@ function ensureEndMap(){
  endMap=new ST.ChipMap(endEl.firstElementChild,{onSelect:p=>navigate(p)});
  endMap.setScroll(sections.length-1);endMap.setOutro(1);
 }
+/* the ending, step by step: one gesture = one stage (topology → I/O side → package → ecosystem) */
+ST.stepRegion({
+ enabled:()=>on&&!introOn&&!ST.state.switching,
+ positions:()=>{const base=scrollSpace.toPixels(timeline.length),h=outroPx();return [.13,.33,.56,.84].map(e=>Math.round(base+e*h));},
+ ms:()=>((SITE_CONTENT.story||{}).stepMs||{}).ending||1100
+});
 function updateOutro(dt){
  if(!eco3d)return;
  const e=active.segment.kind==='main'?outroAmount():0,h=.02,at=n=>endStage>=n?h:0;
@@ -139,8 +145,8 @@ function finishIntro(quiet){
 }
 function updateIntro(dt,force){
  if(!introOn||!introRoot)return;
- introP=still||force?introT:introP+(introT-introP)*(1-Math.exp(-dt*7));
- if(Math.abs(introT-introP)<.0005)introP=introT;
+ if(introAnim&&!still){const now=performance.now();introAnim.el+=(now-introAnim.last)*introRate;introAnim.last=now;const t=clamp(introAnim.el/introAnim.ms,0,1);introP=introAnim.from+(introAnim.to-introAnim.from)*ST.easeInOut(t);if(t>=1){introAnim=null;introQuiet=now+200;const q=introQueued;introQueued=0;if(q&&introP<introLen()-.01){introRate=Math.max(1.5,introRate*.8);introMove(q,true);}else introRate=1;}else wake();}
+ else{introAnim=null;introP=introT;}
  const S=storyLen(),d=clamp(introP-S,0,1);
  const cr=ST.story.apply(introRoot,Math.min(introP,S),introMap,innerWidth<=900);
  const stage=introRoot.querySelector('.choose-stage');
@@ -159,21 +165,34 @@ function updateIntro(dt,force){
  ST.state.storyP=d>0?null:introP;lift=.6*(1-z);
  if(introT>=introLen()-1e-3&&introP>=introLen()-.004&&!force)finishIntro(true);
 }
-function introMove(steps){
- const L=introLen();
- if(steps>0&&introT>=L-.001&&introP>L-.15){finishIntro(true);return;}
- introT=clamp(introT+steps,0,L);wake();
+/* one step per gesture: each card lands on the chip (or the connections draw, the contacts appear) in one timed
+   animation; input during it, and until the wheel has been quiet for a moment, is ignored */
+let introAnim=null,introQuiet=0,introRate=1,introQueued=0;
+const introSteps=()=>{const n=introRoot?introRoot.querySelectorAll('.story-card').length:0;return [...Array(n+1).keys(),introLen()];};
+function introGo(to){
+ const from=introP,m=Object.assign({card:700,connections:1000,pads:900,journey:1400},(SITE_CONTENT.story||{}).stepMs||{});
+ const card=introRoot&&introRoot.querySelectorAll('.story-card')[Math.round(Math.max(from,to))-2],kind=card&&card.dataset.card;
+ const ms=to>=introLen()-1e-3||from>storyLen()?m.journey:kind==='conn'?m.connections:kind==='pads'?m.pads:m.card;
+ introT=to;introAnim=still?null:{from,to,el:0,last:performance.now(),ms};wake();
+}
+function introMove(dir,fresh=true){
+ if(introAnim){if(fresh&&Math.sign(introAnim.to-introAnim.from)===dir){introRate=Math.min(4,introRate*1.8);introQueued=dir;}return;}
+ if(performance.now()<introQuiet&&!fresh){introQuiet=performance.now()+200;return;}
+ const steps=introSteps(),cur=introT;
+ const next=dir>0?steps.find(s=>s>cur+.01):[...steps].reverse().find(s=>s<cur-.01);
+ if(next==null){if(dir>0)finishIntro(true);return;}
+ introGo(next);
 }
 const atJourneyStart=()=>on&&!introOn&&scrollY<=2&&currentDistance<.5&&introRoot!==undefined;
 window.addEventListener('wheel',e=>{
  if(!on||ST.state.switching)return;
- if(introOn){e.preventDefault();introMove(e.deltaY/(innerHeight*.6));return;}
+ if(introOn){e.preventDefault();if(Math.abs(e.deltaY)>=1)introMove(Math.sign(e.deltaY),ST.wheelFresh);return;}
  if(e.deltaY<0&&atJourneyStart()&&lift<.05){e.preventDefault();openIntro(introLen()-.02);}
 },{passive:false,capture:true});
 window.addEventListener('touchstart',e=>{touchY=e.touches[0].clientY;},{passive:true,capture:true});
 window.addEventListener('touchmove',e=>{
  if(!on||touchY==null)return;const y=e.touches[0].clientY,dy=touchY-y;
- if(introOn){e.preventDefault();touchY=y;introMove(dy/(innerHeight*.55));return;}
+ if(introOn){e.preventDefault();if(Math.abs(dy)>28){touchY=null;introMove(Math.sign(dy));}return;}
  if(dy<-30&&atJourneyStart()){touchY=null;openIntro(introLen()-.02);}
 },{passive:false,capture:true});
 window.addEventListener('keydown',e=>{
@@ -184,10 +203,10 @@ window.addEventListener('keydown',e=>{
  if(!fwd&&!back)return;
  if(e.key===' '&&e.target.closest&&e.target.closest('button,a'))return;
  e.preventDefault();e.stopImmediatePropagation();
- introMove(fwd?Math.floor(introT+1e-3)+1-introT:-(introT-Math.ceil(introT-1e-3)+1));
+ introMove(fwd?1:-1);
 },{capture:true});
 introEl.addEventListener('click',e=>{
- if(e.target.closest('.story-skip,.story-start')){e.preventDefault();if(still)finishIntro();else{introT=introLen();wake();}return;}
+ if(e.target.closest('.story-skip,.story-start')){e.preventDefault();if(still)finishIntro();else introGo(introLen());return;}
  const go=e.target.closest('.sc-go[data-path]');
  if(go){e.preventDefault();e.stopPropagation();finishIntro(true);navigate(go.dataset.path.split('/'));}
 },true);
@@ -720,7 +739,7 @@ const V=ST.modes['3d']={
  isPlain(){return introOn;},
  go(path){
   /* the menu during the opening story: the start goes back to its first step, a section leaves the story and travels there */
-  if(introOn){if(pathKey(path)==='overview'){introT=0;wake();return;}finishIntro(true);}
+  if(introOn){if(pathKey(path)==='overview'){introGo(0);return;}finishIntro(true);}
   navigate(path,{focus:false});
  },
  openMap(){buildMap();mapDialog.showModal();},
