@@ -2,6 +2,14 @@
 
 The SemiTec Foundation website: one page with a 2D reading view and a 3D journey. Open `index.html`, or the live preview at https://semitecfoundation.github.io/semitec-visit-page/. Open items that need a server or real content are in **[TODO.md](TODO.md)**.
 
+## Content database
+
+On the server the page's content comes from `db/site.json`, written by the **SemiTec Content Manager** (a separate application in `semitec-content-manager`, with its own users). Every save there rewrites that file, so changes appear at once, without git.
+
+- `js/db.js` reads `db/site.json` and puts it over `SITE_CONTENT` before the other scripts start. The scripts are listed in `index.html` and started in that order; `core.js` and `sound.js` wait for the `st:scripts-ready` signal.
+- `db/` is in `.gitignore`: it belongs to the server, and the 5-minute git pull leaves it alone.
+- **`content.js` is the fallback.** It is used when `db/site.json` is missing, unreadable or takes over 3 seconds, which also covers opening the page from disk and the GitHub Pages preview. While a database exists, editing text in `content.js` does not change the site: edit it in the content manager. Only new `ui` keys still come through from `content.js`.
+
 ## Static content integration (November 2026)
 
 The bilingual editorial source is `semitec-static-website-content.md`. Its copy is integrated into `content.js` using the existing sections, cards, 2D reading view and 3D journey. The four Aragats pillars remain in Focus; the six charter directions are separate cards in Initiatives. Existing section and legacy program URLs are retained. The draft's section names also resolve as hash aliases.
@@ -224,7 +232,9 @@ The growing and shrinking window uses View Transitions (Chrome, Edge and Safari 
 
 ```
 index.html          shell: header + switch, 3D layers, 2D page, bottom bar, dialogs
-content.js          ← EDIT CONTENT HERE (both views) + CHIP_LAYOUT for the 2D map
+content.js          the fallback content (both views) + CHIP_LAYOUT for the 2D map
+js/db.js            reads the content database, then starts the other scripts
+db/                 written by the content manager on the server (not in git)
 css/base.css        colours for both views, header, switch, bottom bar, dialogs, transition
 css/read.css        2D page and chip map
 css/signal.css      3D view (Signal styles, scoped to the 3D view)

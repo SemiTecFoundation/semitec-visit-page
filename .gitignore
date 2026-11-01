@@ -1,2 +1,4 @@
 .DS_Store
 node_modules/
+# written by the content manager on the server; the 5-minute git pull must leave it alone
+db/

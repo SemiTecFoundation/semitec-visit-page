@@ -394,6 +394,6 @@
     reduced.addEventListener('change', () => { state.reduced = reduced.matches; });
     root.classList.add('is-ready'); state.ready = true;
   }
-  /* Deferred scripts run before DOMContentLoaded, so every view is registered by then. */
-  if (document.readyState === 'complete') init(); else document.addEventListener('DOMContentLoaded', init);
+  /* js/db.js signals when the last script has run, so every view is registered by then. */
+  document.addEventListener('st:scripts-ready', init);
 })();

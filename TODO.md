@@ -5,7 +5,8 @@ Placeholders in the page are marked "(example)" or "to be confirmed".
 
 ## Needs a server or a service
 - [ ] **Actions on the page that need a server:** *Suggest a topic*, *Propose a project*, *Propose an idea*, the contact form, partner/supporter requests — today they only lead to Get Involved; when the server is ready, each becomes a real form that sends.
-- [ ] **Load the content from a database:** programs and their cards, projects, events, meetings, news, reports, partners and the "SemiTec today" figures should come from the platform's database (with an admin to edit them), instead of `content.js`. Measure first: list every kind of record the page shows and the fields it needs, so the database and the page agree.
+- [x] **Load the content from a database** (done: the SemiTec Content Manager writes `db/site.json`, see README.md). Still open: the "SemiTec today" figures and a programs list, once the page shows them.
+- [ ] **Report PDFs:** archive items have no link on the page yet (`SITE_CONTENT.memory[].url` is documented but nothing reads it), and the content manager uploads pictures only. Add both together.
 - [ ] **Payments (Support).** Choose a payment provider (one-time "Pulse" and monthly "Clock"), set real amounts, enable the Donate button, add a thank-you return (`?thanks=1` → chip power-on with thank-you message).
 - [ ] **Contact form (Connect).** Connect the form to a mail address or form service; until then a `mailto:` link can be set in `SITE_CONTENT.contact.rows[].href`.
 - [ ] **"Save the date" on upcoming events.** A button per upcoming event that adds it to the visitor's calendar (.ics file / Google Calendar link). Can be generated in the page, but publish together with the server so links and times are final.

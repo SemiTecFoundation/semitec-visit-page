@@ -106,5 +106,5 @@
     }
   }
   ST.soundPaint = paint;
-  if (document.readyState === 'complete') init(); else document.addEventListener('DOMContentLoaded', init);
+  document.addEventListener('st:scripts-ready', init);
 })();

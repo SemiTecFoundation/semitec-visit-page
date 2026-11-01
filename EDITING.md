@@ -2,7 +2,9 @@
 
 > Adapted from the Signal prototype's editing guide. Sections 2–4 and 6–7 apply unchanged to the content and to the 3D view. The **2D view** uses the same content, so a change in `content.js` updates both views.
 
-This project is plain HTML, CSS and JavaScript. It works when `index.html` is opened directly, including offline. Keep the classic deferred script order: **content.js → js/journey.js → js/scene.js → js/core.js → js/chiplayout.js → js/chipmap.js → js/mode-read.js → js/mode-signal.js**. No framework or build process is required.
+> **On the server, content is edited in the SemiTec Content Manager, not here.** While `db/site.json` exists it replaces what `content.js` holds, so the sections below on editing text apply to the fallback copy. See "Content database" in README.md.
+
+This project is plain HTML, CSS and JavaScript. It works when `index.html` is opened directly, including offline. Keep the script order: **content.js → js/db.js**, then the scripts `js/db.js` starts in the order listed in `index.html`: **js/journey.js → js/scene.js → js/core.js → js/sound.js → js/chiplayout.js → js/chipmap.js → js/ecosystem.js → js/story.js → js/mode-read.js → js/mode-signal.js**. No framework or build process is required.
 
 ## 1. Where to make a change
 
