@@ -450,7 +450,7 @@ html[lang=hy] .sec-hero .sec-title{font-size:clamp(34px,3.8vw,56px)}
 @keyframes ep-shine{0%,40%{transform:translateX(-70%)}70%,100%{transform:translateX(70%)}}
 .ep-dot{position:absolute;left:20px;top:20px;width:12px;height:12px;border-radius:50%;background:#0b0f10;box-shadow:inset 0 1px 2px #000,0 1px 0 #ffffff14}
 .ep-logo{display:flex;align-items:center;gap:12px;color:#eac883}
-.ep-logo svg{width:44px;height:44px;fill:none;stroke:currentColor;stroke-width:2;stroke-linejoin:round}
+.ep-logo img{width:80px;height:60px;object-fit:cover;object-position:50% 30%;flex-shrink:0}
 .ep-logo span{display:flex;flex-direction:column;line-height:1}
 .ep-logo strong{font-size:30px;letter-spacing:.2em;font-weight:500;color:#efe6cf}
 .ep-logo em{margin-top:6px;font-style:normal;font-size:10px;letter-spacing:.42em;color:#eac883}
@@ -764,7 +764,7 @@ html.map-end .map-dock:before{opacity:0}
 /* the name and logo on the empty chip (opening story); --brand fades from 1 to 0 as the first section lands */
 .cm-brand{position:absolute;left:0;top:0;width:1000px;height:760px;display:flex;align-items:center;justify-content:center;gap:34px;color:#eac883;pointer-events:none;
   transform:translateZ(2px);opacity:var(--brand,0);transition:opacity .2s linear}
-.cm-brand svg{width:120px;height:120px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linejoin:round;filter:drop-shadow(0 0 14px #eac88355)}
+.cm-brand img{width:200px;height:150px;object-fit:cover;object-position:50% 30%;flex-shrink:0;filter:drop-shadow(0 0 14px #eac88355)}
 .cm-brand span{display:flex;flex-direction:column;line-height:1}
 .cm-brand strong{font-size:96px;font-weight:500;letter-spacing:.2em;color:#efe6cf}
 .cm-brand em{margin-top:14px;font-style:normal;font-size:28px;letter-spacing:.5em;color:#eac883}

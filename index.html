@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache">
   <meta name="description" content="SemiTec Foundation — read the page with an interactive chip map, or travel through the chip in 3D. One structure, two views.">
   <title>SemiTec Foundation</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath fill='%23071419' d='M0 0h40v40H0z'/%3E%3Cpath fill='none' stroke='%23eac883' stroke-width='2' d='m5 29 12-20 6 10 4-6 9 16H5Z'/%3E%3C/svg%3E">
+  <link rel="icon" type="image/png" href="assets/logo.png">
   <!-- The view is chosen before first paint: ?mode=2d|3d, else the last one used, else 2D. -->
   <script>
     (function(){var m=new URLSearchParams(location.search).get('mode');try{m=m||localStorage.getItem('st-mode')}catch(e){}
@@ -36,7 +36,7 @@
 
   <!-- ===== Shared header ===== -->
   <header class="header">
-    <a class="brand" href="#overview"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M5 29 17 9l6 10 4-6 9 16H5Z"/><path d="m12 29 7-11 6 11"/></svg><span id="brand-name"></span></a>
+    <a class="brand" href="#overview"><img src="assets/logo.png" width="38" height="38" alt="" aria-hidden="true"><span id="brand-name"></span></a>
     <div class="header-center"><i class="status-light"></i><span id="brand-tagline"></span></div>
     <div class="header-tools">
       <div class="mode-switch" role="group" data-ui-label="modeGroup">

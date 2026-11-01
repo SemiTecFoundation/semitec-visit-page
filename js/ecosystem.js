@@ -14,7 +14,7 @@
   const PW = 300, PH = 228, LEAD = 14, NTB = 14, NSIDE = 10;
   const leadX = j => -PW / 2 + (j + .5) * PW / NTB;          /* top / bottom leads */
   const leadY = j => -PH / 2 + (j + .5) * PH / NSIDE;        /* left / right leads */
-  const LOGO = '<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M5 29 17 9l6 10 4-6 9 16H5Z"/><path d="m12 29 7-11 6 11"/></svg>';
+  const LOGO = '<img src="assets/logo.png" alt="" aria-hidden="true">';
 
 
   /* where the modules sit: two columns beside the package (wide screens) or rows above and below it (phones) */

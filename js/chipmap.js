@@ -129,7 +129,7 @@
               <path class="cm-flow" d="${L.route}"/><path class="cm-draw" d="${L.route}" pathLength="1"/><path class="cm-active" d="${L.route}"/>
               <circle class="cm-halo" r="16"/><circle class="cm-signal" r="5"/>
             </svg>
-            <div class="cm-brand" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M5 29 17 9l6 10 4-6 9 16H5Z"/><path d="m12 29 7-11 6 11"/></svg><span><strong>SEMITEC</strong><em class="cm-brand-sub"></em></span></div>
+            <div class="cm-brand" aria-hidden="true"><img src="assets/logo.png" alt=""><span><strong>SEMITEC</strong><em class="cm-brand-sub"></em></span></div>
             <div class="cm-die-label" aria-hidden="true"><strong>SEMITEC</strong><span>EDUCATION · SCIENCE · TECHNOLOGY</span></div>
             <div class="cm-blocks"></div>
             <div class="cm-under">${underHTML()}</div>

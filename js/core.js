@@ -34,7 +34,7 @@
 
   /* ---------- small helpers shared by every file ---------- */
   ST.pick = v => Array.isArray(v) ? v[state.lang === 'hy' ? 1 : 0] : (v ?? '');
-  ST.text = key => ST.pick(SITE_CONTENT.ui[key]);
+  ST.text = key => ST.pick(SITE_CONTENT.ui[key]).replace('{currentYear}', new Date().getFullYear());
   ST.pad = n => String(n).padStart(2, '0');
   ST.clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
   ST.lerp = (a, b, t) => a + (b - a) * t;
@@ -54,7 +54,7 @@
   /* section/card: a card on a section's main road (About) */
   ST.isShowcase = p => { const sec = p.length === 2 && sections.find(s => s.id === p[0]); return !!sec && [...(sec.showcase || []), ...(sec.cells || [])].some(c => c.id === p[1]); };
   ST.readHash = () => {
-    try { const p = decodeURIComponent(location.hash.slice(1)).split('/').filter(Boolean); return ST.resolve(p) || ST.isShowcase(p) ? p : ['overview']; }
+    try { const aliases = { hero: 'overview', about: 'purpose', ecosystem: 'focus', directions: 'initiatives', participate: 'support', partnerships: 'support/partner', 'support-us': 'donate', future: 'impact', contact: 'support/contact', 'interactive-lab': 'initiatives/interactive-lab', audiences: 'people' }; const hash = decodeURIComponent(location.hash.slice(1)); const p = (aliases[hash] || hash).split('/').filter(Boolean); return ST.resolve(p) || ST.isShowcase(p) ? p : ['overview']; }
     catch (e) { return ['overview']; }
   };
   /* a tiny tween helper: ST.tween(ms, t => …) → Promise */

@@ -88,7 +88,7 @@
       <section class="ev-group" id="show-events-past"><p class="ev-head">${ST.esc(ST.text('evPast'))}${past.length ? ` <button type="button" class="ev-open" data-open-memory="gallery">${ST.esc(ST.text('openGallery'))} ↗</button>` : ''}</p>
         ${past.length ? `<div class="evc-row">${past.slice().reverse().map((e, k) => evCard(e, past.length - 1 - k, 'past')).join('')}</div>` : empty('evNonePast')}</section>
       <section class="ev-group" id="show-events-news"><p class="ev-head">${ST.esc(ST.text('evNews'))}</p>
-        <ol class="news-list">${news.map((n, k) => `<li><button type="button" data-news="${k}"><span class="nl-date">${ST.esc(ST.fmtNewsDate(n))}</span><strong>${ST.esc(ST.pick(n.title))}</strong><span class="nl-go" aria-hidden="true">↗</span></button></li>`).join('')}</ol></section>
+        <p class="sec-text">${ST.esc(ST.pick(SITE_CONTENT.feeds['news-feed'].intro))}</p>${news.length ? '' : empty('feedEmpty')}<ol class="news-list">${news.map((n, k) => `<li><button type="button" data-news="${k}"><span class="nl-date">${ST.esc(ST.fmtNewsDate(n))}</span><strong>${ST.esc(ST.pick(n.title))}</strong><span class="nl-go" aria-hidden="true">↗</span></button></li>`).join('')}</ol></section>
       <section class="ev-group ev-propose" id="show-events-propose"><p>${ST.esc(ST.text('evProposeNote'))}</p><a class="evc-btn" href="#support/idea">${ST.esc(ST.text('evPropose'))} →</a></section>
     </div>`;
   }
@@ -140,9 +140,14 @@
     return `<div class="choose story" id="choose"><div class="choose-pin">${ST.story.html('2d')}</div></div>`;
   }
   function render() {
+    // No API exists for these collections yet; render editorial copy and an honest empty state.
+    const feed = key => {
+      const f = SITE_CONTENT.feeds[key];
+      return `<div class="ev-group"><h3 class="ev-head">${ST.esc(ST.pick(f.title))}</h3><p class="sec-text">${ST.esc(ST.pick(f.intro))}</p><p class="evc-empty">${ST.esc(ST.text('feedEmpty'))}</p></div>`;
+    };
     const html = sections.map((s, i) => {
       const H = i === 0 ? 'h1' : 'h2';
-      const eyebrow = i === 0 ? ST.text('beginning') : ST.pick(s.label);
+      const eyebrow = s.eyebrow ? ST.pick(s.eyebrow) : i === 0 ? ST.text('beginning') : ST.pick(s.label);
       const items = (s.items || []).map((it, c) => `<li style="--c:${c}">${ST.esc(ST.pick(it))}</li>`).join('');
       const kids = (s.children || []);
       return `<section class="sec${i === 0 ? ' sec-hero' : ''}" id="${s.id}" data-index="${i}" aria-labelledby="h-${s.id}">
@@ -152,7 +157,12 @@
           <${H} class="sec-title" id="h-${s.id}">${title(ST.pick(s.title))}</${H}>
           <p class="sec-intro">${ST.esc(ST.pick(s.intro))}</p>
           ${(s.text || []).map(t => `<p class="sec-text">${ST.esc(ST.pick(t))}</p>`).join('')}
+          ${linksHTML(s.links, 'hero-actions')}
+          ${s.id === 'support' ? `<p class="sec-text">${ST.esc(ST.pick(SITE_CONTENT.brand.legalName))}</p>` : ''}
           ${showcaseHTML(s.showcase, s.id)}
+          ${s.id === 'initiatives' ? feed('programs-feed') + feed('resources-feed') : ''}
+          ${s.id === 'people' && !SITE_CONTENT.partners.length ? feed('partners-feed') : ''}
+          ${s.id === 'support' ? feed('opportunities-feed') : ''}
           ${i === 0 ? `<ul class="hero-tags">${items}</ul>
              <div class="hero-actions">
                <span class="hero-cue"><span class="scroll-mouse" aria-hidden="true"><i></i></span>${ST.esc(ST.text('scrollBegin'))}</span>

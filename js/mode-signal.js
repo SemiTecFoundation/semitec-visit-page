@@ -27,7 +27,7 @@ const mediaBoards=[];
 const retiredVisits=[],branchEntrances=[];
 let currentEntrance=null;
 const pick=value=>Array.isArray(value)?value[language==='hy'?1:0]:(value??'');
-const text=key=>pick(SITE_CONTENT.ui[key]);
+const text=key=>ST.text(key);
 const pathKey=path=>path.join('/');
 const labelFor=path=>{const r=resolveRoute(path);return r?pick(r.node.label||r.node.title):'';};
 function element(tag,className,value){const e=document.createElement(tag);if(className)e.className=className;if(value!==undefined)e.textContent=value;return e;}

@@ -2,12 +2,20 @@
 
 The SemiTec Foundation website: one page with a 2D reading view and a 3D journey. Open `index.html`, or the live preview at https://semitecfoundation.github.io/semitec-visit-page/. Open items that need a server or real content are in **[TODO.md](TODO.md)**.
 
-## Content source (Oct 2026)
+## Static content integration (November 2026)
+
+The bilingual editorial source is `semitec-static-website-content.md`. Its copy is integrated into `content.js` using the existing sections, cards, 2D reading view and 3D journey. The four Aragats pillars remain in Focus; the six charter directions are separate cards in Initiatives. Existing section and legacy program URLs are retained. The draft's section names also resolve as hash aliases.
+
+News, events, partners and archive records have no static sample entries. Programs, resources and opportunities show the supplied evergreen introductions and empty states because their APIs do not exist yet. Future admin integration must supply published, localized records; this change does not implement a backend. Unverified Academy product descriptions and news records were removed from public static copy. The contact form and donation controls remain unavailable, and the unverified mailbox is not published. Copyright uses the current application year.
+
+Validation: `node validate.cjs` and JavaScript syntax checks pass. Browser layout verification remains pending because no connected browser was available.
+
+## Earlier content source (Oct 2026)
 
 All text comes from the document "SemiTec Foundation — Public Website Content & Structure".
 - Section ids are unchanged; long texts are paragraphs (`text`) in sections and path cards.
 - Partners, events and archive items are empty on purpose: add only confirmed records.
-- Programs are marked "Status: planned" until they start. **SemiTec Academy** (Programs → SemiTec Academy, with the app, learning materials and templates) is available: its links (`links: [{label, href}]` on a path) and its three product cards (`showcase: [{title, intro, details, items, links, media}]`: one row of three cards in 2D that lift on hover; in 3D, text boards that come one after another along the loop, starting just after the point where a selected path arrives). Clicking a card in either view opens it large: a Details tab, one tab per picture (`gallery`), arrows, and its links. In 3D the reading panel of a path shows the same paragraphs (`text`) as 2D open the release page, the presentation and the GitHub repositories. Students and partners in Get Involved link to it too, and an "Academy ↗" link sits in the footer.
+- Program records are reserved for backend/admin publication. Existing cards still use `showcase: [{title, intro, details, items, links, media}]`; clicking a static editorial card opens its details and gallery in either view.
 - The contact form does not send yet; it says so on the page.
 - The Armenian text is a draft and needs a native review before publishing.
 
