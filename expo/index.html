@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SemiTec Foundation — Expo presentation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Noto+Sans+Armenian:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="css/expo.css">
+</head>
+<body>
+<canvas id="backdrop" aria-hidden="true"></canvas>
+
+<main id="stage" aria-live="polite">
+
+  <!-- 1 · INTRO -->
+  <section class="scene s-intro" data-duration="9000">
+    <svg class="logo-mark a" viewBox="0 0 40 40" aria-hidden="true" style="--anim:fade;--d:.1s">
+      <path class="draw" pathLength="1" d="M5 29 17 9l6 10 4-6 9 16H5Z" style="--d:.2s;--dur:2.2s"/>
+      <path class="draw gold" pathLength="1" d="m12 29 7-11 6 11" style="--d:1.2s;--dur:1.6s"/>
+    </svg>
+    <p class="kicker a" style="--d:1.6s" data-i18n="s1.kicker"></p>
+    <h1 class="words" data-i18n="s1.title" style="--d:2s"></h1>
+    <p class="sub a" style="--d:3.6s" data-i18n="s1.sub"></p>
+    <div class="scanline a" style="--anim:scan;--d:2.4s;--dur:3s"></div>
+  </section>
+
+  <!-- 2 · THE GAP -->
+  <section class="scene s-gap" data-chapter="labs" data-duration="11000">
+    <p class="kicker a" data-i18n="s2.kicker"></p>
+    <h2 class="words small" data-i18n="s2.title" style="--d:.3s"></h2>
+    <svg class="gap-art" viewBox="0 0 1600 420" aria-hidden="true">
+      <defs>
+        <linearGradient id="cliff" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#16343a"/><stop offset="1" stop-color="#071419" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <g class="a" style="--anim:left;--d:1.4s">
+        <path d="M0 200 H500 L460 420 H0 Z" fill="url(#cliff)" stroke="#397b80" stroke-width="2"/>
+        <text x="60" y="270" class="t-big" data-i18n="s2.left"></text>
+        <text x="60" y="314" class="t-small" data-i18n="s2.leftSub"></text>
+      </g>
+      <g class="a" style="--anim:right;--d:1.6s">
+        <path d="M1100 200 H1600 V420 H1140 Z" fill="url(#cliff)" stroke="#397b80" stroke-width="2"/>
+        <text x="1540" y="270" class="t-big" text-anchor="end" data-i18n="s2.right"></text>
+        <text x="1540" y="314" class="t-small" text-anchor="end" data-i18n="s2.rightSub"></text>
+      </g>
+      <g class="planks">
+        <rect class="a" x="510" y="186" width="62" height="22" rx="4" style="--anim:drop;--d:3.0s"/>
+        <rect class="a" x="584" y="186" width="62" height="22" rx="4" style="--anim:drop;--d:3.15s"/>
+        <rect class="a" x="658" y="186" width="62" height="22" rx="4" style="--anim:drop;--d:3.3s"/>
+        <rect class="a" x="732" y="186" width="62" height="22" rx="4" style="--anim:drop;--d:3.45s"/>
+        <rect class="a" x="806" y="186" width="62" height="22" rx="4" style="--anim:drop;--d:3.6s"/>
+        <rect class="a" x="880" y="186" width="62" height="22" rx="4" style="--anim:drop;--d:3.75s"/>
+        <rect class="a" x="954" y="186" width="62" height="22" rx="4" style="--anim:drop;--d:3.9s"/>
+        <rect class="a" x="1028" y="186" width="62" height="22" rx="4" style="--anim:drop;--d:4.05s"/>
+      </g>
+      <path class="draw" pathLength="1" d="M510 166 Q800 76 1090 166" fill="none" stroke="#eac883" stroke-width="3" style="--d:4.3s;--dur:1.4s"/>
+      <text class="a t-bridge" x="800" y="96" text-anchor="middle" style="--anim:fade;--d:5s" data-i18n="s2.bridge"></text>
+      <circle class="pulse-dot" cx="0" cy="196" r="9"/>
+    </svg>
+    <p class="note a" style="--d:6s" data-i18n="s2.note"></p>
+  </section>
+
+  <!-- 3 · PURPOSE -->
+  <section class="scene s-purpose" data-duration="11000">
+    <p class="kicker a" data-i18n="s3.kicker"></p>
+    <h2 class="words" data-i18n="s3.title" style="--d:.3s"></h2>
+    <div class="pillars">
+      <svg class="pillar-link" viewBox="0 0 1660 40" preserveAspectRatio="none" aria-hidden="true">
+        <path class="draw flowline" pathLength="1" d="M0 20 H1660" style="--d:1.2s;--dur:2s"/>
+      </svg>
+      <article class="card a" style="--anim:rise;--d:1.4s">
+        <svg class="icon" viewBox="0 0 64 64" aria-hidden="true"><rect x="8" y="34" width="48" height="18" rx="3"/><rect x="16" y="12" width="32" height="22" rx="3"/><path d="M24 52v6M40 52v6M22 20h20M22 26h12"/></svg>
+        <h3 data-i18n="s3.p1"></h3><p data-i18n="s3.p1t"></p>
+      </article>
+      <article class="card a" style="--anim:rise;--d:2.2s">
+        <svg class="icon" viewBox="0 0 64 64" aria-hidden="true"><path d="M10 14h18a6 6 0 0 1 6 6v32a5 5 0 0 0-5-5H10Z"/><path d="M54 14H40a6 6 0 0 0-6 6v32a5 5 0 0 1 5-5h15Z"/></svg>
+        <h3 data-i18n="s3.p2"></h3><p data-i18n="s3.p2t"></p>
+      </article>
+      <article class="card a" style="--anim:rise;--d:3.0s">
+        <svg class="icon" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="22"/><circle cx="32" cy="32" r="12"/><circle cx="32" cy="32" r="3"/><path d="M32 4v8M32 52v8M4 32h8M52 32h8"/></svg>
+        <h3 data-i18n="s3.p3"></h3><p data-i18n="s3.p3t"></p>
+      </article>
+    </div>
+  </section>
+
+  <!-- 4 · LABORATORY -->
+  <section class="scene s-lab" data-chapter="labs" data-duration="12000">
+    <div class="col">
+      <p class="kicker a" data-i18n="s4.kicker"></p>
+      <h2 class="words" data-i18n="s4.title" style="--d:.3s"></h2>
+      <ul class="ticks">
+        <li class="a" style="--anim:left;--d:1.6s" data-i18n="s4.i1"></li>
+        <li class="a" style="--anim:left;--d:2.2s" data-i18n="s4.i2"></li>
+        <li class="a" style="--anim:left;--d:2.8s" data-i18n="s4.i3"></li>
+        <li class="a" style="--anim:left;--d:3.4s" data-i18n="s4.i4"></li>
+      </ul>
+    </div>
+    <div class="lab-room a" style="--anim:fade;--d:.8s">
+      <div class="benches">
+        <div class="bench a" style="--anim:pop;--d:1.4s"><i class="scr"></i><i class="pcb"></i></div>
+        <div class="bench a" style="--anim:pop;--d:1.6s"><i class="scr"></i><i class="pcb"></i></div>
+        <div class="bench a" style="--anim:pop;--d:1.8s"><i class="scr"></i><i class="pcb"></i></div>
+        <div class="bench a" style="--anim:pop;--d:2.0s"><i class="scr"></i><i class="pcb"></i></div>
+        <div class="bench a" style="--anim:pop;--d:2.2s"><i class="scr"></i><i class="pcb"></i></div>
+        <div class="bench a" style="--anim:pop;--d:2.4s"><i class="scr"></i><i class="pcb"></i></div>
+        <div class="bench a" style="--anim:pop;--d:2.6s"><i class="scr"></i><i class="pcb"></i></div>
+        <div class="bench a" style="--anim:pop;--d:2.8s"><i class="scr"></i><i class="pcb"></i></div>
+      </div>
+      <p class="room-label a" style="--anim:fade;--d:4s" data-i18n="s4.label"></p>
+    </div>
+  </section>
+
+  <!-- 5 · BOARD -->
+  <section class="scene s-board" data-chapter="labs" data-duration="15000">
+    <div class="board-head">
+      <p class="kicker a" data-i18n="s5.kicker"></p>
+      <h2 class="words" data-i18n="s5.title" style="--d:.3s"></h2>
+      <p class="sub a" style="--d:1.2s" data-i18n="s5.sub"></p>
+    </div>
+    <div class="board-wrap a" style="--anim:zoom;--d:.6s;--dur:1.6s"><div class="board-slot"></div></div>
+    <div class="specs">
+      <div class="spec a" style="--anim:rise;--d:3.2s"><b class="count" data-to="154" data-suffix="K" data-delay="3.4"></b><span data-i18n="s5.k1"></span></div>
+      <div class="spec a" style="--anim:rise;--d:3.5s"><b class="count" data-to="71" data-suffix="K" data-delay="3.7"></b><span data-i18n="s5.k2"></span></div>
+      <div class="spec a" style="--anim:rise;--d:3.8s"><b class="count" data-to="360" data-delay="4.0"></b><span data-i18n="s5.k3"></span></div>
+      <div class="spec a" style="--anim:rise;--d:4.1s"><b class="count" data-to="7.6" data-dec="1" data-suffix=" Mb" data-delay="4.3"></b><span data-i18n="s5.k4"></span></div>
+      <div class="spec a" style="--anim:rise;--d:4.4s"><b class="count" data-to="4" data-delay="4.6"></b><span data-i18n="s5.k5"></span></div>
+      <div class="spec a" style="--anim:rise;--d:4.7s"><b>4–8 GB</b><span data-i18n="s5.k6"></span></div>
+    </div>
+    <p class="io a" style="--anim:fade;--d:6s" data-i18n="s5.io"></p>
+    <p class="note a" style="--d:8s" data-i18n="s5.note"></p>
+  </section>
+
+  <!-- 6 · BOARD TOUR -->
+  <section class="scene s-tour" data-chapter="labs" data-duration="38000">
+    <div class="tour-side">
+      <p class="kicker a" data-i18n="tour.kicker"></p>
+      <div class="tour-card a" style="--anim:left;--d:.6s">
+        <p class="tour-num"><b>01</b> / 12</p>
+        <h2 class="tour-name"></h2>
+        <p class="tour-text"></p>
+        <div class="tour-bar"><i></i></div>
+      </div>
+    </div>
+    <div class="tour-view a" style="--anim:zoom;--d:.2s;--dur:1.4s">
+      <div class="tour-cam"><div class="board-slot tour-board"></div></div>
+    </div>
+  </section>
+
+  <!-- 7 · INSIDE THE FPGA -->
+  <section class="scene s-zoom" data-chapter="labs" data-duration="33000">
+    <div class="zoom-side">
+      <p class="kicker a" data-i18n="f.kicker"></p>
+      <h2 class="words" data-i18n="f.title" style="--d:.3s"></h2>
+      <ol class="crumbs a" style="--anim:fade;--d:1s">
+        <li data-i18n="f.l0"></li><li data-i18n="f.l1"></li><li data-i18n="f.l2"></li>
+        <li data-i18n="f.l3"></li><li data-i18n="f.l4"></li><li data-i18n="f.l5"></li>
+      </ol>
+      <p class="zoom-text"></p>
+      <p class="zoom-note" data-i18n="f.note"></p>
+    </div>
+    <div class="zoom-view a" style="--anim:fade;--d:.2s">
+      <!-- L0 package -->
+      <div class="zl" style="--ox:50%;--oy:50%">
+        <svg viewBox="0 0 1000 800">
+          <defs><linearGradient id="zlid" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d8dcdf"/><stop offset=".55" stop-color="#9ea7ac"/><stop offset="1" stop-color="#cfd4d7"/></linearGradient>
+            <pattern id="zball" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="4" fill="#c9a54e"/></pattern></defs>
+          <rect x="230" y="130" width="540" height="540" rx="26" fill="#173a31" stroke="#2f6a5a" stroke-width="3"/>
+          <rect x="246" y="146" width="508" height="508" rx="20" fill="url(#zball)" opacity=".35"/>
+          <rect x="320" y="220" width="360" height="360" rx="16" fill="url(#zlid)" stroke="#6d777c" stroke-width="2"/>
+          <text x="500" y="378" class="zt-big">XCZU3EG</text>
+          <text x="500" y="420" class="zt-mid">-2SFVC784E</text>
+          <text x="500" y="470" class="zt-sm">Zynq UltraScale+ MPSoC</text>
+          <circle cx="345" cy="245" r="7" fill="#6d777c"/>
+        </svg>
+      </div>
+      <!-- L1 die: PS + PL -->
+      <div class="zl" style="--ox:76.5%;--oy:40%">
+        <svg viewBox="0 0 1000 800">
+          <rect x="90" y="50" width="820" height="700" rx="10" class="z-die"/>
+          <rect x="110" y="70" width="290" height="660" rx="8" class="z-psr"/>
+          <text x="255" y="108" class="zh">PS</text>
+          <rect x="130" y="130" width="250" height="170" rx="6" class="z-sub"/><text x="255" y="156" class="zs">APU</text>
+          <rect x="146" y="170" width="104" height="54" rx="4" class="z-core"/><text x="198" y="204" class="zc">A53</text>
+          <rect x="260" y="170" width="104" height="54" rx="4" class="z-core"/><text x="312" y="204" class="zc">A53</text>
+          <rect x="146" y="232" width="104" height="54" rx="4" class="z-core"/><text x="198" y="266" class="zc">A53</text>
+          <rect x="260" y="232" width="104" height="54" rx="4" class="z-core"/><text x="312" y="266" class="zc">A53</text>
+          <rect x="130" y="316" width="120" height="96" rx="6" class="z-sub"/><text x="190" y="358" class="zs">RPU</text><text x="190" y="384" class="zs2">2× R5F</text>
+          <rect x="260" y="316" width="120" height="96" rx="6" class="z-sub"/><text x="320" y="358" class="zs">GPU</text><text x="320" y="384" class="zs2">Mali-400</text>
+          <rect x="130" y="428" width="250" height="80" rx="6" class="z-sub"/><text x="255" y="476" class="zs">DDR4 controller</text>
+          <rect x="130" y="524" width="250" height="80" rx="6" class="z-sub"/><text x="255" y="572" class="zs">USB · SD · UART · DP</text>
+          <rect x="130" y="620" width="250" height="90" rx="6" class="z-sub"/><text x="255" y="672" class="zs">PMU · CSU</text>
+          <rect x="420" y="70" width="470" height="660" rx="8" class="z-plr"/>
+          <text x="655" y="58" class="zh2">PL</text>
+          <g class="z-crs"></g>
+        </svg>
+      </div>
+      <!-- L2 clock region (columns are generated) -->
+      <div class="zl" style="--ox:40%;--oy:36%">
+        <svg viewBox="0 0 1000 800"><g class="z-cols"></g></svg>
+      </div>
+      <!-- L3 sites (generated) -->
+      <div class="zl" style="--ox:31%;--oy:42%">
+        <svg viewBox="0 0 1000 800"><g class="z-sites"></g></svg>
+      </div>
+      <!-- L4 BELs in a slice (generated) -->
+      <div class="zl" style="--ox:50%;--oy:50%">
+        <svg viewBox="0 0 1000 800"><g class="z-bels"></g></svg>
+      </div>
+      <!-- L5 DSP48E2 + RAMB36E2 -->
+      <div class="zl" style="--ox:50%;--oy:50%">
+        <svg viewBox="0 0 1000 800">
+          <text x="250" y="70" class="zh3">DSP48E2</text><text x="250" y="100" class="zs2">× 360 · XCZU3EG</text>
+          <rect x="40" y="130" width="420" height="560" rx="14" class="z-dsp"/>
+          <g class="z-io"><text x="60" y="200">A · 30</text><text x="60" y="290">D · 27</text><text x="60" y="420">B · 18</text><text x="60" y="560">C · 48</text></g>
+          <rect x="150" y="210" width="120" height="90" rx="8" class="z-unit"/><text x="210" y="250" class="zu">Pre-adder</text><text x="210" y="276" class="zu2">27-bit</text>
+          <rect x="150" y="360" width="120" height="110" rx="8" class="z-unit"/><text x="210" y="410" class="zu">Multiplier</text><text x="210" y="436" class="zu2">27 × 18</text>
+          <rect x="300" y="300" width="130" height="190" rx="8" class="z-unit hot"/><text x="365" y="384" class="zu">ALU</text><text x="365" y="410" class="zu2">48-bit</text>
+          <rect x="300" y="540" width="130" height="80" rx="8" class="z-unit"/><text x="365" y="576" class="zu">Pattern</text><text x="365" y="600" class="zu2">detector</text>
+          <g class="z-wire"><path d="M110 195 H130 V250 H150"/><path d="M110 285 H150"/><path d="M270 255 H285 V390 H150 M270 415 H300"/><path d="M110 415 H150"/><path d="M110 555 H280 V460 H300"/><path d="M430 395 H455"/><path d="M365 490 V540"/></g>
+          <text x="470" y="400" class="zio">P · 48</text>
+          <circle r="8" class="z-pulse" style="offset-path:path('M110 195 H130 V250 H150 H270 H285 V395 H300 H430 H470')"/>
+          <text x="750" y="70" class="zh3">RAMB36E2</text><text x="750" y="100" class="zs2">× 216 · 7.6 Mb</text>
+          <rect x="560" y="130" width="380" height="560" rx="14" class="z-bram"/>
+          <rect x="600" y="170" width="300" height="230" rx="8" class="z-half"/><text x="750" y="276" class="zu">RAMB18E2</text><text x="750" y="304" class="zu2">18 Kb · upper</text>
+          <rect x="600" y="420" width="300" height="230" rx="8" class="z-half"/><text x="750" y="526" class="zu">RAMB18E2</text><text x="750" y="554" class="zu2">18 Kb · lower</text>
+          <g class="z-io"><text x="575" y="724">Port A</text><text x="860" y="724">Port B</text></g>
+          <g class="z-bits"></g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 · HANDS-ON FLOW -->
+  <section class="scene s-flow" data-chapter="library" data-duration="14000">
+    <p class="kicker a" data-i18n="s6.kicker"></p>
+    <h2 class="words" data-i18n="s6.title" style="--d:.3s"></h2>
+    <div class="pipeline">
+      <div class="rail"><i class="a" style="--anim:grow;--d:1.2s;--dur:6s;--ease:linear"></i></div>
+      <div class="step a" style="--anim:pop;--d:1.2s"><b>1</b><h3 data-i18n="s6.a"></h3><p data-i18n="s6.at"></p></div>
+      <div class="step a" style="--anim:pop;--d:2.7s"><b>2</b><h3 data-i18n="s6.b"></h3><p data-i18n="s6.bt"></p></div>
+      <div class="step a" style="--anim:pop;--d:4.2s"><b>3</b><h3 data-i18n="s6.c"></h3><p data-i18n="s6.ct"></p></div>
+      <div class="step a" style="--anim:pop;--d:5.7s"><b>4</b><h3 data-i18n="s6.d"></h3><p data-i18n="s6.dt"></p></div>
+      <div class="step a" style="--anim:pop;--d:7.2s"><b>5</b><h3 data-i18n="s6.e"></h3><p data-i18n="s6.et"></p></div>
+    </div>
+    <div class="flow-bottom">
+      <div class="code a" style="--anim:rise;--d:1.4s">
+        <div class="code-bar"><i></i><i></i><i></i><span>blink.sv</span></div>
+        <pre class="type" data-delay="1.8" data-cps="34">module blink (
+  input  logic clk,
+  input  logic rst_n,
+  output logic led
+);
+  logic [26:0] count;
+
+  always_ff @(posedge clk or negedge rst_n)
+    if (!rst_n) count &lt;= '0;
+    else        count &lt;= count + 1'b1;
+
+  assign led = count[26];
+endmodule</pre>
+      </div>
+      <div class="wave a" style="--anim:fade;--d:3.4s">
+        <svg viewBox="0 0 520 170" aria-hidden="true">
+          <text x="0" y="34">clk</text><path class="wv clk" d="M70 44 h12 v-24 h12 v24 h12 v-24 h12 v24 h12 v-24 h12 v24 h12 v-24 h12 v24 h12 v-24 h12 v24 h12 v-24 h12 v24 h12 v-24 h12 v24 h12 v-24 h12 v24 h12 v-24 h12 v24 h12 v-24 h12 v24 h12 v-24 h12 v24 h12 v-24 h12 v24 h12 v-24 h12 v24"/>
+          <text x="0" y="94">count</text><path class="wv bus" d="M70 84 h70 l6 -10 h60 l6 10 h60 l6 -10 h60 l6 10 h60 l6 -10 h80 M70 84 h70 l6 10 h60 l6 -10 h60 l6 10 h60 l6 -10 h60 l6 10 h80"/>
+          <text x="0" y="154">led</text><path class="wv led" d="M70 164 h180 v-24 h200 v24 h50"/>
+        </svg>
+      </div>
+      <div class="mini-board a" style="--anim:zoom;--d:6.6s">
+        <div class="mini-leds"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <p data-i18n="s6.live"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 · TOOLCHAIN -->
+  <section class="scene s-tools" data-chapter="library" data-duration="15000">
+    <p class="kicker a" data-i18n="t.kicker"></p>
+    <h2 class="words" data-i18n="t.title" style="--d:.3s"></h2>
+    <div class="tools">
+      <article class="tool a" style="--anim:rise;--d:1.2s">
+        <div class="tool-head"><svg class="ticon" viewBox="0 0 48 48" aria-hidden="true"><rect x="12" y="12" width="24" height="24" rx="3"/><path d="M18 6v6M24 6v6M30 6v6M18 36v6M24 36v6M30 36v6M6 18h6M6 24h6M6 30h6M36 18h6M36 24h6M36 30h6"/></svg>
+          <div><h3>Vivado</h3><p data-i18n="t.v"></p></div></div>
+        <ul><li data-i18n="t.v1"></li><li data-i18n="t.v2"></li><li data-i18n="t.v3"></li></ul>
+      </article>
+      <article class="tool a" style="--anim:rise;--d:1.8s">
+        <div class="tool-head"><svg class="ticon" viewBox="0 0 48 48" aria-hidden="true"><path d="M17 12 7 24l10 12M31 12l10 12-10 12M27 8l-6 32"/></svg>
+          <div><h3>Vitis</h3><p data-i18n="t.s"></p></div></div>
+        <ul><li data-i18n="t.s1"></li><li data-i18n="t.s2"></li><li data-i18n="t.s3"></li></ul>
+      </article>
+      <article class="tool a" style="--anim:rise;--d:2.4s">
+        <div class="tool-head"><svg class="ticon" viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="8" width="32" height="32" rx="5"/><path d="M14 18h6M14 24h20M14 30h14"/><circle cx="34" cy="18" r="2.5"/></svg>
+          <div><h3>PYNQ · Jupyter</h3><p data-i18n="t.p"></p></div></div>
+        <ul><li data-i18n="t.p1"></li><li data-i18n="t.p2"></li><li data-i18n="t.p3"></li></ul>
+      </article>
+    </div>
+    <div class="bd a" style="--anim:fade;--d:3.4s">
+      <p class="bd-title" data-i18n="t.bd"></p>
+      <svg viewBox="0 0 1660 230" aria-hidden="true">
+        <g class="bd-wires">
+          <path class="draw" pathLength="1" d="M330 115 H450" style="--d:4.4s"/>
+          <path class="draw" pathLength="1" d="M710 115 H760 V45 H860" style="--d:4.8s"/>
+          <path class="draw" pathLength="1" d="M710 115 H860" style="--d:5s"/>
+          <path class="draw" pathLength="1" d="M710 115 H760 V185 H860" style="--d:5.2s"/>
+          <path class="draw" pathLength="1" d="M1160 185 H1260 V215 H170 V170" style="--d:5.8s;--dur:2s"/>
+        </g>
+        <g class="bd-flow">
+          <path d="M330 115 H450"/><path d="M710 115 H760 V45 H860"/><path d="M710 115 H860"/><path d="M710 115 H760 V185 H860"/><path d="M1160 185 H1260 V215 H170 V170"/>
+        </g>
+        <g class="bd-block a" style="--anim:pop;--d:3.8s"><rect x="10" y="60" width="320" height="110" rx="12"/><text x="170" y="108">Zynq UltraScale+</text><text x="170" y="136" class="sm">Processing System</text></g>
+        <g class="bd-block a" style="--anim:pop;--d:4.2s"><rect x="450" y="75" width="260" height="80" rx="12"/><text x="580" y="122">AXI Interconnect</text></g>
+        <g class="bd-block ip a" style="--anim:pop;--d:4.6s"><rect x="860" y="20" width="300" height="52" rx="10"/><text x="1010" y="53">sensor_if · custom IP</text></g>
+        <g class="bd-block ip a" style="--anim:pop;--d:4.8s"><rect x="860" y="90" width="300" height="52" rx="10"/><text x="1010" y="123">axi_gpio · LEDs</text></g>
+        <g class="bd-block ip a" style="--anim:pop;--d:5s"><rect x="860" y="160" width="300" height="52" rx="10"/><text x="1010" y="193">axi_dma · data to DDR4</text></g>
+        <g class="bd-block out a" style="--anim:pop;--d:6.4s"><rect x="1330" y="60" width="320" height="110" rx="12"/><text x="1490" y="108">bitstream + XSA</text><text x="1490" y="136" class="sm">→ Vitis · PYNQ</text></g>
+        <path class="draw bd-arrow" pathLength="1" d="M1160 46 H1250 V115 H1330" style="--d:6.2s"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- 10 · PS + PL, RESULTS ON THE PC -->
+  <section class="scene s-pspl" data-chapter="projects" data-duration="17000">
+    <div class="pspl-head">
+      <p class="kicker a" data-i18n="z.kicker"></p>
+      <h2 class="words" data-i18n="z.title" style="--d:.3s"></h2>
+    </div>
+    <div class="zynq a" style="--anim:zoom;--d:.8s">
+      <svg viewBox="0 0 820 640" aria-hidden="true">
+        <rect class="z-chip draw" pathLength="1" x="20" y="20" width="780" height="470" rx="18" style="--d:1s;--dur:1.6s"/>
+        <text x="410" y="56" class="z-name">AMD Zynq UltraScale+ · XCZU3EG</text>
+        <g class="a" style="--anim:left;--d:1.6s">
+          <rect class="z-ps" x="50" y="80" width="300" height="380" rx="14"/>
+          <text x="200" y="116" class="z-h">PS</text><text x="200" y="140" class="z-s" data-i18n="z.ps"></text>
+          <rect class="z-core" x="80" y="160" width="110" height="70" rx="8"/><text x="135" y="201" class="z-c">A53</text>
+          <rect class="z-core" x="210" y="160" width="110" height="70" rx="8"/><text x="265" y="201" class="z-c">A53</text>
+          <rect class="z-core" x="80" y="244" width="110" height="70" rx="8"/><text x="135" y="285" class="z-c">A53</text>
+          <rect class="z-core" x="210" y="244" width="110" height="70" rx="8"/><text x="265" y="285" class="z-c">A53</text>
+          <rect class="z-row" x="80" y="332" width="240" height="46" rx="8"/><text x="200" y="361" class="z-r">DDR4 controller</text>
+          <rect class="z-row" x="80" y="392" width="240" height="46" rx="8"/><text x="200" y="421" class="z-r">USB · Ethernet · UART</text>
+        </g>
+        <g class="a" style="--anim:right;--d:1.9s">
+          <rect class="z-pl" x="470" y="80" width="300" height="380" rx="14"/>
+          <text x="620" y="116" class="z-h">PL</text><text x="620" y="140" class="z-s" data-i18n="z.pl"></text>
+          <rect class="z-blk" x="500" y="168" width="240" height="70" rx="8"/><text x="620" y="209" class="z-r" data-i18n="z.b1"></text>
+          <rect class="z-blk" x="500" y="258" width="240" height="70" rx="8"/><text x="620" y="299" class="z-r" data-i18n="z.b2"></text>
+          <rect class="z-blk" x="500" y="348" width="240" height="70" rx="8"/><text x="620" y="389" class="z-r" data-i18n="z.b3"></text>
+        </g>
+        <g class="z-axi a" style="--anim:fade;--d:2.8s">
+          <path d="M350 203 H470"/><path d="M350 293 H470"/><path d="M350 383 H470"/>
+          <text x="410" y="190">AXI</text><text x="410" y="280">AXI</text><text x="410" y="370">AXI</text>
+        </g>
+        <g class="z-out a" style="--anim:up;--d:3.4s">
+          <path d="M200 490 V540"/><path d="M620 490 V540"/>
+          <rect x="50" y="540" width="300" height="76" rx="12"/><text x="200" y="573" class="z-r">Ethernet · USB</text><text x="200" y="599" class="z-s" data-i18n="z.o1"></text>
+          <rect x="470" y="540" width="300" height="76" rx="12"/><text x="620" y="573" class="z-r">Mini DisplayPort</text><text x="620" y="599" class="z-s" data-i18n="z.o2"></text>
+        </g>
+      </svg>
+    </div>
+    <div class="monitor a" style="--anim:tilt-in;--d:1.4s;--dur:1.6s">
+      <div class="screen">
+        <div class="nb-bar"><i></i><i></i><i></i><span>sensor_lab.ipynb — Jupyter</span><b class="kernel">Python 3 (PYNQ)</b></div>
+        <div class="nb-cell"><span class="nb-in">In [1]:</span>
+<pre class="type" data-lang="py" data-delay="2.4" data-cps="44">from pynq import Overlay, allocate
+import matplotlib.pyplot as plt
+
+ol  = Overlay("sensor_lab.bit")    # load the PL design
+dma = ol.axi_dma
+buf = allocate(shape=(1024,), dtype="u2")
+
+dma.recvchannel.transfer(buf)      # PL → DDR4
+dma.recvchannel.wait()
+plt.plot(buf)                      # result on the PC</pre></div>
+        <div class="nb-out a" style="--anim:fade;--d:10.2s"><span class="nb-in">Out[1]:</span>
+          <svg viewBox="0 0 600 190" aria-hidden="true">
+            <g class="grid"><path d="M40 20 H590 M40 65 H590 M40 110 H590 M40 155 H590"/><path d="M40 10 V170 H590"/></g>
+            <path class="plot draw" pathLength="1" d="" style="--d:10.6s;--dur:2.6s;--ease:linear"/>
+          </svg>
+          <span class="live-tag"><i class="live"></i>live</span>
+        </div>
+      </div>
+      <div class="stand"></div>
+    </div>
+  </section>
+
+  <!-- 11 · LIVE DASHBOARDS -->
+  <section class="scene s-dash" data-chapter="projects" data-duration="21000">
+    <div class="dash-head">
+      <p class="kicker a" data-i18n="d.kicker"></p>
+      <h2 class="words" data-i18n="d.title" style="--d:.3s"></h2>
+      <p class="sub a" style="--d:1s" data-i18n="d.sub"></p>
+    </div>
+    <div class="dash-mon a" style="--anim:zoom;--d:.8s;--dur:1.4s">
+      <div class="dash-screen"><canvas class="dash" width="2400" height="1300"></canvas></div>
+      <div class="stand"></div>
+    </div>
+  </section>
+
+  <!-- 12 · SENSORS AND MEASUREMENT -->
+  <section class="scene s-measure" data-chapter="labs" data-duration="16000">
+    <p class="kicker a" data-i18n="m.kicker"></p>
+    <h2 class="words" data-i18n="m.title" style="--d:.3s"></h2>
+    <svg class="bench-art" viewBox="0 0 1660 600" aria-hidden="true">
+      <defs>
+        <clipPath id="scr"><rect x="1102" y="112" width="436" height="270" rx="6"/></clipPath>
+      </defs>
+      <!-- wires -->
+      <g class="wires">
+        <path class="draw" pathLength="1" d="M300 110 C420 110 420 300 560 300" style="--d:2.6s"/>
+        <path class="draw" pathLength="1" d="M300 250 C430 250 430 340 560 340" style="--d:2.8s"/>
+        <path class="draw" pathLength="1" d="M300 390 C430 390 430 380 560 380" style="--d:3s"/>
+        <path class="draw" pathLength="1" d="M300 530 C430 530 430 420 560 420" style="--d:3.2s"/>
+        <path class="draw" pathLength="1" d="M730 120 V240" style="--d:3.4s"/>
+        <path class="draw probe" pathLength="1" d="M900 330 C980 330 980 470 1080 470" style="--d:4.2s"/>
+        <path class="draw probe2" pathLength="1" d="M900 380 C1000 380 1000 520 1080 520" style="--d:4.4s"/>
+      </g>
+      <g class="sdots">
+        <circle r="6" style="offset-path:path('M300 110 C420 110 420 300 560 300');--sd:3.6s"/>
+        <circle r="6" style="offset-path:path('M300 250 C430 250 430 340 560 340');--sd:4.1s"/>
+        <circle r="6" style="offset-path:path('M300 390 C430 390 430 380 560 380');--sd:4.6s"/>
+        <circle r="6" style="offset-path:path('M300 530 C430 530 430 420 560 420');--sd:5.1s"/>
+        <circle r="6" class="gold" style="offset-path:path('M900 330 C980 330 980 470 1080 470');--sd:5.4s"/>
+      </g>
+      <!-- sensor modules -->
+      <g class="mod a" style="--anim:left;--d:1.2s"><rect x="40" y="70" width="260" height="80" rx="10"/><circle cx="84" cy="110" r="16"/><text x="118" y="104" class="mt" data-i18n="m.s1"></text><text x="118" y="128" class="ms">I²C · Pmod</text></g>
+      <g class="mod a" style="--anim:left;--d:1.4s"><rect x="40" y="210" width="260" height="80" rx="10"/><rect x="70" y="232" width="30" height="36" rx="4"/><text x="118" y="244" class="mt" data-i18n="m.s2"></text><text x="118" y="268" class="ms">SPI · Grove</text></g>
+      <g class="mod a" style="--anim:left;--d:1.6s"><rect x="40" y="350" width="260" height="80" rx="10"/><circle cx="72" cy="390" r="13"/><circle cx="104" cy="390" r="13"/><text x="128" y="384" class="mt" data-i18n="m.s3"></text><text x="128" y="408" class="ms">GPIO · Grove</text></g>
+      <g class="mod a" style="--anim:left;--d:1.8s"><rect x="40" y="490" width="260" height="80" rx="10"/><path d="M66 530 q10 -22 20 0 t20 0" class="mw"/><text x="128" y="524" class="mt" data-i18n="m.s4"></text><text x="128" y="548" class="ms">ADC · Pmod</text></g>
+      <g class="mod a" style="--anim:up;--d:2s"><rect x="620" y="40" width="220" height="80" rx="10"/><circle cx="660" cy="80" r="20"/><circle cx="660" cy="80" r="8"/><text x="696" y="74" class="mt">Camera</text><text x="696" y="98" class="ms">MIPI CSI</text></g>
+      <!-- board -->
+      <g class="mini-pcb a" style="--anim:pop;--d:.9s">
+        <rect x="560" y="240" width="340" height="230" rx="16"/>
+        <rect class="soc2" x="680" y="300" width="100" height="100" rx="8"/>
+        <text x="730" y="356" class="b-t">ZU3EG</text>
+        <text x="730" y="450" class="ms" text-anchor="middle">AUP-ZU3</text>
+        <g class="mleds"><circle cx="600" cy="440" r="6"/><circle cx="620" cy="440" r="6"/><circle cx="640" cy="440" r="6"/><circle cx="660" cy="440" r="6"/></g>
+      </g>
+      <!-- oscilloscope -->
+      <g class="scope a" style="--anim:right;--d:1.4s">
+        <rect class="body" x="1080" y="80" width="560" height="460" rx="20"/>
+        <rect class="scr" x="1102" y="112" width="436" height="270" rx="6"/>
+        <g class="grat"><path d="M1102 157 H1538 M1102 202 H1538 M1102 247 H1538 M1102 292 H1538 M1102 337 H1538 M1189 112 V382 M1276 112 V382 M1363 112 V382 M1450 112 V382"/></g>
+        <g clip-path="url(#scr)">
+          <path class="ch1" d="M1102 200 q27 -60 54 0 t54 0 t54 0 t54 0 t54 0 t54 0 t54 0 t54 0 t54 0 t54 0 t54 0 t54 0 t54 0 t54 0 t54 0 t54 0 t54 0 t54 0"/>
+          <path class="ch2" d="M1102 340 v-40 h27 v40 h81 v-40 h27 v40 h81 v-40 h27 v40 h81 v-40 h27 v40 h81 v-40 h27 v40 h81 v-40 h27 v40 h81 v-40 h27 v40 h81 v-40 h27 v40 h81"/>
+        </g>
+        <text x="1110" y="132" class="rd ch1t">CH1  1.00 kHz  3.30 Vpp</text>
+        <text x="1110" y="374" class="rd ch2t">CH2  PWM 25 %</text>
+        <g class="knobs"><circle cx="1580" cy="150" r="20"/><circle cx="1580" cy="220" r="20"/><circle cx="1580" cy="290" r="20"/><circle cx="1580" cy="360" r="14"/></g>
+        <g class="jacks"><circle cx="1150" cy="470" r="18"/><circle cx="1230" cy="470" r="18"/><circle cx="1310" cy="470" r="18"/><circle cx="1390" cy="470" r="18"/></g>
+        <text x="1150" y="514" class="ms" text-anchor="middle">CH1</text><text x="1230" y="514" class="ms" text-anchor="middle">CH2</text>
+        <text x="1500" y="476" class="ms" text-anchor="middle" data-i18n="m.scope"></text>
+      </g>
+    </svg>
+    <div class="instr">
+      <span class="a" style="--anim:pop;--d:5.2s" data-i18n="m.i1"></span>
+      <span class="a" style="--anim:pop;--d:5.4s" data-i18n="m.i2"></span>
+      <span class="a" style="--anim:pop;--d:5.6s" data-i18n="m.i3"></span>
+      <span class="a" style="--anim:pop;--d:5.8s" data-i18n="m.i4"></span>
+      <span class="a" style="--anim:pop;--d:6.0s" data-i18n="m.i5"></span>
+    </div>
+  </section>
+
+  <!-- 13 · PROJECT IDEAS -->
+  <section class="scene s-ideas" data-chapter="projects" data-duration="15000">
+    <p class="kicker a" data-i18n="x.kicker"></p>
+    <h2 class="words" data-i18n="x.title" style="--d:.3s"></h2>
+    <div class="ideas">
+      <article class="idea a" style="--anim:rise;--d:1.2s"><svg class="iicon" viewBox="0 0 64 64"><rect x="6" y="16" width="34" height="26" rx="4"/><circle cx="23" cy="29" r="7"/><path d="M40 24l16-8v26l-16-8"/><path class="scanl" d="M8 22h30"/></svg>
+        <h3 data-i18n="x.1"></h3><p data-i18n="x.1t"></p><em>MIPI · PL · DisplayPort</em></article>
+      <article class="idea a" style="--anim:rise;--d:1.5s"><svg class="iicon" viewBox="0 0 64 64"><path d="M6 50h52"/><path class="bar1" d="M14 50V34"/><path class="bar2" d="M26 50V22"/><path class="bar3" d="M38 50V28"/><path class="bar4" d="M50 50V14"/></svg>
+        <h3 data-i18n="x.2"></h3><p data-i18n="x.2t"></p><em>Sensors · AXI DMA · Jupyter</em></article>
+      <article class="idea a" style="--anim:rise;--d:1.8s"><svg class="iicon" viewBox="0 0 64 64"><path class="sine" d="M4 32 q7 -20 14 0 t14 0 t14 0 t14 0"/><path d="M4 46h56" class="dim"/></svg>
+        <h3 data-i18n="x.3"></h3><p data-i18n="x.3t"></p><em>DSP slices · Oscilloscope</em></article>
+      <article class="idea a" style="--anim:rise;--d:2.1s"><svg class="iicon" viewBox="0 0 64 64"><circle cx="32" cy="32" r="20"/><g class="rotor"><path d="M32 14v36M14 32h36"/></g><circle cx="32" cy="32" r="5"/></svg>
+        <h3 data-i18n="x.4"></h3><p data-i18n="x.4t"></p><em>PWM · Encoder · Logic analyzer</em></article>
+      <article class="idea a" style="--anim:rise;--d:2.4s"><svg class="iicon" viewBox="0 0 64 64"><path d="M8 20h18v24H8z"/><path d="M38 14h18v36H38z"/><path class="zap" d="M26 32h12"/><path d="M44 24l6 8-6 8"/></svg>
+        <h3 data-i18n="x.5"></h3><p data-i18n="x.5t"></p><em>Vitis HLS · PYNQ</em></article>
+      <article class="idea a" style="--anim:rise;--d:2.7s"><svg class="iicon" viewBox="0 0 64 64"><rect x="10" y="10" width="44" height="44" rx="4"/><path d="M10 21h44M10 32h44M10 43h44M21 10v44M32 10v44M43 10v44"/><rect class="cellx" x="33" y="22" width="9" height="9"/></svg>
+        <h3 data-i18n="x.6"></h3><p data-i18n="x.6t"></p><em>BIST · ECC · JTAG</em></article>
+    </div>
+  </section>
+
+  <!-- 14 · LAB GALLERY (plays only when photos are listed in GALLERY in js/content.js) -->
+  <section class="scene s-gallery" data-chapter="labs" data-duration="12000">
+    <div class="gal-stage"></div>
+    <div class="gal-cap">
+      <p class="kicker a" data-i18n="g.kicker"></p>
+      <h2 class="words" data-i18n="g.title" style="--d:.3s"></h2>
+    </div>
+  </section>
+
+  <!-- 15 · MATERIALS -->
+  <section class="scene s-materials" data-chapter="library" data-duration="13000">
+    <div class="col">
+      <p class="kicker a" data-i18n="s7.kicker"></p>
+      <h2 class="words" data-i18n="s7.title" style="--d:.3s"></h2>
+      <p class="sub a" style="--d:1.2s" data-i18n="s7.sub"></p>
+      <ol class="ladder">
+        <li class="a" style="--anim:left;--d:2.2s"><b data-i18n="s7.l1"></b><span data-i18n="s7.l1t"></span></li>
+        <li class="a" style="--anim:left;--d:2.8s"><b data-i18n="s7.l2"></b><span data-i18n="s7.l2t"></span></li>
+        <li class="a" style="--anim:left;--d:3.4s"><b data-i18n="s7.l3"></b><span data-i18n="s7.l3t"></span></li>
+      </ol>
+    </div>
+    <div class="shots">
+      <figure class="shot back a" style="--anim:tilt-in;--d:1s;--dur:1.6s"><img src="assets/lab.png" alt=""></figure>
+      <figure class="shot front a" style="--anim:tilt-in;--d:1.6s;--dur:1.6s"><img src="assets/training.png" alt="SemiTec Academy training screen"></figure>
+    </div>
+    <div class="pkg">
+      <p class="pkg-title a" style="--anim:fade;--d:4.6s" data-i18n="s7.pkg"></p>
+      <div class="chips">
+        <span class="a" style="--anim:pop;--d:5.0s">Memory Fundamentals</span>
+        <span class="a" style="--anim:pop;--d:5.2s">Memories and Their Faults</span>
+        <span class="a" style="--anim:pop;--d:5.4s">March Tests</span>
+        <span class="a" style="--anim:pop;--d:5.6s">BIST Foundations</span>
+        <span class="a" style="--anim:pop;--d:5.8s">MBIST Architecture</span>
+        <span class="a" style="--anim:pop;--d:6.0s">Test Access: JTAG and IJTAG</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 16 · PROJECTS -->
+  <section class="scene s-projects" data-chapter="projects" data-duration="13000">
+    <div class="col">
+      <p class="kicker a" data-i18n="s8.kicker"></p>
+      <h2 class="words" data-i18n="s8.title" style="--d:.3s"></h2>
+      <div class="levels">
+        <div class="lv a" style="--anim:rise;--d:1.4s;--h:34%"><i></i><span data-i18n="s8.lv1"></span></div>
+        <div class="lv a" style="--anim:rise;--d:1.8s;--h:54%"><i></i><span data-i18n="s8.lv2"></span></div>
+        <div class="lv a" style="--anim:rise;--d:2.2s;--h:76%"><i></i><span data-i18n="s8.lv3"></span></div>
+        <div class="lv a" style="--anim:rise;--d:2.6s;--h:100%"><i></i><span data-i18n="s8.lv4"></span></div>
+      </div>
+    </div>
+    <div class="examples">
+      <p class="ex-title a" style="--anim:fade;--d:3.4s" data-i18n="s8.ex"></p>
+      <article class="ex a" style="--anim:right;--d:3.8s"><em>AUP-ZU3</em><h3 data-i18n="s8.e1"></h3><p data-i18n="s8.t1"></p></article>
+      <article class="ex a" style="--anim:right;--d:4.4s"><em>AUP-ZU3</em><h3 data-i18n="s8.e2"></h3><p data-i18n="s8.t1"></p></article>
+      <article class="ex a" style="--anim:right;--d:5.0s"><em>AUP-ZU3</em><h3 data-i18n="s8.e3"></h3><p data-i18n="s8.t3"></p></article>
+    </div>
+  </section>
+
+  <!-- 17 · CYCLE -->
+  <section class="scene s-cycle" data-chapter="projects" data-duration="12000">
+    <div class="col">
+      <p class="kicker a" data-i18n="s9.kicker"></p>
+      <h2 class="words" data-i18n="s9.title" style="--d:.3s"></h2>
+      <div class="now a" style="--anim:rise;--d:5s">
+        <p class="now-title"><i class="live"></i><span data-i18n="s9.now"></span></p>
+        <ul class="ticks small">
+          <li data-i18n="s9.w1"></li><li data-i18n="s9.w2"></li><li data-i18n="s9.w3"></li>
+        </ul>
+      </div>
+    </div>
+    <div class="cycle a" style="--anim:zoom;--d:.8s">
+      <svg viewBox="0 0 640 640" aria-hidden="true">
+        <circle class="ring" cx="320" cy="320" r="230"/>
+        <circle class="ring draw" pathLength="1" cx="320" cy="320" r="230" style="--d:1s;--dur:2s"/>
+      </svg>
+      <div class="orbit"><i></i></div>
+      <div class="node n1 a" style="--anim:pop;--d:1.2s"><b>1</b><span data-i18n="s9.n1"></span></div>
+      <div class="node n2 a" style="--anim:pop;--d:1.7s"><b>2</b><span data-i18n="s9.n2"></span></div>
+      <div class="node n3 a" style="--anim:pop;--d:2.2s"><b>3</b><span data-i18n="s9.n3"></span></div>
+      <div class="node n4 a" style="--anim:pop;--d:2.7s"><b>4</b><span data-i18n="s9.n4"></span></div>
+    </div>
+  </section>
+
+  <!-- 18 · ROADMAP -->
+  <section class="scene s-road" data-duration="12000">
+    <p class="kicker a" data-i18n="s10.kicker"></p>
+    <h2 class="words" data-i18n="s10.title" style="--d:.3s"></h2>
+    <div class="road">
+      <div class="road-line"><i class="a" style="--anim:grow;--d:1.2s;--dur:5s;--ease:linear"></i></div>
+      <div class="stop up a" style="--anim:pop;--d:1.4s"><i class="dot now-dot"></i><span data-i18n="s10.r1"></span></div>
+      <div class="stop dn a" style="--anim:pop;--d:2.6s"><i class="dot"></i><span data-i18n="s10.r2"></span></div>
+      <div class="stop up a" style="--anim:pop;--d:3.8s"><i class="dot"></i><span data-i18n="s10.r3"></span></div>
+      <div class="stop dn a" style="--anim:pop;--d:5.0s"><i class="dot"></i><span data-i18n="s10.r4"></span></div>
+      <div class="stop up a" style="--anim:pop;--d:6.2s"><i class="dot"></i><span data-i18n="s10.r5"></span></div>
+    </div>
+  </section>
+
+  <!-- 19 · JOIN -->
+  <section class="scene s-join" data-duration="12000">
+    <svg class="logo-mark small a" viewBox="0 0 40 40" aria-hidden="true" style="--anim:fade">
+      <path class="draw" pathLength="1" d="M5 29 17 9l6 10 4-6 9 16H5Z" style="--d:.1s;--dur:1.6s"/>
+      <path class="draw gold" pathLength="1" d="m12 29 7-11 6 11" style="--d:.8s;--dur:1.2s"/>
+    </svg>
+    <p class="kicker a" style="--d:.6s" data-i18n="s11.kicker"></p>
+    <h1 class="words" data-i18n="s11.title" style="--d:.9s"></h1>
+    <div class="join">
+      <article class="a" style="--anim:rise;--d:2.2s"><h3 data-i18n="s11.c1"></h3><p data-i18n="s11.c1t"></p></article>
+      <article class="a" style="--anim:rise;--d:2.8s"><h3 data-i18n="s11.c2"></h3><p data-i18n="s11.c2t"></p></article>
+      <article class="a" style="--anim:rise;--d:3.4s"><h3 data-i18n="s11.c3"></h3><p data-i18n="s11.c3t"></p></article>
+    </div>
+    <p class="brandline a" style="--anim:fade;--d:4.6s" data-i18n="s11.tag"></p>
+  </section>
+
+  <!-- AUP-ZU3 board drawing (component layout follows the real board). Cloned into every .board-slot. -->
+  <template id="board-tpl">
+    <svg class="aup" viewBox="0 0 994 910" aria-label="AUP-ZU3 board">
+      <defs>
+        <linearGradient id="bmetal" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e3e6e8"/><stop offset=".5" stop-color="#9aa3a8"/><stop offset="1" stop-color="#d3d8db"/></linearGradient>
+        <linearGradient id="bpcb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#16242d"/><stop offset="1" stop-color="#0b151c"/></linearGradient>
+        <pattern id="bfins" width="12" height="12" patternUnits="userSpaceOnUse"><rect width="12" height="12" fill="#23292d"/><rect width="5" height="12" fill="#0d1013"/></pattern>
+        <pattern id="bpins" width="14" height="18" patternUnits="userSpaceOnUse"><rect x="2" y="4" width="10" height="10" rx="2" fill="#d4b464"/></pattern>
+      </defs>
+      <rect class="b-pcb" fill="url(#bpcb)" x="6" y="12" width="982" height="890" rx="26"/>
+      <g class="b-trace">
+        <path d="M605 430 H640"/><path d="M605 500 H640"/><path d="M500 384 V300 H560 V215"/><path d="M450 384 V250 H386 V220"/>
+        <path d="M400 470 H260 V530"/><path d="M400 420 H80 V290"/><path d="M500 556 V700 H480 V722"/><path d="M560 556 V640 H740 V725"/>
+        <path d="M610 540 H860 V438"/><path d="M610 520 H940 V526"/><path d="M400 520 H100 V560"/><path d="M450 556 V680 H215 V754"/>
+      </g>
+      <g class="b-hole"><circle cx="40" cy="46" r="15"/><circle cx="954" cy="46" r="15"/><circle cx="40" cy="870" r="15"/><circle cx="954" cy="870" r="15"/></g>
+      <!-- top edge connectors -->
+      <g class="b-conn">
+        <rect class="b-metal" fill="url(#bmetal)" x="128" y="0" width="70" height="80" rx="6"/><rect class="b-hole2" x="140" y="44" width="46" height="22" rx="3"/>
+        <rect class="b-metal" fill="url(#bmetal)" x="284" y="34" width="64" height="62" rx="16"/><rect class="b-hole2" x="297" y="56" width="38" height="18" rx="9"/>
+        <rect class="b-metal" fill="url(#bmetal)" x="409" y="34" width="64" height="62" rx="16"/><rect class="b-hole2" x="422" y="56" width="38" height="18" rx="9"/>
+        <rect class="b-metal" fill="url(#bmetal)" x="547" y="38" width="58" height="52" rx="14"/><rect class="b-hole2" x="558" y="56" width="36" height="16" rx="8"/>
+        <rect class="b-metal" fill="url(#bmetal)" x="706" y="40" width="100" height="94" rx="4"/><rect class="b-hole2" x="716" y="48" width="80" height="10" rx="2"/>
+        <rect class="b-metal" fill="url(#bmetal)" x="832" y="38" width="58" height="52" rx="14"/><rect class="b-hole2" x="843" y="56" width="36" height="16" rx="8"/>
+      </g>
+      <g class="b-silk">
+        <text x="232" y="62">DP TX</text><text x="316" y="116">USB 3.0</text><text x="441" y="116">USB 3.0</text>
+        <text x="576" y="106">PROG UART</text><text x="905" y="68">EXT PWR</text>
+        <text x="58" y="130">CAMERA</text><text x="46" y="304">MIC</text><text x="46" y="384">AUDIO IN</text><text x="46" y="464">AUDIO OUT</text>
+        <text x="235" y="498">FAN</text><text x="757" y="214">SD · BOOT · JTAG</text><text x="905" y="372">SERVOS</text><text x="930" y="368" class="v">JSTICK</text>
+        <text x="900" y="522">POT</text><text x="60" y="546">PMODB</text><text x="60" y="860">PMODA</text><text x="757" y="717">GROVE</text>
+        <text x="812" y="752">PS</text><text x="812" y="816">PL</text><text x="812" y="878">PL</text>
+        <text x="858" y="790">PS LEDS</text><text x="858" y="834">PS_PB</text><text x="930" y="900">RPI</text>
+        <text x="492" y="712">RGB LEDS</text><text x="215" y="746">BTN1</text><text x="295" y="746">BTN0</text><text x="215" y="832">BTN3</text><text x="295" y="832">BTN2</text>
+        <text x="682" y="370">DDR4</text><text x="958" y="124">ON</text><text x="958" y="230">OFF</text>
+      </g>
+      <text class="b-name" x="172" y="292">AUP-ZU3</text>
+      <!-- small chips and passives -->
+      <g class="b-chip">
+        <rect x="205" y="160" width="52" height="52" rx="4"/><rect x="350" y="176" width="46" height="46" rx="4"/><rect x="420" y="176" width="46" height="46" rx="4"/>
+        <rect x="548" y="140" width="72" height="72" rx="4"/><rect x="760" y="262" width="36" height="36" rx="3"/><rect x="836" y="104" width="44" height="44" rx="3"/>
+        <rect x="780" y="452" width="46" height="46" rx="3"/><rect x="270" y="320" width="40" height="40" rx="3"/>
+      </g>
+      <g class="b-ind">
+        <rect x="660" y="252" width="40" height="38" rx="4"/><rect x="710" y="254" width="40" height="38" rx="4"/><rect x="812" y="232" width="40" height="40" rx="4"/>
+        <rect x="812" y="292" width="40" height="40" rx="4"/><rect x="788" y="404" width="34" height="34" rx="4"/>
+      </g>
+      <g class="b-caps">
+        <rect x="372" y="346" width="22" height="12" transform="rotate(45 383 352)"/><rect x="392" y="330" width="22" height="12" transform="rotate(45 403 336)"/>
+        <rect x="604" y="330" width="22" height="12" transform="rotate(-45 615 336)"/><rect x="622" y="346" width="22" height="12" transform="rotate(-45 633 352)"/>
+        <rect x="372" y="580" width="22" height="12" transform="rotate(-45 383 586)"/><rect x="392" y="596" width="22" height="12" transform="rotate(-45 403 602)"/>
+        <rect x="604" y="596" width="22" height="12" transform="rotate(45 615 602)"/><rect x="622" y="580" width="22" height="12" transform="rotate(45 633 586)"/>
+        <rect x="492" y="566" width="12" height="22"/><rect x="510" y="566" width="12" height="22"/><rect x="350" y="440" width="22" height="12"/><rect x="350" y="458" width="22" height="12"/>
+      </g>
+      <!-- MIPI camera FFC, audio jacks, fan -->
+      <rect class="b-ffc" x="36" y="140" width="46" height="150" rx="3"/><rect class="b-hole2" x="44" y="150" width="10" height="130"/>
+      <g class="b-jack">
+        <rect x="0" y="312" width="74" height="54" rx="4"/><circle cx="14" cy="339" r="11"/>
+        <rect x="0" y="392" width="74" height="54" rx="4"/><circle cx="14" cy="419" r="11"/>
+        <rect x="0" y="472" width="74" height="54" rx="4"/><circle cx="14" cy="499" r="11"/>
+      </g>
+      <rect class="b-white" x="215" y="505" width="40" height="48" rx="3"/>
+      <!-- switches: power + boot -->
+      <rect class="b-sw" x="944" y="132" width="30" height="80" rx="4"/><rect class="b-knob" x="948" y="140" width="22" height="30" rx="3"/>
+      <rect class="b-sw" x="718" y="150" width="78" height="46" rx="4"/><rect class="b-knob" x="726" y="158" width="30" height="30" rx="3"/>
+      <!-- DONE button -->
+      <rect class="b-sw" x="486" y="236" width="46" height="40" rx="4"/><circle class="b-btn" cx="509" cy="256" r="12"/>
+      <!-- Zynq with heatsink -->
+      <g class="b-zynq">
+        <rect class="b-frame" x="396" y="384" width="214" height="172" rx="6"/>
+        <rect class="b-sink" fill="url(#bfins)" x="410" y="392" width="186" height="72" rx="2"/>
+        <rect class="b-sink" fill="url(#bfins)" x="410" y="476" width="186" height="72" rx="2"/>
+      </g>
+      <!-- DDR4 -->
+      <g class="b-ddr">
+        <rect x="642" y="388" width="82" height="72" rx="3"/><rect x="642" y="474" width="82" height="72" rx="3"/>
+        <text x="683" y="430">DDR4</text><text x="683" y="516">DDR4</text>
+      </g>
+      <rect class="b-strip" x="655" y="575" width="140" height="12" rx="2"/><rect class="b-strip" x="655" y="600" width="140" height="12" rx="2"/>
+      <!-- servo, joystick, potentiometer -->
+      <rect class="b-hdr" x="842" y="380" width="140" height="58" rx="3"/><rect x="846" y="384" width="132" height="50" fill="url(#bpins)"/>
+      <rect class="b-hdr" x="952" y="256" width="20" height="98" rx="3"/><rect x="955" y="258" width="14" height="94" fill="url(#bpins)"/>
+      <circle class="b-pot" cx="958" cy="484" r="26"/><circle class="b-pot2" cx="958" cy="484" r="12"/><path class="b-potl" d="M950 484 H966"/>
+      <!-- Pmod+ -->
+      <rect class="b-hdr" x="16" y="552" width="88" height="292" rx="3"/><rect x="64" y="564" width="28" height="270" fill="url(#bpins)"/>
+      <circle class="b-ot" cx="112" cy="826" r="5"/>
+      <!-- buttons -->
+      <g class="b-ubtn">
+        <rect x="192" y="754" width="46" height="46" rx="4"/><circle cx="215" cy="777" r="12"/>
+        <rect x="272" y="754" width="46" height="46" rx="4"/><circle cx="295" cy="777" r="12"/>
+        <rect x="192" y="840" width="46" height="46" rx="4"/><circle cx="215" cy="863" r="12"/>
+        <rect x="272" y="840" width="46" height="46" rx="4"/><circle cx="295" cy="863" r="12"/>
+      </g>
+      <!-- RGB LEDs, LEDs, switches -->
+      <g class="b-rgb"><rect x="424" y="722" width="18" height="18" rx="3"/><rect x="468" y="722" width="18" height="18" rx="3"/><rect x="512" y="722" width="18" height="18" rx="3"/><rect x="556" y="722" width="18" height="18" rx="3"/></g>
+      <g class="b-led">
+        <rect x="343" y="768" width="16" height="10" rx="2"/><rect x="385" y="768" width="16" height="10" rx="2"/><rect x="427" y="768" width="16" height="10" rx="2"/><rect x="469" y="768" width="16" height="10" rx="2"/>
+        <rect x="511" y="768" width="16" height="10" rx="2"/><rect x="553" y="768" width="16" height="10" rx="2"/><rect x="595" y="768" width="16" height="10" rx="2"/><rect x="637" y="768" width="16" height="10" rx="2"/>
+      </g>
+      <g class="b-slide">
+        <rect x="333" y="800" width="36" height="78" rx="3"/><rect x="375" y="800" width="36" height="78" rx="3"/><rect x="417" y="800" width="36" height="78" rx="3"/><rect x="459" y="800" width="36" height="78" rx="3"/>
+        <rect x="501" y="800" width="36" height="78" rx="3"/><rect x="543" y="800" width="36" height="78" rx="3"/><rect x="585" y="800" width="36" height="78" rx="3"/><rect x="627" y="800" width="36" height="78" rx="3"/>
+      </g>
+      <g class="b-slknob">
+        <rect x="341" y="812" width="20" height="26" rx="2"/><rect x="383" y="812" width="20" height="26" rx="2"/><rect x="425" y="812" width="20" height="26" rx="2"/><rect x="467" y="812" width="20" height="26" rx="2"/>
+        <rect x="509" y="812" width="20" height="26" rx="2"/><rect x="551" y="812" width="20" height="26" rx="2"/><rect x="593" y="812" width="20" height="26" rx="2"/><rect x="635" y="812" width="20" height="26" rx="2"/>
+      </g>
+      <!-- Grove, PS LEDs, PS button -->
+      <g class="b-grove">
+        <rect x="722" y="725" width="74" height="42" rx="3"/><rect x="722" y="790" width="74" height="42" rx="3"/><rect x="722" y="852" width="74" height="42" rx="3"/>
+      </g>
+      <g class="b-psled"><rect x="822" y="800" width="14" height="9" rx="2"/><rect x="876" y="800" width="14" height="9" rx="2"/></g>
+      <rect class="b-sw" x="836" y="842" width="44" height="44" rx="4"/><circle class="b-btn" cx="858" cy="864" r="12"/>
+      <!-- Raspberry Pi header -->
+      <rect class="b-hdr" x="942" y="520" width="36" height="372" rx="3"/><rect x="946" y="526" width="28" height="360" fill="url(#bpins)"/>
+    </svg>
+  </template>
+
+</main>
+
+<div id="pause-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg><span data-i18n="hud.paused"></span></div>
+
+<button id="big-play" type="button" aria-label="Play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7Z"/></svg></button>
+
+<nav id="hud" aria-label="Presentation controls">
+  <button id="btn-play" type="button" aria-label="Play or pause">
+    <svg class="i-pause" viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+    <svg class="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5Z"/></svg>
+  </button>
+  <div id="segments"></div>
+  <button id="btn-lang" type="button" aria-label="Language">ՀԱՅ</button>
+  <button id="btn-fs" type="button" aria-label="Fullscreen"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+  <p id="hint" data-i18n="hud.hint"></p>
+</nav>
+
+<script src="js/content.js"></script>
+<script src="js/backdrop.js"></script>
+<script src="js/scenes.js"></script>
+<script src="js/expo.js"></script>
+</body>
+</html>

@@ -12,11 +12,41 @@ On the server the page's content comes from `db/site.json`, written by the **Sem
 
 ## Static content integration (November 2026)
 
-The bilingual editorial source is `semitec-static-website-content.md`. Its copy is integrated into `content.js` using the existing sections, cards, 2D reading view and 3D journey. The four Aragats pillars remain in Focus; the six charter directions are separate cards in Initiatives. Existing section and legacy program URLs are retained. The draft's section names also resolve as hash aliases.
+The bilingual editorial source is `semitec-static-website-content.md`. Its copy is integrated into `content.js` using the existing sections, cards, 2D reading view and 3D journey. The four Aragats pillars remain in Focus. Existing section and legacy program URLs are retained. The draft's section names also resolve as hash aliases.
 
 News, events, partners and archive records have no static sample entries. Programs, resources and opportunities show the supplied evergreen introductions and empty states because their APIs do not exist yet. Future admin integration must supply published, localized records; this change does not implement a backend. Unverified Academy product descriptions and news records were removed from public static copy. The contact form and donation controls remain unavailable, and the unverified mailbox is not published. Copyright uses the current application year.
 
 Validation: `node validate.cjs` and JavaScript syntax checks pass. Browser layout verification remains pending because no connected browser was available.
+
+## Focus Areas: five directions (November 2026)
+
+The Focus Areas section (`initiatives`) has five side paths, one per direction, and no cards. The six charter directions and the separate program paths were removed. The intro explains the gap the directions close.
+
+| Path | Direction | Extra |
+|---|---|---|
+| `labs` | Laboratories in universities and education centres | `deck: "labs"` |
+| `library` | Digital Library: courses, trainings, materials (SemiTec Academy) | `deck: "library"`, the "Explore the building blocks" card |
+| `projects` | Student Projects: diploma, thesis and research projects | `deck: "projects"` |
+| `hackathons` | Hackathons & Conferences | `eventTypes: hackathon, conference` |
+| `meetings` | Engineers & Lectures: meeting series and guest lectures | `eventTypes: meeting, lecture` |
+
+Old addresses still work: `#initiatives/academy` opens the library, `#initiatives/mentorship` and `#initiatives/challenges` open projects, and `#interactive-lab` opens the library.
+
+**The presentation (`expo/`).** This is the foundation's self-running presentation. A node with `deck` gets a **Watch** button, which opens the presentation in a window in both views:
+- `deck: "all"` plays the whole story (the Focus Areas section uses it);
+- `labs`, `library` and `projects` play only their chapter, so the slides explain and the path text keeps to status, facts and links.
+
+The window loads `expo/index.html?embed=1&autoplay=1&chapter=…&lang=…`. Esc or × closes it and stops it. On its own, `expo/index.html` is the full expo version, with its own README.
+
+**Events on a path.** A node with `eventTypes` lists the upcoming events of those types, or "No dates announced yet". The event types `hackathon` and `conference` were added.
+
+Both fields are in the content manager's schema. To update the live site, run this on the server in the content manager's folder after pulling:
+
+```sh
+npm run import -- --section initiatives
+```
+
+It replaces only this section and adds the two event types, keeps every other edit, and keeps the previous version in History.
 
 ## Earlier content source (Oct 2026)
 

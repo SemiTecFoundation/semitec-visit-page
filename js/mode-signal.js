@@ -323,6 +323,8 @@ function renderCard(force=false){
  }else{
   const list=element('div',route.index===0?'intro-tags':'panel-items');(node.items||[]).forEach(item=>list.append(element(route.index===0?'span':'div',route.index===0?'':'panel-item',pick(item))));card.append(list);
  }
+ if(node.deck){const holder=element('div','panel-deck');holder.innerHTML=ST.deckHTML(node);card.append(holder);}   // ▸DECK watch the expo chapter
+ if(inLoop&&node.eventTypes){const holder=element('div','panel-events');holder.innerHTML=ST.pathEventsHTML(node);card.append(holder);}
  if((node.links||[]).length){const ls=element('div','panel-links');node.links.forEach(l=>{const inner=l.href[0]==='#',a=element('a','',pick(l.label)+(inner?' →':' ↗'));a.href=l.href;if(!inner){a.target='_blank';a.rel='noopener';}ls.append(a);});card.append(ls);}
  const actions=element('div','panel-actions');
  const primary=element('button','primary-action');primary.type='button';

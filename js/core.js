@@ -54,7 +54,7 @@
   /* section/card: a card on a section's main road (About) */
   ST.isShowcase = p => { const sec = p.length === 2 && sections.find(s => s.id === p[0]); return !!sec && [...(sec.showcase || []), ...(sec.cells || [])].some(c => c.id === p[1]); };
   ST.readHash = () => {
-    try { const aliases = { hero: 'overview', about: 'purpose', ecosystem: 'focus', directions: 'initiatives', participate: 'support', partnerships: 'support/partner', 'support-us': 'donate', future: 'impact', contact: 'support/contact', 'interactive-lab': 'initiatives/interactive-lab', audiences: 'people' }; const hash = decodeURIComponent(location.hash.slice(1)); const p = (aliases[hash] || hash).split('/').filter(Boolean); return ST.resolve(p) || ST.isShowcase(p) ? p : ['overview']; }
+    try { const aliases = { hero: 'overview', about: 'purpose', ecosystem: 'focus', directions: 'initiatives', participate: 'support', partnerships: 'support/partner', 'support-us': 'donate', future: 'impact', contact: 'support/contact', 'interactive-lab': 'initiatives/library/interactive-lab', 'initiatives/interactive-lab': 'initiatives/library', audiences: 'people', 'initiatives/academy': 'initiatives/library', 'initiatives/mentorship': 'initiatives/projects', 'initiatives/challenges': 'initiatives/projects' }; const hash = decodeURIComponent(location.hash.slice(1)); const p = (aliases[hash] || hash).split('/').filter(Boolean); return ST.resolve(p) || ST.isShowcase(p) ? p : ['overview']; }
     catch (e) { return ['overview']; }
   };
   /* a tiny tween helper: ST.tween(ms, t => …) → Promise */
@@ -103,6 +103,53 @@
       .filter(e => !isNaN(e.when)).sort((a, b) => a.when - b.when);
     return { upcoming: all.filter(e => e.when >= ST.today), past: all.filter(e => e.when < ST.today) };
   };
+  /* Focus Areas: upcoming events of the types a path lists in `eventTypes` (directions 4 and 5) */
+  ST.pathEvents = node => {
+    const types = (node.eventTypes || []).map(t => typeof t === 'string' ? t : t.type);
+    return types.length ? ST.events().upcoming.filter(e => types.includes(e.type)).slice(0, 3) : null;
+  };
+  ST.pathEventsHTML = node => {
+    const list = ST.pathEvents(node); if (!list) return '';
+    return `<div class="path-events"><p class="pe-label">${ST.esc(ST.text('evOfPath'))}</p>${list.length
+      ? `<ul>${list.map(e => `<li><time>${ST.esc(ST.fmtDate(e.when))}</time><span>${ST.esc(ST.pick(e.title))}${e.place ? ` · ${ST.esc(ST.pick(e.place))}` : ''}</span></li>`).join('')}</ul>`
+      : `<p class="pe-none">${ST.esc(ST.text('evNoneYet'))}</p>`}</div>`;
+  };
+
+  /* The expo presentation (expo/), shown in a window: a path with `deck` plays its chapter,
+     a section with deck "all" plays the whole story. */
+  ST.deckHTML = node => node && node.deck
+    ? `<button type="button" class="deck-btn" data-deck="${ST.esc(node.deck)}"><span class="deck-play" aria-hidden="true"></span><span>${ST.esc(ST.text(node.deck === 'all' ? 'deckFull' : 'deckWatch'))}</span></button>` : '';
+  (() => {
+    let dialog = null, frame = null;
+    function open(chapter) {
+      if (!dialog) {
+        dialog = document.createElement('dialog');
+        dialog.className = 'deck-dialog';
+        dialog.innerHTML = '<button type="button" class="deck-close">×</button><div class="deck-frame"><iframe allow="fullscreen" allowfullscreen></iframe></div><p class="deck-hint"></p>';
+        document.body.append(dialog);
+        frame = dialog.querySelector('iframe');
+        dialog.querySelector('.deck-close').addEventListener('click', () => dialog.close());
+        dialog.addEventListener('click', e => { if (e.target === dialog) dialog.close(); });
+        dialog.addEventListener('close', () => { frame.src = 'about:blank'; });
+      }
+      dialog.querySelector('.deck-close').setAttribute('aria-label', ST.text('deckClose'));
+      dialog.querySelector('.deck-hint').textContent = ST.text('deckHint');
+      frame.title = ST.text('deckWatch');
+      const q = new URLSearchParams({ embed: '1', autoplay: '1', lang: state.lang });
+      if (chapter !== 'all') q.set('chapter', chapter);
+      frame.src = 'expo/index.html?' + q;
+      dialog.showModal();
+      setTimeout(() => frame.focus(), 300);
+    }
+    window.addEventListener('message', e => { if (dialog && dialog.open && e.data && e.data.expo === 'close') dialog.close(); });
+    document.addEventListener('click', e => {
+      const b = e.target.closest && e.target.closest('[data-deck]');
+      if (!b) return;
+      e.preventDefault(); e.stopPropagation();
+      open(b.dataset.deck);
+    }, true);
+  })();
+
   /* News: newest first; a date may be a day (YYYY-MM-DD) or only a month (YYYY-MM) */
   ST.news = () => (SITE_CONTENT.news || []).map(n => ({ ...n, when: new Date((n.date.length === 7 ? n.date + '-01' : n.date) + 'T12:00:00'), monthOnly: n.date.length === 7 }))
     .filter(n => !isNaN(n.when)).sort((a, b) => b.when - a.when);

@@ -235,303 +235,283 @@ const SITE_CONTENT = {
         "Focus Areas",
         "Ուղղություններ"
       ],
-      "title": [
-        "Six Directions. One Shared Purpose.",
-        "Վեց ուղղություն։ Մեկ միասնական նպատակ։"
-      ],
-      "intro": [
-        "Our six areas of activity reflect the foundation’s charter and together span the creation, sharing, and practical application of knowledge.",
-        "Մեր գործունեության վեց ուղղությունները բխում են հիմնադրամի կանոնադրությունից և միասին ընդգրկում են գիտելիքի ստեղծման, տարածման ու գործնական կիրառման ամբողջ ճանապարհը։"
-      ],
-      "text": [],
-      "items": [],
-      "media": "learning",
-      "children": [
-        {
-          "id": "academy",
-          "title": [
-            "Education and open knowledge: SemiTec Academy",
-            "Կրթություն և բաց գիտելիք՝ SemiTec Ակադեմիա"
-          ],
-          "intro": [
-            "Nothing has been published here yet. Follow our updates for future opportunities.",
-            "Առայժմ հրապարակումներ չկան։ Հետևեք մեր նորություններին՝ տեղեկանալու նոր հնարավորությունների մասին։"
-          ],
-          "items": [],
-          "text": [],
-          "links": [],
-          "children": [],
-          "media": "learning",
-          "showcase": []
-        },
-        {
-          "id": "mentorship",
-          "title": [
-            "Mentorship and project supervision",
-            "Մենթորություն և նախագծերի ղեկավարում"
-          ],
-          "intro": [
-            "Nothing has been published here yet. Follow our updates for future opportunities.",
-            "Առայժմ հրապարակումներ չկան։ Հետևեք մեր նորություններին՝ տեղեկանալու նոր հնարավորությունների մասին։"
-          ],
-          "items": [],
-          "children": [],
-          "text": [],
-          "media": "learning",
-          "showcase": [],
-          "links": []
-        },
-        {
-          "id": "challenges",
-          "title": [
-            "Research and technical challenges",
-            "Հետազոտական և տեխնիկական մարտահրավերներ"
-          ],
-          "intro": [
-            "Nothing has been published here yet. Follow our updates for future opportunities.",
-            "Առայժմ հրապարակումներ չկան։ Հետևեք մեր նորություններին՝ տեղեկանալու նոր հնարավորությունների մասին։"
-          ],
-          "items": [],
-          "children": [],
-          "text": [],
-          "media": "learning",
-          "showcase": [],
-          "links": []
-        },
-        {
-          "id": "meetings",
-          "title": [
-            "Meetings with industry engineers",
-            "Հանդիպումներ արդյունաբերության ինժեներների հետ"
-          ],
-          "intro": [
-            "Nothing has been published here yet. Follow our updates for future opportunities.",
-            "Առայժմ հրապարակումներ չկան։ Հետևեք մեր նորություններին՝ տեղեկանալու նոր հնարավորությունների մասին։"
-          ],
-          "items": [],
-          "children": [],
-          "text": [],
-          "media": "learning",
-          "showcase": [],
-          "links": []
-        },
-        {
-          "id": "hackathons",
-          "title": [
-            "Hackathons and engineering challenges",
-            "Հաքաթոններ և ինժեներական մրցույթներ"
-          ],
-          "intro": [
-            "Nothing has been published here yet. Follow our updates for future opportunities.",
-            "Առայժմ հրապարակումներ չկան։ Հետևեք մեր նորություններին՝ տեղեկանալու նոր հնարավորությունների մասին։"
-          ],
-          "items": [],
-          "children": [],
-          "text": [],
-          "media": "learning",
-          "showcase": [],
-          "links": []
-        }
-      ],
       "eyebrow": [
         "WHAT WE AIM TO DO",
         "ԻՆՉ ԵՆՔ ՆՊԱՏԱԿԱԴՐՎԱԾ ԱՆԵԼ"
       ],
-      "showcase": [
+      "title": [
+        "Five Directions. One Shared Purpose.",
+        "Հինգ ուղղություն։ Մեկ միասնական նպատակ։"
+      ],
+      "intro": [
+        "Students learn the theory, while industry needs engineers who have already built real things. Our five directions close that gap: laboratories and learning materials to practise with, real projects to work on, and events and meetings that connect students with the people who build technology.",
+        "Ուսանողները սովորում են տեսությունը, իսկ արդյունաբերությանը պետք են ինժեներներ, ովքեր արդեն իրական սարքեր են ստեղծել։ Մեր հինգ ուղղությունները լրացնում են այդ բացը՝ լաբորատորիաներ և ուսումնական նյութեր գործնական աշխատանքի համար, իրական նախագծեր, ինչպես նաև միջոցառումներ և հանդիպումներ, որոնք ուսանողներին կապում են տեխնոլոգիաներ ստեղծողների հետ։"
+      ],
+      "text": [],
+      "items": [],
+      "media": "learning",
+      "deck": "all",
+      "children": [
         {
-          "id": "direction-community-events",
+          "id": "labs",
           "title": [
-            "Scientific and Educational Community & Events",
-            "Գիտակրթական համայնք և միջոցառումներ"
+            "Laboratories",
+            "Լաբորատորիաներ"
           ],
           "intro": [
-            "Connecting people. Sparking ideas.",
-            "Մարդիկ, որոնց հանդիպումից ծնվում են նոր գաղափարներ։"
+            "Hands-on laboratories in universities and education centres.",
+            "Գործնական լաբորատորիաներ համալսարաններում և կրթական կենտրոններում։"
           ],
-          "details": [
+          "text": [
             [
-              "We aim to bring together students, educators, scientists, engineers, and technology professionals through conferences, competitions, professional gatherings, and public events. We seek to make science and engineering more accessible to young people and help talented participants connect with further educational, professional, and research opportunities.",
-              "Նպատակ ունենք համախմբելու ուսանողներին, դասախոսներին, գիտնականներին, ճարտարագետներին և ոլորտի մասնագետներին՝ կազմակերպելով մասնագիտական հանդիպումներ, գիտաժողովներ, մրցույթներ և հանրային միջոցառումներ։ Ձգտում ենք գիտությունն ու տեխնոլոգիաներն ավելի հասանելի դարձնել երիտասարդներին և օգնել տաղանդավոր մասնակիցներին գտնել կրթական, մասնագիտական ու հետազոտական զարգացման ուղիներ։"
+              "We set up laboratories together with universities and education centres. Partner companies bring boards, instruments and design tools, and their engineers take part in teaching and research. The first platform is the AMD AUP-ZU3 board.",
+              "Լաբորատորիաները ստեղծում ենք համալսարանների և կրթական կենտրոնների հետ։ Գործընկեր ընկերությունները տրամադրում են հարթակներ, սարքավորումներ և նախագծման գործիքներ, իսկ նրանց ինժեներները մասնակցում են ուսուցմանը և հետազոտությանը։ Առաջին հարթակը AMD AUP-ZU3-ն է։"
             ]
           ],
           "items": [
             [
-              "Conferences and meetups · Competitions and hackathons · Science outreach · Community connections",
-              "Համաժողովներ և հանդիպումներ · Մրցույթներ ու հաքաթոններ · Գիտության հանրայնացում · Համայնքային կապեր"
-            ]
-          ],
-          "links": [],
-          "media": "wafer",
-          "gallery": [
-            "wafer"
-          ]
-        },
-        {
-          "id": "direction-open-knowledge",
-          "title": [
-            "Open Knowledge & Educational Resources",
-            "Բաց թվային գիտելիք և ուսումնական բովանդակություն"
-          ],
-          "intro": [
-            "Knowledge to explore, use, and build upon.",
-            "Գիտելիք, որը կարելի է բացահայտել, օգտագործել և զարգացնել։"
-          ],
-          "details": [
+              "Status: in preparation",
+              "Կարգավիճակ՝ նախապատրաստվում է"
+            ],
             [
-              "We seek to develop an open digital repository of educational materials, laboratory guides, project work, articles, and scientific publications. Our goal is to support resources that are useful to students, educators, research groups, and technology professionals.",
-              "Ձգտում ենք զարգացնել բաց թվային պահոց՝ ուսումնական նյութերի, լաբորատոր ուղեցույցների, նախագծային աշխատանքների, հոդվածների և գիտական հրապարակումների համար։ Մեր նպատակն է աջակցել այնպիսի բովանդակության ստեղծմանն ու տարածմանը, որը օգտակար կլինի ուսանողներին, դասախոսներին, հետազոտական խմբերին և մասնագետներին։"
-            ]
-          ],
-          "items": [
+              "For universities and education centres",
+              "Համալսարանների և կրթական կենտրոնների համար"
+            ],
             [
-              "Open repository · Practical guides · Project-based learning · Digital and print publications",
-              "Բաց նյութերի պահոց · Գործնական ուղեցույցներ · Նախագծային աշխատանքներ · Թվային և տպագիր հրապարակումներ"
+              "First board: AMD AUP-ZU3",
+              "Առաջին հարթակը՝ AMD AUP-ZU3"
             ]
           ],
-          "links": [],
-          "media": "wafer",
-          "gallery": [
-            "wafer"
-          ]
-        },
-        {
-          "id": "direction-labs",
-          "title": [
-            "Educational & Technological Infrastructure",
-            "Կրթական և տեխնոլոգիական ենթակառուցվածքներ"
+          "links": [
+            {
+              "label": [
+                "Host a laboratory",
+                "Հյուրընկալել լաբորատորիա"
+              ],
+              "href": "#support/partner"
+            }
           ],
-          "intro": [
-            "From theory to experimentation. From knowledge to practice.",
-            "Տեսությունից՝ փորձարարություն։ Գիտելիքից՝ գործնական փորձ։"
-          ],
-          "details": [
-            [
-              "We aim to work with universities and educational institutions to develop shared laboratories and workshops equipped with relevant hardware, design tools, and software environments. Semiconductor and digital design, FPGA/ASIC technologies, electronics, and embedded systems are important areas of technical interest for SemiTec.",
-              "Նպատակ ունենք համալսարանների և կրթական հաստատությունների հետ զարգացնելու համատեղ լաբորատորիաներ ու աշխատանոցներ՝ ժամանակակից սարքավորումներով, նախագծման գործիքներով և ծրագրային միջավայրերով։ Կիսահաղորդչային և թվային նախագծումը, FPGA/ASIC տեխնոլոգիաները, էլեկտրոնիկան ու ներկառուցված համակարգերը մեր մասնագիտական հետաքրքրության կարևոր ուղղություններից են։"
-            ]
-          ],
-          "items": [
-            [
-              "Shared labs · Engineering tools · Hands-on learning · University–industry links",
-              "Համատեղ լաբորատորիաներ · Ինժեներական գործիքներ · Գործնական ուսուցում · Համալսարան–արդյունաբերություն կապ"
-            ]
-          ],
-          "links": [],
-          "media": "wafer",
-          "gallery": [
-            "wafer"
-          ]
-        },
-        {
-          "id": "direction-research-regions",
-          "title": [
-            "Research, Innovation & Regional Development",
-            "Հետազոտություն, նորարարություն և տարածաշրջանային զարգացում"
-          ],
-          "intro": [
-            "Helping ideas progress toward application.",
-            "Գաղափարներ, որոնք կարող են ճանապարհ անցնել մինչև կիրառություն։"
-          ],
-          "details": [
-            [
-              "We seek to support research groups, experimental projects, and prototypes through access to expertise, publication opportunities, and international collaboration. We also value the development of educational, work, and technological opportunities across Armenia’s cities and communities.",
-              "Ձգտում ենք նպաստել հետազոտական խմբերի, փորձարարական նախագծերի և նախատիպերի զարգացմանը՝ խրախուսելով մասնագիտական խորհրդատվությունը, հրապարակումները և միջազգային համագործակցությունը։ Միաժամանակ կարևորում ենք կրթական, աշխատանքային և տեխնոլոգիական հնարավորությունների զարգացումը Հայաստանի տարբեր քաղաքներում ու համայնքներում։"
-            ]
-          ],
-          "items": [
-            [
-              "Research groups · Prototypes and experiments · International collaboration · Regional learning spaces",
-              "Հետազոտական խմբեր · Նախատիպեր և փորձեր · Միջազգային համագործակցություն · Տարածաշրջանային միջավայրեր"
-            ]
-          ],
-          "links": [],
-          "media": "wafer",
-          "gallery": [
-            "wafer"
-          ]
-        },
-        {
-          "id": "direction-support",
-          "title": [
-            "Educational & Professional Support",
-            "Կրթական և մասնագիտական աջակցության ծրագրեր"
-          ],
-          "intro": [
-            "Supporting growth at every stage.",
-            "Աջակցություն՝ աճի յուրաքանչյուր փուլում։"
-          ],
-          "details": [
-            [
-              "Our objectives include creating opportunities for scholarships, grants, awards, and targeted support. Potential initiatives include summer schools, camps, professional training, mentorship, and support for student or research projects.",
-              "Մեր նպատակներից է կրթաթոշակների, դրամաշնորհների, մրցանակների և նպատակային աջակցության հնարավորությունների ստեղծումը։ Նախատեսվող նախաձեռնությունները կարող են ներառել ամառային դպրոցներ, ճամբարներ, վերապատրաստումներ, մենթորություն և ուսանողական կամ հետազոտական նախագծերի աջակցություն։"
-            ]
-          ],
-          "items": [
-            [
-              "Scholarships and grants · Summer schools · Mentorship · Project support",
-              "Կրթաթոշակներ և դրամաշնորհներ · Ամառային դպրոցներ · Մենթորություն · Նախագծերի աջակցություն"
-            ]
-          ],
-          "links": [],
-          "media": "wafer",
-          "gallery": [
-            "wafer"
-          ]
-        },
-        {
-          "id": "direction-collaboration",
-          "title": [
-            "Collaboration",
-            "Համագործակցություն"
-          ],
-          "intro": [
-            "Different perspectives. Shared progress.",
-            "Տարբեր փորձառություններ։ Համատեղ արդյունքներ։"
-          ],
-          "details": [
-            [
-              "We welcome collaboration with universities, research centers, technology companies, professional associations, public institutions, international organizations, and Armenian diaspora experts. We aim to bring together expertise, resources, and experience around educational, scientific, and technological initiatives.",
-              "Մենք բաց ենք համագործակցության համար համալսարանների, հետազոտական կենտրոնների, տեխնոլոգիական ընկերությունների, մասնագիտական միավորումների, հանրային կառույցների, միջազգային կազմակերպությունների և սփյուռքի մասնագետների հետ։ Ձգտում ենք միավորել գիտելիքը, ռեսուրսներն ու փորձառությունը՝ կրթական, գիտական և տեխնոլոգիական նախաձեռնությունների շուրջ։"
-            ]
-          ],
-          "items": [
-            [
-              "Universities · Technology companies · Research organizations · Diaspora and international networks",
-              "Համալսարաններ · Տեխնոլոգիական ընկերություններ · Հետազոտական կառույցներ · Սփյուռք և միջազգային կապեր"
-            ]
-          ],
-          "links": [],
-          "media": "wafer",
-          "gallery": [
-            "wafer"
-          ]
-        },
-        {
-          "id": "interactive-lab",
-          "media": "wafer",
           "children": [],
+          "media": "academy-lab",
+          "showcase": [],
+          "deck": "labs"
+        },
+        {
+          "id": "library",
           "title": [
-            "Explore the building blocks of the digital world.",
-            "Փորձարկեք թվային աշխարհի հիմքերը։"
+            "Digital Library",
+            "Թվային գրադարան"
           ],
           "intro": [
-            "Complex digital systems begin with simple ideas. Explore logic operations and the principles of digital design through our interactive demonstrations.",
-            "Թվային համակարգերի հիմքում պարզ գաղափարներ են, որոնց համադրությունից ծնվում են բարդ տեխնոլոգիաներ։ Բացահայտեք տրամաբանական գործողությունները և թվային նախագծման սկզբունքները մեր ինտերակտիվ ցուցադրությունների միջոցով։"
+            "Courses, trainings and learning materials, open to everyone.",
+            "Դասընթացներ, ուսուցողական և ուսումնական նյութեր՝ բաց բոլորի համար։"
           ],
-          "text": [],
-          "items": [],
-          "eyebrow": [
-            "TECHNOLOGY IN ACTION",
-            "ՏԵԽՆՈԼՈԳԻԱՆ՝ ԳՈՐԾՆԱԿԱՆՈՒՄ"
-          ],
-          "details": [
+          "text": [
             [
-              "These interactive examples are introductory demonstrations, not a substitute for a full course or laboratory experience.",
-              "Այս ինտերակտիվ օրինակները ճանաչողական ցուցադրություններ են և չեն փոխարինում ամբողջական դասընթացին կամ լաբորատոր աշխատանքին։"
+              "The library is published through SemiTec Academy, the foundation's free desktop learning app. Students add course packages and study on their own computer: interactive trainings with quizzes, labs with source files, readings and projects.",
+              "Գրադարանը հրապարակվում է SemiTec Academy-ի՝ հիմնադրամի անվճար ուսումնական հավելվածի միջոցով։ Ուսանողներն ավելացնում են դասընթացների փաթեթներ և սովորում իրենց համակարգչում՝ ինտերակտիվ ուսուցում թեստերով, լաբորատոր աշխատանքներ աղբյուր ֆայլերով, ընթերցանություն և նախագծեր։"
             ]
+          ],
+          "items": [
+            [
+              "Status: running",
+              "Կարգավիճակ՝ գործում է"
+            ],
+            [
+              "First package: BIST and MBIST",
+              "Առաջին փաթեթը՝ BIST և MBIST"
+            ],
+            [
+              "Free and open",
+              "Անվճար և բաց"
+            ]
+          ],
+          "links": [
+            {
+              "label": [
+                "Download SemiTec Academy",
+                "Ներբեռնել SemiTec Academy-ն"
+              ],
+              "href": "https://github.com/SemiTecFoundation/semitec-academy/releases/latest"
+            },
+            {
+              "label": [
+                "See the introduction",
+                "Դիտել ներածությունը"
+              ],
+              "href": "https://semitecfoundation.github.io/semitec-academy/"
+            }
+          ],
+          "children": [],
+          "media": "academy-training",
+          "showcase": [
+            {
+              "id": "interactive-lab",
+              "media": "wafer",
+              "title": [
+                "Explore the building blocks of the digital world.",
+                "Փորձարկեք թվային աշխարհի հիմքերը։"
+              ],
+              "intro": [
+                "Complex digital systems begin with simple ideas. Explore logic operations and the principles of digital design through our interactive demonstrations.",
+                "Թվային համակարգերի հիմքում պարզ գաղափարներ են, որոնց համադրությունից ծնվում են բարդ տեխնոլոգիաներ։ Բացահայտեք տրամաբանական գործողությունները և թվային նախագծման սկզբունքները մեր ինտերակտիվ ցուցադրությունների միջոցով։"
+              ],
+              "text": [],
+              "items": [],
+              "eyebrow": [
+                "TECHNOLOGY IN ACTION",
+                "ՏԵԽՆՈԼՈԳԻԱՆ՝ ԳՈՐԾՆԱԿԱՆՈՒՄ"
+              ],
+              "details": [
+                [
+                  "These interactive examples are introductory demonstrations, not a substitute for a full course or laboratory experience.",
+                  "Այս ինտերակտիվ օրինակները ճանաչողական ցուցադրություններ են և չեն փոխարինում ամբողջական դասընթացին կամ լաբորատոր աշխատանքին։"
+                ]
+              ],
+              "links": [],
+              "gallery": [
+                "wafer"
+              ]
+            }
+          ],
+          "deck": "library"
+        },
+        {
+          "id": "projects",
+          "title": [
+            "Student Projects",
+            "Ուսանողական նախագծեր"
+          ],
+          "intro": [
+            "Diploma, thesis and research projects, defined and supervised.",
+            "Ավարտական, թեզային և հետազոտական նախագծեր՝ սահմանված և ղեկավարվող։"
+          ],
+          "text": [
+            [
+              "We define project topics with real engineering problems for bachelor, master and PhD students and for research teams, supervise the work, and help students apply for grants with their projects.",
+              "Մենք սահմանում ենք իրական ինժեներական խնդիրներով նախագծերի թեմաներ բակալավրի, մագիստրոսի և PhD ուսանողների ու հետազոտական խմբերի համար, ղեկավարում ենք աշխատանքը և օգնում ուսանողներին իրենց նախագծերով դիմել դրամաշնորհների։"
+            ]
+          ],
+          "items": [
+            [
+              "Status: running",
+              "Կարգավիճակ՝ գործում է"
+            ],
+            [
+              "Bachelor, master and PhD projects",
+              "Բակալավրի, մագիստրոսի և PhD նախագծեր"
+            ],
+            [
+              "Supervision and grant applications",
+              "Ղեկավարում և դրամաշնորհային հայտեր"
+            ]
+          ],
+          "links": [
+            {
+              "label": [
+                "Propose a topic or join a project",
+                "Առաջարկել թեմա կամ միանալ նախագծին"
+              ],
+              "href": "#support/contact"
+            }
+          ],
+          "children": [],
+          "media": "prog-projects",
+          "showcase": [],
+          "deck": "projects"
+        },
+        {
+          "id": "hackathons",
+          "title": [
+            "Hackathons & Conferences",
+            "Հաքաթոններ և գիտաժողովներ"
+          ],
+          "intro": [
+            "Engineering challenges, competitions and conferences that bring people together.",
+            "Ինժեներական մարտահրավերներ, մրցույթներ և գիտաժողովներ, որոնք համախմբում են մարդկանց։"
+          ],
+          "text": [
+            [
+              "Hackathons and conferences are planned. Each one is announced here and in News & Events; after it takes place, its results and photos move into the gallery.",
+              "Հաքաթոններն ու գիտաժողովները պլանավորված են։ Յուրաքանչյուրը կհայտարարվի այստեղ և «Նորություններ և միջոցառումներ» բաժնում, իսկ անցկացվելուց հետո դրա արդյունքներն ու լուսանկարները կտեղափոխվեն պատկերասրահ։"
+            ]
+          ],
+          "items": [
+            [
+              "Status: planned",
+              "Կարգավիճակ՝ պլանավորված է"
+            ]
+          ],
+          "links": [
+            {
+              "label": [
+                "News & Events",
+                "Նորություններ և միջոցառումներ"
+              ],
+              "href": "#events"
+            }
+          ],
+          "children": [],
+          "media": "prog-problems",
+          "showcase": [],
+          "eventTypes": [
+            {
+              "type": "hackathon"
+            },
+            {
+              "type": "conference"
+            }
+          ]
+        },
+        {
+          "id": "meetings",
+          "title": [
+            "Engineers & Lectures",
+            "Ինժեներներ և դասախոսություններ"
+          ],
+          "intro": [
+            "A meeting series with industry engineers, and guest lectures at universities.",
+            "Հանդիպումների շարք արդյունաբերության ինժեներների հետ և հրավիրյալ դասախոսություններ համալսարաններում։"
+          ],
+          "text": [
+            [
+              "Guest lectures at universities are already running. A regular series of meetings between students and industry engineers on chosen topics is being prepared.",
+              "Հրավիրյալ դասախոսություններն արդեն անցկացվում են համալսարաններում։ Նախապատրաստվում է ուսանողների և արդյունաբերության ինժեներների պարբերական հանդիպումների շարք՝ ընտրված թեմաներով։"
+            ]
+          ],
+          "items": [
+            [
+              "Guest lectures: running",
+              "Հրավիրյալ դասախոսություններ՝ գործում են"
+            ],
+            [
+              "Meeting series: in preparation",
+              "Հանդիպումների շարք՝ նախապատրաստվում է"
+            ]
+          ],
+          "links": [
+            {
+              "label": [
+                "News & Events",
+                "Նորություններ և միջոցառումներ"
+              ],
+              "href": "#events"
+            }
+          ],
+          "children": [],
+          "media": "prog-meet",
+          "showcase": [],
+          "eventTypes": [
+            {
+              "type": "meeting"
+            },
+            {
+              "type": "lecture"
+            }
           ]
         }
-      ]
+      ],
+      "showcase": []
     },
     {
       "id": "events",
@@ -1719,6 +1699,30 @@ const SITE_CONTENT = {
     }
   },
   "ui": {
+    "deckWatch": [
+      "Watch the presentation",
+      "Դիտել ներկայացումը"
+    ],
+    "deckFull": [
+      "Watch the full story",
+      "Դիտել ամբողջական ներկայացումը"
+    ],
+    "deckClose": [
+      "Close the presentation",
+      "Փակել ներկայացումը"
+    ],
+    "deckHint": [
+      "Space pauses · ← → or scroll moves between scenes",
+      "Space՝ դադար · ← → կամ անիվ՝ տեսարանների միջև"
+    ],
+    "evOfPath": [
+      "Upcoming",
+      "Առաջիկայում"
+    ],
+    "evNoneYet": [
+      "No dates announced yet.",
+      "Ամսաթվեր դեռ չեն հայտարարվել։"
+    ],
     "map": [
       "Explore sections",
       "Բաժիններ"
@@ -2698,6 +2702,20 @@ const SITE_CONTENT = {
     ]
   ],
   "eventTypes": {
+    "hackathon": {
+      "label": [
+        "Hackathon",
+        "Հաքաթոն"
+      ],
+      "media": "prog-problems"
+    },
+    "conference": {
+      "label": [
+        "Conference",
+        "Գիտաժողով"
+      ],
+      "media": "gathering"
+    },
     "lecture": {
       "label": [
         "Guest lecture",

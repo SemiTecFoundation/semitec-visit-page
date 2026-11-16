@@ -1,0 +1,283 @@
+/* EDIT TEXT AND TIMING HERE.
+   Every string is [English, Armenian]. The Armenian is a draft for review.
+   Keys match data-i18n="..." attributes in index.html. Use \n for a line break. */
+
+const EXPO_CONFIG = {
+  defaultLang: 'en',        // 'en' or 'hy' (also ?lang=hy in the URL)
+  loop: true,               // start again after the last scene
+  resumeAfterMs: 60000,     // a paused deck resumes by itself after this idle time (0 = never)
+  hudHideMs: 2600           // controls fade out after this much mouse inactivity
+};
+
+const STRINGS = {
+  /* HUD */
+  'hud.paused':  ['Paused', 'Դադար'],
+  'hud.hint':    ['Space · pause   ← → or scroll · navigate   L · language   F · fullscreen',
+                  'Space · դադար   ← → կամ անիվ · անցում   L · լեզու   F · ամբողջ էկրան'],
+
+  /* 1 · Intro */
+  's1.kicker':   ['SemiTec Foundation', 'SemiTec հիմնադրամ'],
+  's1.title':    ['Advancing Armenia’s\nsemiconductor future.', 'Կառուցում ենք Հայաստանի\nկիսահաղորդչային ապագան։'],
+  's1.sub':      ['Laboratories, learning materials and real projects\nfor students and researchers.',
+                  'Լաբորատորիաներ, ուսումնական նյութեր և իրական նախագծեր\nուսանողների ու հետազոտողների համար։'],
+
+  /* 2 · The gap */
+  's2.kicker':   ['The gap', 'Բացը'],
+  's2.title':    ['Students learn the theory.\nIndustry needs engineers who have built real hardware.',
+                  'Ուսանողները սովորում են տեսությունը։\nԱրդյունաբերությանը պետք են իրական սարքեր ստեղծած ինժեներներ։'],
+  's2.left':     ['University', 'Համալսարան'],
+  's2.leftSub':  ['Theory · lectures · exams', 'Տեսություն · դասախոսություններ · քննություններ'],
+  's2.right':    ['Industry', 'Արդյունաբերություն'],
+  's2.rightSub': ['Tools · hardware · real problems', 'Գործիքներ · սարքավորումներ · իրական խնդիրներ'],
+  's2.bridge':   ['Hands-on laboratory', 'Գործնական լաբորատորիա'],
+  's2.note':     ['We build the bridge — inside the university.', 'Մենք կառուցում ենք կամուրջը՝ հենց համալսարանում։'],
+
+  /* 3 · Purpose */
+  's3.kicker':   ['Our purpose', 'Մեր նպատակը'],
+  's3.title':    ['Three directions, working as one.', 'Երեք ուղղություն՝ մեկ ամբողջության մեջ։'],
+  's3.p1':       ['Laboratories', 'Լաբորատորիաներ'],
+  's3.p1t':      ['Equipped labs inside universities, with tools and boards from industry.',
+                  'Հագեցած լաբորատորիաներ համալսարաններում՝ արդյունաբերության գործիքներով և հարթակներով։'],
+  's3.p2':       ['Learning materials', 'Ուսումնական նյութեր'],
+  's3.p2t':      ['Courses, trainings and labs written for the hardware students actually use.',
+                  'Դասընթացներ և լաբորատոր աշխատանքներ՝ հենց այն սարքերի համար, որոնցով աշխատում են ուսանողները։'],
+  's3.p3':       ['Projects', 'Նախագծեր'],
+  's3.p3t':      ['Defined problems for bachelor, master and PhD students and research teams.',
+                  'Սահմանված խնդիրներ բակալավրի, մագիստրոսի, PhD ուսանողների և հետազոտական խմբերի համար։'],
+
+  /* 4 · Laboratory initiative */
+  's4.kicker':   ['Laboratory initiative', 'Լաբորատոր նախաձեռնություն'],
+  's4.title':    ['A laboratory\ninside the university.', 'Լաբորատորիա՝\nհամալսարանի ներսում։'],
+  's4.i1':       ['Boards and instruments from partner companies', 'Գործընկեր ընկերությունների հարթակներ և սարքավորումներ'],
+  's4.i2':       ['Professional design tools and software', 'Մասնագիտական նախագծման գործիքներ և ծրագրեր'],
+  's4.i3':       ['Industry engineers join teaching and research', 'Ինժեներները մասնակցում են ուսուցմանը և հետազոտությանը'],
+  's4.i4':       ['Open to students across departments', 'Բաց է տարբեր ամբիոնների ուսանողների համար'],
+  's4.label':    ['One lab · many partners', 'Մեկ լաբորատորիա · բազմաթիվ գործընկերներ'],
+
+  /* 5 · Board */
+  's5.kicker':   ['The first board', 'Առաջին հարթակը'],
+  's5.title':    ['Starting with the\nAMD AUP-ZU3.', 'Սկսում ենք\nAMD AUP-ZU3-ով։'],
+  's5.sub':      ['Arm processors and FPGA logic on one chip — designed for engineering education and research.',
+                  'Arm պրոցեսորներ և FPGA տրամաբանություն մեկ չիպի վրա՝ ինժեներական կրթության և հետազոտության համար։'],
+  's5.k1':       ['logic cells', 'տրամաբանական բջիջ'],
+  's5.k2':       ['LUTs', 'LUT'],
+  's5.k3':       ['DSP slices', 'DSP բլոկ'],
+  's5.k4':       ['block RAM', 'բլոկային RAM'],
+  's5.k5':       ['Arm Cortex-A53 cores', 'Arm Cortex-A53 միջուկ'],
+  's5.k6':       ['DDR4 memory', 'DDR4 հիշողություն'],
+  's5.io': ['Mini DisplayPort · MIPI camera · audio · 2× USB-C 3.0 · USB-C JTAG/UART · microSD · Pmod+ · 3× Grove · Raspberry Pi header · servo and joystick headers', 'Mini DisplayPort · MIPI տեսախցիկ · աուդիո · 2× USB-C 3.0 · USB-C JTAG/UART · microSD · Pmod+ · 3× Grove · Raspberry Pi միակցիչ · սերվոյի և ջոյստիկի միակցիչներ'],
+  's5.note':     ['First of many — more boards and platforms will follow.', 'Առաջինը շարքում՝ կհաջորդեն նոր հարթակներ։'],
+  's5.sw':       ['8 switches', '8 փոխանջատիչ'],
+  's5.btn':      ['4 buttons', '4 կոճակ'],
+
+  /* 8 · Hands-on flow */
+  's6.kicker':   ['Hands-on from day one', 'Գործնական՝ առաջին օրվանից'],
+  's6.title':    ['Every lab ends on real hardware.', 'Յուրաքանչյուր աշխատանք ավարտվում է իրական սարքի վրա։'],
+  's6.a':        ['Describe', 'Նկարագրել'],
+  's6.at':       ['RTL in SystemVerilog', 'RTL՝ SystemVerilog-ով'],
+  's6.b':        ['Simulate', 'Մոդելավորել'],
+  's6.bt':       ['Verify in Vivado', 'Ստուգել Vivado-ում'],
+  's6.c':        ['Implement', 'Իրականացնել'],
+  's6.ct':       ['Synthesis, place & route', 'Սինթեզ, տեղաբաշխում, միացում'],
+  's6.d':        ['Program', 'Ծրագրավորել'],
+  's6.dt':       ['Load it onto the board', 'Բեռնել հարթակի վրա'],
+  's6.e':        ['See it run', 'Տեսնել աշխատանքում'],
+  's6.et':       ['LEDs, screens, sensors', 'LED-ներ, էկրաններ, սենսորներ'],
+  's6.live':     ['Running on the AUP‑ZU3', 'Աշխատում է AUP‑ZU3-ի վրա'],
+
+  /* 6 · Board tour */
+  'tour.kicker': ['Board tour · AUP-ZU3', 'Ծանոթություն հարթակին · AUP-ZU3'],
+  'tour.0':  ['AUP-ZU3 at a glance', 'AUP-ZU3՝ ընդհանուր տեսք'],
+  'tour.0t': ['An Arm + FPGA development board built for engineering education and research.', 'Arm + FPGA մշակման հարթակ՝ ստեղծված ինժեներական կրթության և հետազոտության համար։'],
+  'tour.1':  ['Zynq UltraScale+ XCZU3EG', 'Zynq UltraScale+ XCZU3EG'],
+  'tour.1t': ['A quad-core Arm Cortex-A53 processing system and UltraScale+ programmable logic in one chip, under the heatsink.', 'Չորսմիջուկ Arm Cortex-A53 պրոցեսորային համակարգ և UltraScale+ ծրագրավորվող տրամաբանություն մեկ չիպում՝ ռադիատորի տակ։'],
+  'tour.2':  ['DDR4 memory', 'DDR4 հիշողություն'],
+  'tour.2t': ['4 GB or 8 GB, depending on the board variant, connected to the processing system.', 'Տարբերակից կախված՝ 4 կամ 8 ԳԲ, միացված պրոցեսորային համակարգին։'],
+  'tour.3':  ['Mini DisplayPort', 'Mini DisplayPort'],
+  'tour.3t': ['Video output to a monitor: dashboards and results straight from the board.', 'Վիդեո ելք դեպի մոնիտոր՝ վահանակներ և արդյունքներ անմիջապես հարթակից։'],
+  'tour.4':  ['USB-C ports', 'USB-C պորտեր'],
+  'tour.4t': ['2× USB-C 3.0 host/OTG, plus a USB-C port for JTAG programming and the UART console.', '2× USB-C 3.0 host/OTG և USB-C պորտ JTAG ծրագրավորման ու UART կոնսոլի համար։'],
+  'tour.5':  ['microSD and boot mode', 'microSD և բեռնման ռեժիմ'],
+  'tour.5t': ['Linux and PYNQ boot from the microSD card; a switch selects SD or JTAG boot.', 'Linux-ը և PYNQ-ը բեռնվում են microSD քարտից, փոխանջատիչով ընտրվում է SD կամ JTAG բեռնում։'],
+  'tour.6':  ['MIPI camera interface', 'MIPI տեսախցիկի ինտերֆեյս'],
+  'tour.6t': ['Connect a camera for image and video processing projects.', 'Տեսախցիկի միացում պատկերի և վիդեոյի մշակման նախագծերի համար։'],
+  'tour.7':  ['Audio', 'Աուդիո'],
+  'tour.7t': ['Microphone, line in and line out through the on-board audio codec.', 'Խոսափող, գծային մուտք և ելք՝ ներկառուցված աուդիո կոդեկի միջոցով։'],
+  'tour.8':  ['Pmod+ (2× Pmod)', 'Pmod+ (2× Pmod)'],
+  'tour.8t': ['Plug-in modules: sensors, converters, displays and more.', 'Միացվող մոդուլներ՝ սենսորներ, փոխակերպիչներ, էկրաններ և այլն։'],
+  'tour.9':  ['Switches, LEDs and buttons', 'Փոխանջատիչներ, LED-ներ, կոճակներ'],
+  'tour.9t': ['8 slide switches, 8 LEDs, 4 push-buttons and 4 RGB LEDs for the first labs.', '8 փոխանջատիչ, 8 LED, 4 կոճակ և 4 RGB LED՝ առաջին լաբորատոր աշխատանքների համար։'],
+  'tour.10': ['Grove connectors', 'Grove միակցիչներ'],
+  'tour.10t':['3 Grove ports (1 PS, 2 PL) for ready-made sensor modules, plus 2 PS LEDs and a PS button.', '3 Grove պորտ (1 PS, 2 PL) պատրաստի սենսորային մոդուլների համար, նաև 2 PS LED և PS կոճակ։'],
+  'tour.11': ['Raspberry Pi header', 'Raspberry Pi միակցիչ'],
+  'tour.11t':['40-pin Raspberry Pi–compatible header for HATs and custom extension boards.', '40 պինանոց Raspberry Pi-համատեղելի միակցիչ HAT-երի և ընդլայնման մոդուլների համար։'],
+  'tour.12': ['Servo, joystick, potentiometer', 'Սերվո, ջոյստիկ, պոտենցիոմետր'],
+  'tour.12t':['Headers for 4 servo motors and a joystick, and a 10k potentiometer for analog input.', '4 սերվոշարժիչի և ջոյստիկի միակցիչներ, 10k պոտենցիոմետր՝ անալոգ մուտքի համար։'],
+  'tour.13': ['Ready for the lab', 'Պատրաստ է լաբորատորիայի համար'],
+  'tour.13t':['Everything a student needs, from the first LED to a research project.', 'Այն ամենը, ինչ պետք է ուսանողին՝ առաջին LED-ից մինչև հետազոտական նախագիծ։'],
+
+  /* 7 · Inside the FPGA */
+  'f.kicker':  ['Inside the FPGA', 'FPGA-ի ներսում'],
+  'f.title':   ['Zoom into the chip.', 'Մոտենանք չիպին։'],
+  'f.l0':      ['Package', 'Կորպուս'],
+  'f.l0t':     ['XCZU3EG in an SFVC784 package: a processing system and programmable logic in one device.', 'XCZU3EG՝ SFVC784 կորպուսում. պրոցեսորային համակարգ և ծրագրավորվող տրամաբանություն մեկ սարքում։'],
+  'f.l1':      ['Die · PS + PL', 'Բյուրեղ · PS + PL'],
+  'f.l1t':     ['The processing system with its Arm cores sits beside the programmable logic, which is divided into clock regions.', 'Arm միջուկներով պրոցեսորային համակարգը գտնվում է ծրագրավորվող տրամաբանության կողքին, որը բաժանված է տակտային տիրույթների։'],
+  'f.l2':      ['Clock region', 'Տակտային տիրույթ'],
+  'f.l2t':     ['Columns of CLBs, DSP slices and block RAM, with a horizontal clock spine at the centre. In UltraScale devices a clock region spans 60 CLBs, 24 DSP slices and 12 block RAMs.', 'CLB-ների, DSP բլոկների և բլոկային RAM-ի սյուներ, կենտրոնում՝ հորիզոնական տակտային ողնաշար։ UltraScale-ում տիրույթը ներառում է 60 CLB, 24 DSP և 12 բլոկային RAM։'],
+  'f.l3':      ['Sites', 'Սայթեր'],
+  'f.l3t':     ['Every resource has a site name (SLICE, DSP48E2, RAMB36), just as in Vivado’s device view.', 'Յուրաքանչյուր ռեսուրս ունի սայթի անուն (SLICE, DSP48E2, RAMB36), ինչպես Vivado-ի Device պատուհանում։'],
+  'f.l4':      ['BELs in a slice', 'BEL-եր սլայսում'],
+  'f.l4t':     ['One CLB slice: eight 6-input LUTs, sixteen flip-flops, a CARRY8 chain and wide multiplexers.', 'Մեկ CLB սլայս՝ ութ 6-մուտքանի LUT, տասնվեց տրիգեր, CARRY8 շղթա և լայն մուլտիպլեքսորներ։'],
+  'f.l5':      ['DSP and block RAM', 'DSP և բլոկային RAM'],
+  'f.l5t':     ['DSP48E2: pre-adder, 27×18 multiplier and 48-bit ALU. RAMB36E2: 36 Kb, or two independent RAMB18E2.', 'DSP48E2՝ նախագումարիչ, 27×18 բազմապատկիչ և 48-բիթ ALU։ RAMB36E2՝ 36 Կբ կամ երկու անկախ RAMB18E2։'],
+  'f.note':    ['Floorplan simplified for illustration.', 'Պլանը պարզեցված է՝ նկարազարդման համար։'],
+
+  /* 11 · Dashboards */
+  'd.kicker':  ['Results on the lab monitor', 'Արդյունքները լաբորատորիայի մոնիտորին'],
+  'd.title':   ['From sensor to dashboard, in real time.', 'Սենսորից մինչև վահանակ՝ իրական ժամանակում։'],
+  'd.sub':     ['Data captured in the PL, processed on the PS, shown live over DisplayPort or in the browser.', 'Տվյալները հավաքվում են PL-ում, մշակվում PS-ում և ցուցադրվում DisplayPort-ով կամ բրաուզերում։'],
+  'dl.tab1':   ['Sensor monitor', 'Սենսորների մոնիտոր'],
+  'dl.tab2':   ['Signal analysis', 'Ազդանշանի վերլուծություն'],
+  'dl.tab3':   ['Vision', 'Տեսողություն'],
+  'dl.example':['example data', 'օրինակային տվյալներ'],
+  'dl.temp':   ['Temperature', 'Ջերմաստիճան'],
+  'dl.imu':    ['Acceleration · IMU', 'Արագացում · IMU'],
+  'dl.dist':   ['Distance', 'Հեռավորություն'],
+  'dl.pot':    ['Potentiometer · ADC', 'Պոտենցիոմետր · ԱԹՓ'],
+  'dl.sw':     ['Switches → LEDs', 'Փոխանջատիչներ → LED'],
+  'dl.util':   ['FPGA utilization', 'FPGA ռեսուրսներ'],
+  'dl.raw':    ['Raw signal', 'Սկզբնական ազդանշան'],
+  'dl.fir':    ['After FIR filter (PL)', 'FIR ֆիլտրից հետո (PL)'],
+  'dl.fft':    ['Spectrum · FFT', 'Սպեկտր · FFT'],
+  'dl.stats':  ['Pipeline', 'Մշակման շղթա'],
+  'dl.cam':    ['Camera input', 'Տեսախցիկի մուտք'],
+  'dl.edge':   ['Edge detection (PL)', 'Եզրերի հայտնաբերում (PL)'],
+
+  /* 9 · Toolchain */
+  't.kicker':  ['The full toolchain', 'Ամբողջական գործիքաշար'],
+  't.title':   ['The same tools engineers use in industry.', 'Նույն գործիքները, որոնցով աշխատում են ինժեներները։'],
+  't.v':       ['Hardware design', 'Սարքային նախագծում'],
+  't.v1':      ['RTL design and simulation', 'RTL նախագծում և մոդելավորում'],
+  't.v2':      ['Block design in IP Integrator', 'Բլոկային նախագիծ IP Integrator-ում'],
+  't.v3':      ['Synthesis, implementation, bitstream', 'Սինթեզ, իրականացում, bitstream'],
+  't.s':       ['Embedded software', 'Ներդրված ծրագրավորում'],
+  't.s1':      ['C/C++ applications on the Arm cores', 'C/C++ ծրագրեր Arm միջուկների վրա'],
+  't.s2':      ['Drivers for custom hardware blocks', 'Դրայվերներ սեփական սարքային բլոկների համար'],
+  't.s3':      ['High-level synthesis: C/C++ to hardware', 'Բարձր մակարդակի սինթեզ՝ C/C++-ից սարք'],
+  't.p':       ['Python on the board', 'Python հարթակի վրա'],
+  't.p1':      ['Load hardware designs from a notebook', 'Սարքային նախագծի բեռնում notebook-ից'],
+  't.p2':      ['Control the PL with a few lines of Python', 'PL-ի կառավարում Python-ի մի քանի տողով'],
+  't.p3':      ['Plot results live in the browser', 'Արդյունքների գրաֆիկներ բրաուզերում'],
+  't.bd':      ['Block design · Vivado IP Integrator', 'Բլոկային նախագիծ · Vivado IP Integrator'],
+
+  /* 10 · PS + PL */
+  'z.kicker':  ['Processor + programmable logic', 'Պրոցեսոր + ծրագրավորվող տրամաբանություն'],
+  'z.title':   ['Hardware and software on one chip —\nresults on the lab PC.', 'Սարք և ծրագիր մեկ չիպի վրա՝\nարդյունքը լաբորատորիայի համակարգչում։'],
+  'z.ps':      ['Processing System', 'Պրոցեսորային համակարգ'],
+  'z.pl':      ['Programmable Logic', 'Ծրագրավորվող տրամաբանություն'],
+  'z.b1':      ['Sensor interface', 'Սենսորային ինտերֆեյս'],
+  'z.b2':      ['DSP filter', 'DSP ֆիլտր'],
+  'z.b3':      ['Video pipeline', 'Վիդեո մշակում'],
+  'z.o1':      ['→ PC · Jupyter', '→ Համակարգիչ · Jupyter'],
+  'z.o2':      ['→ Lab monitor', '→ Լաբորատորիայի մոնիտոր'],
+
+  /* 12 · Sensors and measurement */
+  'm.kicker':  ['Sensors, modules and measurement', 'Սենսորներ, մոդուլներ և չափումներ'],
+  'm.title':   ['Connect the real world. Measure what you build.', 'Միացրեք իրական աշխարհը։ Չափեք ձեր ստեղծածը։'],
+  'm.s1':      ['Temperature', 'Ջերմաստիճան'],
+  'm.s2':      ['Motion · IMU', 'Շարժում · IMU'],
+  'm.s3':      ['Distance', 'Հեռավորություն'],
+  'm.s4':      ['Analog input', 'Անալոգ մուտք'],
+  'm.scope':   ['Oscilloscope', 'Օսցիլոգրաֆ'],
+  'm.i1':      ['Oscilloscope', 'Օսցիլոգրաֆ'],
+  'm.i2':      ['Logic analyzer', 'Տրամաբանական անալիզատոր'],
+  'm.i3':      ['Signal generator', 'Ազդանշանի գեներատոր'],
+  'm.i4':      ['Multimeter', 'Մուլտիմետր'],
+  'm.i5':      ['Lab power supply', 'Լաբորատոր սնուցման աղբյուր'],
+
+  /* 13 · Project ideas */
+  'x.kicker':  ['FPGA project ideas', 'FPGA նախագծերի գաղափարներ'],
+  'x.title':   ['What students can build on the AUP-ZU3.', 'Ինչ կարող են ստեղծել ուսանողները AUP-ZU3-ով։'],
+  'x.1':       ['Real-time image processing', 'Պատկերի մշակում իրական ժամանակում'],
+  'x.1t': ['Camera in, filter in the PL, result on the DisplayPort monitor.', 'Տեսախցիկից մուտք, ֆիլտր PL-ում, արդյունք DisplayPort մոնիտորին։'],
+  'x.2':       ['Sensor data platform', 'Սենսորային տվյալների հարթակ'],
+  'x.2t':      ['Acquire and process sensor data in the PL, plot it in a notebook.', 'Տվյալների հավաքում և մշակում PL-ում, գրաֆիկներ notebook-ում։'],
+  'x.3':       ['Digital signal processing', 'Թվային ազդանշանների մշակում'],
+  'x.3t':      ['Filters in DSP slices, checked on the oscilloscope.', 'Ֆիլտրեր DSP բլոկներում՝ ստուգված օսցիլոգրաֆով։'],
+  'x.4':       ['Motor and PWM control', 'Շարժիչի և PWM կառավարում'],
+  'x.4t':      ['PWM generators and encoder feedback, measured in the lab.', 'PWM գեներատորներ և էնկոդերով հետադարձ կապ՝ չափված լաբորատորիայում։'],
+  'x.5':       ['Hardware accelerators', 'Սարքային արագացուցիչներ'],
+  'x.5t':      ['Move a slow function into hardware and call it from Python.', 'Դանդաղ ֆունկցիան տեղափոխել սարքի մեջ և կանչել Python-ից։'],
+  'x.6':       ['Memory test and reliability', 'Հիշողության թեստավորում և հուսալիություն'],
+  'x.6t':      ['BIST, ECC and JTAG access on real memories.', 'BIST, ECC և JTAG հասանելիություն իրական հիշողությունների վրա։'],
+
+  /* 14 · Lab gallery */
+  'g.kicker':  ['Inside the lab', 'Լաբորատորիայում'],
+  'g.title':   ['Students at work.', 'Ուսանողներն աշխատանքի մեջ։'],
+
+  /* 15 · Materials */
+  's7.kicker':   ['Learning materials', 'Ուսումնական նյութեր'],
+  's7.title':    ['Courses written\nfor the lab bench.', 'Դասընթացներ՝\nլաբորատոր սեղանի համար։'],
+  's7.sub':      ['Delivered in the SemiTec Academy app: trainings, quizzes, labs and projects in one package.',
+                  'SemiTec Academy հավելվածում՝ ուսուցում, թեստեր, լաբորատոր աշխատանքներ և նախագծեր մեկ փաթեթում։'],
+  's7.l1':       ['Training', 'Ուսուցում'],
+  's7.l1t':      ['Concepts, interaction, quizzes', 'Հասկացություններ, ինտերակտիվություն, թեստեր'],
+  's7.l2':       ['Lab', 'Լաբորատոր աշխատանք'],
+  's7.l2t':      ['Guided practice on the board', 'Ուղղորդված պրակտիկա հարթակի վրա'],
+  's7.l3':       ['Project', 'Նախագիծ'],
+  's7.l3t':      ['Same style, harder problems', 'Նույն մոտեցումը, ավելի բարդ խնդիրներ'],
+  's7.pkg':      ['First package · BIST and MBIST', 'Առաջին փաթեթը · BIST և MBIST'],
+
+  /* 16 · Projects */
+  's8.kicker':   ['Real projects', 'Իրական նախագծեր'],
+  's8.title':    ['Real problems\nfor every degree.', 'Իրական խնդիրներ\nյուրաքանչյուր աստիճանի համար։'],
+  's8.lv1':      ['Bachelor diploma', 'Բակալավրի ավարտական'],
+  's8.lv2':      ['Master’s thesis', 'Մագիստրոսական թեզ'],
+  's8.lv3':      ['PhD research', 'PhD հետազոտություն'],
+  's8.lv4':      ['Research teams', 'Հետազոտական խմբեր'],
+  's8.ex':       ['Topics already defined on the AUP-ZU3', 'AUP-ZU3-ի վրա արդեն սահմանված թեմաներ'],
+  's8.e1':       ['JTAG-Accessible Memory BIST', 'JTAG-ով հասանելի հիշողության BIST'],
+  's8.e2':       ['ECC-Protected Sensor Data Memory', 'ECC-ով պաշտպանված սենսորային տվյալների հիշողություն'],
+  's8.e3':       ['FPGA Sensor Data Acquisition, Processing & Analytics Platform', 'FPGA սենսորային տվյալների հավաքման, մշակման և վերլուծության հարթակ'],
+  's8.t1':       ['Bachelor diploma', 'Բակալավրի ավարտական'],
+  's8.t3':       ['Cross-department diploma · 2 students', 'Միջամբիոնային ավարտական · 2 ուսանող'],
+
+  /* 17 · Cycle */
+  's9.kicker':   ['From problem to publication', 'Խնդրից մինչև հրապարակում'],
+  's9.title':    ['Projects that become\npapers, prototypes and grants.', 'Նախագծեր, որոնք դառնում են\nհոդվածներ, նախատիպեր\nև դրամաշնորհներ։'],
+  's9.n1':       ['Define the problem', 'Սահմանել խնդիրը'],
+  's9.n2':       ['Work in the lab', 'Աշխատել լաբորատորիայում'],
+  's9.n3':       ['Build a prototype', 'Ստեղծել նախատիպ'],
+  's9.n4':       ['Publish · apply for grants', 'Հրապարակել · դիմել դրամաշնորհի'],
+  's9.now':      ['Already happening', 'Արդեն իրականացվում է'],
+  's9.w1':       ['Supervision of diploma and research projects', 'Ավարտական և հետազոտական նախագծերի ղեկավարում'],
+  's9.w2':       ['Guest lectures', 'Հրավիրյալ դասախոսություններ'],
+  's9.w3':       ['Support for grant applications', 'Աջակցություն դրամաշնորհային հայտերին'],
+
+  /* 18 · Roadmap */
+  's10.kicker':  ['What comes next', 'Հաջորդ քայլերը'],
+  's10.title':   ['Growing, one lab at a time.', 'Աճում ենք՝ լաբորատորիա առ լաբորատորիա։'],
+  's10.r1':      ['First lab with the AUP-ZU3', 'Առաջին լաբորատորիան AUP-ZU3-ով'],
+  's10.r2':      ['More boards and platforms', 'Նոր հարթակներ'],
+  's10.r3':      ['Labs in more universities', 'Լաբորատորիաներ այլ համալսարաններում'],
+  's10.r4':      ['Open repository and digital journal', 'Բաց թվային պահոց և ամսագիր'],
+  's10.r5':      ['Regional centres across Armenia', 'Տարածաշրջանային կենտրոններ ամբողջ Հայաստանում'],
+
+  /* 19 · Join */
+  's11.kicker':  ['Join us', 'Միացեք մեզ'],
+  's11.title':   ['Build it with us.', 'Կառուցենք միասին։'],
+  's11.c1':      ['Universities', 'Համալսարաններ'],
+  's11.c1t':     ['Host a laboratory and bring the courses to your students.', 'Հյուրընկալեք լաբորատորիա և ներդրեք դասընթացները ձեր ուսանողների համար։'],
+  's11.c2':      ['Companies', 'Ընկերություններ'],
+  's11.c2t':     ['Share tools, engineers and real problems.', 'Կիսվեք գործիքներով, ինժեներներով և իրական խնդիրներով։'],
+  's11.c3':      ['Students & researchers', 'Ուսանողներ և հետազոտողներ'],
+  's11.tag':     ['SemiTec Foundation · Advancing Armenia’s semiconductor future', 'SemiTec հիմնադրամ · Հայաստանի կիսահաղորդչային ապագան'],
+  's11.c3t':     ['Take a project, learn on real hardware, publish your work.', 'Ընտրեք նախագիծ, սովորեք իրական սարքերով, հրապարակեք ձեր աշխատանքը։']
+};
+
+/* LAB PHOTOS for the "Inside the lab" scene. Put the photos in assets/gallery/ and list them here.
+   While this list is empty, the scene is skipped automatically. Example:
+   { src: 'assets/gallery/lab-1.jpg', caption: ['Students testing a design on the AUP-ZU3', 'Ուսանողները փորձարկում են նախագիծը AUP-ZU3-ի վրա'] }, */
+const GALLERY = [
+];
