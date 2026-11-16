@@ -255,8 +255,8 @@ const SITE_CONTENT = {
         {
           "id": "labs",
           "title": [
-            "Laboratories",
-            "Լաբորատորիաներ"
+            "University Laboratories",
+            "Համալսարանական լաբորատորիաներ"
           ],
           "intro": [
             "Hands-on laboratories in universities and education centres.",
@@ -297,19 +297,23 @@ const SITE_CONTENT = {
           "deck": "labs"
         },
         {
-          "id": "library",
+          "id": "academy",
           "title": [
-            "Digital Library",
-            "Թվային գրադարան"
+            "SemiTec Academy",
+            "SemiTec Ակադեմիա"
           ],
           "intro": [
-            "Courses, trainings and learning materials, open to everyone.",
-            "Դասընթացներ, ուսուցողական և ուսումնական նյութեր՝ բաց բոլորի համար։"
+            "Our digital library: courses, trainings and learning materials, free in the SemiTec Academy app.",
+            "Մեր թվային գրադարանը՝ դասընթացներ, ուսուցողական և ուսումնական նյութեր, անվճար SemiTec Ակադեմիա հավելվածում։"
           ],
           "text": [
             [
-              "The library is published through SemiTec Academy, the foundation's free desktop learning app. Students add course packages and study on their own computer: interactive trainings with quizzes, labs with source files, readings and projects.",
-              "Գրադարանը հրապարակվում է SemiTec Academy-ի՝ հիմնադրամի անվճար ուսումնական հավելվածի միջոցով։ Ուսանողներն ավելացնում են դասընթացների փաթեթներ և սովորում իրենց համակարգչում՝ ինտերակտիվ ուսուցում թեստերով, լաբորատոր աշխատանքներ աղբյուր ֆայլերով, ընթերցանություն և նախագծեր։"
+              "SemiTec Academy is the foundation's desktop learning app. Students install it once, add course packages and study on their own computer: interactive trainings with quizzes, labs with source files, readings, videos and projects. Progress stays on the student's computer; no server or sign-up is needed.",
+              "SemiTec Ակադեմիան հիմնադրամի ուսումնական համակարգչային հավելվածն է։ Ուսանողները մեկ անգամ տեղադրում են այն, ավելացնում դասընթացային փաթեթներ և սովորում իրենց համակարգչում՝ ինտերակտիվ դասընթացներ թեստերով, լաբորատոր աշխատանքներ աղբյուր ֆայլերով, ընթերցանյութեր, տեսանյութեր և նախագծեր։ Առաջընթացը պահվում է ուսանողի համակարգչում․ սերվեր կամ գրանցում պետք չէ։"
+            ],
+            [
+              "The app, the course materials and the templates for creating them are three open projects, so universities and companies can use them and publish their own courses. We believe that well-organized, accessible knowledge can support independent learning and long-term community development.",
+              "Հավելվածը, դասընթացային նյութերը և դրանք ստեղծելու ձևանմուշները երեք բաց նախագծեր են, որպեսզի համալսարաններն ու ընկերությունները կարողանան օգտագործել դրանք և հրապարակել իրենց սեփական դասընթացները։ Մենք համոզված ենք, որ լավ կազմակերպված և հասանելի գիտելիքը կարող է աջակցել ինքնուրույն ուսմանը և համայնքի երկարաժամկետ զարգացմանը։"
             ]
           ],
           "items": [
@@ -318,8 +322,8 @@ const SITE_CONTENT = {
               "Կարգավիճակ՝ գործում է"
             ],
             [
-              "First package: BIST and MBIST",
-              "Առաջին փաթեթը՝ BIST և MBIST"
+              "First course: BIST and MBIST",
+              "Առաջին դասընթացը՝ BIST և MBIST"
             ],
             [
               "Free and open",
@@ -330,7 +334,7 @@ const SITE_CONTENT = {
             {
               "label": [
                 "Download SemiTec Academy",
-                "Ներբեռնել SemiTec Academy-ն"
+                "Ներբեռնել SemiTec Ակադեմիան"
               ],
               "href": "https://github.com/SemiTecFoundation/semitec-academy/releases/latest"
             },
@@ -343,8 +347,163 @@ const SITE_CONTENT = {
             }
           ],
           "children": [],
-          "media": "academy-training",
+          "media": "academy-app",
           "showcase": [
+            {
+              "id": "app",
+              "title": [
+                "Academy app",
+                "Ակադեմիա հավելված"
+              ],
+              "intro": [
+                "Install once, add packages, study offline and resume where you left off.",
+                "Տեղադրեք մեկ անգամ, ավելացրեք փաթեթներ, սովորեք առանց համացանցի և շարունակեք այնտեղից, որտեղ կանգ եք առել։"
+              ],
+              "details": [
+                [
+                  "Students install the app once on Windows, macOS or Linux, choose a folder for their data and create a local account. They add course packages from the catalog or as a file, enroll, and follow the course order or a weekly study plan.",
+                  "Ուսանողները մեկ անգամ տեղադրում են հավելվածը Windows, macOS կամ Linux համակարգում, ընտրում են թղթապանակ իրենց տվյալների համար և ստեղծում տեղային հաշիվ։ Նրանք ավելացնում են դասընթացային փաթեթներ կատալոգից կամ ֆայլից, գրանցվում և հետևում են դասընթացի հերթականությանը կամ շաբաթական ուսումնական պլանին։"
+                ],
+                [
+                  "Trainings unlock topic by topic with quizzes; labs bring their manual, steps and source files together; progress and optional certificates stay on the student's computer.",
+                  "Դասընթացները բացվում են թեմա առ թեմա՝ թեստերի միջոցով․ լաբորատոր աշխատանքները միավորում են ձեռնարկը, քայլերը և աղբյուր ֆայլերը․ առաջընթացը և վկայականները պահվում են ուսանողի համակարգչում։"
+                ]
+              ],
+              "items": [
+                [
+                  "Trainings, labs, readings, videos and projects",
+                  "Դասընթացներ, լաբորատոր աշխատանքներ, ընթերցանյութեր, տեսանյութեր և նախագծեր"
+                ],
+                [
+                  "Study plans, calendar and optional certificates",
+                  "Ուսումնական պլաններ, օրացույց և ըստ ցանկության՝ վկայականներ"
+                ]
+              ],
+              "links": [
+                {
+                  "label": [
+                    "Download",
+                    "Ներբեռնել"
+                  ],
+                  "href": "https://github.com/SemiTecFoundation/semitec-academy/releases/latest"
+                },
+                {
+                  "label": [
+                    "Introduction",
+                    "Ներածություն"
+                  ],
+                  "href": "https://semitecfoundation.github.io/semitec-academy/"
+                },
+                {
+                  "label": [
+                    "Source code",
+                    "Աղբյուր կոդ"
+                  ],
+                  "href": "https://github.com/SemiTecFoundation/semitec-academy"
+                }
+              ],
+              "media": "academy-app",
+              "gallery": [
+                "academy-app",
+                "academy-catalog",
+                "academy-certificate"
+              ]
+            },
+            {
+              "id": "materials",
+              "title": [
+                "Learning materials",
+                "Ուսումնական նյութեր"
+              ],
+              "intro": [
+                "Courses published by the foundation appear in the app's catalog automatically.",
+                "Հիմնադրամի հրապարակած դասընթացները ինքնաշխատ հայտնվում են հավելվածի կատալոգում։"
+              ],
+              "details": [
+                [
+                  "The foundation's course content is open: lectures, interactive trainings, labs and projects, organised by subject. Each released training also opens on its own in a web browser.",
+                  "Հիմնադրամի դասընթացային բովանդակությունը բաց է՝ դասախոսություններ, ինտերակտիվ դասընթացներ, լաբորատոր աշխատանքներ և նախագծեր՝ ըստ թեմաների։ Յուրաքանչյուր թողարկված դասընթաց բացվում է նաև առանձին՝ դիտարկիչում։"
+                ],
+                [
+                  "Courses built from it are published as packages in the foundation catalog, which every Academy app already knows: a new course or a new version appears in the app by itself.",
+                  "Դրանից կազմված դասընթացները հրապարակվում են որպես փաթեթներ հիմնադրամի կատալոգում, որը յուրաքանչյուր Ակադեմիա հավելված արդեն գիտի․ նոր դասընթացը կամ նոր տարբերակը ինքնին հայտնվում է հավելվածում։"
+                ]
+              ],
+              "items": [
+                [
+                  "First course: BIST and MBIST, for bachelor students",
+                  "Առաջին դասընթաց՝ BIST և MBIST, բակալավրիատի ուսանողների համար"
+                ],
+                [
+                  "Free trainings that also open in a browser",
+                  "Անվճար դասընթացներ, որոնք բացվում են նաև դիտարկիչում"
+                ]
+              ],
+              "links": [
+                {
+                  "label": [
+                    "Browse materials",
+                    "Դիտել նյութերը"
+                  ],
+                  "href": "https://semitecfoundation.github.io/semitec-academy-materials/"
+                },
+                {
+                  "label": [
+                    "Materials on GitHub",
+                    "Նյութերը GitHub-ում"
+                  ],
+                  "href": "https://github.com/SemiTecFoundation/semitec-academy-materials"
+                }
+              ],
+              "media": "academy-training",
+              "gallery": [
+                "academy-training"
+              ]
+            },
+            {
+              "id": "templates",
+              "title": [
+                "Academy Templates",
+                "Ակադեմիայի ձևանմուշներ"
+              ],
+              "intro": [
+                "Templates and AI-assistant skills for lecturers and companies who want to publish their own courses.",
+                "Ձևանմուշներ և AI օգնականի հմտություններ դասախոսների և ընկերությունների համար, որոնք ցանկանում են հրապարակել իրենց դասընթացները։"
+              ],
+              "details": [
+                [
+                  "Academy Templates are ready-made formats and AI-assistant skills for interactive trainings, lab manuals, project briefs and course packages, so a lecturer can turn a topic into material students can use.",
+                  "Ակադեմիայի ձևանմուշները պատրաստի ձևաչափեր և AI օգնականի հմտություններ են ինտերակտիվ դասընթացների, լաբորատոր ձեռնարկների, նախագծային առաջադրանքների և դասընթացային փաթեթների համար, որպեսզի դասախոսը կարողանա թեման վերածել ուսանողների համար օգտակար նյութի։"
+                ],
+                [
+                  "Universities and companies can publish their own packages and catalogs without an agreement or approval from the foundation; each publisher stays responsible for its content.",
+                  "Համալսարաններն ու ընկերությունները կարող են հրապարակել իրենց փաթեթներն ու կատալոգները առանց հիմնադրամի համաձայնության կամ հաստատման․ յուրաքանչյուր հրատարակիչ պատասխանատու է իր բովանդակության համար։"
+                ]
+              ],
+              "items": [
+                [
+                  "Trainings, lab manuals, project briefs and course packages",
+                  "Դասընթացներ, լաբորատոր ձեռնարկներ, նախագծային առաջադրանքներ և դասընթացային փաթեթներ"
+                ],
+                [
+                  "No agreement or approval from the foundation needed",
+                  "Հիմնադրամի համաձայնություն կամ հաստատում պետք չէ"
+                ]
+              ],
+              "links": [
+                {
+                  "label": [
+                    "Academy Templates on GitHub",
+                    "Ձևանմուշները GitHub-ում"
+                  ],
+                  "href": "https://github.com/SemiTecFoundation/semitec-academy-skills"
+                }
+              ],
+              "media": "academy-lab",
+              "gallery": [
+                "academy-lab"
+              ]
+            },
             {
               "id": "interactive-lab",
               "media": "wafer",
@@ -379,8 +538,8 @@ const SITE_CONTENT = {
         {
           "id": "projects",
           "title": [
-            "Student Projects",
-            "Ուսանողական նախագծեր"
+            "Diploma & Research Projects",
+            "Ավարտական և հետազոտական նախագծեր"
           ],
           "intro": [
             "Diploma, thesis and research projects, defined and supervised.",
@@ -466,8 +625,8 @@ const SITE_CONTENT = {
         {
           "id": "meetings",
           "title": [
-            "Engineers & Lectures",
-            "Ինժեներներ և դասախոսություններ"
+            "Engineer Meetings & Guest Lectures",
+            "Հանդիպումներ ինժեներների հետ և հրավիրյալ դասախոսություններ"
           ],
           "intro": [
             "A meeting series with industry engineers, and guest lectures at universities.",

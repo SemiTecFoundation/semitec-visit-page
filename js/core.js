@@ -54,7 +54,7 @@
   /* section/card: a card on a section's main road (About) */
   ST.isShowcase = p => { const sec = p.length === 2 && sections.find(s => s.id === p[0]); return !!sec && [...(sec.showcase || []), ...(sec.cells || [])].some(c => c.id === p[1]); };
   ST.readHash = () => {
-    try { const aliases = { hero: 'overview', about: 'purpose', ecosystem: 'focus', directions: 'initiatives', participate: 'support', partnerships: 'support/partner', 'support-us': 'donate', future: 'impact', contact: 'support/contact', 'interactive-lab': 'initiatives/library/interactive-lab', 'initiatives/interactive-lab': 'initiatives/library', audiences: 'people', 'initiatives/academy': 'initiatives/library', 'initiatives/mentorship': 'initiatives/projects', 'initiatives/challenges': 'initiatives/projects' }; const hash = decodeURIComponent(location.hash.slice(1)); const p = (aliases[hash] || hash).split('/').filter(Boolean); return ST.resolve(p) || ST.isShowcase(p) ? p : ['overview']; }
+    try { const aliases = { hero: 'overview', about: 'purpose', ecosystem: 'focus', directions: 'initiatives', participate: 'support', partnerships: 'support/partner', 'support-us': 'donate', future: 'impact', contact: 'support/contact', 'interactive-lab': 'initiatives/academy', 'initiatives/interactive-lab': 'initiatives/academy', 'initiatives/library': 'initiatives/academy', audiences: 'people', 'initiatives/mentorship': 'initiatives/projects', 'initiatives/challenges': 'initiatives/projects' }; const hash = decodeURIComponent(location.hash.slice(1)); const p = (aliases[hash] || hash).split('/').filter(Boolean); return ST.resolve(p) || ST.isShowcase(p) ? p : ['overview']; }
     catch (e) { return ['overview']; }
   };
   /* a tiny tween helper: ST.tween(ms, t => …) → Promise */
