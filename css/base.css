@@ -253,3 +253,20 @@ html:has(dialog[open]){overflow:hidden}
 .ts-close{position:absolute;top:10px;right:12px;width:34px;height:34px;border:1px solid #98ceca44;border-radius:50%;background:none;color:#f1eee6;font-size:19px}
 .ts-body{overflow:auto;padding:14px 18px 18px;font-size:14px;line-height:1.65;color:#d6e2e1}
 .ts-body p{margin:0 0 12px}
+
+/* ---------- expo presentation: watch button and window (both views) ---------- */
+.deck-btn{display:inline-flex;align-items:center;gap:12px;margin:14px 0 6px;padding:10px 18px 10px 10px;border-radius:999px;border:1px solid #eac88380;background:#eac88314;color:inherit;font:inherit;font-size:14px;cursor:pointer;transition:background .2s,border-color .2s}
+.deck-btn:hover,.deck-btn:focus-visible{background:#eac8832e;border-color:#eac883}
+.deck-play{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#eac883}
+.deck-play::after{content:"";margin-left:3px;border-style:solid;border-width:6px 0 6px 10px;border-color:transparent transparent transparent #071419}
+.deck-dialog{width:min(1280px,94vw);padding:0;border-radius:16px;overflow:hidden}
+.deck-frame{position:relative;aspect-ratio:16/9;max-height:84vh;background:#071419}
+.deck-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.deck-close{position:absolute;top:10px;right:12px;z-index:2;width:38px;height:38px;border-radius:50%;border:1px solid #638b8a66;background:#071419cc;color:#f1eee6;font-size:22px;line-height:1;cursor:pointer}
+.deck-hint{margin:0;padding:10px 16px;font-size:12px;color:#97b0b3;letter-spacing:.04em}
+.path-events{margin:16px 0 4px;padding:12px 14px;border:1px solid #638b8a40;border-radius:10px}
+.pe-label{margin:0 0 6px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#b08a45}
+.path-events ul{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:13px}
+.path-events time{display:inline-block;min-width:100px;color:#97b0b3}
+.pe-none{margin:0;font-size:13px;color:#97b0b3}
+.panel-deck .deck-btn{margin:10px 0 2px}

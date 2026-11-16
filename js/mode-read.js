@@ -51,8 +51,10 @@
       </button>
       <div class="pc-body" id="body-${section.id}-${child.id}"><div class="pc-inner">
         <p class="pc-intro">${ST.esc(ST.pick(child.intro))}</p>
+        ${ST.deckHTML(child)}
         ${(child.text || []).map(t => `<p class="pc-text">${ST.esc(ST.pick(t))}</p>`).join('')}
         ${items ? `<ul class="pc-items">${items}</ul>` : ''}
+        ${ST.pathEventsHTML(child)}
         ${linksHTML(child.links, 'pc-links')}
         ${showcaseHTML(child.showcase, p)}
         ${sub ? `<p class="pc-sub-label">${ST.esc(ST.text('further'))}</p><div class="pc-sub">${sub}</div>` : ''}
@@ -157,6 +159,7 @@
           <${H} class="sec-title" id="h-${s.id}">${title(ST.pick(s.title))}</${H}>
           <p class="sec-intro">${ST.esc(ST.pick(s.intro))}</p>
           ${(s.text || []).map(t => `<p class="sec-text">${ST.esc(ST.pick(t))}</p>`).join('')}
+          ${ST.deckHTML(s)}
           ${linksHTML(s.links, 'hero-actions')}
           ${s.id === 'support' ? `<p class="sec-text">${ST.esc(ST.pick(SITE_CONTENT.brand.legalName))}</p>` : ''}
           ${showcaseHTML(s.showcase, s.id)}
