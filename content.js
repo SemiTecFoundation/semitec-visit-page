@@ -613,6 +613,7 @@ const SITE_CONTENT = {
           "children": [],
           "media": "prog-problems",
           "showcase": [],
+          "deck": "hackathons",
           "eventTypes": [
             {
               "type": "hackathon"
@@ -660,6 +661,7 @@ const SITE_CONTENT = {
           "children": [],
           "media": "prog-meet",
           "showcase": [],
+          "deck": "meetings",
           "eventTypes": [
             {
               "type": "meeting"

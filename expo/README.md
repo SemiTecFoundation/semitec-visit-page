@@ -1,6 +1,6 @@
 # SemiTec Foundation — expo presentation
 
-A self-running, video-like presentation for exhibitions, about 5 minutes per loop. It has 19 scenes: the purpose, the gap and the laboratory initiative; the AMD AUP-ZU3, with a guided board tour (12 parts) and a zoom from the package down to LUTs, flip-flops, DSP48E2 and RAMB36; the hands-on flow and toolchain (Vivado, Vitis, PYNQ/Jupyter); PS↔PL with a notebook; live dashboards (sensors, signal analysis, vision); sensors and measurement; project ideas; lab photos; materials; projects; roadmap; and the call to join. It is plain HTML/CSS/JavaScript, with no build step. Open `index.html` in Chrome, Edge or Firefox.
+A self-running, video-like presentation for exhibitions, about 6½ minutes per loop. It has 27 scenes: the purpose, the gap and the laboratory initiative; the AMD AUP-ZU3, with a guided board tour (12 parts) and a zoom from the package down to LUTs, flip-flops, DSP48E2 and RAMB36; the hands-on flow and toolchain (Vivado, Vitis, PYNQ/Jupyter); PS↔PL with a notebook; live dashboards (sensors, signal analysis, vision); sensors and measurement; project ideas; lab photos; materials; projects; hackathons and conferences (format, event cycle, challenge ideas, conferences); engineer meetings and guest lectures (meeting series, example topics, guest lectures, talk to project); the roadmap; and the call to join. It is plain HTML/CSS/JavaScript, with no build step. Open `index.html` in Chrome, Edge or Firefox.
 
 ## Controls
 
@@ -15,7 +15,7 @@ A self-running, video-like presentation for exhibitions, about 5 minutes per loo
 
 While playing, the deck auto-advances and loops. Navigating while it is paused shows each scene in its finished state, like a slide deck. A paused deck resumes by itself after 60 s without input, so the expo screen never stays frozen. The controls fade out when the mouse is idle.
 
-URL options: `?lang=hy`, `?scene=5`, `?paused=1`. They can be combined, e.g. `index.html?lang=hy&scene=5`.
+URL options: `?lang=hy`, `?scene=5`, `?paused=1`, `?chapter=labs|library|projects|hackathons|meetings` (play one chapter), `?embed=1` (website mode: starts paused behind a play button). They can be combined, e.g. `index.html?lang=hy&scene=5`.
 
 ## Editing
 
