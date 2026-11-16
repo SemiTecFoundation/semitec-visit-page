@@ -24,13 +24,13 @@ The Focus Areas section (`initiatives`) has five side paths, one per direction, 
 
 | Path | Direction | Extra |
 |---|---|---|
-| `labs` | Laboratories in universities and education centres | `deck: "labs"` |
-| `library` | Digital Library: courses, trainings, materials (SemiTec Academy) | `deck: "library"`, the "Explore the building blocks" card |
-| `projects` | Student Projects: diploma, thesis and research projects | `deck: "projects"` |
+| `labs` | University Laboratories | `deck: "labs"` |
+| `academy` | SemiTec Academy: the digital library (courses, trainings, materials) | `deck: "library"`; cards: Academy app, Learning materials, Academy Templates, Explore the building blocks |
+| `projects` | Diploma & Research Projects | `deck: "projects"` |
 | `hackathons` | Hackathons & Conferences | `eventTypes: hackathon, conference` |
-| `meetings` | Engineers & Lectures: meeting series and guest lectures | `eventTypes: meeting, lecture` |
+| `meetings` | Engineer Meetings & Guest Lectures | `eventTypes: meeting, lecture` |
 
-Old addresses still work: `#initiatives/academy` opens the library, `#initiatives/mentorship` and `#initiatives/challenges` open projects, and `#interactive-lab` opens the library.
+Old addresses still work: `#initiatives/library` and `#interactive-lab` open SemiTec Academy, and `#initiatives/mentorship` and `#initiatives/challenges` open projects.
 
 **The presentation (`expo/`).** This is the foundation's self-running presentation. A node with `deck` gets a **Watch** button, which opens the presentation in a window in both views:
 - `deck: "all"` plays the whole story (the Focus Areas section uses it);
