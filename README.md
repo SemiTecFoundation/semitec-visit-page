@@ -27,14 +27,14 @@ The Focus Areas section (`initiatives`) has five side paths, one per direction, 
 | `labs` | University Laboratories | `deck: "labs"` |
 | `academy` | SemiTec Academy: the digital library (courses, trainings, materials) | `deck: "library"`; cards: Academy app, Learning materials, Academy Templates, Explore the building blocks |
 | `projects` | Diploma & Research Projects | `deck: "projects"` |
-| `hackathons` | Hackathons & Conferences | `eventTypes: hackathon, conference` |
-| `meetings` | Engineer Meetings & Guest Lectures | `eventTypes: meeting, lecture` |
+| `hackathons` | Hackathons & Conferences | `deck: "hackathons"`, `eventTypes: hackathon, conference` |
+| `meetings` | Engineer Meetings & Guest Lectures | `deck: "meetings"`, `eventTypes: meeting, lecture` |
 
 Old addresses still work: `#initiatives/library` and `#interactive-lab` open SemiTec Academy, and `#initiatives/mentorship` and `#initiatives/challenges` open projects.
 
 **The presentation (`expo/`).** This is the foundation's self-running presentation. A node with `deck` gets a **Watch** button, which opens the presentation in a window in both views:
 - `deck: "all"` plays the whole story (the Focus Areas section uses it);
-- `labs`, `library` and `projects` play only their chapter, so the slides explain and the path text keeps to status, facts and links.
+- `labs`, `library`, `projects`, `hackathons` and `meetings` play only their chapter, so the slides explain and the path text keeps to status, facts and links.
 
 The window loads `expo/index.html?embed=1&autoplay=1&chapter=…&lang=…`. Esc or × closes it and stops it. On its own, `expo/index.html` is the full expo version, with its own README.
 

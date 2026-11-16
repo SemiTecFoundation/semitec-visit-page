@@ -422,6 +422,16 @@
     c.fillStyle = 'rgba(234,200,131,.7)'; c.fillRect(0, 52, 1200 * (local / TAB_SEC), 2);
   }
 
+  /* ================= hackathon countdown ================= */
+  function clockUpdate(scene, sec) {
+    const el = scene.querySelector('.clock-t'); if (!el) return;
+    const t = isFinite(sec) ? Math.max(0, sec - 1.6) : 4.2;
+    const left = Math.max(0, 24 * 3600 - Math.floor(t * 2400));   // a fast-forwarded weekend
+    const p = n => String(n).padStart(2, '0');
+    const txt = `${p(Math.floor(left / 3600))}:${p(Math.floor(left / 60) % 60)}:${p(left % 60)}`;
+    if (el.textContent !== txt) el.textContent = txt;
+  }
+
   /* ================= API ================= */
   window.SceneFX = {
     init() { initBoards(); initTour(); initZoom(); initDash(); },
@@ -429,6 +439,7 @@
       if (scene.classList.contains('s-tour')) tourUpdate(sec);
       else if (scene.classList.contains('s-zoom')) zoomUpdate(sec);
       else if (scene.classList.contains('s-dash')) dashUpdate(sec);
+      else if (scene.classList.contains('s-hack')) clockUpdate(scene, sec);
     },
     reset(scene) {
       if (scene.classList.contains('s-tour')) tourReset();
