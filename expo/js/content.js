@@ -18,8 +18,7 @@ const STRINGS = {
   /* 1 · Intro */
   's1.kicker':   ['SemiTec Foundation', 'SemiTec հիմնադրամ'],
   's1.title':    ['Advancing Armenia’s\nsemiconductor future.', 'Կառուցում ենք Հայաստանի\nկիսահաղորդչային ապագան։'],
-  's1.sub':      ['Laboratories, learning materials and real projects\nfor students and researchers.',
-                  'Լաբորատորիաներ, ուսումնական նյութեր և իրական նախագծեր\nուսանողների ու հետազոտողների համար։'],
+  's1.sub': ['Laboratories, SemiTec Academy, real projects, hackathons\nand meetings with engineers, for students and researchers.', 'Լաբորատորիաներ, SemiTec Ակադեմիա, իրական նախագծեր, հաքաթոններ\nև հանդիպումներ ինժեներների հետ՝ ուսանողների ու հետազոտողների համար։'],
 
   /* 2 · The gap */
   's2.kicker':   ['The gap', 'Բացը'],
@@ -30,20 +29,22 @@ const STRINGS = {
   's2.right':    ['Industry', 'Արդյունաբերություն'],
   's2.rightSub': ['Tools · hardware · real problems', 'Գործիքներ · սարքավորումներ · իրական խնդիրներ'],
   's2.bridge':   ['Hands-on laboratory', 'Գործնական լաբորատորիա'],
-  's2.note':     ['We build the bridge — inside the university.', 'Մենք կառուցում ենք կամուրջը՝ հենց համալսարանում։'],
+  's2.note': ['We build the bridge: in the lab, in real projects, and wherever students meet engineers.', 'Մենք կառուցում ենք կամուրջը՝ լաբորատորիայում, իրական նախագծերում և այնտեղ, որտեղ ուսանողները հանդիպում են ինժեներներին։'],
 
   /* 3 · Purpose */
   's3.kicker':   ['Our purpose', 'Մեր նպատակը'],
-  's3.title':    ['Three directions, working as one.', 'Երեք ուղղություն՝ մեկ ամբողջության մեջ։'],
-  's3.p1':       ['Laboratories', 'Լաբորատորիաներ'],
-  's3.p1t':      ['Equipped labs inside universities, with tools and boards from industry.',
-                  'Հագեցած լաբորատորիաներ համալսարաններում՝ արդյունաբերության գործիքներով և հարթակներով։'],
-  's3.p2':       ['Learning materials', 'Ուսումնական նյութեր'],
-  's3.p2t':      ['Courses, trainings and labs written for the hardware students actually use.',
-                  'Դասընթացներ և լաբորատոր աշխատանքներ՝ հենց այն սարքերի համար, որոնցով աշխատում են ուսանողները։'],
-  's3.p3':       ['Projects', 'Նախագծեր'],
-  's3.p3t':      ['Defined problems for bachelor, master and PhD students and research teams.',
-                  'Սահմանված խնդիրներ բակալավրի, մագիստրոսի, PhD ուսանողների և հետազոտական խմբերի համար։'],
+  's3.title': ['Five directions, working as one.', 'Հինգ ուղղություն՝ մեկ ամբողջության մեջ։'],
+  's3.p4': ['Hackathons & Conferences', 'Հաքաթոններ և գիտաժողովներ'],
+  's3.p4t': ['Teams solve real challenges, and results reach a stage and a paper.', 'Թիմերը լուծում են իրական մարտահրավերներ, իսկ արդյունքները հասնում են բեմ և հոդված։'],
+  's3.p5': ['Engineer Meetings & Guest Lectures', 'Հանդիպումներ ինժեներների հետ և հրավիրյալ դասախոսություններ'],
+  's3.p5t': ['Industry experience brought to students, in meetings and in their courses.', 'Արդյունաբերական փորձը՝ ուսանողներին, հանդիպումներում և դասընթացներում։'],
+  's3.note': ['Learn and practise · build real projects · meet the community.', 'Սովորել և փորձել · ստեղծել իրական նախագծեր · հանդիպել համայնքին։'],
+  's3.p1': ['University Laboratories', 'Համալսարանական լաբորատորիաներ'],
+  's3.p1t': ['Equipped labs with boards, instruments and tools from industry.', 'Հագեցած լաբորատորիաներ՝ արդյունաբերության հարթակներով, սարքավորումներով և գործիքներով։'],
+  's3.p2': ['SemiTec Academy', 'SemiTec Ակադեմիա'],
+  's3.p2t': ['Our digital library: courses, trainings and labs for the hardware students use.', 'Մեր թվային գրադարանը՝ դասընթացներ, ուսուցում և լաբորատոր աշխատանքներ ուսանողների սարքերի համար։'],
+  's3.p3': ['Diploma & Research Projects', 'Ավարտական և հետազոտական նախագծեր'],
+  's3.p3t': ['Real problems for bachelor, master and PhD students and research teams.', 'Իրական խնդիրներ բակալավրի, մագիստրոսի, PhD ուսանողների և հետազոտական խմբերի համար։'],
 
   /* 4 · Laboratory initiative */
   's4.kicker':   ['Laboratory initiative', 'Լաբորատոր նախաձեռնություն'],
@@ -339,22 +340,23 @@ const STRINGS = {
   /* 18 · Roadmap */
   's10.kicker':  ['What comes next', 'Հաջորդ քայլերը'],
   's10.title':   ['Growing, one lab at a time.', 'Աճում ենք՝ լաբորատորիա առ լաբորատորիա։'],
-  's10.r1':      ['First lab with the AUP-ZU3', 'Առաջին լաբորատորիան AUP-ZU3-ով'],
-  's10.r2':      ['More boards and platforms', 'Նոր հարթակներ'],
-  's10.r3':      ['Labs in more universities', 'Լաբորատորիաներ այլ համալսարաններում'],
-  's10.r4':      ['Open repository and digital journal', 'Բաց թվային պահոց և ամսագիր'],
-  's10.r5':      ['Regional centres across Armenia', 'Տարածաշրջանային կենտրոններ ամբողջ Հայաստանում'],
+  's10.r1': ['First lab with the AUP-ZU3', 'Առաջին լաբորատորիան AUP-ZU3-ով'],
+  's10.r2': ['Engineer meeting series', 'Հանդիպումների շարք ինժեներների հետ'],
+  's10.r3': ['First hackathon', 'Առաջին հաքաթոնը'],
+  's10.r4': ['More boards, labs in more universities', 'Նոր հարթակներ և լաբորատորիաներ այլ համալսարաններում'],
+  's10.r6': ['Regional centres across Armenia', 'Տարածաշրջանային կենտրոններ ամբողջ Հայաստանում'],
+  's10.r5': ['Open repository and digital journal', 'Բաց թվային պահոց և ամսագիր'],
 
   /* 19 · Join */
   's11.kicker':  ['Join us', 'Միացեք մեզ'],
   's11.title':   ['Build it with us.', 'Կառուցենք միասին։'],
   's11.c1':      ['Universities', 'Համալսարաններ'],
-  's11.c1t':     ['Host a laboratory and bring the courses to your students.', 'Հյուրընկալեք լաբորատորիա և ներդրեք դասընթացները ձեր ուսանողների համար։'],
+  's11.c1t': ['Host a laboratory, a guest lecture or an event, and bring the courses to your students.', 'Հյուրընկալեք լաբորատորիա, դասախոսություն կամ միջոցառում և ներդրեք դասընթացները ձեր ուսանողների համար։'],
   's11.c2':      ['Companies', 'Ընկերություններ'],
-  's11.c2t':     ['Share tools, engineers and real problems.', 'Կիսվեք գործիքներով, ինժեներներով և իրական խնդիրներով։'],
+  's11.c2t': ['Share tools and real problems, give a talk, propose a challenge.', 'Կիսվեք գործիքներով և իրական խնդիրներով, հանդես եկեք զեկուցումով, առաջարկեք մարտահրավեր։'],
   's11.c3':      ['Students & researchers', 'Ուսանողներ և հետազոտողներ'],
   's11.tag':     ['SemiTec Foundation · Advancing Armenia’s semiconductor future', 'SemiTec հիմնադրամ · Հայաստանի կիսահաղորդչային ապագան'],
-  's11.c3t':     ['Take a project, learn on real hardware, publish your work.', 'Ընտրեք նախագիծ, սովորեք իրական սարքերով, հրապարակեք ձեր աշխատանքը։']
+  's11.c3t':     ['Take a project, join a hackathon, learn on real hardware.', 'Ընտրեք նախագիծ, մասնակցեք հաքաթոնի, սովորեք իրական սարքերով։']
 };
 
 /* LAB PHOTOS for the "Inside the lab" scene. Put the photos in assets/gallery/ and list them here.

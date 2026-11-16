@@ -704,3 +704,19 @@ body.embed #hint,body.embed #pause-badge{display:none}
 html[lang="hy"] .clock-t{font-size:66px}
 html[lang="hy"] .topic h3{font-size:23px}
 html[lang="hy"] .fl-back p{font-size:23px}
+
+/* purpose with five directions, roadmap with six stops */
+.pillars.five{grid-template-columns:repeat(5,1fr);gap:24px;margin-top:70px}
+.pillars.five .card{padding:34px 28px 36px}
+.pillars.five .pillar-link{top:96px}
+.pillars.five .icon{width:80px;height:80px;padding:15px;margin-bottom:26px}
+.pillars.five h3{font-size:27px;min-height:2.3em}
+.pillars.five p{font-size:21px;margin-top:12px}
+.cnum{position:absolute;top:26px;right:26px;font:700 22px var(--mono);color:rgba(234,200,131,.45)}
+html[lang="hy"] .pillars.five h3{font-size:23px}
+html[lang="hy"] .pillars.five p{font-size:19px}
+.s-purpose .note{margin-top:40px;text-align:center}
+.road.six .stop{width:270px;margin-left:-135px}
+.road.six .stop:nth-child(2){left:7%}.road.six .stop:nth-child(3){left:24%}.road.six .stop:nth-child(4){left:41%}
+.road.six .stop:nth-child(5){left:59%}.road.six .stop:nth-child(6){left:76%}.road.six .stop:nth-child(7){left:93%}
+.road.six .stop span{font-size:24px}
