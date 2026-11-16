@@ -163,7 +163,6 @@
           ${linksHTML(s.links, 'hero-actions')}
           ${s.id === 'support' ? `<p class="sec-text">${ST.esc(ST.pick(SITE_CONTENT.brand.legalName))}</p>` : ''}
           ${showcaseHTML(s.showcase, s.id)}
-          ${s.id === 'initiatives' ? feed('programs-feed') + feed('resources-feed') : ''}
           ${s.id === 'people' && !SITE_CONTENT.partners.length ? feed('partners-feed') : ''}
           ${s.id === 'support' ? feed('opportunities-feed') : ''}
           ${i === 0 ? `<ul class="hero-tags">${items}</ul>
