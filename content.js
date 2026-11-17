@@ -2116,6 +2116,222 @@ const SITE_CONTENT = {
       "contribute to global progress",
       "մասնակցել համաշխարհային առաջընթացին"
     ],
+    "dirGapHead": [
+      "Why five directions",
+      "Ինչու հինգ ուղղություն"
+    ],
+    "dirGapL": [
+      "University",
+      "Համալսարան"
+    ],
+    "dirGapLs": [
+      "Theory · lectures · exams",
+      "Տեսություն · դասախոսություններ"
+    ],
+    "dirGapR": [
+      "Industry",
+      "Արդյունաբերություն"
+    ],
+    "dirGapRs": [
+      "Tools · hardware · real problems",
+      "Գործիքներ · սարքեր · իրական խնդիրներ"
+    ],
+    "dirGapNote": [
+      "Between what students learn and what industry needs there is a gap. Each of our five directions is one plank of the bridge across it.",
+      "Ուսանողների սովորածի և արդյունաբերության կարիքների միջև բաց կա։ Մեր հինգ ուղղություններից յուրաքանչյուրը այդ բացի վրայով անցնող կամրջի մեկ տախտակն է։"
+    ],
+    "dirFive": [
+      "The five directions",
+      "Հինգ ուղղությունները"
+    ],
+    "dirWatchTitle": [
+      "All five directions in one presentation",
+      "Բոլոր հինգ ուղղությունները մեկ ներկայացման մեջ"
+    ],
+    "dirWatchMeta": [
+      "Full presentation · about 6 minutes",
+      "Ամբողջական ներկայացում · մոտ 6 րոպե"
+    ],
+    "evTypesTitle": [
+      "Types of events",
+      "Միջոցառումների տեսակները"
+    ],
+    "evt_lecture": [
+      "An engineer or researcher teaches a topic at a university.",
+      "Ինժեները կամ հետազոտողը համալսարանում դասախոսում է որևէ թեմայով։"
+    ],
+    "evt_meeting": [
+      "An open evening talk with industry engineers, with time for your questions.",
+      "Բաց հանդիպում արդյունաբերության ինժեներների հետ՝ ձեր հարցերի համար ժամանակով։"
+    ],
+    "evt_workshop": [
+      "A hands-on session in the lab: you build along on a real board.",
+      "Գործնական պարապմունք լաբորատորիայում՝ աշխատանք իրական հարթակի վրա։"
+    ],
+    "evt_hackathon": [
+      "A team challenge over a weekend: build something that really works.",
+      "Թիմային մարտահրավեր հանգստյան օրերին՝ ստեղծել իրականում աշխատող բան։"
+    ],
+    "evt_conference": [
+      "Students and researchers present their projects and results.",
+      "Ուսանողներն ու հետազոտողները ներկայացնում են իրենց նախագծերն ու արդյունքները։"
+    ],
+    "evExamples": [
+      "Examples: what our events will look like",
+      "Օրինակներ․ ինչպիսին կլինեն մեր միջոցառումները"
+    ],
+    "evExampleNote": [
+      "These are examples that show the format of each type. Real events will be announced here with their dates and places.",
+      "Սրանք օրինակներ են, որոնք ցույց են տալիս յուրաքանչյուր տեսակի ձևաչափը։ Իրական միջոցառումները կհրապարակվեն այստեղ՝ ամսաթվերով և վայրերով։"
+    ],
+    "evExample": [
+      "Example",
+      "Օրինակ"
+    ],
+    "evFor": [
+      "For",
+      "Ում համար"
+    ],
+    "evFormat": [
+      "Format",
+      "Ձևաչափ"
+    ],
+    "evBring": [
+      "What to bring",
+      "Ինչ վերցնել"
+    ],
+    "evDirection": [
+      "See the direction",
+      "Տեսնել ուղղությունը"
+    ],
+    "imA": [
+      "What we want to change",
+      "Ինչ ենք ուզում փոխել"
+    ],
+    "out1": [
+      "Open learning resources",
+      "Բաց ուսումնական ռեսուրսներ"
+    ],
+    "out1t": [
+      "Practical courses and materials that anyone can use.",
+      "Գործնական դասընթացներ և նյութեր, որոնցից կարող է օգտվել յուրաքանչյուրը։"
+    ],
+    "out2": [
+      "Lab experience for more learners",
+      "Լաբորատոր փորձ ավելի շատերի համար"
+    ],
+    "out2t": [
+      "More students working with real boards and instruments.",
+      "Ավելի շատ ուսանողներ, ովքեր աշխատում են իրական հարթակներով և սարքերով։"
+    ],
+    "out3": [
+      "Research groups that collaborate",
+      "Համագործակցող հետազոտական խմբեր"
+    ],
+    "out3t": [
+      "Researchers, students and companies working on shared problems.",
+      "Հետազոտողներ, ուսանողներ և ընկերություններ՝ ընդհանուր խնդիրների շուրջ։"
+    ],
+    "out4": [
+      "Paths to professional opportunities",
+      "Ուղիներ դեպի մասնագիտական հնարավորություններ"
+    ],
+    "out4t": [
+      "Young people across Armenia connected with jobs, internships and projects.",
+      "Երիտասարդներ ամբողջ Հայաստանից՝ կապված աշխատանքի, պրակտիկայի և նախագծերի հետ։"
+    ],
+    "imB": [
+      "How we will measure it",
+      "Ինչպես ենք չափելու"
+    ],
+    "imBnote": [
+      "We will publish these numbers as the work grows, and show the activities behind them.",
+      "Այս թվերը կհրապարակենք աշխատանքի աճին զուգընթաց՝ ցույց տալով դրանց հետևում կանգնած գործունեությունը։"
+    ],
+    "imC": [
+      "Progress so far",
+      "Արդյունքներն առայժմ"
+    ],
+    "cmA": [
+      "Who SemiTec is for",
+      "Ում համար է SemiTec-ը"
+    ],
+    "cmB": [
+      "Partnerships",
+      "Գործընկերություն"
+    ],
+    "cmPartnerBtn": [
+      "Become a partner",
+      "Դառնալ գործընկեր"
+    ],
+    "cmC": [
+      "People behind SemiTec",
+      "SemiTec-ի մարդիկ"
+    ],
+    "trA": [
+      "Our principles",
+      "Մեր սկզբունքները"
+    ],
+    "tr1": [
+      "Visible",
+      "Տեսանելի"
+    ],
+    "tr1t": [
+      "We share what we do, what we plan, and what did not work.",
+      "Կիսվում ենք նրանով, ինչ անում ենք, ինչ ծրագրում ենք և ինչը չստացվեց։"
+    ],
+    "tr2": [
+      "Measurable",
+      "Չափելի"
+    ],
+    "tr2t": [
+      "Progress is reported in numbers and outcomes, not only in words.",
+      "Առաջընթացը ներկայացվում է թվերով և արդյունքներով, ոչ միայն բառերով։"
+    ],
+    "tr3": [
+      "Responsible",
+      "Պատասխանատու"
+    ],
+    "tr3t": [
+      "Resources are used as agreed, under the charter and the law.",
+      "Ռեսուրսներն օգտագործվում են համաձայնեցված ձևով՝ կանոնադրությանն ու օրենքին համապատասխան։"
+    ],
+    "trB": [
+      "Documents we will publish",
+      "Փաստաթղթեր, որոնք կհրապարակենք"
+    ],
+    "trPending": [
+      "To be published",
+      "Կհրապարակվի"
+    ],
+    "trC": [
+      "Reports archive",
+      "Հաշվետվությունների արխիվ"
+    ],
+    "gvA": [
+      "Ways to support",
+      "Աջակցության ձևերը"
+    ],
+    "gvLater": [
+      "Opens later",
+      "Կբացվի ավելի ուշ"
+    ],
+    "jnA": [
+      "Find your way in",
+      "Գտեք ձեր տեղը"
+    ],
+    "jnB": [
+      "Write to us",
+      "Գրեք մեզ"
+    ],
+    "gvB": [
+      "Donations",
+      "Նվիրատվություններ"
+    ],
+    "soonBadge": [
+      "To be announced",
+      "Կհրապարակվի"
+    ],
     "aboutPath": [
       "Our path",
       "Մեր ճանապարհը"
@@ -3173,6 +3389,186 @@ const SITE_CONTENT = {
       "Other",
       "Այլ"
     ]
+  ],
+  "eventExamples": [
+    {
+      "type": "lecture",
+      "path": "initiatives/meetings",
+      "title": [
+        "From RTL to a running board: the FPGA design flow",
+        "RTL-ից մինչև աշխատող հարթակ․ FPGA նախագծման հոսքը"
+      ],
+      "intro": [
+        "A guest lecture at a university: how a design goes from SystemVerilog to a programmed FPGA, shown live on the AUP-ZU3.",
+        "Հրավիրյալ դասախոսություն համալսարանում․ ինչպես է նախագիծը SystemVerilog-ից հասնում ծրագրավորված FPGA-ի՝ ուղիղ ցուցադրմամբ AUP-ZU3-ի վրա։"
+      ],
+      "who": [
+        "Bachelor and master students",
+        "Բակալավրիատի և մագիստրատուրայի ուսանողներ"
+      ],
+      "format": [
+        "90 minutes · lecture hall",
+        "90 րոպե · լսարան"
+      ],
+      "agenda": [
+        [
+          "Why FPGAs are used in industry",
+          "Ինչու են FPGA-ները կիրառվում արդյունաբերությունում"
+        ],
+        [
+          "Live demo in Vivado: from RTL to bitstream",
+          "Ուղիղ ցուցադրում Vivado-ում․ RTL-ից մինչև bitstream"
+        ],
+        [
+          "Questions from students",
+          "Ուսանողների հարցեր"
+        ]
+      ]
+    },
+    {
+      "type": "meeting",
+      "path": "initiatives/meetings",
+      "title": [
+        "How a chip is verified",
+        "Ինչպես է ստուգվում չիպը"
+      ],
+      "intro": [
+        "An evening meeting with verification engineers: what their work looks like, which skills matter, and how students can start.",
+        "Երեկոյան հանդիպում վերիֆիկացիայի ինժեներների հետ․ ինչպիսին է նրանց աշխատանքը, որ հմտություններն են կարևոր և ինչպես կարող են ուսանողները սկսել։"
+      ],
+      "who": [
+        "Students and young engineers",
+        "Ուսանողներ և երիտասարդ ինժեներներ"
+      ],
+      "format": [
+        "2 hours · evening, open to everyone",
+        "2 ժամ · երեկոյան, բաց բոլորի համար"
+      ],
+      "agenda": [
+        [
+          "Two short talks by engineers",
+          "Ինժեներների երկու կարճ ելույթ"
+        ],
+        [
+          "Open questions and answers",
+          "Հարց ու պատասխան"
+        ],
+        [
+          "Informal conversation",
+          "Ազատ զրույց"
+        ]
+      ]
+    },
+    {
+      "type": "workshop",
+      "path": "initiatives/labs",
+      "title": [
+        "Hands-on: your first design on the AUP-ZU3",
+        "Գործնական պարապմունք․ ձեր առաջին նախագիծը AUP-ZU3-ի վրա"
+      ],
+      "intro": [
+        "A three-hour lab session: write a small SystemVerilog design, simulate it, and run it on the board.",
+        "Եռաժամյա լաբորատոր պարապմունք․ գրեք փոքր SystemVerilog նախագիծ, մոդելավորեք այն և գործարկեք հարթակի վրա։"
+      ],
+      "who": [
+        "Beginners in digital design",
+        "Թվային նախագծման սկսնակներ"
+      ],
+      "format": [
+        "3 hours · laboratory · small group",
+        "3 ժամ · լաբորատորիա · փոքր խումբ"
+      ],
+      "bring": [
+        "A laptop with Vivado installed (instructions sent in advance)",
+        "Նոութբուք՝ տեղադրված Vivado-ով (հրահանգները կուղարկվեն նախապես)"
+      ],
+      "agenda": [
+        [
+          "Set up the tools",
+          "Գործիքների կարգավորում"
+        ],
+        [
+          "Describe and simulate a counter",
+          "Հաշվիչի նկարագրում և մոդելավորում"
+        ],
+        [
+          "Program the board and see it run",
+          "Հարթակի ծրագրավորում և արդյունքի դիտում"
+        ]
+      ]
+    },
+    {
+      "type": "hackathon",
+      "path": "initiatives/hackathons",
+      "title": [
+        "48-hour FPGA hackathon: a live sensor dashboard",
+        "48-ժամյա FPGA հաքաթոն․ սենսորային վահանակ իրական ժամանակում"
+      ],
+      "intro": [
+        "Teams of three build a sensor dashboard on the AUP-ZU3 in two days. Engineers from industry mentor the teams, and the jury looks at what really works.",
+        "Երեք հոգանոց թիմերը երկու օրում AUP-ZU3-ի վրա ստեղծում են սենսորային վահանակ։ Արդյունաբերության ինժեներները մենթորում են թիմերին, իսկ ժյուրին գնահատում է այն, ինչն իրականում աշխատում է։"
+      ],
+      "who": [
+        "Students who know some digital design",
+        "Թվային նախագծման հիմունքներին ծանոթ ուսանողներ"
+      ],
+      "format": [
+        "48 hours · teams of 3 · lab",
+        "48 ժամ · 3 հոգանոց թիմեր · լաբորատորիա"
+      ],
+      "bring": [
+        "A laptop; boards and sensors are provided",
+        "Նոութբուք․ հարթակներն ու սենսորները կտրամադրվեն"
+      ],
+      "agenda": [
+        [
+          "Day 1: the challenge and team setup",
+          "Օր 1․ խնդրի ներկայացում և թիմերի ձևավորում"
+        ],
+        [
+          "Day 2: build with mentors",
+          "Օր 2․ աշխատանք մենթորների հետ"
+        ],
+        [
+          "Final: demos and jury",
+          "Եզրափակում․ ցուցադրումներ և ժյուրի"
+        ]
+      ]
+    },
+    {
+      "type": "conference",
+      "path": "initiatives/hackathons",
+      "title": [
+        "Student research day",
+        "Ուսանողական հետազոտությունների օր"
+      ],
+      "intro": [
+        "Diploma, thesis and research projects presented in short talks and posters; professors and companies give feedback.",
+        "Ավարտական, թեզային և հետազոտական նախագծերի ներկայացում կարճ ելույթներով և պաստառներով․ դասախոսներն ու ընկերությունները տալիս են իրենց կարծիքը։"
+      ],
+      "who": [
+        "Students, supervisors and companies",
+        "Ուսանողներ, ղեկավարներ և ընկերություններ"
+      ],
+      "format": [
+        "1 day · talks and posters",
+        "1 օր · ելույթներ և պաստառներ"
+      ],
+      "agenda": [
+        [
+          "Morning: short project talks",
+          "Առավոտ․ նախագծերի կարճ ներկայացումներ"
+        ],
+        [
+          "Afternoon: posters and live demos",
+          "Կեսօրից հետո․ պաստառներ և ուղիղ ցուցադրումներ"
+        ],
+        [
+          "Recognition of the best projects",
+          "Լավագույն նախագծերի ճանաչում"
+        ]
+      ]
+    }
   ],
   "eventTypes": {
     "hackathon": {
