@@ -8,6 +8,8 @@
      ?embed=1 starts paused behind a play button and lets the page around it scroll normally */
   const chapter = params.get('chapter');
   const embed = params.get('embed') === '1';
+  // scenes marked data-solo="x" play only in chapter x (the About chapter has its own, longer story)
+  document.querySelectorAll('.scene[data-solo]').forEach(sc => { if (sc.dataset.solo !== chapter) sc.remove(); });
   if (chapter) {
     const keep = Array.from(document.querySelectorAll('.scene')).filter(sc => (sc.dataset.chapter || '').split(' ').includes(chapter));
     if (keep.length) document.querySelectorAll('.scene').forEach(sc => { if (!keep.includes(sc)) sc.remove(); });
@@ -77,9 +79,10 @@
       ln.className = 'ln';
       line.split(' ').filter(Boolean).forEach((word, i, arr) => {
         const w = document.createElement('span');
-        w.className = 'w';
+        const hl = word.startsWith('*');   // *word = highlighted
+        w.className = hl ? 'w hl' : 'w';
         w.style.setProperty('--d', (base + n * 0.07).toFixed(2) + 's');
-        w.textContent = word;
+        w.textContent = hl ? word.slice(1) : word;
         ln.appendChild(w);
         if (i < arr.length - 1) ln.appendChild(document.createTextNode(' '));
         n++;

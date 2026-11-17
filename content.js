@@ -2005,12 +2005,12 @@ const SITE_CONTENT = {
       "Արդյունաբերություն"
     ],
     "symbolHint": [
-      "Four summits of Aragats, four pillars, one mark. Choose a summit.",
-      "Արագածի չորս գագաթ, չորս հենասյուն, մեկ նշան։ Ընտրեք գագաթը։"
+      "Choose a pillar to fly to its summit.",
+      "Ընտրեք հենասյուներից մեկը՝ նրա գագաթին մոտենալու համար։"
     ],
-    "symbolLogo": [
-      "Together they form the SemiTec mark.",
-      "Միասին դրանք կազմում են SemiTec-ի նշանը։"
+    "symbolReplay": [
+      "Replay",
+      "Կրկին դիտել"
     ],
     "deckShort": [
       "Watch",
