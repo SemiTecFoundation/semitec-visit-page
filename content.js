@@ -1964,6 +1964,158 @@ const SITE_CONTENT = {
     }
   },
   "ui": {
+    "aboutBelieve": [
+      "What we believe",
+      "Ինչին ենք հավատում"
+    ],
+    "aboutWho": [
+      "Who we bring together",
+      "Ում ենք միավորում"
+    ],
+    "who1": [
+      "School pupils",
+      "Դպրոցականներ"
+    ],
+    "who2": [
+      "University students",
+      "Ուսանողներ"
+    ],
+    "who3": [
+      "Educators",
+      "Դասավանդողներ"
+    ],
+    "who4": [
+      "Engineers",
+      "Ինժեներներ"
+    ],
+    "who5": [
+      "Researchers",
+      "Հետազոտողներ"
+    ],
+    "who6": [
+      "Academic institutions",
+      "Բուհեր և ինստիտուտներ"
+    ],
+    "who7": [
+      "Technology companies",
+      "Տեխնոլոգիական ընկերություններ"
+    ],
+    "aboutStep1t": [
+      "Asking questions and wanting to know how things work.",
+      "Հարցեր տալ և ցանկանալ հասկանալ, թե ինչպես են աշխատում բաները։"
+    ],
+    "aboutStep2t": [
+      "Courses and open learning materials from SemiTec Academy.",
+      "Դասընթացներ և բաց ուսումնական նյութեր SemiTec Ակադեմիայից։"
+    ],
+    "aboutStep3t": [
+      "Laboratories with real hardware, tools and measurement.",
+      "Լաբորատորիաներ՝ իրական սարքավորումներով, գործիքներով և չափումներով։"
+    ],
+    "aboutStep4t": [
+      "Diploma, thesis and research projects that create new ideas.",
+      "Ավարտական, թեզային և հետազոտական նախագծեր, որոնք ստեղծում են նոր գաղափարներ։"
+    ],
+    "aboutWatchTitle": [
+      "SemiTec in two and a half minutes",
+      "SemiTec-ը երկուսուկես րոպեում"
+    ],
+    "aboutWatchMeta": [
+      "Presentation · our mission, vision and symbol",
+      "Ներկայացում · մեր առաքելությունը, տեսլականը և խորհրդանիշը"
+    ],
+    "missionKeys": [
+      "connected|accessible|shared|continues|meaningful results",
+      "փոխկապակցված|հասանելի|փոխանցելի|շարունակական|իրական արդյունքների"
+    ],
+    "visionKeys": [
+      "education|science|technology|industry",
+      "կրթությունը|գիտությունը|տեխնոլոգիաներն|արդյունաբերությունը"
+    ],
+    "missionList": [
+      "What this means",
+      "Ինչ է սա նշանակում"
+    ],
+    "m1": [
+      "A connected ecosystem",
+      "Կապակցված էկոհամակարգ"
+    ],
+    "m1t": [
+      "Students, educators, engineers, researchers and companies working in one network.",
+      "Ուսանողներ, դասավանդողներ, ինժեներներ, հետազոտողներ և ընկերություններ՝ մեկ ցանցում։"
+    ],
+    "m2": [
+      "Accessible knowledge",
+      "Հասանելի գիտելիք"
+    ],
+    "m2t": [
+      "Open courses, lab guides and project templates for everyone.",
+      "Բաց դասընթացներ, լաբորատոր ուղեցույցներ և նախագծերի ձևանմուշներ բոլորի համար։"
+    ],
+    "m3": [
+      "Shared experience",
+      "Փոխանցվող փորձ"
+    ],
+    "m3t": [
+      "Engineers mentor students, and today’s students mentor the next generation.",
+      "Ինժեներները մենթորում են ուսանողներին, իսկ այսօրվա ուսանողները՝ հաջորդ սերնդին։"
+    ],
+    "m4": [
+      "Continuous collaboration",
+      "Շարունակական համագործակցություն"
+    ],
+    "m4t": [
+      "Courses, labs, projects and events that continue all year.",
+      "Դասընթացներ, լաբորատորիաներ, նախագծեր և միջոցառումներ՝ ամբողջ տարվա ընթացքում։"
+    ],
+    "m5": [
+      "Real results",
+      "Իրական արդյունքներ"
+    ],
+    "m5t": [
+      "Ideas that become prototypes, theses, products and careers.",
+      "Գաղափարներ, որոնք դառնում են նախատիպեր, ավարտական աշխատանքներ, արտադրանք և կարիերա։"
+    ],
+    "visionFields": [
+      "Four fields that reinforce one another",
+      "Չորս ոլորտ, որոնք փոխլրացնում են միմյանց"
+    ],
+    "visionEduT": [
+      "prepares people",
+      "պատրաստում է մասնագետներ"
+    ],
+    "visionSciT": [
+      "creates new knowledge",
+      "ստեղծում է նոր գիտելիք"
+    ],
+    "visionTechT": [
+      "turns knowledge into tools",
+      "գիտելիքը դարձնում է գործիք"
+    ],
+    "visionIndT": [
+      "brings real problems and careers",
+      "բերում է իրական խնդիրներ և կարիերա"
+    ],
+    "visionPeopleLine": [
+      "So that people can",
+      "Որպեսզի մարդիկ կարողանան"
+    ],
+    "verb1": [
+      "learn",
+      "սովորել"
+    ],
+    "verb2": [
+      "research",
+      "հետազոտել"
+    ],
+    "verb3": [
+      "create",
+      "ստեղծել"
+    ],
+    "verb4": [
+      "contribute to global progress",
+      "մասնակցել համաշխարհային առաջընթացին"
+    ],
     "aboutPath": [
       "Our path",
       "Մեր ճանապարհը"
