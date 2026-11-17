@@ -42,8 +42,20 @@
       <div class="path-rows">${kids.map((k, c) => `<button type="button" class="pr-row" id="row-${s.id}-${k.id}" data-open-path="${s.id}/${k.id}" style="--c:${c}">
         <span class="pr-n">${ST.pad(c + 1)}</span>
         <span class="pr-body"><strong>${ST.esc(ST.pick(k.title))}</strong><span>${ST.esc(ST.pick(k.intro))}</span></span>
-        <span class="pr-more">${ST.esc(ST.text('showMoreShort'))} <i aria-hidden="true">→</i></span>
+        <span class="pr-actions">${k.deck ? `<span class="pr-watch" role="button" tabindex="0" data-deck="${ST.esc(k.deck)}"><span class="deck-play" aria-hidden="true"></span>${ST.esc(ST.text('deckShort'))}</span>` : ''}<span class="pr-more">${ST.esc(ST.text('showMoreShort'))} <i aria-hidden="true">→</i></span></span>
       </button>`).join('')}</div></div>`;
+  }
+  /* each row fades in when it reaches the screen; rows that arrive together follow one another */
+  let rowIO = null;
+  function revealRows() {
+    if (rowIO) rowIO.disconnect();
+    const rows = $$('.pr-row');
+    if (!('IntersectionObserver' in window) || ST.state.reduced) { rows.forEach(r => r.classList.add('is-in')); return; }
+    rowIO = new IntersectionObserver(entries => {
+      let k = 0;
+      entries.filter(e => e.isIntersecting).forEach(e => { e.target.style.setProperty('--d', (k++ * .14) + 's'); e.target.classList.add('is-in'); rowIO.unobserve(e.target); });
+    }, { rootMargin: '0px 0px -12% 0px', threshold: .15 });
+    rows.forEach(r => rowIO.observe(r));
   }
   /* the full content of a path, shown in the side panel */
   function pathBody(section, child) {
@@ -61,7 +73,7 @@
         ${items ? `<ul class="pc-items">${items}</ul>` : ''}
         ${ST.pathEventsHTML(child)}
         ${linksHTML(child.links, 'pc-links')}
-        ${showcaseHTML(child.showcase, p)}
+        ${(child.showcase || []).length ? `<div class="dr-list-wrap">${child.showcaseLabel ? `<p class="dr-list-label">${ST.esc(ST.pick(child.showcaseLabel))}</p>` : ''}${showcaseHTML(child.showcase, p).replace('class="pc-show', 'class="pc-show dr-list')}</div>` : ''}
         ${sub ? `<p class="pc-sub-label">${ST.esc(ST.text('further'))}</p><div class="pc-sub">${sub}</div>` : ''}`;
   }
   /* a card (product, news item, event) in the side panel: text first, then its pictures in a strip */
@@ -101,6 +113,12 @@
     el.addEventListener('click', e => {
       if (e.target.closest('.dr-close') || e.target.classList.contains('dr-scrim')) { drawerClose(); return; }
       if (e.target.closest('.dr-back')) { drawer.stack.pop(); drawerRender(); return; }
+      const cr = e.target.closest('[data-crumb]');
+      if (cr) {
+        if (cr.dataset.crumb === 'section') { const sid = drawer.stack[0].path[0]; drawerClose(); scrollToPath([sid]); }
+        else { drawer.stack.length = +cr.dataset.crumb + 1; drawerRender(); }
+        return;
+      }
       const nav = e.target.closest('.dr-prev,.dr-next');
       if (nav) { const top = drawer.stack[drawer.stack.length - 1], n = cardList(top).length; top.idx = (top.idx + (nav.classList.contains('dr-next') ? 1 : -1) + n) % n; drawerRender(); return; }
       const sc = e.target.closest('.pc-show-card');
@@ -113,8 +131,14 @@
   }
   function drawerRender() {
     const el = drawerEnsure(), top = drawer.stack[drawer.stack.length - 1]; if (!top) return;
-    const crumbs = drawer.stack.flatMap((e, i) => crumbOf(e).filter((x, j) => i === 0 || j === crumbOf(e).length - 1));
-    el.querySelector('.dr-crumb').innerHTML = crumbs.map(c => `<span>${ST.esc(c)}</span>`).join('<i aria-hidden="true">›</i>');
+    /* every level above the current one is a link: the section closes the panel, a path or card goes back to it */
+    const crumbs = [];
+    drawer.stack.forEach((e, i) => {
+      const names = crumbOf(e);
+      if (i === 0 && e.kind === 'path') crumbs.push({ name: names[0], go: 'section' });
+      crumbs.push({ name: names[names.length - 1], go: i });
+    });
+    el.querySelector('.dr-crumb').innerHTML = crumbs.map((c, k) => k === crumbs.length - 1 ? `<span aria-current="page">${ST.esc(c.name)}</span>` : `<button type="button" data-crumb="${c.go}">${ST.esc(c.name)}</button>`).join('<i aria-hidden="true">›</i>');
     el.querySelector('.dr-back').hidden = drawer.stack.length < 2;
     el.querySelector('.dr-back').setAttribute('aria-label', ST.text('back').trim());
     el.querySelector('.dr-close').setAttribute('aria-label', ST.text('close'));
@@ -266,6 +290,7 @@
     });
     intro.innerHTML = html[0]; storyLast = -1;
     main.innerHTML = html.slice(1).join('');
+    revealRows();
     ST.eco.render(outro);
     cache = new WeakMap();
     if (drawer.el && drawer.el.classList.contains('is-open')) drawerRender();
@@ -496,14 +521,14 @@
     if (path.length === 1) drawerClose(true);
     const behavior = instant || ST.state.reduced ? 'instant' : 'smooth';
     if (path.length > 1) {
-      const card = setCard(path, true);
-      if (card) {
-        requestAnimationFrame(() => {
-          measure();
-          const top = card.getBoundingClientRect().top + scrollY - innerHeight * .3;
-          scrollTo({ top: Math.max(0, top), behavior });
-          if (instant) readScroll();
-        });
+      /* a path opens in the side panel; the page goes to the top of its section, so the map stays on that section */
+      const row = document.getElementById(`row-${path[0]}-${path[1]}`);
+      if (row) {
+        measure();
+        const header = $('.header').offsetHeight;
+        scrollTo({ top: Math.max(0, tops[r.index] - header - 8), behavior: 'instant' });
+        readScroll();
+        drawerOpen({ kind: 'path', path: [path[0], path[1]] });
         return;
       }
     }
@@ -576,6 +601,7 @@
       if (eo) { const [kind, k] = eo.dataset.evOpen.split(':'); drawerOpen({ kind: 'event', when: kind, idx: +k }); return; }
       const sc = e.target.closest('.pc-show-card');
       if (sc && !e.target.closest('.psc-links a')) { drawerOpen({ kind: 'card', key: sc.closest('.pc-show').dataset.showKey, idx: +sc.dataset.show }); return; }
+      if (e.target.closest('.pr-watch')) return;   /* the presentation opens through [data-deck] */
       const row = e.target.closest('[data-open-path]');
       if (row) { drawerOpen({ kind: 'path', path: row.dataset.openPath.split('/') }); return; }
       if (head) { const card = head.closest('.path-card'); setCard(card.dataset.path.split('/'), !card.classList.contains('is-open')); return; }
