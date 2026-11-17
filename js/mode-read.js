@@ -41,7 +41,7 @@
     return `<div class="paths rows"><p class="paths-label">${ST.esc(ST.text('pathsLabel'))}</p>
       <div class="path-rows">${kids.map((k, c) => `<button type="button" class="pr-row" id="row-${s.id}-${k.id}" data-open-path="${s.id}/${k.id}" style="--c:${c}">
         <span class="pr-n">${ST.pad(c + 1)}</span>
-        <span class="pr-body"><strong>${ST.esc(ST.pick(k.title))}</strong><span>${ST.esc(ST.pick(k.intro))}</span></span>
+        <span class="pr-body"><strong>${ST.esc(ST.pick(k.title))}</strong>${/^Nothing has been published/.test((k.intro || [''])[0]) ? `<span class="xs-badge is-plan">${ST.esc(ST.text('soonBadge'))}</span>` : `<span>${ST.esc(ST.pick(k.intro))}</span>`}</span>
         <span class="pr-actions">${k.deck ? `<span class="pr-watch" role="button" tabindex="0" data-deck="${ST.esc(k.deck)}"><span class="deck-play" aria-hidden="true"></span>${ST.esc(ST.text('deckShort'))}</span>` : ''}<span class="pr-more">${ST.esc(ST.text('showMoreShort'))} <i aria-hidden="true">→</i></span></span>
       </button>`).join('')}</div></div>`;
   }
@@ -49,7 +49,7 @@
   let rowIO = null;
   function revealRows() {
     if (rowIO) rowIO.disconnect();
-    const rows = $$('.pr-row, .rv');
+    const rows = $$('.pr-row, .rv, .xs-rv');
     if (!('IntersectionObserver' in window) || ST.state.reduced) { rows.forEach(r => r.classList.add('is-in')); return; }
     rowIO = new IntersectionObserver(entries => {
       let k = 0;
@@ -124,11 +124,182 @@
   }
   // the presentation card shows the Aragats mark, drawn once with the deck's colours
   function aboutThumb() {
-    const cv = document.querySelector('.ab-thumb');
-    if (!cv || !window.Aragats || cv.dataset.done) return;
-    Aragats.create(cv, { theme: 'dark', fixed: true, labels: () => ['', '', '', ''] }).draw(Aragats.END);
-    cv.dataset.done = '1';
+    if (!window.Aragats) return;
+    document.querySelectorAll('.ab-thumb:not([data-done])').forEach(cv => {
+      Aragats.create(cv, { theme: 'dark', fixed: true, labels: () => ['', '', '', ''] }).draw(cv.closest('#initiatives') ? 9.6 : Aragats.END);
+      cv.dataset.done = '1';
+    });
   }
+  /* ---------- 03–09 in the 2D view: the same readable blocks as About (kicker, statement, cards) ---------- */
+  Object.assign(IC, {
+    lab: '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/><rect x="9" y="7" width="6" height="6" rx="1"/>',
+    doc: '<path d="M6 3h8l4 4v14H6Z"/><path d="M14 3v4h4M9 12h6M9 16h6"/>',
+    trophy: '<path d="M8 4h8v5a4 4 0 0 1-8 0Z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8 21h8M9 17h6v4H9Z"/>',
+    mic: '<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4M9 21h6"/>',
+    stage: '<path d="M3 20h18M5 20v-6h14v6"/><circle cx="12" cy="7" r="3"/><path d="M8 14a4 4 0 0 1 8 0"/>',
+    tool: '<path d="M14.5 6.5a4 4 0 0 0-5 5L4 17v3h3l5.5-5.5a4 4 0 0 0 5-5l-2.5 2.5-2.5-.5-.5-2.5Z"/>',
+    meet: '<circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M3 20a5 5 0 0 1 10 0M11 20a5 5 0 0 1 10 0"/>',
+    cap: '<path d="M2 9l10-5 10 5-10 5Z"/><path d="M6 11v5c3 2 9 2 12 0v-5M22 9v6"/>',
+    gear: '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/>',
+    teach: '<rect x="3" y="4" width="18" height="11" rx="1"/><path d="M7 20l3-5M17 20l-3-5M7 8h6M7 11h9"/>',
+    building: '<path d="M4 21V5l8-2v18M12 8h8v13M7 8h2M7 12h2M7 16h2M15 12h2M15 16h2M2 21h20"/>',
+    globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
+    eye: '<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>',
+    chart: '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+    shield: '<path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6Z"/><path d="m9 12 2 2 4-4"/>',
+    hand: '<path d="M7 11V6a1.5 1.5 0 0 1 3 0v5M10 10V4.5a1.5 1.5 0 0 1 3 0V10M13 10V5.5a1.5 1.5 0 0 1 3 0V12M16 9a1.5 1.5 0 0 1 3 0v4a8 8 0 0 1-8 8h-.5A6.5 6.5 0 0 1 5 17l-2-4a1.5 1.5 0 0 1 2.6-1.5L7 13"/>',
+    box: '<path d="M3 7l9-4 9 4v10l-9 4-9-4Z"/><path d="M3 7l9 4 9-4M12 11v10"/>',
+    star: '<path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9Z"/>',
+    coin: '<circle cx="12" cy="12" r="9"/><path d="M15 9.5c-.5-1-1.6-1.5-3-1.5-1.7 0-3 .8-3 2s1.3 1.7 3 2 3 .8 3 2-1.3 2-3 2c-1.4 0-2.5-.5-3-1.5M12 6v2M12 16v2"/>',
+    mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
+    heart: '<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/>',
+    users: '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/>',
+    check: '<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>',
+    clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+    pin: '<path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/>'
+  });
+  const kick = (n, label) => `<p class="ab-kick"><span>${n}</span>${ST.esc(label)}</p>`;
+  const statusOf = it => { const en = (Array.isArray(it) ? it[0] : it) || ''; return /running/i.test(en) ? 'is-run' : /planned/i.test(en) ? 'is-plan' : /prepar/i.test(en) ? 'is-prep' : ''; };
+  // a status line "Status: running" becomes a coloured badge; other lines stay facts
+  function statusBadges(items) {
+    const P = ST.pick, E = ST.esc;
+    return (items || []).filter(statusOf).map(it => {
+      const t = P(it), i = t.search(/[:։՝]/), label = t.slice(0, i), val = t.slice(i + 1).trim();
+      return `<span class="xs-badge ${statusOf(it)}">${/^status|^կարգավիճակ/i.test(label) ? '' : `${E(label)}: `}${E(val)}</span>`;
+    }).join('');
+  }
+  const facts = items => (items || []).filter(it => !statusOf(it)).map(it => `<li>${ST.esc(ST.pick(it))}</li>`).join('');
+  // cards that open a path in the side panel; they keep the row ids so the chip map can find them
+  function pathCards(s, kids, icons, cls, extra) {
+    return `<div class="xs-cards ${cls || ''}">${kids.map((k, c) => `<button type="button" class="xs-card xs-rv" id="row-${s.id}-${k.id}" data-open-path="${s.id}/${k.id}" style="--c:${c}">
+      <span class="xs-ic">${icon(icons[c % icons.length])}</span>
+      <span class="xs-cb"><strong>${ST.esc(ST.pick(k.title))}</strong><span>${ST.esc(ST.pick(k.intro))}</span>${extra ? extra(k) : ''}</span>
+      <span class="xs-go" aria-hidden="true">→</span></button>`).join('')}</div>`;
+  }
+  const watchCard = (deck, title, meta) => `<button type="button" class="ab-watch rv" data-deck="${ST.esc(deck)}">
+      <canvas class="ab-thumb" width="360" height="250" aria-hidden="true"></canvas>
+      <span class="ab-wt"><span class="ab-wplay" aria-hidden="true"></span><span><strong>${ST.esc(title)}</strong><small>${ST.esc(meta)}</small></span></span></button>`;
+
+  /* 03 Directions: the gap and its bridge, the five directions, the full presentation */
+  const DIR_ICONS = ['lab', 'book', 'doc', 'trophy', 'mic'];
+  function dirHTML(s) {
+    const T = ST.text, E = ST.esc, P = ST.pick, kids = s.children || [];
+    const planks = kids.map((k, i) => `<g class="xg-plank" style="--k:${i}"><rect x="${232 + i * 60}" y="96" width="52" height="26" rx="5"/><text x="${258 + i * 60}" y="114">${i + 1}</text></g>`).join('');
+    return `<div class="about-x">
+      <div class="ab-block rv xs-gap">
+        ${kick('A', T('dirGapHead'))}
+        <svg class="xg-art" viewBox="0 0 780 210" aria-hidden="true">
+          <path class="xg-cliff" d="M0 110 H232 L214 210 H0 Z"/><path class="xg-cliff" d="M548 110 H780 V210 H566 Z"/>
+          <text class="xg-t" x="16" y="150">${E(T('dirGapL'))}</text><text class="xg-s" x="16" y="176">${E(T('dirGapLs'))}</text>
+          <text class="xg-t" x="764" y="150" text-anchor="end">${E(T('dirGapR'))}</text><text class="xg-s" x="764" y="176" text-anchor="end">${E(T('dirGapRs'))}</text>
+          ${planks}
+          <path class="xg-arc" d="M232 86 Q390 20 548 86" pathLength="1"/>
+          <circle class="xg-dot" r="7" cx="0" cy="0"/>
+        </svg>
+        <p class="ab-body xg-note">${E(T('dirGapNote'))}</p>
+      </div>
+      <div class="ab-block rv">
+        ${kick('B', T('dirFive'))}
+        <div class="xs-dirs">${kids.map((k, c) => `<article class="xs-dir xs-rv" id="row-${s.id}-${k.id}" style="--c:${c}">
+          <button type="button" class="xs-dir-main" data-open-path="${s.id}/${k.id}">
+            <span class="xs-ic">${icon(DIR_ICONS[c])}<em>${c + 1}</em></span>
+            <span class="xs-cb"><span class="xs-badges">${statusBadges(k.items)}</span><strong>${E(P(k.title))}</strong><span>${E(P(k.intro))}</span>
+              ${facts(k.items) ? `<ul class="xs-facts">${facts(k.items)}</ul>` : ''}</span></button>
+          <span class="xs-dir-act">${k.deck ? `<span class="pr-watch" role="button" tabindex="0" data-deck="${E(k.deck)}"><span class="deck-play" aria-hidden="true"></span>${E(T('deckShort'))}</span>` : ''}
+            <button type="button" class="xs-more" data-open-path="${s.id}/${k.id}">${E(T('showMoreShort'))} →</button></span>
+        </article>`).join('')}</div>
+      </div>
+      ${s.deck ? watchCard(s.deck, T('dirWatchTitle'), T('dirWatchMeta')) : ''}
+    </div>`;
+  }
+
+  /* 05 Impact: what we want to change, how we will measure it */
+  function impactHTML(s) {
+    const T = ST.text, E = ST.esc, P = ST.pick;
+    const meas = ((s.children || []).find(k => k.id === 'measuring') || {}).items || [];
+    const MI = ['users', 'book', 'flask', 'check', 'meet', 'heart', 'star'];
+    return `<div class="about-x">
+      <div class="ab-block rv">
+        ${kick('A', T('imA'))}
+        <div class="xs-grid2">${[['book', 1], ['lab', 2], ['flask', 3], ['cap', 4]].map(([ic, n], i) => `<div class="xs-tile" style="--k:${i}">${icon(ic)}<strong>${E(T('out' + n))}</strong><span>${E(T('out' + n + 't'))}</span></div>`).join('')}</div>
+      </div>
+      ${meas.length ? `<div class="ab-block rv">
+        ${kick('B', T('imB'))}
+        <ul class="xs-meter">${meas.map((m, i) => `<li style="--k:${i}">${icon(MI[i % MI.length])}<span>${E(P(m))}</span><b>—</b></li>`).join('')}</ul>
+        <p class="xs-note">${icon('clock')}${E(T('imBnote'))}</p>
+      </div>` : ''}
+      <p class="ab-kick xs-kick-only">${'<span>C</span>' + E(T('imC'))}</p>
+    </div>`;
+  }
+
+  /* 06 Community: who SemiTec is for, partnership, the people behind it */
+  const AUD_ICONS = ['cap', 'gear', 'teach', 'flask', 'building', 'globe'];
+  function peopleHTML(s) {
+    const T = ST.text, E = ST.esc, P = ST.pick, part = (s.showcase || [])[0];
+    const aud = (s.items || []).map(P).map(t => { const i = t.search(/[:։]/); return i > 0 ? [t.slice(0, i), t.slice(i + 1).trim()] : [t, '']; });
+    return `<div class="about-x">
+      ${aud.length ? `<div class="ab-block rv">
+        ${kick('A', T('cmA'))}
+        <div class="xs-grid2">${aud.map(([a, b], i) => `<div class="xs-tile" style="--k:${i}">${icon(AUD_ICONS[i % AUD_ICONS.length])}<strong>${E(a)}</strong><span>${E(b)}</span></div>`).join('')}</div>
+      </div>` : ''}
+      ${part ? `<section class="ab-card rv xs-callout" id="show-${s.id}-${part.id}">
+        ${kick('B', P(part.eyebrow) || T('cmB'))}
+        <p class="ab-state">${E(P(part.title))}</p><p class="ab-body">${E(P(part.intro))}</p>
+        <a class="xs-btn" href="#support/partner">${E(T('cmPartnerBtn'))} →</a>
+      </section>` : ''}
+      <p class="ab-kick xs-kick-only"><span>C</span>${E(T('cmC'))}</p>
+    </div>`;
+  }
+
+  /* 07 Transparency: three principles and the documents that will be published */
+  function trustHTML(s) {
+    const T = ST.text, E = ST.esc, P = ST.pick;
+    const docs = ((s.children || []).find(k => k.id === 'reports') || {}).items || [];
+    return `<div class="about-x">
+      <div class="ab-block rv">
+        ${kick('A', T('trA'))}
+        <div class="xs-grid3">${[['eye', 1], ['chart', 2], ['shield', 3]].map(([ic, n], i) => `<div class="xs-tile" style="--k:${i}">${icon(ic)}<strong>${E(T('tr' + n))}</strong><span>${E(T('tr' + n + 't'))}</span></div>`).join('')}</div>
+      </div>
+      ${docs.length ? `<div class="ab-block rv">
+        ${kick('B', T('trB'))}
+        <ul class="xs-docs">${docs.map((d, i) => `<li style="--k:${i}">${icon('doc')}<span>${E(P(d))}</span><em>${E(T('trPending'))}</em></li>`).join('')}</ul>
+      </div>` : ''}
+      <p class="ab-kick xs-kick-only"><span>C</span>${E(T('trC'))}</p>
+    </div>`;
+  }
+
+  /* 08 Support: the ways to support, and a clear note on payments */
+  function giveHTML(s) {
+    const T = ST.text, E = ST.esc, P = ST.pick;
+    const note = (s.text || []).map(P).filter(Boolean)[0];
+    return `<div class="about-x">
+      <div class="ab-block rv">
+        ${kick('A', T('gvA'))}
+        ${pathCards(s, s.children || [], ['users', 'box', 'star', 'coin'], 'xs-two', k => k.id === 'financial' ? `<span class="xs-badge is-plan">${E(T('gvLater'))}</span>` : '')}
+        ${note ? `<p class="xs-note">${icon('shield')}${E(note)}</p>` : ''}
+      </div>
+      <p class="ab-kick xs-kick-only"><span>B</span>${E(T('gvB'))}</p>
+    </div>`;
+  }
+
+  /* 09 Get involved: choose who you are */
+  function joinHTML(s) {
+    const T = ST.text;
+    return `<div class="about-x">
+      <div class="ab-block rv">
+        ${kick('A', T('jnA'))}
+        ${pathCards(s, s.children || [], ['cap', 'gear', 'flask', 'building', 'heart', 'bulb', 'mail'], 'xs-two')}
+      </div>
+      <div class="ab-block rv">
+        ${kick('B', ST.pick(SITE_CONTENT.feeds['opportunities-feed'].title))}
+        <div class="xs-empty">${icon('clock')}<p>${ST.esc(ST.pick(SITE_CONTENT.feeds['opportunities-feed'].intro))}</p></div>
+      </div>
+      <p class="ab-kick xs-kick-only"><span>C</span>${ST.esc(T('jnB'))}</p>
+    </div>`;
+  }
+  const SECX = { purpose: aboutHTML, focus: symbolHTML, initiatives: dirHTML, impact: impactHTML, people: peopleHTML, transparency: trustHTML, donate: giveHTML, support: joinHTML };
+  const OWN_ROWS = { initiatives: 1, donate: 1, support: 1 };      // their paths are already cards above
+  const OWN_TEXT = { purpose: 1, donate: 1, initiatives: 1 };      // their text and presentation are part of the blocks
   /* ---------- 02 Our Symbol: a contour map rises into Aragats, each summit is visited, and the
      silhouette fills into the SemiTec mark (drawn by expo/js/aragats.js, shared with the presentation) ---------- */
   function symbolHTML(s) {
@@ -236,6 +407,7 @@
   const drawer = { el: null, stack: [] };
   function cardList(entry) {
     if (entry.kind === 'news') return ST.news().map(ST.newsCard);
+    if (entry.kind === 'example') return (SITE_CONTENT.eventExamples || []).map(ST.exampleCard);
     if (entry.kind === 'event') { const ev = ST.events()[entry.when === 'up' ? 'upcoming' : 'past']; return ev.map(ST.eventCard); }
     const [sid, cid] = entry.key.split('/'), sec = sections.find(x => x.id === sid);
     const node = cid ? (sec.children || []).find(x => x.id === cid) : sec;
@@ -328,22 +500,52 @@
       <a class="gp-where" href="#transparency/reports">${ST.esc(ST.text('whereGoes'))} →</a>
     </div>`;
   }
-  /* News & Events: upcoming (date badges), past (photo cards, gallery) and news (a dated list); every item opens large */
+  /* 04 News & Events: types of events, what is coming, examples of each type, what took place, news */
+  const EV_ICONS = { hackathon: 'trophy', conference: 'stage', lecture: 'mic', meeting: 'meet', workshop: 'tool' };
+  const EV_ORDER = ['lecture', 'meeting', 'workshop', 'hackathon', 'conference'];
+  ST.exampleCard = x => {
+    const T = ST.text, t = (SITE_CONTENT.eventTypes || {})[x.type] || {};
+    const d = [];
+    if (x.who) d.push([T('evFor'), x.who]);
+    if (x.format) d.push([T('evFormat'), x.format]);
+    return { title: x.title, intro: x.intro, short: t.label,
+      details: d.map(([k, v]) => [`${k}: ${ST.pick(v)}`, `${k}: ${ST.pick(v)}`]).concat(x.bring ? [[`${T('evBring')}: ${ST.pick(x.bring)}`, `${T('evBring')}: ${ST.pick(x.bring)}`]] : []).concat([[T('evExampleNote'), T('evExampleNote')]]),
+      items: x.agenda || [], links: x.path ? [{ label: [T('evDirection'), T('evDirection')], href: '#' + x.path }] : [] };
+  };
   function eventsPanel() {
-    const { upcoming, past } = ST.events(), news = ST.news(), types = SITE_CONTENT.eventTypes || {};
-    const badge = d => `<span class="evc-badge"><b>${d.getDate()}</b>${ST.esc(new Intl.DateTimeFormat(ST.state.lang === 'hy' ? 'hy-AM' : 'en-GB', { month: 'short' }).format(d))}</span>`;
+    const T = ST.text, E = ST.esc, P = ST.pick;
+    const { upcoming, past } = ST.events(), news = ST.news(), types = SITE_CONTENT.eventTypes || {}, ex = SITE_CONTENT.eventExamples || [];
+    const badge = d => `<span class="evc-badge"><b>${d.getDate()}</b>${E(new Intl.DateTimeFormat(ST.state.lang === 'hy' ? 'hy-AM' : 'en-GB', { month: 'short' }).format(d))}</span>`;
     const evCard = (e, k, kind) => { const t = types[e.type] || {}, m = SITE_CONTENT.media[e.media || t.media];
-      return `<article class="evc is-${kind}" data-ev-open="${kind}:${k}" tabindex="0">${m ? `<div class="evc-img"><img src="${ST.esc(m.src)}" alt="" loading="lazy"></div>` : ''}${badge(e.when)}
-        <div class="evc-body"><span class="evc-type">${ST.esc(ST.pick(t.label || ''))}</span><strong>${ST.esc(ST.pick(e.title))}</strong><small>${ST.esc(ST.pick(e.place || ''))}</small></div></article>`; };
-    const empty = (key, btn) => `<div class="evc-empty"><p>${ST.esc(ST.text(key))}</p>${btn ? `<a class="evc-btn" href="#support/idea">${ST.esc(ST.text('evPropose'))} →</a>` : ''}</div>`;
-    return `<div class="ev-groups">
-      <section class="ev-group" id="show-events-upcoming"><p class="ev-head"><i class="status-light"></i>${ST.esc(ST.text('upcomingTitle'))}</p>
-        ${upcoming.length ? `<div class="evc-row">${upcoming.map((e, k) => evCard(e, k, 'up')).join('')}</div>` : empty('evNoneUpcoming', true)}</section>
-      <section class="ev-group" id="show-events-past"><p class="ev-head">${ST.esc(ST.text('evPast'))}${past.length ? ` <button type="button" class="ev-open" data-open-memory="gallery">${ST.esc(ST.text('openGallery'))} ↗</button>` : ''}</p>
-        ${past.length ? `<div class="evc-row">${past.slice().reverse().map((e, k) => evCard(e, past.length - 1 - k, 'past')).join('')}</div>` : empty('evNonePast')}</section>
-      <section class="ev-group" id="show-events-news"><p class="ev-head">${ST.esc(ST.text('evNews'))}</p>
-        <p class="sec-text">${ST.esc(ST.pick(SITE_CONTENT.feeds['news-feed'].intro))}</p>${news.length ? '' : empty('feedEmpty')}<ol class="news-list">${news.map((n, k) => `<li><button type="button" data-news="${k}"><span class="nl-date">${ST.esc(ST.fmtNewsDate(n))}</span><strong>${ST.esc(ST.pick(n.title))}</strong><span class="nl-go" aria-hidden="true">↗</span></button></li>`).join('')}</ol></section>
-      <section class="ev-group ev-propose" id="show-events-propose"><p>${ST.esc(ST.text('evProposeNote'))}</p><a class="evc-btn" href="#support/idea">${ST.esc(ST.text('evPropose'))} →</a></section>
+      return `<article class="evc is-${kind}" data-ev-open="${kind}:${k}" tabindex="0">${m ? `<div class="evc-img"><img src="${E(m.src)}" alt="" loading="lazy"></div>` : ''}${badge(e.when)}
+        <div class="evc-body"><span class="evc-type">${E(P(t.label || ''))}</span><strong>${E(P(e.title))}</strong><small>${E(P(e.place || ''))}</small></div></article>`; };
+    const empty = (key, btn) => `<div class="xs-empty">${icon('clock')}<p>${E(T(key))}</p>${btn ? `<a class="xs-btn" href="#support/idea">${E(T('evPropose'))} →</a>` : ''}</div>`;
+    return `<div class="about-x xs-events">
+      <div class="ab-block rv">
+        ${kick('A', T('evTypesTitle'))}
+        <ul class="xs-types">${EV_ORDER.filter(k => types[k]).map((k, i) => `<li style="--k:${i}" class="t-${k}">${icon(EV_ICONS[k])}<strong>${E(P(types[k].label))}</strong><span>${E(T('evt_' + k))}</span></li>`).join('')}</ul>
+      </div>
+      <section class="ab-block rv" id="show-events-upcoming">
+        ${kick('B', T('upcomingTitle'))}
+        ${upcoming.length ? `<div class="evc-row">${upcoming.map((e, k) => evCard(e, k, 'up')).join('')}</div>` : empty('evNoneUpcoming', true)}
+      </section>
+      ${ex.length ? `<section class="ab-block rv" id="show-events-examples">
+        ${kick('C', T('evExamples'))}
+        <p class="ab-body">${E(T('evExampleNote'))}</p>
+        <div class="xs-ex">${ex.map((x, k) => { const t = types[x.type] || {}; return `<button type="button" class="xs-exc t-${E(x.type)}" data-ex-open="${k}" style="--k:${k}">
+          <span class="xs-exb"><span class="xs-ic">${icon(EV_ICONS[x.type] || 'star')}</span><span class="xs-exl">${E(P(t.label || ''))}</span><span class="xs-stamp">${E(T('evExample'))}</span></span>
+          <strong>${E(P(x.title))}</strong><span class="xs-exi">${E(P(x.intro))}</span>
+          <span class="xs-exm"><span>${icon('users')}${E(P(x.who || ''))}</span><span>${icon('clock')}${E(P(x.format || ''))}</span></span></button>`; }).join('')}</div>
+      </section>` : ''}
+      <section class="ab-block rv" id="show-events-past">
+        ${kick(ex.length ? 'D' : 'C', T('evPast'))}${past.length ? ` <button type="button" class="ev-open" data-open-memory="gallery">${E(T('openGallery'))} ↗</button>` : ''}
+        ${past.length ? `<div class="evc-row">${past.slice().reverse().map((e, k) => evCard(e, past.length - 1 - k, 'past')).join('')}</div>` : empty('evNonePast')}
+      </section>
+      <section class="ab-block rv" id="show-events-news">
+        ${kick(ex.length ? 'E' : 'D', T('evNews'))}
+        <p class="ab-body">${E(P(SITE_CONTENT.feeds['news-feed'].intro))}</p>${news.length ? '' : empty('feedEmpty')}<ol class="news-list">${news.map((n, k) => `<li><button type="button" data-news="${k}"><span class="nl-date">${E(ST.fmtNewsDate(n))}</span><strong>${E(P(n.title))}</strong><span class="nl-go" aria-hidden="true">↗</span></button></li>`).join('')}</ol>
+      </section>
+      <section class="ev-group ev-propose rv" id="show-events-propose"><p>${E(T('evProposeNote'))}</p><a class="evc-btn" href="#support/idea">${E(T('evPropose'))} →</a></section>
     </div>`;
   }
   /* Impact / Trust: their memory bank (projects, reports) */
@@ -410,24 +612,22 @@
           <p class="sec-eyebrow"><span class="sec-num">${ST.pad(i)}</span><span class="sec-rule" aria-hidden="true"></span><span>${ST.esc(eyebrow)}</span></p>
           <${H} class="sec-title" id="h-${s.id}">${title(ST.pick(s.title))}</${H}>
           <p class="sec-intro">${ST.esc(ST.pick(s.intro))}</p>
-          ${s.id === 'purpose' ? '' : (s.text || []).filter(t => ST.pick(t)).map(t => `<p class="sec-text">${ST.esc(ST.pick(t))}</p>`).join('')}
-          ${s.id === 'purpose' ? '' : ST.deckHTML(s)}
+          ${OWN_TEXT[s.id] ? '' : (s.text || []).filter(t => ST.pick(t)).map(t => `<p class="sec-text">${ST.esc(ST.pick(t))}</p>`).join('')}
+          ${OWN_TEXT[s.id] ? '' : ST.deckHTML(s)}
           ${linksHTML(s.links, 'hero-actions')}
           ${s.id === 'support' ? `<p class="sec-text">${ST.esc(ST.pick(SITE_CONTENT.brand.legalName))}</p>` : ''}
-          ${s.id === 'purpose' ? aboutHTML(s) : s.id === 'focus' ? symbolHTML(s) : showcaseHTML(s.showcase, s.id)}
-          ${s.id === 'people' && !SITE_CONTENT.partners.length ? feed('partners-feed') : ''}
-          ${s.id === 'support' ? feed('opportunities-feed') : ''}
+          ${SECX[s.id] ? SECX[s.id](s) : showcaseHTML(s.showcase, s.id)}
           ${i === 0 ? `<ul class="hero-tags">${items}</ul>
              <div class="hero-actions">
                <span class="hero-cue"><span class="scroll-mouse" aria-hidden="true"><i></i></span>${ST.esc(ST.text('scrollBegin'))}</span>
              </div>
         </div>${chooseBlock()}<div>` : `
-          <ul class="sec-items">${items}</ul>
+          ${SECX[s.id] ? '' : `<ul class="sec-items">${items}</ul>`}
           ${s.id === 'events' ? eventsPanel() : ''}
           ${s.id !== 'events' && ST.bankFor(s.id) ? memoryPanel(ST.bankFor(s.id)) : ''}
           ${s.id === CHIP_LAYOUT.power ? givePanel() : ''}
           ${s.id === 'support' ? contactPanel() : ''}
-          ${kids.length ? pathRows(s, kids) : ''}
+          ${kids.length && !OWN_ROWS[s.id] ? pathRows(s, kids) : ''}
           ${s.id === 'people' ? padStrip() : ''}`}
         </div>
       </section>`;
@@ -742,6 +942,8 @@
       const head = e.target.closest('.pc-head');
       const nb = e.target.closest('[data-news]');
       if (nb) { drawerOpen({ kind: 'news', idx: +nb.dataset.news }); return; }
+      const xo = e.target.closest('[data-ex-open]');
+      if (xo) { drawerOpen({ kind: 'example', idx: +xo.dataset.exOpen }); return; }
       const eo = e.target.closest('[data-ev-open]');
       if (eo) { const [kind, k] = eo.dataset.evOpen.split(':'); drawerOpen({ kind: 'event', when: kind, idx: +k }); return; }
       const sc = e.target.closest('.pc-show-card');
