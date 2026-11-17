@@ -963,6 +963,8 @@ html.dr-open{overflow:hidden}
 
 /* ---------- 01 About (2D): path, mission word by word, vision ---------- */
 .about-x{display:grid;gap:34px;margin-top:30px;max-width:720px}
+.ab-h{margin:0 0 12px;font-size:22px;font-weight:500;letter-spacing:-.01em;color:var(--text)}
+.ab-h::before{content:"";display:inline-block;width:22px;height:2px;margin:0 10px 6px 0;background:var(--accent);vertical-align:middle}
 .ab-label{margin:0 0 10px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
 .ab-path{position:relative}
 .ab-line{position:absolute;left:12px;right:12px;top:47px;height:2px;background:var(--line)}
@@ -994,29 +996,22 @@ html.dr-open{overflow:hidden}
 @keyframes vpulse{50%{stroke:#b08a4555;stroke-width:16}}
 @media (max-width:760px){.ab-vision{grid-template-columns:1fr}.ab-quote{font-size:20px}}
 
-/* ---------- 02 Our Symbol (2D): four summits → the mark ---------- */
-.symbol-x{margin-top:26px;max-width:760px}
-.sy-hint{margin:0 0 8px;font-size:13px;color:var(--muted)}
-.sy-art{width:100%;height:auto;overflow:visible}
-.sy-tri{fill:var(--fill);fill-opacity:0;stroke:#14262c;stroke-width:5;stroke-linejoin:round;stroke-dasharray:4200;stroke-dashoffset:4200;
-  transition:stroke-dashoffset 1.6s cubic-bezier(.65,0,.35,1) calc(.2s + var(--k) * .55s),fill-opacity 1s ease calc(2.9s + var(--k) * .25s),stroke-opacity .8s ease 3.6s}
-.symbol-x.is-in .sy-tri{stroke-dashoffset:0;fill-opacity:1;stroke-opacity:0}
-.sy-peak{cursor:pointer;opacity:0;transition:opacity .6s calc(.8s + var(--k) * .55s)}
-.symbol-x.is-in .sy-peak{opacity:1}
-.sy-peak circle{fill:#f4f2ea;stroke:var(--accent);stroke-width:6;transition:r .3s,fill .3s}
-.sy-peak .sy-ring{fill:none;stroke:var(--accent);stroke-width:3;opacity:0}
-.sy-peak text{font-size:46px;font-weight:500;fill:var(--muted);transition:fill .3s}
-.sy-peak.is-on circle{fill:var(--accent)}
-.sy-peak.is-on .sy-ring{opacity:.6;animation:ring 1.6s ease-out infinite;transform-box:fill-box;transform-origin:center}
-.sy-peak.is-on text{fill:var(--text)}
-.sy-peak:focus-visible{outline:none}
-.sy-peak:focus-visible circle{stroke-width:10}
-@keyframes ring{from{transform:scale(.7);opacity:.7}to{transform:scale(1.5);opacity:0}}
-.sy-cards{position:relative;min-height:96px;margin-top:6px}
-.sy-card{position:absolute;inset:0 auto auto 0;max-width:560px;padding:16px 20px;border:1px solid var(--line);border-radius:12px;background:var(--surface);opacity:0;transform:translateY(10px);transition:opacity .45s,transform .45s;pointer-events:none}
-.sy-card.is-on{opacity:1;transform:none}
-.sy-card strong{font-size:16px;font-weight:500}
-.sy-card p{margin:6px 0 0;font-size:14px;line-height:1.6;color:var(--muted)}
-.sy-logo{display:flex;align-items:center;gap:14px;margin:22px 0 0;font-size:13px;color:var(--muted);opacity:0;transition:opacity .8s 4.2s}
-.symbol-x.is-in .sy-logo{opacity:1}
-.sy-logo img{width:54px;height:54px;border-radius:10px;background:#fff;border:1px solid var(--line)}
+/* ---------- 02 Our Symbol (2D): Aragats contour mountain → the mark ---------- */
+.symbol-x{margin-top:26px;max-width:780px}
+.sy-stage{position:relative;border-radius:18px;overflow:hidden;
+  background:radial-gradient(ellipse at 50% 38%,#fbf8ef 0%,#f4f2ea 60%,#ece7d8 100%);border:1px solid var(--line)}
+.sy-canvas{display:block;width:100%;aspect-ratio:1720/1180;cursor:pointer}
+.sy-replay{position:absolute;right:12px;bottom:12px;display:inline-flex;gap:6px;align-items:center;padding:7px 13px;border-radius:999px;
+  border:1px solid var(--line);background:#fffdf7cc;color:var(--muted);font:inherit;font-size:12px;cursor:pointer;opacity:0;transition:opacity .4s,color .2s,border-color .2s}
+.symbol-x.is-done .sy-replay,.sy-stage:hover .sy-replay,.sy-replay:focus-visible{opacity:1}
+.sy-replay:hover{color:var(--text);border-color:var(--accent)}
+.sy-hint{margin:12px 0 10px;font-size:13px;color:var(--muted)}
+.sy-pillars{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.sy-pill{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;align-items:baseline;text-align:left;padding:14px 16px;border-radius:12px;
+  border:1px solid var(--line);background:var(--surface);color:var(--text);font:inherit;cursor:pointer;transition:border-color .3s,box-shadow .3s,transform .3s}
+.sy-pill:hover{border-color:var(--accent)}
+.sy-pill.is-on{border-color:var(--accent);box-shadow:0 0 0 3px #b08a4526;transform:translateY(-2px)}
+.sy-n{grid-row:span 2;font-size:11px;letter-spacing:.12em;color:var(--accent)}
+.sy-pill strong{font-size:15px;font-weight:500}
+.sy-d{font-size:13px;line-height:1.55;color:var(--muted)}
+@media (max-width:760px){.sy-pillars{grid-template-columns:1fr}}

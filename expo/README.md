@@ -53,3 +53,10 @@ assets/           SemiTec Academy screenshots (training.png, lab.png)
 Fonts load from Google Fonts when online. Offline, system fonts are used and the deck still works.
 
 Board facts come from the feature list on the AUP-ZU3 board overview (https://xilinx.github.io/AUP-ZU3/overview.html). The board drawing follows the real component layout. The FPGA zoom is a simplified illustration. Its numbers (8 LUTs and 16 flip-flops per CLB, CARRY8, a clock region of 60 CLBs, 24 DSP and 12 BRAM, 360 DSP48E2, 216 RAMB36) come from AMD UG574, UG899 and the Zynq UltraScale+ product table. Dashboard values are example data.
+
+## About chapter (`?chapter=about`)
+Fourteen scenes that play only from the website's About section (`data-solo="about"`), so the full
+presentation stays as it was: people, the path, the mission in five parts, the vision in three parts,
+the Aragats symbol and a closing line. Texts are the `ab*` keys in `js/content.js`; in a text, `*word`
+highlights a word. The symbol animation is `js/aragats.js`, shared with the website's 2D view
+(section 02), and the globe is drawn in `js/about.js`.

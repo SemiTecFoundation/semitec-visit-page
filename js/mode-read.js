@@ -71,9 +71,9 @@
         <div class="ab-line"><i></i></div>
         <ol>${steps.map((t, i) => `<li style="--k:${i}"><span class="ab-dot"></span><span>${E(t)}</span></li>`).join('')}</ol>
       </div>
-      ${mission ? `<blockquote class="ab-mission rv" id="show-${s.id}-${mission.id}"><p class="ab-label">${E(P(mission.title))}</p><p class="ab-quote">${words(mission.intro)}</p></blockquote>` : ''}
+      ${mission ? `<blockquote class="ab-mission rv" id="show-${s.id}-${mission.id}"><h3 class="ab-h">${E(P(mission.title))}</h3><p class="ab-quote">${words(mission.intro)}</p></blockquote>` : ''}
       ${vision ? `<div class="ab-vision rv" id="show-${s.id}-${vision.id}">
-        <div><p class="ab-label">${E(P(vision.title))}</p><p class="ab-vtext">${E(P(vision.intro))}</p></div>
+        <div><h3 class="ab-h">${E(P(vision.title))}</h3><p class="ab-vtext">${E(P(vision.intro))}</p></div>
         <svg viewBox="0 0 600 320" aria-hidden="true">
           <g class="vlinks">${[[0,1],[1,2],[2,3],[3,0],[0,2],[1,3]].map(([a, b], i) => `<path class="vl" style="--k:${i}" d="M${nodes[a][1]} ${nodes[a][2]}L${nodes[b][1]} ${nodes[b][2]}"/>`).join('')}</g>
           ${nodes.map(([k, x, y], i) => `<g class="vn" style="--k:${i}"><rect x="${x - 78}" y="${y - 24}" width="156" height="48" rx="24"/><text x="${x}" y="${y + 6}">${E(T(k))}</text></g>`).join('')}
@@ -81,42 +81,78 @@
         </svg></div>` : ''}
     </div>`;
   }
-  /* ---------- 02 Our Symbol: the four summits draw themselves and fill into the SemiTec mark ---------- */
-  const SUMMITS = [   // the four triangles of the logo, in a 1270 × 842 box (apex first)
-    { pts: '306,438 0,842 610,842', apex: [306, 438], fill: '#17262c', lab: [-40, 400, 'end'] },
-    { pts: '635,0 0,842 1270,842', apex: [635, 0], fill: '#b08a45', lab: [635, -40, 'middle'] },
-    { pts: '889,335 1270,842 508,842', apex: [889, 335], fill: '#17262c', lab: [1310, 300, 'start'] },
-    { pts: '557,500 674,621 508,842 225,842', apex: [557, 500], fill: '#8b2c10', lab: [557, 930, 'middle'] }
-  ];
+  /* ---------- 02 Our Symbol: a contour map rises into Aragats, each summit is visited, and the
+     silhouette fills into the SemiTec mark (drawn by expo/js/aragats.js, shared with the presentation) ---------- */
   function symbolHTML(s) {
-    const E = ST.esc, P = ST.pick, cards = s.showcase || [];
-    const map = [0, 1, 2, 3];   // card k → summit k: Education, Science, Industry, Community
-    return `<div class="symbol-x rv" data-summit="0">
+    const E = ST.esc, P = ST.pick, cards = (s.showcase || []).slice(0, 4);
+    return `<div class="symbol-x">
+      <div class="sy-stage">
+        <canvas class="sy-canvas" role="img" aria-label="${E(cards.map(c => P(c.title)).join(' · '))}"></canvas>
+        <button type="button" class="sy-replay" aria-label="${E(ST.text('symbolReplay'))}"><span aria-hidden="true">↻</span> ${E(ST.text('symbolReplay'))}</button>
+      </div>
       <p class="sy-hint">${E(ST.text('symbolHint'))}</p>
-      <svg class="sy-art" viewBox="-200 -110 1670 1100" role="group">
-        <g class="sy-shapes">
-          ${[1, 0, 3, 2].map((n, i) => `<polygon class="sy-tri" data-n="${n}" points="${SUMMITS[n].pts}" style="--k:${i};--fill:${SUMMITS[n].fill}"/>`).join('')}
-        </g>
-        ${cards.slice(0, 4).map((c, k) => { const t = SUMMITS[map[k]]; return `<g class="sy-peak" data-k="${k}" tabindex="0" role="button" aria-label="${E(P(c.title))}" style="--k:${k}" id="show-${s.id}-${c.id}">
-          <circle cx="${t.apex[0]}" cy="${t.apex[1]}" r="20"/><circle class="sy-ring" cx="${t.apex[0]}" cy="${t.apex[1]}" r="36"/>
-          <text x="${t.lab[0]}" y="${t.lab[1]}" text-anchor="${t.lab[2]}">${E(P(c.title))}</text></g>`; }).join('')}
-      </svg>
-      <div class="sy-cards">${cards.slice(0, 4).map((c, k) => `<div class="sy-card${k === 0 ? ' is-on' : ''}" data-k="${k}"><strong>${E(P(c.title))}</strong><p>${E(P(c.intro))}</p></div>`).join('')}</div>
-      <p class="sy-logo"><img src="assets/logo.png" alt="" width="54" height="54"><span>${E(ST.text('symbolLogo'))}</span></p>
+      <div class="sy-pillars">${cards.map((c, k) => `<button type="button" class="sy-pill" data-k="${k}" id="show-${s.id}-${c.id}">
+        <span class="sy-n">0${k + 1}</span><strong>${E(P(c.title))}</strong><span class="sy-d">${E(P(c.intro))}</span></button>`).join('')}</div>
     </div>`;
   }
-  function symbolPick(root, k, user) {
-    root.dataset.summit = k;
-    root.querySelectorAll('.sy-card').forEach(c => c.classList.toggle('is-on', +c.dataset.k === k));
-    root.querySelectorAll('.sy-peak').forEach(c => c.classList.toggle('is-on', +c.dataset.k === k));
-    if (user) root.dataset.user = '1';
+  const SY = { root: null, art: null, t: 0, started: false, vis: false, raf: 0, last: 0, tween: null, holdAt: -1, hold: 0, io: null };
+  function symbolInit() {
+    const root = document.querySelector('.symbol-x');
+    if (!root || !window.Aragats) return;
+    if (SY.root !== root) {
+      SY.root = root;
+      const cards = ((SITE_CONTENT.sections || []).find(x => x.id === 'focus') || {}).showcase || [];
+      SY.art = Aragats.create(root.querySelector('canvas'), { theme: 'light', labels: () => cards.slice(0, 4).map(c => ST.pick(c.title)),
+        font: getComputedStyle(document.body).fontFamily });
+      if (ST.state.reduced) { SY.t = Aragats.END; SY.started = true; }
+      if (SY.io) SY.io.disconnect();
+      SY.io = new IntersectionObserver(es => es.forEach(e => {
+        SY.vis = e.isIntersecting;
+        if (SY.vis && !SY.started && e.intersectionRatio > .35) SY.started = true;
+        if (SY.vis) symbolLoop();
+      }), { threshold: [0, .35, .6] });
+      SY.io.observe(root.querySelector('.sy-stage'));
+    }
+    symbolFrame();
   }
-  /* summits light up one after another until the visitor chooses one */
-  setInterval(() => {
-    const root = document.querySelector('[data-mode="2d"] .symbol-x.is-in:not([data-user])'); if (!root || document.hidden) return;
-    const r = root.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) return;
-    symbolPick(root, (+root.dataset.summit + 1) % 4);
-  }, 2600);
+  function symbolFrame() {
+    if (!SY.art) return;
+    SY.art.draw(SY.t);
+    SY.root.querySelectorAll('.sy-pill').forEach(b => b.classList.toggle('is-on', Aragats.focus(SY.t, +b.dataset.k) > .5));
+    SY.root.classList.toggle('is-done', SY.t >= Aragats.END);
+  }
+  function symbolLoop() {
+    if (SY.raf) return;
+    SY.last = performance.now();
+    const tick = now => {
+      SY.raf = 0;
+      const dt = Math.min(.1, (now - SY.last) / 1000); SY.last = now;
+      if (!SY.vis || document.hidden || document.documentElement.dataset.mode !== '2d') return;
+      if (SY.tween) {
+        const k = Math.min(1, (now - SY.tween.start) / SY.tween.dur), e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+        SY.t = SY.tween.from + (SY.tween.to - SY.tween.from) * e;
+        if (k >= 1) SY.tween = null;
+      } else if (SY.holdAt >= 0 && SY.t >= SY.holdAt) {
+        SY.t = SY.holdAt; SY.hold -= dt; if (SY.hold <= 0) SY.holdAt = -1;
+      } else if (SY.started && SY.t < Aragats.END) SY.t = Math.min(Aragats.END, SY.t + dt);
+      symbolFrame();
+      if (SY.started && (SY.t < Aragats.END || SY.tween || SY.holdAt >= 0)) SY.raf = requestAnimationFrame(tick);
+    };
+    SY.raf = requestAnimationFrame(tick);
+  }
+  // fly (rewind or forward) to summit k, stay there for a while, then go on to the mark
+  function symbolFocus(k) {
+    if (!SY.art) return;
+    const to = Aragats.T1 + k * Aragats.TP + 1;
+    SY.started = true;
+    SY.tween = ST.state.reduced ? null : { from: SY.t, to, start: performance.now(), dur: 900 + 120 * Math.abs(SY.t - to) };
+    if (ST.state.reduced) SY.t = to;
+    SY.holdAt = to; SY.hold = 5;
+    symbolLoop(); symbolFrame();
+  }
+  function symbolReplay() {
+    SY.tween = null; SY.holdAt = -1; SY.t = 0; SY.started = true; symbolLoop(); symbolFrame();
+  }
   /* the full content of a path, shown in the side panel */
   function pathBody(section, child) {
     const p = `${section.id}/${child.id}`;
@@ -351,6 +387,7 @@
     intro.innerHTML = html[0]; storyLast = -1;
     main.innerHTML = html.slice(1).join('');
     revealRows();
+    symbolInit();
     ST.eco.render(outro);
     cache = new WeakMap();
     if (drawer.el && drawer.el.classList.contains('is-open')) drawerRender();
@@ -661,8 +698,11 @@
       if (eo) { const [kind, k] = eo.dataset.evOpen.split(':'); drawerOpen({ kind: 'event', when: kind, idx: +k }); return; }
       const sc = e.target.closest('.pc-show-card');
       if (sc && !e.target.closest('.psc-links a')) { drawerOpen({ kind: 'card', key: sc.closest('.pc-show').dataset.showKey, idx: +sc.dataset.show }); return; }
-      const pk = e.target.closest('.sy-peak');
-      if (pk) { symbolPick(pk.closest('.symbol-x'), +pk.dataset.k, true); return; }
+      const pk = e.target.closest('.sy-pill');
+      if (pk) { symbolFocus(+pk.dataset.k); return; }
+      if (e.target.closest('.sy-replay')) { symbolReplay(); return; }
+      const cv = e.target.closest('.sy-canvas');
+      if (cv && SY.art) { const r = cv.getBoundingClientRect(), k = SY.art.peakAt(e.clientX - r.left, e.clientY - r.top); if (k >= 0) symbolFocus(k); return; }
       if (e.target.closest('.pr-watch')) return;   /* the presentation opens through [data-deck] */
       const row = e.target.closest('[data-open-path]');
       if (row) { drawerOpen({ kind: 'path', path: row.dataset.openPath.split('/') }); return; }
@@ -671,7 +711,6 @@
       const gb = e.target.closest('[data-give]');
       if (gb) { giveMode = gb.dataset.give; const panel = gb.closest('.give-panel'); panel.dataset.modeGive = giveMode; panel.querySelectorAll('[data-give]').forEach(b => b.setAttribute('aria-pressed', String(b === gb))); }
     });
-    main.addEventListener('keydown', e => { const pk = e.target.closest && e.target.closest('.sy-peak'); if (pk && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); symbolPick(pk.closest('.symbol-x'), +pk.dataset.k, true); } });
     addEventListener('hashchange', () => { if (on && !ST.state.switching) { const p = ST.readHash(); scrollToPath(p); } });
   };
   /* where each step of the ending sits in its pinned scroll (used when switching views inside the ending) */
