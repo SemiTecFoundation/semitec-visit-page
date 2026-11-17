@@ -893,3 +893,20 @@ html.travel-intro .gate-layer,html.travel-end .gate-layer{opacity:0!important;tr
 
 /* a block not built yet in the opening story: hidden outright (Safari keeps 3D-transformed children visible at opacity 0) */
 .chipmap .cm-block.is-gone{visibility:hidden}
+
+/* ---------- paths as tabs (2D) ---------- */
+.paths.tabs .pt-tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.pt-tab{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:8px 15px 8px 9px;font:inherit;font-size:13px;color:var(--muted);cursor:pointer;transition:border-color .2s,color .2s,background .2s}
+.pt-tab:hover{border-color:#c9b48a;color:var(--text)}
+.pt-tab[aria-selected="true"]{border-color:var(--accent);color:var(--text);background:#b08a4514}
+.pt-n{display:grid;place-items:center;min-width:24px;height:24px;border-radius:50%;background:#14262c0f;font-size:10px;letter-spacing:.04em}
+.pt-tab[aria-selected="true"] .pt-n{background:var(--accent);color:#fff}
+.paths.tabs .path-card{display:none}
+.paths.tabs .path-card.is-open{display:block;box-shadow:none}
+.paths.tabs .pc-head{display:none}
+.paths.tabs .pc-body{grid-template-rows:1fr;transition:none}
+.paths.tabs .path-card.is-open .pc-inner{animation:pt-in .35s var(--ease-out) both}
+@keyframes pt-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.pc-title{margin:4px 0 6px;font-size:20px;font-weight:500;line-height:1.25}
+.paths:not(.tabs) .pc-title{display:none}
+.paths.tabs .pc-inner{padding:16px 22px 20px}

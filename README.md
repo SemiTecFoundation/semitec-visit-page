@@ -18,6 +18,15 @@ News, events, partners and archive records have no static sample entries. Progra
 
 Validation: `node validate.cjs` and JavaScript syntax checks pass. Browser layout verification remains pending because no connected browser was available.
 
+## 2D view: one name per section, tabs (November 2026)
+
+- **One name per section.** A numbered section's heading uses its menu name (`label`), the same name the chip and the bottom bar show. Its `eyebrow` is not shown. Section 02 is now **Our Symbol** and section 03 **Directions**.
+- **Short names.** Paths and chip cells may have `short` (EN/HY). It is used on the chip map and on the tabs; the full `title` stays on the page.
+- **No section illustrations** in the 2D view. The chip map beside the text is the section's picture.
+- **Paths as tabs.** A section's paths are a row of tabs with one path shown at a time. A link to a path (`#section/path`) opens its tab. The 3D view is unchanged.
+
+Live site: `npm run import -- --section focus,initiatives,events,impact,people,transparency,donate,support` in the content manager.
+
 ## Focus Areas: five directions (November 2026)
 
 The Focus Areas section (`initiatives`) has five side paths, one per direction, and no cards. The six charter directions and the separate program paths were removed. The intro explains the gap the directions close.
