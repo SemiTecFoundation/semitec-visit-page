@@ -80,7 +80,27 @@
     return h;
   }
   const sentences = t => (t || '').split(/(?<=[.։])\s+/).filter(Boolean);
-  function aboutHTML(s) {
+  // the Mission and Vision cards of About; also shown in the side panel (3D: their boards along the road open them)
+  function mvHTML(s, card, which) {
+    if (!card) return '';
+    const T = ST.text, E = ST.esc, P = ST.pick, mission = card, vision = card;
+    const head = (n, label) => `<p class="ab-kick"><span>${n}</span>${E(label)}</p>`;
+    const fields = [['book', 'visionEdu'], ['flask', 'visionSci'], ['chip', 'visionTech'], ['factory', 'visionInd']];
+    return which === 'mission' ? `<section class="ab-card ab-mission rv" id="show-${s.id}-${mission.id}" aria-labelledby="ab-m">
+        ${head('C', P(mission.title)).replace('<p class="ab-kick">', '<p class="ab-kick" id="ab-m">')}
+        <p class="ab-quote">${marks(P(mission.intro), T('missionKeys'))}</p>
+        <p class="ab-sub">${E(T('missionList'))}</p>
+        <ol class="ab-five">${[1, 2, 3, 4, 5].map(n => `<li style="--k:${n}"><b>${n}</b><div><strong>${E(T('m' + n))}</strong><span>${E(T('m' + n + 't'))}</span></div></li>`).join('')}</ol>
+      </section>` : `<section class="ab-card ab-vision rv" id="show-${s.id}-${vision.id}" aria-labelledby="ab-v">
+        ${head('D', P(vision.title)).replace('<p class="ab-kick">', '<p class="ab-kick" id="ab-v">')}
+        <p class="ab-quote">${marks(P(vision.intro), T('visionKeys'))}</p>
+        <p class="ab-sub">${E(T('visionFields'))}</p>
+        <div class="ab-fields">${fields.map(([ic, k], i) => `<div class="ab-field" style="--k:${i}">${icon(ic)}<strong>${E(T(k))}</strong><span>${E(T(k + 'T'))}</span></div>`).join('')}
+</div>
+        <div class="ab-people"><span class="ab-pp">${E(T('visionPeopleLine'))}</span>${[1, 2, 3, 4].map(n => `<span class="ab-verb" style="--k:${n}">${E(T('verb' + n))}</span>`).join('')}</div>
+      </section>`;
+  }
+  function aboutHTML(s, opts = {}) {
     const T = ST.text, E = ST.esc, P = ST.pick, cards = s.showcase || [];
     const mission = cards.find(c => c.id === 'mission') || cards[0], vision = cards.find(c => c.id === 'vision') || cards[1];
     const texts = (s.text || []).map(P).filter(Boolean);
@@ -106,20 +126,7 @@
         <canvas class="ab-thumb" width="360" height="250" aria-hidden="true"></canvas>
         <span class="ab-wt"><span class="ab-wplay" aria-hidden="true"></span><span><strong>${E(T('aboutWatchTitle'))}</strong><small>${E(T('aboutWatchMeta'))}</small></span></span>
       </button>` : ''}
-      ${mission ? `<section class="ab-card ab-mission rv" id="show-${s.id}-${mission.id}" aria-labelledby="ab-m">
-        ${head('C', P(mission.title)).replace('<p class="ab-kick">', '<p class="ab-kick" id="ab-m">')}
-        <p class="ab-quote">${marks(P(mission.intro), T('missionKeys'))}</p>
-        <p class="ab-sub">${E(T('missionList'))}</p>
-        <ol class="ab-five">${[1, 2, 3, 4, 5].map(n => `<li style="--k:${n}"><b>${n}</b><div><strong>${E(T('m' + n))}</strong><span>${E(T('m' + n + 't'))}</span></div></li>`).join('')}</ol>
-      </section>` : ''}
-      ${vision ? `<section class="ab-card ab-vision rv" id="show-${s.id}-${vision.id}" aria-labelledby="ab-v">
-        ${head('D', P(vision.title)).replace('<p class="ab-kick">', '<p class="ab-kick" id="ab-v">')}
-        <p class="ab-quote">${marks(P(vision.intro), T('visionKeys'))}</p>
-        <p class="ab-sub">${E(T('visionFields'))}</p>
-        <div class="ab-fields">${fields.map(([ic, k], i) => `<div class="ab-field" style="--k:${i}">${icon(ic)}<strong>${E(T(k))}</strong><span>${E(T(k + 'T'))}</span></div>`).join('')}
-</div>
-        <div class="ab-people"><span class="ab-pp">${E(T('visionPeopleLine'))}</span>${[1, 2, 3, 4].map(n => `<span class="ab-verb" style="--k:${n}">${E(T('verb' + n))}</span>`).join('')}</div>
-      </section>` : ''}
+      ${opts.noMV ? '' : mvHTML(s, mission, 'mission') + mvHTML(s, vision, 'vision')}
     </div>`;
   }
   // the presentation card shows the Aragats mark, drawn once with the deck's colours
@@ -304,6 +311,7 @@
      because the mountain itself stands beside the road */
   ST.secHTML = s => {
     if (s.id === 'events') return eventsPanel();
+    if (s.id === 'purpose') return aboutHTML(s, { noMV: true }).replace(/<\/div>\s*$/, '') + `<div class="ab-block rv xs-mvlinks">${(s.showcase || []).slice(0, 2).map((c, k) => `<button type="button" class="xs-card" data-card="purpose:${k}"><span class="xs-ic">${icon(k ? 'eye' : 'star')}</span><span class="xs-cb"><strong>${ST.esc(ST.pick(c.title))}</strong><span>${ST.esc(ST.text('mvAlong'))}</span></span><span class="xs-go" aria-hidden="true">→</span></button>`).join('')}</div></div>`;
     if (s.id === 'focus') return `<div class="about-x"><div class="ab-block rv">${kick('A', ST.pick(s.label))}<p class="ab-body">${ST.esc(ST.text('symbolHint3d'))}</p>
       <div class="sy-pillars">${(s.showcase || []).slice(0, 4).map((c, k) => `<button type="button" class="sy-pill" data-card="focus:${k}"><span class="sy-n">0${k + 1}</span><strong>${ST.esc(ST.pick(c.title))}</strong><span class="sy-d">${ST.esc(ST.pick(c.intro))}</span></button>`).join('')}</div></div></div>`;
     return SECX[s.id] ? SECX[s.id](s) : '';
@@ -403,6 +411,10 @@
   /* a card (product, news item, event) in the side panel: text first, then its pictures in a strip */
   function cardBody(item) {
     const esc = ST.esc, P = ST.pick;
+    if (item.id === 'mission' || item.id === 'vision') {
+      const sec = sections.find(x => x.id === 'purpose');
+      if (sec && (sec.showcase || []).includes(item)) return `<h2 class="dr-title">${esc(P(item.title))}</h2><div class="about-x dr-mv">${mvHTML(sec, item, item.id).replace(/ rv"/g, ' rv is-in"').replace(/ id="show-[^"]*"/, '')}</div>`;
+    }
     const pics = (item.gallery || (item.media ? [item.media] : [])).filter((id, i, a) => SITE_CONTENT.media[id] && a.indexOf(id) === i);
     return `<h2 class="dr-title">${esc(P(item.title))}</h2>
       <p class="dr-lead">${esc(P(item.intro))}</p>

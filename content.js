@@ -2340,6 +2340,14 @@ const SITE_CONTENT = {
       "The mountain beside the road is our mark: its four summits are the four pillars. Choose one to read more.",
       "Ճանապարհի կողքին գտնվող լեռը մեր նշանն է․ նրա չորս գագաթները չորս հենասյուներն են։ Ընտրեք մեկը՝ ավելին կարդալու համար։"
     ],
+    "mvAlong": [
+      "Its board stands along the road ahead. Open it to read it in full.",
+      "Նրա վահանակը ճանապարհի վրա է՝ առջևում։ Բացեք՝ ամբողջությամբ կարդալու համար։"
+    ],
+    "deckBoard": [
+      "Presentation",
+      "Ներկայացում"
+    ],
     "aboutPath": [
       "Our path",
       "Մեր ճանապարհը"

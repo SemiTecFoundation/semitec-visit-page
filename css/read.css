@@ -1191,3 +1191,7 @@ html.dr-open{overflow:hidden}
 .cm-pads{transform:translateZ(6px)}
 .cm-pad{transition:scale .2s var(--ease-out),filter .2s,box-shadow .2s,background .2s}
 .cm-pad:hover,.cm-pad:focus-visible,.cm-pad.is-open{scale:1.45;z-index:2}
+/* Mission / Vision in the side panel */
+.dr-mv{margin-top:14px;max-width:none}
+.dr-mv .ab-card{padding:0;border:0;background:none}
+.dr-mv .ab-kick{display:none}

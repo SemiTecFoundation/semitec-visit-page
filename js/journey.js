@@ -60,7 +60,7 @@ class Curve {
 }
 /* The road between two sections is sectionSpacing long, unless the section has its own cards on the main road
    (About, Focus, the news in News & Events): then it is long enough for each card to have its own stretch. */
-function mainCards(section){return section.showcase&&section.showcase.length?section.showcase.length:section.id==='events'?((SITE_CONTENT.news||[]).length?Math.min(4,SITE_CONTENT.news.length):Math.min(5,(SITE_CONTENT.eventExamples||[]).length)):0;}
+function mainCards(section){const d=section.deck&&section.showcase&&section.showcase.length?1:0;return section.showcase&&section.showcase.length?section.showcase.length+d:section.id==='events'?((SITE_CONTENT.news||[]).length?Math.min(4,SITE_CONTENT.news.length):Math.min(5,(SITE_CONTENT.eventExamples||[]).length)):0;}
 const SECTION_OFFSETS=(()=>{
   const S=SITE_CONTENT.sections,base=JOURNEY_SETTINGS.sectionSpacing,g=JOURNEY_SETTINGS.mainCardGap,off=[0];
   for(let i=0;i<S.length-1;i++){const n=i>0?mainCards(S[i]):0;off.push(off[i]+Math.max(base,n?(n-1)*g+19:0));}
