@@ -36,7 +36,14 @@
       <div class="psc-body"><strong>${ST.esc(ST.pick(it.title))}</strong><p>${ST.esc(ST.pick(it.intro))}</p>
       ${linksHTML(it.links, 'psc-links')}<button type="button" class="psc-more">${ST.esc(ST.text('showMore'))} ↗</button></div></article>`;
   }).join('')}</div>` : '';
-  function pathCard(section, child, c) {
+  /* paths as tabs: one row of tabs, one path shown at a time (the chosen one, or the first) */
+  function pathTabs(s, kids) {
+    const sel = openPath && openPath[0] === s.id && kids.some(k => k.id === openPath[1]) ? openPath[1] : kids[0].id;
+    return `<div class="paths tabs"><p class="paths-label">${ST.esc(ST.text('pathsLabel'))}</p>
+      <div class="pt-tabs" role="tablist">${kids.map((k, c) => `<button type="button" role="tab" class="pt-tab" id="tab-${s.id}-${k.id}" data-path="${s.id}/${k.id}" aria-controls="card-${s.id}-${k.id}" aria-selected="${k.id === sel}"><span class="pt-n">${ST.pad(c + 1)}</span>${ST.esc(ST.pick(k.short || k.title))}</button>`).join('')}</div>
+      <div class="path-grid">${kids.map((k, c) => pathCard(s, k, c, k.id === sel)).join('')}</div></div>`;
+  }
+  function pathCard(section, child, c, open) {
     const p = `${section.id}/${child.id}`;
     const items = (child.items || []).map(it => `<li>${ST.esc(ST.pick(it))}</li>`).join('');
     const sub = (child.children || []).map(g => `<div class="pc-sub-item">
@@ -44,12 +51,13 @@
         <span>${g.items && g.items.length ? g.items.map(it => ST.esc(ST.pick(it))).join(' · ') : ST.esc(ST.pick(g.intro || ''))}</span>
         ${linksHTML(g.links, 'pc-sub-links')}
       </div>`).join('');
-    return `<article class="path-card" id="card-${section.id}-${child.id}" data-path="${p}" style="--c:${c}">
+    return `<article class="path-card${open ? ' is-open' : ''}" id="card-${section.id}-${child.id}" data-path="${p}" style="--c:${c}" role="tabpanel" aria-labelledby="tab-${section.id}-${child.id}">
       <button type="button" class="pc-head" aria-expanded="false" aria-controls="body-${section.id}-${child.id}">
         <span class="pc-n">${ST.pad(c + 1)}</span><span class="pc-t">${ST.esc(ST.pick(child.title))}</span>
         ${child.children && child.children.length ? `<span class="pc-count">+${child.children.length}</span>` : ''}<span class="pc-x" aria-hidden="true"></span>
       </button>
       <div class="pc-body" id="body-${section.id}-${child.id}"><div class="pc-inner">
+        <h3 class="pc-title">${ST.esc(ST.pick(child.title))}</h3>
         <p class="pc-intro">${ST.esc(ST.pick(child.intro))}</p>
         ${ST.deckHTML(child)}
         ${(child.text || []).map(t => `<p class="pc-text">${ST.esc(ST.pick(t))}</p>`).join('')}
@@ -149,7 +157,7 @@
     };
     const html = sections.map((s, i) => {
       const H = i === 0 ? 'h1' : 'h2';
-      const eyebrow = s.eyebrow ? ST.pick(s.eyebrow) : i === 0 ? ST.text('beginning') : ST.pick(s.label);
+      const eyebrow = i === 0 ? (s.eyebrow ? ST.pick(s.eyebrow) : ST.text('beginning')) : ST.pick(s.label);   // one name per section: the same as the chip and the bottom bar
       const items = (s.items || []).map((it, c) => `<li style="--c:${c}">${ST.esc(ST.pick(it))}</li>`).join('');
       const kids = (s.children || []);
       return `<section class="sec${i === 0 ? ' sec-hero' : ''}" id="${s.id}" data-index="${i}" aria-labelledby="h-${s.id}">
@@ -170,13 +178,12 @@
                <span class="hero-cue"><span class="scroll-mouse" aria-hidden="true"><i></i></span>${ST.esc(ST.text('scrollBegin'))}</span>
              </div>
         </div>${chooseBlock()}<div>` : `
-          ${media(s)}
           <ul class="sec-items">${items}</ul>
           ${s.id === 'events' ? eventsPanel() : ''}
           ${s.id !== 'events' && ST.bankFor(s.id) ? memoryPanel(ST.bankFor(s.id)) : ''}
           ${s.id === CHIP_LAYOUT.power ? givePanel() : ''}
           ${s.id === 'support' ? contactPanel() : ''}
-          ${kids.length ? `<div class="paths"><p class="paths-label">${ST.esc(ST.text('pathsLabel'))}</p><div class="path-grid">${kids.map((k, c) => pathCard(s, k, c)).join('')}</div></div>` : ''}
+          ${kids.length ? pathTabs(s, kids) : ''}
           ${s.id === 'people' ? padStrip() : ''}`}
         </div>
       </section>`;
@@ -191,6 +198,8 @@
   /* ---------- path cards ---------- */
   function setCard(path, open, instant) {
     const card = document.getElementById(`card-${path[0]}-${path[1]}`); if (!card) return null;
+    if (!open && card.closest('.tabs')) return card;   /* a tab stays chosen until another one is */
+    if (open) card.closest('.sec').querySelectorAll('.pt-tab').forEach(t => t.setAttribute('aria-selected', String(t.dataset.path === path.join('/'))));
     /* the clicked card keeps its place on screen while a longer card above it closes */
     const y0 = card.getBoundingClientRect().top;
     let closedAbove = false;
@@ -513,6 +522,8 @@
         const node = cid ? sec.children.find(x => x.id === cid) : sec, list = node.showcase || [];
         ST.openShowcase(list[+sc.dataset.show], +sc.dataset.show, list.length); return;
       }
+      const tab = e.target.closest('.pt-tab');
+      if (tab) { setCard(tab.dataset.path.split('/'), true); history.replaceState(null, '', '#' + tab.dataset.path); return; }
       if (head) { const card = head.closest('.path-card'); setCard(card.dataset.path.split('/'), !card.classList.contains('is-open')); return; }
       const m = e.target.closest('[data-media]'); if (m) ST.openMedia(m.dataset.media, m.dataset.mediaTitle);
       const gb = e.target.closest('[data-give]');

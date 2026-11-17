@@ -130,8 +130,8 @@ const SITE_CONTENT = {
     {
       "id": "focus",
       "label": [
-        "Focus",
-        "Ուղղություններ"
+        "Our Symbol",
+        "Մեր խորհրդանիշը"
       ],
       "title": [
         "Four Peaks. One Shared Future.",
@@ -232,7 +232,7 @@ const SITE_CONTENT = {
     {
       "id": "initiatives",
       "label": [
-        "Focus Areas",
+        "Directions",
         "Ուղղություններ"
       ],
       "eyebrow": [
@@ -294,7 +294,11 @@ const SITE_CONTENT = {
           "children": [],
           "media": "academy-lab",
           "showcase": [],
-          "deck": "labs"
+          "deck": "labs",
+          "short": [
+            "Labs",
+            "Լաբորատորիաներ"
+          ]
         },
         {
           "id": "academy",
@@ -533,7 +537,11 @@ const SITE_CONTENT = {
               ]
             }
           ],
-          "deck": "library"
+          "deck": "library",
+          "short": [
+            "Academy",
+            "Ակադեմիա"
+          ]
         },
         {
           "id": "projects",
@@ -577,7 +585,11 @@ const SITE_CONTENT = {
           "children": [],
           "media": "prog-projects",
           "showcase": [],
-          "deck": "projects"
+          "deck": "projects",
+          "short": [
+            "Projects",
+            "Նախագծեր"
+          ]
         },
         {
           "id": "hackathons",
@@ -621,6 +633,10 @@ const SITE_CONTENT = {
             {
               "type": "conference"
             }
+          ],
+          "short": [
+            "Hackathons",
+            "Հաքաթոններ"
           ]
         },
         {
@@ -669,6 +685,10 @@ const SITE_CONTENT = {
             {
               "type": "lecture"
             }
+          ],
+          "short": [
+            "Meetings",
+            "Հանդիպումներ"
           ]
         }
       ],
@@ -698,6 +718,10 @@ const SITE_CONTENT = {
           "title": [
             "Upcoming events",
             "Առաջիկա միջոցառումներ"
+          ],
+          "short": [
+            "Upcoming",
+            "Առաջիկա"
           ]
         },
         {
@@ -705,11 +729,19 @@ const SITE_CONTENT = {
           "title": [
             "Past events",
             "Անցած միջոցառումներ"
+          ],
+          "short": [
+            "Past",
+            "Անցած"
           ]
         },
         {
           "id": "news",
           "title": [
+            "News",
+            "Նորություններ"
+          ],
+          "short": [
             "News",
             "Նորություններ"
           ]
@@ -719,6 +751,10 @@ const SITE_CONTENT = {
           "title": [
             "Propose an event",
             "Առաջարկել միջոցառում"
+          ],
+          "short": [
+            "Propose",
+            "Առաջարկել"
           ]
         }
       ]
@@ -759,7 +795,11 @@ const SITE_CONTENT = {
               "Մենք ձգտում ենք փաստագրել հիմնադրամի և նրա նախաձեռնությունների զարգացումը՝ կրթական ծրագրեր, հետազոտական նախագծեր, տեխնիկական միջոցառումներ, համատեղ նախաձեռնություններ և համայնքային ներդրումներ։"
             ]
           ],
-          "media": "wafer"
+          "media": "wafer",
+          "short": [
+            "Progress",
+            "Առաջընթաց"
+          ]
         },
         {
           "id": "measuring",
@@ -808,13 +848,17 @@ const SITE_CONTENT = {
               "Մենք մտադիր ենք գնահատել գործունեությունը համապատասխան որակական և քանակական ցուցանիշներով։ Կախված նախաձեռնությունից՝ դրանք կարող են ներառել․"
             ]
           ],
-          "media": "wafer"
+          "media": "wafer",
+          "short": [
+            "Measuring",
+            "Գնահատում"
+          ]
         },
         {
           "id": "ahead",
           "title": [
-            "Building lasting opportunities, not just individual programs.",
-            "Կառուցել ոչ միայն ծրագրեր, այլև շարունակական հնարավորություններ։"
+            "Looking ahead",
+            "Առաջ նայելով"
           ],
           "intro": [
             "We envision a future in which educational resources are open and practical, laboratory experience is accessible to more learners, research groups can collaborate effectively, and young people across Armenia can connect with professional opportunities. That future will be built through consistent work, meaningful partnerships, and real initiatives.",
@@ -827,6 +871,10 @@ const SITE_CONTENT = {
           "eyebrow": [
             "OUR LONG-TERM OUTLOOK",
             "ՄԵՐ ՀԵՌԱՆԿԱՐԸ"
+          ],
+          "short": [
+            "Ahead",
+            "Առաջիկայում"
           ]
         }
       ],
@@ -891,7 +939,11 @@ const SITE_CONTENT = {
           "items": [],
           "children": [],
           "text": [],
-          "media": "gathering"
+          "media": "gathering",
+          "short": [
+            "Founders",
+            "Հիմնադիրներ"
+          ]
         },
         {
           "id": "leadership",
@@ -906,7 +958,11 @@ const SITE_CONTENT = {
           "items": [],
           "children": [],
           "media": "gathering",
-          "text": []
+          "text": [],
+          "short": [
+            "Leadership",
+            "Ղեկավարություն"
+          ]
         },
         {
           "id": "mentors",
@@ -921,7 +977,11 @@ const SITE_CONTENT = {
           "items": [],
           "children": [],
           "text": [],
-          "media": "gathering"
+          "media": "gathering",
+          "short": [
+            "Mentors",
+            "Մենթորներ"
+          ]
         },
         {
           "id": "universities",
@@ -936,7 +996,11 @@ const SITE_CONTENT = {
           "items": [],
           "children": [],
           "text": [],
-          "media": "gathering"
+          "media": "gathering",
+          "short": [
+            "Universities",
+            "Համալսարաններ"
+          ]
         },
         {
           "id": "partners",
@@ -951,7 +1015,11 @@ const SITE_CONTENT = {
           "items": [],
           "children": [],
           "text": [],
-          "media": "gathering"
+          "media": "gathering",
+          "short": [
+            "Partners",
+            "Գործընկերներ"
+          ]
         },
         {
           "id": "wider",
@@ -966,7 +1034,11 @@ const SITE_CONTENT = {
           "items": [],
           "children": [],
           "text": [],
-          "media": "gathering"
+          "media": "gathering",
+          "short": [
+            "Community",
+            "Համայնք"
+          ]
         }
       ],
       "eyebrow": [
@@ -1048,7 +1120,11 @@ const SITE_CONTENT = {
           ],
           "items": [],
           "children": [],
-          "media": "learning"
+          "media": "learning",
+          "short": [
+            "Commitment",
+            "Պարտավորություն"
+          ]
         },
         {
           "id": "governance",
@@ -1068,7 +1144,11 @@ const SITE_CONTENT = {
               "Մենք ձգտում ենք պահպանել հստակ պարտականություններ, թափանցիկ որոշումների կայացում և պատշաճ վերահսկողություն։"
             ]
           ],
-          "media": "learning"
+          "media": "learning",
+          "short": [
+            "Governance",
+            "Կառավարում"
+          ]
         },
         {
           "id": "reports",
@@ -1107,7 +1187,11 @@ const SITE_CONTENT = {
             ]
           ],
           "children": [],
-          "media": "learning"
+          "media": "learning",
+          "short": [
+            "Documents",
+            "Փաստաթղթեր"
+          ]
         },
         {
           "id": "resources",
@@ -1127,7 +1211,11 @@ const SITE_CONTENT = {
               "Մենք ձգտում ենք օգտագործել առկա ռեսուրսները պատասխանատու կերպով՝ մեր առաքելությանը համապատասխան, և հաղորդել, թե ինչպես են դրանք նպաստում կրթական, գիտական և համայնքային նախաձեռնություններին։"
             ]
           ],
-          "media": "learning"
+          "media": "learning",
+          "short": [
+            "Resources",
+            "Ռեսուրսներ"
+          ]
         }
       ]
     },
@@ -1166,7 +1254,11 @@ const SITE_CONTENT = {
           ],
           "items": [],
           "children": [],
-          "media": "learning"
+          "media": "learning",
+          "short": [
+            "Expertise",
+            "Փորձառություն"
+          ]
         },
         {
           "id": "equipment",
@@ -1180,7 +1272,11 @@ const SITE_CONTENT = {
           ],
           "items": [],
           "children": [],
-          "media": "learning"
+          "media": "learning",
+          "short": [
+            "Equipment",
+            "Սարքավորումներ"
+          ]
         },
         {
           "id": "sponsorship",
@@ -1194,7 +1290,11 @@ const SITE_CONTENT = {
           ],
           "items": [],
           "children": [],
-          "media": "learning"
+          "media": "learning",
+          "short": [
+            "Sponsorship",
+            "Հովանավորություն"
+          ]
         },
         {
           "id": "financial",
@@ -1208,7 +1308,11 @@ const SITE_CONTENT = {
           ],
           "items": [],
           "children": [],
-          "media": "learning"
+          "media": "learning",
+          "short": [
+            "Funding",
+            "Ֆինանսավորում"
+          ]
         }
       ],
       "eyebrow": [
@@ -1270,6 +1374,10 @@ const SITE_CONTENT = {
               ],
               "href": "https://github.com/SemiTecFoundation/semitec-academy/releases/latest"
             }
+          ],
+          "short": [
+            "Students",
+            "Ուսանողներ"
           ]
         },
         {
@@ -1290,7 +1398,11 @@ const SITE_CONTENT = {
               "Արդյունաբերության մասնագետները կարող են ներդրում ունենալ՝ կիսվելով տեխնիկական գիտելիքով, մասնակցելով քննարկումներին, առաջարկելով ինժեներական խնդիրներ, ուղղորդելով ուսանողներին կամ աջակցելով համատեղ նախաձեռնություններին։ Ձեր փորձը կարող է օգնել կապել կրթությունն ու հետազոտությունը իրական տեխնոլոգիական կարիքների հետ։"
             ]
           ],
-          "media": "gathering"
+          "media": "gathering",
+          "short": [
+            "Engineers",
+            "Ինժեներներ"
+          ]
         },
         {
           "id": "researchers",
@@ -1310,13 +1422,17 @@ const SITE_CONTENT = {
               "Հետազոտողներն ու դասախոսները կարող են առաջարկել հետազոտական թեմաներ, կրթական գործողություններ, տեխնիկական դասախոսություններ և համագործակցության հնարավորություններ։ Մենք ձգտում ենք խրախուսել գիտական գիտելիքի փոխանակումը և համատեղ հետազոտությունը։"
             ]
           ],
-          "media": "gathering"
+          "media": "gathering",
+          "short": [
+            "Researchers",
+            "Հետազոտողներ"
+          ]
         },
         {
           "id": "partner",
           "title": [
-            "We can achieve more together.",
-            "Միասին կարող ենք ավելին։"
+            "Partner with us",
+            "Դարձեք գործընկեր"
           ],
           "intro": [
             "Developing Armenia’s educational, scientific, and technological potential takes sustained collaboration among universities, researchers, industry, and communities. We are interested in joint educational programs, professional events, laboratory environments, research initiatives, mentorship, and broader access to technological resources.",
@@ -1345,6 +1461,10 @@ const SITE_CONTENT = {
           "eyebrow": [
             "PARTNERSHIPS",
             "ԳՈՐԾԸՆԿԵՐՈՒԹՅՈՒՆ"
+          ],
+          "short": [
+            "Partners",
+            "Գործընկերներ"
           ]
         },
         {
@@ -1365,7 +1485,11 @@ const SITE_CONTENT = {
               "Կամավորները կարող են աջակցել միջոցառումների կազմակերպմանը, կրթական նյութերին, հաղորդակցությանը, տեխնիկական նախաձեռնություններին և հիմնադրամի այլ գործողություններին։ Ողջունելի են ինչպես տեխնիկական, այնպես էլ ոչ տեխնիկական ոլորտների մասնագետների ներդրումները։"
             ]
           ],
-          "media": "gathering"
+          "media": "gathering",
+          "short": [
+            "Volunteer",
+            "Կամավորներ"
+          ]
         },
         {
           "id": "idea",
@@ -1385,13 +1509,17 @@ const SITE_CONTENT = {
               "Մենք ողջունում ենք կրթական ծրագրերի, հետազոտական թեմաների, տեխնիկական քննարկումների, համատեղ նախագծերի և հիմնադրամի առաքելությանը համապատասխան այլ գործողությունների առաջարկներ։ Եթե դուք նկատել եք խնդիր, հնարավորություն կամ գաղափար, որը կարող է օգտակար լինել կիսահաղորդչային համայնքին, խնդրում ենք կիսվել։"
             ]
           ],
-          "media": "gathering"
+          "media": "gathering",
+          "short": [
+            "Ideas",
+            "Գաղափարներ"
+          ]
         },
         {
           "id": "contact",
           "title": [
-            "The future begins with collaboration.",
-            "Ապագան սկսվում է համագործակցությունից։"
+            "Contact us",
+            "Կապ մեզ հետ"
           ],
           "intro": [
             "Have an idea, question, or proposal? Reach out to discuss how we can contribute together to education, science, and technological development in Armenia.",
@@ -1404,6 +1532,10 @@ const SITE_CONTENT = {
           "eyebrow": [
             "CONTACT",
             "ԿԱՊ"
+          ],
+          "short": [
+            "Contact",
+            "Կապ"
           ]
         }
       ],

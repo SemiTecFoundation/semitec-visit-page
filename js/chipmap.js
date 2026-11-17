@@ -281,7 +281,7 @@
     text() {
       this.blocks.forEach(({ el, s }) => {
         el.querySelector('.cm-name').textContent = ST.pick(s.label);
-        el.querySelectorAll('.cm-cells button').forEach((btn, k) => btn.firstElementChild.textContent = ST.pick(cellsOf(s)[k].title));
+        el.querySelectorAll('.cm-cells button').forEach((btn, k) => btn.firstElementChild.textContent = ST.pick(cellsOf(s)[k].short || cellsOf(s)[k].title));   // short names fit the chip
         const kick = el.querySelector('.cm-kicker'); if (kick) kick.textContent = ST.text('powerUnit');
         const sub = this.frame.querySelector('.cm-brand-sub'); if (sub) sub.textContent = ST.pick(SITE_CONTENT.brand.subtitle);
         el.querySelector('.cm-top').setAttribute('aria-label', ST.pick(s.label));
