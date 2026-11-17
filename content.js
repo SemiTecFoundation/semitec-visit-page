@@ -1992,6 +1992,10 @@ const SITE_CONTENT = {
     }
   },
   "ui": {
+    "showMoreShort": [
+      "More",
+      "Ավելին"
+    ],
     "deckWatch": [
       "Watch the presentation",
       "Դիտել ներկայացումը"

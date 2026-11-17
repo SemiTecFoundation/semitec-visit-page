@@ -36,14 +36,17 @@
       <div class="psc-body"><strong>${ST.esc(ST.pick(it.title))}</strong><p>${ST.esc(ST.pick(it.intro))}</p>
       ${linksHTML(it.links, 'psc-links')}<button type="button" class="psc-more">${ST.esc(ST.text('showMore'))} ↗</button></div></article>`;
   }).join('')}</div>` : '';
-  /* paths as tabs: one row of tabs, one path shown at a time (the chosen one, or the first) */
-  function pathTabs(s, kids) {
-    const sel = openPath && openPath[0] === s.id && kids.some(k => k.id === openPath[1]) ? openPath[1] : kids[0].id;
-    return `<div class="paths tabs"><p class="paths-label">${ST.esc(ST.text('pathsLabel'))}</p>
-      <div class="pt-tabs" role="tablist">${kids.map((k, c) => `<button type="button" role="tab" class="pt-tab" id="tab-${s.id}-${k.id}" data-path="${s.id}/${k.id}" aria-controls="card-${s.id}-${k.id}" aria-selected="${k.id === sel}"><span class="pt-n">${ST.pad(c + 1)}</span>${ST.esc(ST.pick(k.short || k.title))}</button>`).join('')}</div>
-      <div class="path-grid">${kids.map((k, c) => pathCard(s, k, c, k.id === sel)).join('')}</div></div>`;
+  /* paths: one row per path that appears as the page scrolls; "More" opens the path in the side panel */
+  function pathRows(s, kids) {
+    return `<div class="paths rows"><p class="paths-label">${ST.esc(ST.text('pathsLabel'))}</p>
+      <div class="path-rows">${kids.map((k, c) => `<button type="button" class="pr-row" id="row-${s.id}-${k.id}" data-open-path="${s.id}/${k.id}" style="--c:${c}">
+        <span class="pr-n">${ST.pad(c + 1)}</span>
+        <span class="pr-body"><strong>${ST.esc(ST.pick(k.title))}</strong><span>${ST.esc(ST.pick(k.intro))}</span></span>
+        <span class="pr-more">${ST.esc(ST.text('showMoreShort'))} <i aria-hidden="true">→</i></span>
+      </button>`).join('')}</div></div>`;
   }
-  function pathCard(section, child, c, open) {
+  /* the full content of a path, shown in the side panel */
+  function pathBody(section, child) {
     const p = `${section.id}/${child.id}`;
     const items = (child.items || []).map(it => `<li>${ST.esc(ST.pick(it))}</li>`).join('');
     const sub = (child.children || []).map(g => `<div class="pc-sub-item">
@@ -51,24 +54,97 @@
         <span>${g.items && g.items.length ? g.items.map(it => ST.esc(ST.pick(it))).join(' · ') : ST.esc(ST.pick(g.intro || ''))}</span>
         ${linksHTML(g.links, 'pc-sub-links')}
       </div>`).join('');
-    return `<article class="path-card${open ? ' is-open' : ''}" id="card-${section.id}-${child.id}" data-path="${p}" style="--c:${c}" role="tabpanel" aria-labelledby="tab-${section.id}-${child.id}">
-      <button type="button" class="pc-head" aria-expanded="false" aria-controls="body-${section.id}-${child.id}">
-        <span class="pc-n">${ST.pad(c + 1)}</span><span class="pc-t">${ST.esc(ST.pick(child.title))}</span>
-        ${child.children && child.children.length ? `<span class="pc-count">+${child.children.length}</span>` : ''}<span class="pc-x" aria-hidden="true"></span>
-      </button>
-      <div class="pc-body" id="body-${section.id}-${child.id}"><div class="pc-inner">
-        <h3 class="pc-title">${ST.esc(ST.pick(child.title))}</h3>
-        <p class="pc-intro">${ST.esc(ST.pick(child.intro))}</p>
+    return `<h2 class="dr-title">${ST.esc(ST.pick(child.title))}</h2>
+        <p class="dr-lead">${ST.esc(ST.pick(child.intro))}</p>
         ${ST.deckHTML(child)}
-        ${(child.text || []).map(t => `<p class="pc-text">${ST.esc(ST.pick(t))}</p>`).join('')}
+        ${(child.text || []).map(t => `<p class="dr-text">${ST.esc(ST.pick(t))}</p>`).join('')}
         ${items ? `<ul class="pc-items">${items}</ul>` : ''}
         ${ST.pathEventsHTML(child)}
         ${linksHTML(child.links, 'pc-links')}
         ${showcaseHTML(child.showcase, p)}
-        ${sub ? `<p class="pc-sub-label">${ST.esc(ST.text('further'))}</p><div class="pc-sub">${sub}</div>` : ''}
-      </div></div>
-    </article>`;
+        ${sub ? `<p class="pc-sub-label">${ST.esc(ST.text('further'))}</p><div class="pc-sub">${sub}</div>` : ''}`;
   }
+  /* a card (product, news item, event) in the side panel: text first, then its pictures in a strip */
+  function cardBody(item) {
+    const esc = ST.esc, P = ST.pick;
+    const pics = (item.gallery || (item.media ? [item.media] : [])).filter((id, i, a) => SITE_CONTENT.media[id] && a.indexOf(id) === i);
+    return `<h2 class="dr-title">${esc(P(item.title))}</h2>
+      <p class="dr-lead">${esc(P(item.intro))}</p>
+      ${(item.details || []).map(t => `<p class="dr-text">${esc(P(t))}</p>`).join('')}
+      ${(item.items || []).length ? `<ul class="pc-items">${item.items.map(t => `<li>${esc(P(t))}</li>`).join('')}</ul>` : ''}
+      ${linksHTML(item.links, 'pc-links')}
+      ${pics.length ? `<div class="dr-strip">${pics.map(id => { const m = SITE_CONTENT.media[id]; return `<figure><button type="button" data-media="${esc(id)}" data-media-title="${esc(P(m.title))}" aria-label="${esc(ST.text('viewImage'))}"><img src="${esc(m.src)}" alt="${esc(P(m.alt))}" loading="lazy"><span class="dr-zoom" aria-hidden="true">⤢</span></button><figcaption><strong>${esc(P(m.title))}</strong>${m.caption ? `<span>${esc(P(m.caption))}</span>` : ''}</figcaption></figure>`; }).join('')}</div>` : ''}`;
+  }
+
+  /* ---------- the side panel (2D): paths and cards open here, the page stays where it is ---------- */
+  const drawer = { el: null, stack: [] };
+  function cardList(entry) {
+    if (entry.kind === 'news') return ST.news().map(ST.newsCard);
+    if (entry.kind === 'event') { const ev = ST.events()[entry.when === 'up' ? 'upcoming' : 'past']; return ev.map(ST.eventCard); }
+    const [sid, cid] = entry.key.split('/'), sec = sections.find(x => x.id === sid);
+    const node = cid ? (sec.children || []).find(x => x.id === cid) : sec;
+    return (node && node.showcase) || [];
+  }
+  function crumbOf(entry) {
+    if (entry.kind === 'path') { const s = sections.find(x => x.id === entry.path[0]), c = (s.children || []).find(x => x.id === entry.path[1]); return [ST.pad(sections.indexOf(s)) + ' ' + ST.pick(s.label), ST.pick(c.short || c.title)]; }
+    const item = cardList(entry)[entry.idx];
+    return [ST.pick(item.short || item.title)];
+  }
+  function drawerEnsure() {
+    if (drawer.el) return drawer.el;
+    const el = document.createElement('aside');
+    el.className = 'drawer'; el.setAttribute('aria-hidden', 'true');
+    el.innerHTML = `<div class="dr-scrim"></div><div class="dr-panel" role="dialog" aria-modal="true" tabindex="-1">
+      <header class="dr-head"><button type="button" class="dr-back" hidden>←</button><nav class="dr-crumb"></nav><button type="button" class="dr-close">×</button></header>
+      <div class="dr-body"></div><footer class="dr-foot" hidden><button type="button" class="dr-prev">←</button><span class="dr-count"></span><button type="button" class="dr-next">→</button></footer></div>`;
+    document.body.append(el);
+    el.addEventListener('click', e => {
+      if (e.target.closest('.dr-close') || e.target.classList.contains('dr-scrim')) { drawerClose(); return; }
+      if (e.target.closest('.dr-back')) { drawer.stack.pop(); drawerRender(); return; }
+      const nav = e.target.closest('.dr-prev,.dr-next');
+      if (nav) { const top = drawer.stack[drawer.stack.length - 1], n = cardList(top).length; top.idx = (top.idx + (nav.classList.contains('dr-next') ? 1 : -1) + n) % n; drawerRender(); return; }
+      const sc = e.target.closest('.pc-show-card');
+      if (sc && !e.target.closest('.psc-links a')) { drawer.stack.push({ kind: 'card', key: sc.closest('.pc-show').dataset.showKey, idx: +sc.dataset.show }); drawerRender(); return; }
+      const m = e.target.closest('[data-media]'); if (m) { ST.openMedia(m.dataset.media, m.dataset.mediaTitle); return; }
+      const a = e.target.closest('a[href^="#"]'); if (a) drawerClose(true);
+    });
+    el.addEventListener('keydown', e => { if (e.key === 'Escape') { e.preventDefault(); if (drawer.stack.length > 1) { drawer.stack.pop(); drawerRender(); } else drawerClose(); } });
+    drawer.el = el; return el;
+  }
+  function drawerRender() {
+    const el = drawerEnsure(), top = drawer.stack[drawer.stack.length - 1]; if (!top) return;
+    const crumbs = drawer.stack.flatMap((e, i) => crumbOf(e).filter((x, j) => i === 0 || j === crumbOf(e).length - 1));
+    el.querySelector('.dr-crumb').innerHTML = crumbs.map(c => `<span>${ST.esc(c)}</span>`).join('<i aria-hidden="true">›</i>');
+    el.querySelector('.dr-back').hidden = drawer.stack.length < 2;
+    el.querySelector('.dr-back').setAttribute('aria-label', ST.text('back').trim());
+    el.querySelector('.dr-close').setAttribute('aria-label', ST.text('close'));
+    let html;
+    if (top.kind === 'path') { const s = sections.find(x => x.id === top.path[0]); html = pathBody(s, s.children.find(x => x.id === top.path[1])); }
+    else html = cardBody(cardList(top)[top.idx]);
+    const body = el.querySelector('.dr-body');
+    body.innerHTML = `<div class="dr-page">${html}</div>`; body.scrollTop = 0;
+    const foot = el.querySelector('.dr-foot'), n = top.kind === 'path' ? 0 : cardList(top).length;
+    foot.hidden = n < 2; if (n > 1) foot.querySelector('.dr-count').textContent = `${ST.pad(top.idx + 1)} / ${ST.pad(n)}`;
+  }
+  function drawerOpen(entry) {
+    const el = drawerEnsure();
+    drawer.stack = [entry]; drawerRender();
+    el.setAttribute('aria-hidden', 'false'); el.classList.add('is-open');
+    document.documentElement.classList.add('dr-open');
+    if (entry.kind === 'path') { openPath = [...entry.path]; history.replaceState(null, '', '#' + entry.path.join('/')); }
+    setTimeout(() => el.querySelector('.dr-panel').focus(), 50);
+    ST.sound && ST.sound.blip && ST.sound.blip('read');
+  }
+  function drawerClose(keepHash) {
+    if (!drawer.el || !drawer.el.classList.contains('is-open')) return;
+    const first = drawer.stack[0];
+    drawer.el.classList.remove('is-open'); drawer.el.setAttribute('aria-hidden', 'true');
+    document.documentElement.classList.remove('dr-open');
+    drawer.stack = []; openPath = null;
+    if (!keepHash && first && first.kind === 'path') history.replaceState(null, '', '#' + first.path[0]);
+    const row = first && first.kind === 'path' && document.getElementById(`row-${first.path[0]}-${first.path[1]}`); if (row) row.focus({ preventScroll: true });
+  }
+  R.closeDrawer = () => drawerClose(true);
   /* Support = the chip's power unit. Payment links are placeholders until the foundation chooses a provider. */
   let giveMode = 'pulse';
   function givePanel() {
@@ -183,7 +259,7 @@
           ${s.id !== 'events' && ST.bankFor(s.id) ? memoryPanel(ST.bankFor(s.id)) : ''}
           ${s.id === CHIP_LAYOUT.power ? givePanel() : ''}
           ${s.id === 'support' ? contactPanel() : ''}
-          ${kids.length ? pathTabs(s, kids) : ''}
+          ${kids.length ? pathRows(s, kids) : ''}
           ${s.id === 'people' ? padStrip() : ''}`}
         </div>
       </section>`;
@@ -192,33 +268,14 @@
     main.innerHTML = html.slice(1).join('');
     ST.eco.render(outro);
     cache = new WeakMap();
-    if (openPath) setCard(openPath, true, true);
+    if (drawer.el && drawer.el.classList.contains('is-open')) drawerRender();
   }
 
   /* ---------- path cards ---------- */
-  function setCard(path, open, instant) {
-    const card = document.getElementById(`card-${path[0]}-${path[1]}`); if (!card) return null;
-    if (!open && card.closest('.tabs')) return card;   /* a tab stays chosen until another one is */
-    if (open) card.closest('.sec').querySelectorAll('.pt-tab').forEach(t => t.setAttribute('aria-selected', String(t.dataset.path === path.join('/'))));
-    /* the clicked card keeps its place on screen while a longer card above it closes */
-    const y0 = card.getBoundingClientRect().top;
-    let closedAbove = false;
-    if (open) $$('.path-card.is-open').forEach(c => { if (c !== card && c.closest('.sec') === card.closest('.sec')) { if (c.compareDocumentPosition(card) & Node.DOCUMENT_POSITION_FOLLOWING) closedAbove = true; toggle(c, false, instant); } });
-    toggle(card, open, instant);
-    if (closedAbove) {
-      const t0 = performance.now();
-      const hold = () => { const dy = card.getBoundingClientRect().top - y0; if (Math.abs(dy) > .5) scrollBy({ top: dy, behavior: 'instant' }); if (performance.now() - t0 < 700) requestAnimationFrame(hold); };
-      if (instant) requestAnimationFrame(hold); else hold();
-    }
-    openPath = open ? [path[0], path[1]] : null;
-    return card;
-  }
-  function toggle(card, open, instant) {
-    if (instant) card.classList.add('no-anim');
-    card.classList.toggle('is-open', open);
-    card.querySelector('.pc-head').setAttribute('aria-expanded', String(open));
-    if (instant) requestAnimationFrame(() => card.classList.remove('no-anim'));
-    setTimeout(() => { measure(); readScroll(); }, instant ? 0 : 420);
+  function setCard(path, open) {
+    const row = document.getElementById(`row-${path[0]}-${path[1]}`); if (!row) return null;
+    if (open) drawerOpen({ kind: 'path', path: [path[0], path[1]] }); else drawerClose();
+    return row;
   }
 
   /* ---------- scroll → position ---------- */
@@ -436,9 +493,10 @@
       return;
     }
     const r = ST.resolve(path); if (!r) return;
+    if (path.length === 1) drawerClose(true);
     const behavior = instant || ST.state.reduced ? 'instant' : 'smooth';
     if (path.length > 1) {
-      const card = setCard(path, true, instant);
+      const card = setCard(path, true);
       if (card) {
         requestAnimationFrame(() => {
           measure();
@@ -513,17 +571,13 @@
     main.addEventListener('click', e => {
       const head = e.target.closest('.pc-head');
       const nb = e.target.closest('[data-news]');
-      if (nb) { const list = ST.news(); ST.openShowcase(ST.newsCard(list[+nb.dataset.news]), +nb.dataset.news, list.length); return; }
+      if (nb) { drawerOpen({ kind: 'news', idx: +nb.dataset.news }); return; }
       const eo = e.target.closest('[data-ev-open]');
-      if (eo) { const [kind, k] = eo.dataset.evOpen.split(':'), ev = ST.events()[kind === 'up' ? 'upcoming' : 'past']; ST.openShowcase(ST.eventCard(ev[+k]), +k, ev.length); return; }
+      if (eo) { const [kind, k] = eo.dataset.evOpen.split(':'); drawerOpen({ kind: 'event', when: kind, idx: +k }); return; }
       const sc = e.target.closest('.pc-show-card');
-      if (sc && !e.target.closest('.psc-links a')) {
-        const [sid, cid] = sc.closest('.pc-show').dataset.showKey.split('/'), sec = SITE_CONTENT.sections.find(x => x.id === sid);
-        const node = cid ? sec.children.find(x => x.id === cid) : sec, list = node.showcase || [];
-        ST.openShowcase(list[+sc.dataset.show], +sc.dataset.show, list.length); return;
-      }
-      const tab = e.target.closest('.pt-tab');
-      if (tab) { setCard(tab.dataset.path.split('/'), true); history.replaceState(null, '', '#' + tab.dataset.path); return; }
+      if (sc && !e.target.closest('.psc-links a')) { drawerOpen({ kind: 'card', key: sc.closest('.pc-show').dataset.showKey, idx: +sc.dataset.show }); return; }
+      const row = e.target.closest('[data-open-path]');
+      if (row) { drawerOpen({ kind: 'path', path: row.dataset.openPath.split('/') }); return; }
       if (head) { const card = head.closest('.path-card'); setCard(card.dataset.path.split('/'), !card.classList.contains('is-open')); return; }
       const m = e.target.closest('[data-media]'); if (m) ST.openMedia(m.dataset.media, m.dataset.mediaTitle);
       const gb = e.target.closest('[data-give]');
@@ -561,12 +615,9 @@
     if (map.expanded) { map.expanded = false; map.frame.classList.remove('is-expanded'); document.documentElement.classList.remove('map-expanded'); map.resize(); }
     return map.dive(Math.max(0, index));
   };
-  R.leave = function () { on = false; cancelAnimationFrame(raf); raf = 0; };
+  R.leave = function () { drawerClose(true); on = false; cancelAnimationFrame(raf); raf = 0; };
   R.currentPath = function () {
-    if (openPath && openPath[0] === sections[index].id) {
-      const card = document.getElementById(`card-${openPath[0]}-${openPath[1]}`), r = card && card.getBoundingClientRect();
-      if (r && r.bottom > 0 && r.top < innerHeight) return [...openPath];
-    }
+    if (openPath && drawer.el && drawer.el.classList.contains('is-open')) return [...openPath];
     return [sections[Math.max(0, index)].id];
   };
   R.go = function (path) {
