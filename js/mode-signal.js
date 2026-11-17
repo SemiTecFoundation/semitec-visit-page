@@ -476,8 +476,25 @@ function createShow(item,k,n,point,visit,mobilePoint,open){
  relabel();
  mediaBoards.push({figure,button:card,point,mobilePoint,visit,width:figure.offsetWidth,alpha:0,relabel});
 }
+/* ▸DECK a presentation screen beside the road: the section's or path's chapter of the presentation, played in place */
+function createDeck(node,point,visit,mobilePoint){
+ const figure=element('figure','media-board deck-board');figure.id='visual-'+(++mediaCounter);figure.setAttribute('aria-hidden','true');
+ const btn=element('button','db-screen');btn.type='button';btn.tabIndex=-1;btn.dataset.deck=node.deck;
+ const cv=element('canvas','db-thumb');cv.width=320;cv.height=200;
+ const play=element('span','db-play'),kick=element('span','db-kicker'),title=element('strong'),meta=element('small');
+ const info=element('span','db-info');info.append(kick,title,meta);
+ btn.append(cv,play,info);figure.append(btn);document.querySelector('#scene-media').append(figure);
+ if(window.Aragats)Aragats.create(cv,{theme:'dark',fixed:true,labels:()=>['','','','']}).draw(node.deck==='about'?Aragats.END:9.6);
+ const relabel=()=>{kick.textContent=text('deckBoard').toUpperCase();title.textContent=pick(node.short||node.label||node.title);meta.textContent=text(node.deck==='all'?'deckFull':'deckWatch');};
+ relabel();
+ mediaBoards.push({figure,button:btn,point,mobilePoint,visit,width:figure.offsetWidth,alpha:0,relabel});
+}
 function addVisitMedia(visit){
  const node=resolveRoute(visit.path).node;
+ if(node.deck){   // ▸DECK the path's presentation stands where the path arrives
+  const L=visit.curve.length,d=Math.min(34,L*.2)+9,pose=visit.curve.pose(d),r=[-pose.direction[2],0,pose.direction[0]];
+  createDeck(node,[pose.point[0]+r[0]*6,5.4,pose.point[2]+r[2]*6],visit,[pose.point[0]+r[0]*2,3.6,pose.point[2]+r[2]*2]);
+ }
  if((node.showcase||[]).length){
   const n=node.showcase.length;
   /* a selected path arrives at min(34, 20% of the loop): the first board stands a little after that point */
@@ -729,13 +746,19 @@ function tweenLift(from,to,ms,ease){lift=from;wake();return ST.tween(ms,t=>{lift
 /* a section's own cards (About): they stand along its road one after another; each shows only while it is
    near (it comes up as you approach and fades once passed), so they never pile up */
 function addMainShowcase(){
+ sections.forEach((section,index)=>{   // ▸DECK a section's presentation screen, met first after its gate
+  if(index<1||!section.deck)return;
+  const sd=timeline.main.distanceAt(index/(sections.length-1)),pose=timeline.main.pose(sd-JOURNEY_SETTINGS.arriveBeforeMiddle+JOURNEY_SETTINGS.mainCardGap-1),r=[-pose.direction[2],0,pose.direction[0]];
+  createDeck(section,[pose.point[0]+r[0]*3.4,4.6,pose.point[2]+r[2]*3.4],null,[pose.point[0]+r[0]*1.1,2.8,pose.point[2]+r[2]*1.1]);
+  mediaBoards.at(-1).far=JOURNEY_SETTINGS.mainCardGap+3;
+ });
  sections.forEach((section,index)=>{
   if(section.id==='focus')return;   // ▸LANDMARKS Our Symbol: the mountain stands there instead of cards
   const ex=section.id==='events'&&!ST.news().length;
   const list=section.showcase&&section.showcase.length?section.showcase:section.id==='events'?(ex?(SITE_CONTENT.eventExamples||[]).slice(0,5).map(ST.exampleCard):ST.news().slice(0,4).map(ST.newsCard)):[];if(!list.length||index<1)return;   // News & Events: the latest news, or the example events
   /* the first card is already in view where a chosen section arrives; each card then has its own stretch of road
      (mainCardGap long): it comes up, stays for a few scrolls, fades as it is passed, and only then the next comes */
-  const sd=timeline.main.distanceAt(index/(sections.length-1)),gap=JOURNEY_SETTINGS.mainCardGap,n=list.length,from=sd-JOURNEY_SETTINGS.arriveBeforeMiddle+gap-1;
+  const sd=timeline.main.distanceAt(index/(sections.length-1)),gap=JOURNEY_SETTINGS.mainCardGap,n=list.length,from=sd-JOURNEY_SETTINGS.arriveBeforeMiddle+gap-1+(section.deck?gap:0);   // ▸DECK after the presentation screen, which takes the first stretch
   list.forEach((item,k)=>{
    const pose=timeline.main.pose(from+gap*k),r=[-pose.direction[2],0,pose.direction[0]];
    const open=section.id==='events'?()=>ST.drawerOpen(ex?{kind:'example',idx:k}:{kind:'news',idx:k}):()=>ST.drawerOpen({kind:'card',key:section.id,idx:k});
