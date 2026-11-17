@@ -49,7 +49,7 @@
   let rowIO = null;
   function revealRows() {
     if (rowIO) rowIO.disconnect();
-    const rows = $$('.pr-row');
+    const rows = $$('.pr-row, .rv');
     if (!('IntersectionObserver' in window) || ST.state.reduced) { rows.forEach(r => r.classList.add('is-in')); return; }
     rowIO = new IntersectionObserver(entries => {
       let k = 0;
@@ -57,6 +57,66 @@
     }, { rootMargin: '0px 0px -12% 0px', threshold: .15 });
     rows.forEach(r => rowIO.observe(r));
   }
+
+  /* ---------- 01 About: the path, the mission word by word, the vision as four connected fields ---------- */
+  function aboutHTML(s) {
+    const T = ST.text, E = ST.esc, P = ST.pick, cards = s.showcase || [];
+    const mission = cards.find(c => c.id === 'mission') || cards[0], vision = cards.find(c => c.id === 'vision') || cards[1];
+    const steps = [1, 2, 3, 4].map(n => T('aboutStep' + n));
+    const words = t => P(t).split(/\s+/).map((w, i) => `<span class="mw" style="--i:${i}">${E(w)}</span>`).join(' ');
+    const nodes = [['visionEdu', 120, 70], ['visionSci', 480, 70], ['visionTech', 480, 250], ['visionInd', 120, 250]];
+    return `<div class="about-x">
+      <div class="ab-path rv" aria-label="${E(T('aboutPath'))}">
+        <p class="ab-label">${E(T('aboutPath'))}</p>
+        <div class="ab-line"><i></i></div>
+        <ol>${steps.map((t, i) => `<li style="--k:${i}"><span class="ab-dot"></span><span>${E(t)}</span></li>`).join('')}</ol>
+      </div>
+      ${mission ? `<blockquote class="ab-mission rv" id="show-${s.id}-${mission.id}"><p class="ab-label">${E(P(mission.title))}</p><p class="ab-quote">${words(mission.intro)}</p></blockquote>` : ''}
+      ${vision ? `<div class="ab-vision rv" id="show-${s.id}-${vision.id}">
+        <div><p class="ab-label">${E(P(vision.title))}</p><p class="ab-vtext">${E(P(vision.intro))}</p></div>
+        <svg viewBox="0 0 600 320" aria-hidden="true">
+          <g class="vlinks">${[[0,1],[1,2],[2,3],[3,0],[0,2],[1,3]].map(([a, b], i) => `<path class="vl" style="--k:${i}" d="M${nodes[a][1]} ${nodes[a][2]}L${nodes[b][1]} ${nodes[b][2]}"/>`).join('')}</g>
+          ${nodes.map(([k, x, y], i) => `<g class="vn" style="--k:${i}"><rect x="${x - 78}" y="${y - 24}" width="156" height="48" rx="24"/><text x="${x}" y="${y + 6}">${E(T(k))}</text></g>`).join('')}
+          <g class="vc"><circle cx="300" cy="160" r="46"/><text x="300" y="166">${E(T('visionPeople'))}</text></g>
+        </svg></div>` : ''}
+    </div>`;
+  }
+  /* ---------- 02 Our Symbol: the four summits draw themselves and fill into the SemiTec mark ---------- */
+  const SUMMITS = [   // the four triangles of the logo, in a 1270 × 842 box (apex first)
+    { pts: '306,438 0,842 610,842', apex: [306, 438], fill: '#17262c', lab: [-40, 400, 'end'] },
+    { pts: '635,0 0,842 1270,842', apex: [635, 0], fill: '#b08a45', lab: [635, -40, 'middle'] },
+    { pts: '889,335 1270,842 508,842', apex: [889, 335], fill: '#17262c', lab: [1310, 300, 'start'] },
+    { pts: '557,500 674,621 508,842 225,842', apex: [557, 500], fill: '#8b2c10', lab: [557, 930, 'middle'] }
+  ];
+  function symbolHTML(s) {
+    const E = ST.esc, P = ST.pick, cards = s.showcase || [];
+    const map = [0, 1, 2, 3];   // card k → summit k: Education, Science, Industry, Community
+    return `<div class="symbol-x rv" data-summit="0">
+      <p class="sy-hint">${E(ST.text('symbolHint'))}</p>
+      <svg class="sy-art" viewBox="-200 -110 1670 1100" role="group">
+        <g class="sy-shapes">
+          ${[1, 0, 3, 2].map((n, i) => `<polygon class="sy-tri" data-n="${n}" points="${SUMMITS[n].pts}" style="--k:${i};--fill:${SUMMITS[n].fill}"/>`).join('')}
+        </g>
+        ${cards.slice(0, 4).map((c, k) => { const t = SUMMITS[map[k]]; return `<g class="sy-peak" data-k="${k}" tabindex="0" role="button" aria-label="${E(P(c.title))}" style="--k:${k}" id="show-${s.id}-${c.id}">
+          <circle cx="${t.apex[0]}" cy="${t.apex[1]}" r="20"/><circle class="sy-ring" cx="${t.apex[0]}" cy="${t.apex[1]}" r="36"/>
+          <text x="${t.lab[0]}" y="${t.lab[1]}" text-anchor="${t.lab[2]}">${E(P(c.title))}</text></g>`; }).join('')}
+      </svg>
+      <div class="sy-cards">${cards.slice(0, 4).map((c, k) => `<div class="sy-card${k === 0 ? ' is-on' : ''}" data-k="${k}"><strong>${E(P(c.title))}</strong><p>${E(P(c.intro))}</p></div>`).join('')}</div>
+      <p class="sy-logo"><img src="assets/logo.png" alt="" width="54" height="54"><span>${E(ST.text('symbolLogo'))}</span></p>
+    </div>`;
+  }
+  function symbolPick(root, k, user) {
+    root.dataset.summit = k;
+    root.querySelectorAll('.sy-card').forEach(c => c.classList.toggle('is-on', +c.dataset.k === k));
+    root.querySelectorAll('.sy-peak').forEach(c => c.classList.toggle('is-on', +c.dataset.k === k));
+    if (user) root.dataset.user = '1';
+  }
+  /* summits light up one after another until the visitor chooses one */
+  setInterval(() => {
+    const root = document.querySelector('[data-mode="2d"] .symbol-x.is-in:not([data-user])'); if (!root || document.hidden) return;
+    const r = root.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) return;
+    symbolPick(root, (+root.dataset.summit + 1) % 4);
+  }, 2600);
   /* the full content of a path, shown in the side panel */
   function pathBody(section, child) {
     const p = `${section.id}/${child.id}`;
@@ -266,11 +326,11 @@
           <p class="sec-eyebrow"><span class="sec-num">${ST.pad(i)}</span><span class="sec-rule" aria-hidden="true"></span><span>${ST.esc(eyebrow)}</span></p>
           <${H} class="sec-title" id="h-${s.id}">${title(ST.pick(s.title))}</${H}>
           <p class="sec-intro">${ST.esc(ST.pick(s.intro))}</p>
-          ${(s.text || []).map(t => `<p class="sec-text">${ST.esc(ST.pick(t))}</p>`).join('')}
+          ${(s.text || []).filter(t => ST.pick(t)).map(t => `<p class="sec-text">${ST.esc(ST.pick(t))}</p>`).join('')}
           ${ST.deckHTML(s)}
           ${linksHTML(s.links, 'hero-actions')}
           ${s.id === 'support' ? `<p class="sec-text">${ST.esc(ST.pick(SITE_CONTENT.brand.legalName))}</p>` : ''}
-          ${showcaseHTML(s.showcase, s.id)}
+          ${s.id === 'purpose' ? aboutHTML(s) : s.id === 'focus' ? symbolHTML(s) : showcaseHTML(s.showcase, s.id)}
           ${s.id === 'people' && !SITE_CONTENT.partners.length ? feed('partners-feed') : ''}
           ${s.id === 'support' ? feed('opportunities-feed') : ''}
           ${i === 0 ? `<ul class="hero-tags">${items}</ul>
@@ -601,6 +661,8 @@
       if (eo) { const [kind, k] = eo.dataset.evOpen.split(':'); drawerOpen({ kind: 'event', when: kind, idx: +k }); return; }
       const sc = e.target.closest('.pc-show-card');
       if (sc && !e.target.closest('.psc-links a')) { drawerOpen({ kind: 'card', key: sc.closest('.pc-show').dataset.showKey, idx: +sc.dataset.show }); return; }
+      const pk = e.target.closest('.sy-peak');
+      if (pk) { symbolPick(pk.closest('.symbol-x'), +pk.dataset.k, true); return; }
       if (e.target.closest('.pr-watch')) return;   /* the presentation opens through [data-deck] */
       const row = e.target.closest('[data-open-path]');
       if (row) { drawerOpen({ kind: 'path', path: row.dataset.openPath.split('/') }); return; }
@@ -609,6 +671,7 @@
       const gb = e.target.closest('[data-give]');
       if (gb) { giveMode = gb.dataset.give; const panel = gb.closest('.give-panel'); panel.dataset.modeGive = giveMode; panel.querySelectorAll('[data-give]').forEach(b => b.setAttribute('aria-pressed', String(b === gb))); }
     });
+    main.addEventListener('keydown', e => { const pk = e.target.closest && e.target.closest('.sy-peak'); if (pk && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); symbolPick(pk.closest('.symbol-x'), +pk.dataset.k, true); } });
     addEventListener('hashchange', () => { if (on && !ST.state.switching) { const p = ST.readHash(); scrollToPath(p); } });
   };
   /* where each step of the ending sits in its pinned scroll (used when switching views inside the ending) */

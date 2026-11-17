@@ -63,6 +63,7 @@ const SITE_CONTENT = {
     },
     {
       "id": "purpose",
+      "deck": "about",
       "label": [
         "About",
         "Մեր մասին"
@@ -141,12 +142,7 @@ const SITE_CONTENT = {
         "The four summits of Mount Aragats inspire SemiTec’s visual identity. In our interpretation, they represent four interconnected pillars of progress. These are elements of our brand story, not a replacement for the foundation’s charter-defined areas of activity.",
         "Արագածի չորս գագաթները ոգեշնչել են ՍեմիԹեքի տեսողական ինքնությունը։ Մեր մեկնաբանությամբ դրանք խորհրդանշում են զարգացման չորս փոխկապակցված հենասյուները։ Սա բրենդային խորհրդանիշ է, ոչ թե հիմնադրամի գործունեության իրավական դասակարգումը։"
       ],
-      "text": [
-        [
-          null,
-          null
-        ]
-      ],
+      "text": [],
       "items": [],
       "media": "learning",
       "children": [],
@@ -1968,6 +1964,54 @@ const SITE_CONTENT = {
     }
   },
   "ui": {
+    "aboutPath": [
+      "Our path",
+      "Մեր ճանապարհը"
+    ],
+    "aboutStep1": [
+      "Curiosity",
+      "Հետաքրքրասիրություն"
+    ],
+    "aboutStep2": [
+      "Knowledge",
+      "Գիտելիք"
+    ],
+    "aboutStep3": [
+      "Hands-on experience",
+      "Գործնական փորձ"
+    ],
+    "aboutStep4": [
+      "Research and innovation",
+      "Հետազոտություն և նորարարություն"
+    ],
+    "visionPeople": [
+      "People",
+      "Մարդիկ"
+    ],
+    "visionEdu": [
+      "Education",
+      "Կրթություն"
+    ],
+    "visionSci": [
+      "Science",
+      "Գիտություն"
+    ],
+    "visionTech": [
+      "Technology",
+      "Տեխնոլոգիա"
+    ],
+    "visionInd": [
+      "Industry",
+      "Արդյունաբերություն"
+    ],
+    "symbolHint": [
+      "Four summits of Aragats, four pillars, one mark. Choose a summit.",
+      "Արագածի չորս գագաթ, չորս հենասյուն, մեկ նշան։ Ընտրեք գագաթը։"
+    ],
+    "symbolLogo": [
+      "Together they form the SemiTec mark.",
+      "Միասին դրանք կազմում են SemiTec-ի նշանը։"
+    ],
     "deckShort": [
       "Watch",
       "Դիտել"
