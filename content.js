@@ -507,40 +507,16 @@ const SITE_CONTENT = {
               "gallery": [
                 "academy-lab"
               ]
-            },
-            {
-              "id": "interactive-lab",
-              "media": "wafer",
-              "title": [
-                "Explore the building blocks of the digital world.",
-                "Փորձարկեք թվային աշխարհի հիմքերը։"
-              ],
-              "intro": [
-                "Complex digital systems begin with simple ideas. Explore logic operations and the principles of digital design through our interactive demonstrations.",
-                "Թվային համակարգերի հիմքում պարզ գաղափարներ են, որոնց համադրությունից ծնվում են բարդ տեխնոլոգիաներ։ Բացահայտեք տրամաբանական գործողությունները և թվային նախագծման սկզբունքները մեր ինտերակտիվ ցուցադրությունների միջոցով։"
-              ],
-              "text": [],
-              "items": [],
-              "eyebrow": [
-                "TECHNOLOGY IN ACTION",
-                "ՏԵԽՆՈԼՈԳԻԱՆ՝ ԳՈՐԾՆԱԿԱՆՈՒՄ"
-              ],
-              "details": [
-                [
-                  "These interactive examples are introductory demonstrations, not a substitute for a full course or laboratory experience.",
-                  "Այս ինտերակտիվ օրինակները ճանաչողական ցուցադրություններ են և չեն փոխարինում ամբողջական դասընթացին կամ լաբորատոր աշխատանքին։"
-                ]
-              ],
-              "links": [],
-              "gallery": [
-                "wafer"
-              ]
             }
           ],
           "deck": "library",
           "short": [
             "Academy",
             "Ակադեմիա"
+          ],
+          "showcaseLabel": [
+            "Open projects",
+            "Բաց նախագծեր"
           ]
         },
         {
@@ -1992,6 +1968,10 @@ const SITE_CONTENT = {
     }
   },
   "ui": {
+    "deckShort": [
+      "Watch",
+      "Դիտել"
+    ],
     "showMoreShort": [
       "More",
       "Ավելին"

@@ -129,9 +129,9 @@ dialog::backdrop{background:#020b11c9;backdrop-filter:blur(8px)}
 .map-enter{display:block;padding:0 0 15px 17px;font-size:10px;color:#78a8a8}
 .map-section li .map-enter{font-size:9px;margin-top:7px;padding-bottom:7px}
 .map-footer{font-size:9px;color:#779396;margin-top:20px}
-.media-dialog{width:min(900px,92vw);padding:18px}
+.media-dialog{width:min(900px,92vw);padding:58px 18px 18px}
 .media-dialog img{width:100%;max-height:65vh;object-fit:contain;display:block}
-#media-close{position:absolute;top:25px;right:25px}
+#media-close{position:absolute;top:12px;right:14px;border-radius:50%}
 .media-dialog h2{font-size:22px;font-weight:400;margin:18px 5px 10px}
 .media-dialog p{font-size:12px;color:#97b0b3;line-height:1.6;margin:0 5px 10px}
 /* memory cells (gallery and archive) — used in the 2D Events panel, the 3D board and the dialog */

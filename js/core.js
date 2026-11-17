@@ -142,6 +142,7 @@
       setTimeout(() => frame.focus(), 300);
     }
     window.addEventListener('message', e => { if (dialog && dialog.open && e.data && e.data.expo === 'close') dialog.close(); });
+    document.addEventListener('keydown', e => { const b = e.target.closest && e.target.closest('[data-deck][role="button"]'); if (b && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); e.stopPropagation(); open(b.dataset.deck); } }, true);
     document.addEventListener('click', e => {
       const b = e.target.closest && e.target.closest('[data-deck]');
       if (!b) return;
