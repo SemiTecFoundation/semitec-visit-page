@@ -1178,3 +1178,16 @@ html.dr-open{overflow:hidden}
 .xs-cards .xs-cb > span:not(.xs-badge){display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .pr-body .xs-badge{justify-self:start;margin-top:4px}
 .xs-empty + .contact-panel{margin-top:0}
+
+/* chip map: an odd last cell in a two-column block sits in the middle, wider */
+.cm-cells.is-dense button:last-child:nth-child(odd){grid-column:1/-1;justify-self:center;width:66%;justify-content:center;gap:10px}
+/* edge pads: decorative traces never catch the mouse, and every pad has a larger invisible hit area */
+.cm-nets,.cm-nets *{pointer-events:none}
+.cm-pad::after{content:"";position:absolute;inset:-10px -8px}
+.cm-pad-top::after{inset:-14px -8px -6px}
+.cm-pad-bottom::after{inset:-6px -8px -14px}
+.cm-pad-left::after{inset:-8px -6px -8px -14px}
+.cm-pad-right::after{inset:-8px -14px -8px -6px}
+.cm-pads{transform:translateZ(6px)}
+.cm-pad{transition:scale .2s var(--ease-out),filter .2s,box-shadow .2s,background .2s}
+.cm-pad:hover,.cm-pad:focus-visible,.cm-pad.is-open{scale:1.45;z-index:2}
