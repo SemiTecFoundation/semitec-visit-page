@@ -59,27 +59,75 @@
   }
 
   /* ---------- 01 About: the path, the mission word by word, the vision as four connected fields ---------- */
+  /* ---------- 01 About: belief, path, presentation, mission, vision — each its own readable block ---------- */
+  const IC = {   // small line icons (24 × 24)
+    q: '<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.6v.6M12 17h.01"/>',
+    book: '<path d="M3 5h6a3 3 0 0 1 3 3v12a2.5 2.5 0 0 0-2.5-2.5H3Z"/><path d="M21 5h-6a3 3 0 0 0-3 3v12a2.5 2.5 0 0 1 2.5-2.5H21Z"/>',
+    board: '<rect x="3" y="5" width="18" height="14" rx="2"/><rect x="9" y="9" width="6" height="6" rx="1"/><path d="M6 8h1M6 16h1M17 8h1M17 16h1"/>',
+    bulb: '<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3Z"/>',
+    flask: '<path d="M9 3h6M10 3v6L4.5 18.5A1.7 1.7 0 0 0 6 21h12a1.7 1.7 0 0 0 1.5-2.5L14 9V3"/><path d="M7 15h10"/>',
+    chip: '<rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/>',
+    factory: '<path d="M3 21V10l6 4V10l6 4V5h6v16Z"/><path d="M7 18h2M12 18h2M17 18h2"/>'
+  };
+  const icon = k => `<svg viewBox="0 0 24 24" aria-hidden="true">${IC[k]}</svg>`;
+  // highlight the key words of a sentence (lists in ui.missionKeys / ui.visionKeys, "|"-separated)
+  function marks(text, keys) {
+    let h = ST.esc(text);
+    (keys || '').split('|').filter(Boolean).forEach(k => {
+      const i = h.toLowerCase().indexOf(k.toLowerCase());
+      if (i >= 0) h = h.slice(0, i) + '<mark>' + h.slice(i, i + k.length) + '</mark>' + h.slice(i + k.length);
+    });
+    return h;
+  }
+  const sentences = t => (t || '').split(/(?<=[.։])\s+/).filter(Boolean);
   function aboutHTML(s) {
     const T = ST.text, E = ST.esc, P = ST.pick, cards = s.showcase || [];
     const mission = cards.find(c => c.id === 'mission') || cards[0], vision = cards.find(c => c.id === 'vision') || cards[1];
-    const steps = [1, 2, 3, 4].map(n => T('aboutStep' + n));
-    const words = t => P(t).split(/\s+/).map((w, i) => `<span class="mw" style="--i:${i}">${E(w)}</span>`).join(' ');
-    const nodes = [['visionEdu', 120, 70], ['visionSci', 480, 70], ['visionTech', 480, 250], ['visionInd', 120, 250]];
+    const texts = (s.text || []).map(P).filter(Boolean);
+    const belief = sentences(texts[0]), pathText = texts[1] || '';
+    const head = (n, label) => `<p class="ab-kick"><span>${n}</span>${E(label)}</p>`;
+    const steps = [['q', 1], ['book', 2], ['board', 3], ['bulb', 4]];
+    const fields = [['book', 'visionEdu'], ['flask', 'visionSci'], ['chip', 'visionTech'], ['factory', 'visionInd']];
     return `<div class="about-x">
-      <div class="ab-path rv" aria-label="${E(T('aboutPath'))}">
-        <p class="ab-label">${E(T('aboutPath'))}</p>
-        <div class="ab-line"><i></i></div>
-        <ol>${steps.map((t, i) => `<li style="--k:${i}"><span class="ab-dot"></span><span>${E(t)}</span></li>`).join('')}</ol>
+      ${texts[0] ? `<div class="ab-block rv">
+        ${head('A', T('aboutBelieve'))}
+        <p class="ab-state">${E(belief[0] || '')}</p>
+        ${belief.length > 1 ? `<p class="ab-body">${E(belief.slice(1).join(' '))}</p>` : ''}
+        <p class="ab-sub">${E(T('aboutWho'))}</p>
+        <ul class="ab-who">${[1, 2, 3, 4, 5, 6, 7].map(n => `<li style="--k:${n}">${E(T('who' + n))}</li>`).join('')}</ul>
+      </div>` : ''}
+      <div class="ab-block rv">
+        ${head('B', T('aboutPath'))}
+        ${pathText ? `<p class="ab-body">${E(pathText)}</p>` : ''}
+        <ol class="ab-steps">${steps.map(([ic, n], i) => `<li style="--k:${i}"><span class="ab-si">${icon(ic)}</span>
+          <div><strong><em>0${n}</em>${E(T('aboutStep' + n))}</strong><span>${E(T('aboutStep' + n + 't'))}</span></div></li>`).join('')}</ol>
       </div>
-      ${mission ? `<blockquote class="ab-mission rv" id="show-${s.id}-${mission.id}"><h3 class="ab-h">${E(P(mission.title))}</h3><p class="ab-quote">${words(mission.intro)}</p></blockquote>` : ''}
-      ${vision ? `<div class="ab-vision rv" id="show-${s.id}-${vision.id}">
-        <div><h3 class="ab-h">${E(P(vision.title))}</h3><p class="ab-vtext">${E(P(vision.intro))}</p></div>
-        <svg viewBox="0 0 600 320" aria-hidden="true">
-          <g class="vlinks">${[[0,1],[1,2],[2,3],[3,0],[0,2],[1,3]].map(([a, b], i) => `<path class="vl" style="--k:${i}" d="M${nodes[a][1]} ${nodes[a][2]}L${nodes[b][1]} ${nodes[b][2]}"/>`).join('')}</g>
-          ${nodes.map(([k, x, y], i) => `<g class="vn" style="--k:${i}"><rect x="${x - 78}" y="${y - 24}" width="156" height="48" rx="24"/><text x="${x}" y="${y + 6}">${E(T(k))}</text></g>`).join('')}
-          <g class="vc"><circle cx="300" cy="160" r="46"/><text x="300" y="166">${E(T('visionPeople'))}</text></g>
-        </svg></div>` : ''}
+      ${s.deck ? `<button type="button" class="ab-watch rv" data-deck="${E(s.deck)}">
+        <canvas class="ab-thumb" width="360" height="250" aria-hidden="true"></canvas>
+        <span class="ab-wt"><span class="ab-wplay" aria-hidden="true"></span><span><strong>${E(T('aboutWatchTitle'))}</strong><small>${E(T('aboutWatchMeta'))}</small></span></span>
+      </button>` : ''}
+      ${mission ? `<section class="ab-card ab-mission rv" id="show-${s.id}-${mission.id}" aria-labelledby="ab-m">
+        ${head('C', P(mission.title)).replace('<p class="ab-kick">', '<p class="ab-kick" id="ab-m">')}
+        <p class="ab-quote">${marks(P(mission.intro), T('missionKeys'))}</p>
+        <p class="ab-sub">${E(T('missionList'))}</p>
+        <ol class="ab-five">${[1, 2, 3, 4, 5].map(n => `<li style="--k:${n}"><b>${n}</b><div><strong>${E(T('m' + n))}</strong><span>${E(T('m' + n + 't'))}</span></div></li>`).join('')}</ol>
+      </section>` : ''}
+      ${vision ? `<section class="ab-card ab-vision rv" id="show-${s.id}-${vision.id}" aria-labelledby="ab-v">
+        ${head('D', P(vision.title)).replace('<p class="ab-kick">', '<p class="ab-kick" id="ab-v">')}
+        <p class="ab-quote">${marks(P(vision.intro), T('visionKeys'))}</p>
+        <p class="ab-sub">${E(T('visionFields'))}</p>
+        <div class="ab-fields">${fields.map(([ic, k], i) => `<div class="ab-field" style="--k:${i}">${icon(ic)}<strong>${E(T(k))}</strong><span>${E(T(k + 'T'))}</span></div>`).join('')}
+</div>
+        <div class="ab-people"><span class="ab-pp">${E(T('visionPeopleLine'))}</span>${[1, 2, 3, 4].map(n => `<span class="ab-verb" style="--k:${n}">${E(T('verb' + n))}</span>`).join('')}</div>
+      </section>` : ''}
     </div>`;
+  }
+  // the presentation card shows the Aragats mark, drawn once with the deck's colours
+  function aboutThumb() {
+    const cv = document.querySelector('.ab-thumb');
+    if (!cv || !window.Aragats || cv.dataset.done) return;
+    Aragats.create(cv, { theme: 'dark', fixed: true, labels: () => ['', '', '', ''] }).draw(Aragats.END);
+    cv.dataset.done = '1';
   }
   /* ---------- 02 Our Symbol: a contour map rises into Aragats, each summit is visited, and the
      silhouette fills into the SemiTec mark (drawn by expo/js/aragats.js, shared with the presentation) ---------- */
@@ -362,8 +410,8 @@
           <p class="sec-eyebrow"><span class="sec-num">${ST.pad(i)}</span><span class="sec-rule" aria-hidden="true"></span><span>${ST.esc(eyebrow)}</span></p>
           <${H} class="sec-title" id="h-${s.id}">${title(ST.pick(s.title))}</${H}>
           <p class="sec-intro">${ST.esc(ST.pick(s.intro))}</p>
-          ${(s.text || []).filter(t => ST.pick(t)).map(t => `<p class="sec-text">${ST.esc(ST.pick(t))}</p>`).join('')}
-          ${ST.deckHTML(s)}
+          ${s.id === 'purpose' ? '' : (s.text || []).filter(t => ST.pick(t)).map(t => `<p class="sec-text">${ST.esc(ST.pick(t))}</p>`).join('')}
+          ${s.id === 'purpose' ? '' : ST.deckHTML(s)}
           ${linksHTML(s.links, 'hero-actions')}
           ${s.id === 'support' ? `<p class="sec-text">${ST.esc(ST.pick(SITE_CONTENT.brand.legalName))}</p>` : ''}
           ${s.id === 'purpose' ? aboutHTML(s) : s.id === 'focus' ? symbolHTML(s) : showcaseHTML(s.showcase, s.id)}
@@ -387,7 +435,7 @@
     intro.innerHTML = html[0]; storyLast = -1;
     main.innerHTML = html.slice(1).join('');
     revealRows();
-    symbolInit();
+    symbolInit(); aboutThumb();
     ST.eco.render(outro);
     cache = new WeakMap();
     if (drawer.el && drawer.el.classList.contains('is-open')) drawerRender();
