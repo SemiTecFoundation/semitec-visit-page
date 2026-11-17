@@ -286,6 +286,15 @@ function returnFromLoop(){
   navigationTarget={path:active.segment.visit.parentPath,distance:end};nativeScroll(end);
  }else navigate([sections[Math.max(0,active.index-1)].id]);
 }
+/* ▸BLOCKS clicks inside the blocks: a path card travels into that path; cards, examples, events and news open the side panel */
+panel.addEventListener('click',event=>{
+ const t=event.target;if(!t.closest)return;
+ const op=t.closest('[data-open-path]');if(op&&!t.closest('[data-deck]')){event.preventDefault();navigate(op.dataset.openPath.split('/'),{focus:true});return;}
+ const ex=t.closest('[data-ex-open]');if(ex){ST.drawerOpen({kind:'example',idx:+ex.dataset.exOpen});return;}
+ const cd=t.closest('[data-card]');if(cd){const [key,idx]=cd.dataset.card.split(':');ST.drawerOpen({kind:'card',key,idx:+idx});return;}
+ const ev=t.closest('[data-ev-open]');if(ev){const [when,idx]=ev.dataset.evOpen.split(':');ST.drawerOpen({kind:'event',when,idx:+idx});return;}
+ const nw=t.closest('[data-news]');if(nw){ST.drawerOpen({kind:'news',idx:+nw.dataset.news});return;}
+});
 function breadcrumb(path){
  const nav=element('nav','breadcrumbs');nav.setAttribute('aria-label',text('breadcrumb'));
  nav.append(routeLink(['overview'],text('home')));
@@ -309,6 +318,9 @@ function renderCard(force=false){
  else title.textContent=pick(node.title);
  card.append(title,element('p','panel-intro',pick(node.intro)));
  if(!inLoop&&node.id==='events'){const up=ST.events().upcoming[0],nx=element('p','panel-next');nx.append(element('span','',text(up?'evNext':'evNoNext')));if(up)nx.append(element('strong','',`${ST.fmtDate(up.when)} · ${pick(up.title)}`));card.append(nx);}
+ /* ▸BLOCKS a main section shows the same blocks as the 2D page (js/mode-read.js), in the dark colours */
+ let blocks=null;
+ if(!inLoop&&route.index>0&&ST.secHTML){const html=ST.secHTML(node);if(html){blocks=element('div','panel-blocks');blocks.innerHTML=html;blocks.querySelectorAll('.rv,.xs-rv,.pr-row').forEach(e=>e.classList.add('is-in'));card.append(blocks);card.classList.add('has-blocks');}}
  if(inLoop&&(node.text||[]).length){   // the path's text, in a scrolling area that fits above the buttons
   const more=element('div','panel-more');node.text.forEach(t=>more.append(element('p','panel-text',pick(t))));card.append(more);
  }
@@ -317,13 +329,15 @@ function renderCard(force=false){
   const status=element('div','loop-status');const ring=element('div','loop-ring');ring.setAttribute('role','progressbar');ring.setAttribute('aria-label',text('loopProgress'));ring.setAttribute('aria-valuemin','0');ring.setAttribute('aria-valuemax','100');
   const detail=element('div');detail.append(element('span','',text('back')+labelFor(active.segment.visit.parentPath)),element('small','',text('loopHint')));status.append(ring,detail);card.append(status);
  }
- if(route.children.length&&ready){
-  card.append(element('p','route-options-label',text('optional')));const list=element('div','route-options');
-  route.children.forEach((child,i)=>{const a=routeLink([...active.path,child.id],'');const symbol=element('span','option-symbol','↺');symbol.setAttribute('aria-hidden','true');a.append(element('span','option-number',String(i+1).padStart(2,'0')),element('span','',pick(child.title)),symbol);list.append(a);});card.append(list);
- }else{
+ if(inLoop&&active.path.length===2){const md=element('button','panel-detail');md.type='button';md.append(element('span','',text('detailsMore')),element('span','','→'));md.addEventListener('click',()=>ST.drawerOpen({kind:'path',path:[...active.path]}));card.append(md);}
+ if(route.children.length&&ready&&!(blocks&&ST.ownsPaths(node.id))){
+  const host=blocks||card;   // ▸BLOCKS with blocks, the paths scroll with them
+  host.append(element('p','route-options-label',text('optional')));const list=element('div','route-options');
+  route.children.forEach((child,i)=>{const a=routeLink([...active.path,child.id],'');const symbol=element('span','option-symbol','↺');symbol.setAttribute('aria-hidden','true');a.append(element('span','option-number',String(i+1).padStart(2,'0')),element('span','',pick(child.title)),symbol);list.append(a);});host.append(list);
+ }else if(!blocks){
   const list=element('div',route.index===0?'intro-tags':'panel-items');(node.items||[]).forEach(item=>list.append(element(route.index===0?'span':'div',route.index===0?'':'panel-item',pick(item))));card.append(list);
  }
- if(node.deck){const holder=element('div','panel-deck');holder.innerHTML=ST.deckHTML(node);card.append(holder);}   // ▸DECK watch the expo chapter
+ if(node.deck&&!(blocks&&blocks.querySelector('[data-deck]'))){const holder=element('div','panel-deck');holder.innerHTML=ST.deckHTML(node);card.append(holder);}   // ▸DECK watch the expo chapter
  if(inLoop&&node.eventTypes){const holder=element('div','panel-events');holder.innerHTML=ST.pathEventsHTML(node);card.append(holder);}
  if((node.links||[]).length){const ls=element('div','panel-links');node.links.forEach(l=>{const inner=l.href[0]==='#',a=element('a','',pick(l.label)+(inner?' →':' ↗'));a.href=l.href;if(!inner){a.target='_blank';a.rel='noopener';}ls.append(a);});card.append(ls);}
  const actions=element('div','panel-actions');
@@ -336,6 +350,7 @@ function renderCard(force=false){
  // Both cards coexist briefly. Only the new card remains interactive/accessibile.
  const old=currentCard;panel.querySelectorAll('.is-leaving').forEach(e=>e.remove());panel.append(card);currentCard=card;updatePanelSize();requestAnimationFrame(updatePanelSize);setTimeout(updatePanelSize,160);setTimeout(updatePanelSize,panelFadeMs+60);
  renderBranchEntrances(route,ready);
+ if(blocks&&ST.paintThumbs)ST.paintThumbs();
  if(old){old.inert=true;old.setAttribute('aria-hidden','true');old.classList.add('is-leaving');old.classList.remove('is-current');setTimeout(()=>old.remove(),panelFadeMs+30);}
  if(still||!old)card.classList.add('is-current');else requestAnimationFrame(()=>card.classList.add('is-current'));
  ST.report(route.index,active.path); // ▸DUAL the shared bottom bar follows this view
@@ -450,16 +465,14 @@ function addMainMedia(){
 }
 /* product boards along a path (e.g. SemiTec Academy): text cards that come one after another after the point
    where a selected path arrives. Clicking one opens it large: details, every picture, and its links. */
-function createShow(item,k,n,point,visit,mobilePoint){
+function createShow(item,k,n,point,visit,mobilePoint,open){
  const figure=element('figure','media-board show-board');figure.id='visual-'+(++mediaCounter);figure.setAttribute('aria-hidden','true');
  const card=element('button','sb-card');card.type='button';card.tabIndex=-1;
  const kick=element('span','sb-kicker'),title=element('strong'),intro=element('p','sb-intro'),more=element('span','sb-more');
- const thumbs=element('span','sb-thumbs');
- (item.gallery||(item.media?[item.media]:[])).forEach(id=>{const m=SITE_CONTENT.media[id];if(!m)return;const im=element('img');im.src=m.src;im.alt='';im.decoding='async';thumbs.append(im);});
- card.append(kick,title,intro,thumbs,more);figure.append(card);document.querySelector('#scene-media').append(figure);
+ card.append(kick,title,intro,more);figure.append(card);document.querySelector('#scene-media').append(figure);   // ▸BLOCKS text only: the old pictures are gone
  card.addEventListener('pointerenter',()=>figure.classList.add('is-hover'));card.addEventListener('pointerleave',()=>figure.classList.remove('is-hover'));
- card.addEventListener('click',()=>ST.openShowcase(item,k,n));
- const relabel=()=>{kick.textContent=String(k+1).padStart(2,'0')+' / '+String(n).padStart(2,'0');title.textContent=pick(item.title);intro.textContent=pick(item.intro);more.textContent=text('showMore')+' ↗';};
+ card.addEventListener('click',()=>open?open():ST.openShowcase(item,k,n));
+ const relabel=()=>{kick.textContent=item.kicker?pick(item.kicker):String(k+1).padStart(2,'0')+' / '+String(n).padStart(2,'0');title.textContent=pick(item.title);intro.textContent=pick(item.intro);more.textContent=text('detailsMore')+' →';};
  relabel();
  mediaBoards.push({figure,button:card,point,mobilePoint,visit,width:figure.offsetWidth,alpha:0,relabel});
 }
@@ -475,7 +488,7 @@ function addVisitMedia(visit){
    const d=n>1?from+(L*.88-from)*k/(n-1):from,pose=visit.curve.pose(d),r=[-pose.direction[2],0,pose.direction[0]];
    const at=(sd,o)=>[pose.point[0]+r[0]*o*sd,0,pose.point[2]+r[2]*o*sd];
    const sd=rightness(d,at(1,7))>=rightness(d,at(-1,7))?1:-1,p=at(sd,7),m=at(sd,2.2);
-   createShow(item,k,n,[p[0],5.6,p[2]],visit,[m[0],3.7,m[2]]);
+   createShow(item,k,n,[p[0],5.6,p[2]],visit,[m[0],3.7,m[2]],()=>ST.drawerOpen({kind:'card',key:pathKey(visit.path),idx:k}));
   });
   return;
  }
@@ -572,8 +585,43 @@ function updateGates(dt){
   el.style.transform=`translate(${q.x}px,${q.y}px) translate(-50%,-50%) scale(${clamp(26/q.depth,.35,2.2)})`;
  });
 }
+/* ▸LANDMARKS names on the mountain's summits, the bridge's planks, the direction blocks and the event stations */
+const lmLayer=element('div','event-layer lm-layer');lmLayer.setAttribute('aria-hidden','true');gateLayer.after(lmLayer);let lmBuilt=false,lmLang='';
+function textLandmarks(){
+ const sec=id=>sections.find(s=>s.id===id)||{},types=SITE_CONTENT.eventTypes||{};
+ lmLayer.querySelectorAll('[data-lm]').forEach(el=>{const m=scene.landmarks[+el.dataset.lm];let t='';
+  if(m.kind==='summit')t=pick(((sec('focus').showcase||[])[m.k]||{}).title);
+  else if(m.kind==='plank')t=String(m.k+1);
+  else if(m.kind==='dir'){const c=(sec('initiatives').children||[])[m.k]||{};t=(m.k+1)+' · '+pick(c.short||c.title);}
+  else if(m.kind==='station')t=pick((types[m.type]||{}).label);
+  el.querySelector('span').textContent=t;});
+ lmLang=language;
+}
+function buildLandmarks(){
+ lmBuilt=true;if(!scene.landmarks)return;
+ lmLayer.innerHTML=scene.landmarks.map((m,i)=>`<button type="button" class="lm-tag lm-${m.kind}${m.status?' is-'+m.status:''}${m.type?' t-'+m.type:''}" data-lm="${i}" tabindex="-1"><i></i><span></span></button>`).join('');
+ lmLayer.addEventListener('click',e=>{const b=e.target.closest('[data-lm]');if(!b)return;const m=scene.landmarks[+b.dataset.lm];
+  if(m.kind==='summit')ST.drawerOpen({kind:'card',key:'focus',idx:m.k});
+  else if(m.kind==='plank'||m.kind==='dir'){const c=(sections.find(s=>s.id==='initiatives').children||[])[m.k];if(c)navigate(['initiatives',c.id],{focus:true});}
+  else if(m.kind==='station'){const i=(SITE_CONTENT.eventExamples||[]).findIndex(x=>x.type===m.type);if(i>=0)ST.drawerOpen({kind:'example',idx:i});}});
+ textLandmarks();
+}
+function updateLandmarks(dt){
+ if(!scene||!scene.landmarks)return;if(!lmBuilt)buildLandmarks();if(lmLang!==language)textLandmarks();
+ const main=active.segment.kind==='main'&&Math.max(lift,endLift)<.05,readingRight=innerWidth>760?panel.getBoundingClientRect().right:0;
+ lmLayer.querySelectorAll('[data-lm]').forEach(el=>{
+  const m=scene.landmarks[+el.dataset.lm],near=currentDistance-timeline.mainLocation(m.sec);
+  const target=main?clamp(1-(Math.abs(near-10)-34)/14,0,1):0;
+  let a=layerAlpha.get(el)||0;a=still?target:a+(target-a)*(1-Math.exp(-dt*6));layerAlpha.set(el,a);
+  const q=a>.02?scene.project(m.point):null;
+  if(!q||q.depth<2.5){el.style.visibility='hidden';el.style.pointerEvents='none';return;}
+  el.style.visibility='visible';el.style.pointerEvents=a>.5?'auto':'none';el.tabIndex=a>.5?0:-1;
+  el.style.transform=`translate(${q.x}px,${q.y}px) translate(-50%,-100%) scale(${clamp(24/q.depth,.55,1.15)})`;
+  el.style.opacity=String(a*(q.x<readingRight+30?.12:1));el.style.zIndex=String(1000-Math.round(q.depth));
+ });
+}
 function updateEvents(dt){
- updateGates(dt);
+ updateGates(dt);updateLandmarks(dt);
  if(!scene||!scene.eventsGeo)return;if(!eventBuilt)buildEventLabels();
  const g=scene.eventsGeo,main=active.segment.kind==='main'&&Math.max(lift,endLift)<.05;
  const readingRight=innerWidth>760?panel.getBoundingClientRect().right:0;
@@ -682,13 +730,16 @@ function tweenLift(from,to,ms,ease){lift=from;wake();return ST.tween(ms,t=>{lift
    near (it comes up as you approach and fades once passed), so they never pile up */
 function addMainShowcase(){
  sections.forEach((section,index)=>{
-  const list=section.showcase&&section.showcase.length?section.showcase:section.id==='events'?ST.news().slice(0,4).map(ST.newsCard):[];if(!list.length||index<1)return;   // News & Events: the latest news
+  if(section.id==='focus')return;   // ▸LANDMARKS Our Symbol: the mountain stands there instead of cards
+  const ex=section.id==='events'&&!ST.news().length;
+  const list=section.showcase&&section.showcase.length?section.showcase:section.id==='events'?(ex?(SITE_CONTENT.eventExamples||[]).slice(0,5).map(ST.exampleCard):ST.news().slice(0,4).map(ST.newsCard)):[];if(!list.length||index<1)return;   // News & Events: the latest news, or the example events
   /* the first card is already in view where a chosen section arrives; each card then has its own stretch of road
      (mainCardGap long): it comes up, stays for a few scrolls, fades as it is passed, and only then the next comes */
   const sd=timeline.main.distanceAt(index/(sections.length-1)),gap=JOURNEY_SETTINGS.mainCardGap,n=list.length,from=sd-JOURNEY_SETTINGS.arriveBeforeMiddle+gap-1;
   list.forEach((item,k)=>{
    const pose=timeline.main.pose(from+gap*k),r=[-pose.direction[2],0,pose.direction[0]];
-   createShow(item,k,n,[pose.point[0]+r[0]*2.8,3.9,pose.point[2]+r[2]*2.8],null,[pose.point[0]+r[0]*.9,2.3,pose.point[2]+r[2]*.9]);
+   const open=section.id==='events'?()=>ST.drawerOpen(ex?{kind:'example',idx:k}:{kind:'news',idx:k}):()=>ST.drawerOpen({kind:'card',key:section.id,idx:k});
+   createShow(item,k,n,[pose.point[0]+r[0]*2.8,3.9,pose.point[2]+r[2]*2.8],null,[pose.point[0]+r[0]*.9,2.3,pose.point[2]+r[2]*.9],open);
    mediaBoards.at(-1).far=gap+3;
   });
  });

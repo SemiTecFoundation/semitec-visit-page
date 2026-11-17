@@ -42,40 +42,39 @@
     return [Math.max(0, best), owner];
   }
 
-  /* contour lines by marching squares, computed once */
+  /* contour lines by marching squares, computed once per resolution */
   const STEP = 24, LV = [];
   for (let L = 8; L < 842; L += STEP) LV.push(L);
-  let CONT = null;   // [level][owner] → Float32Array of x,z pairs (segments)
-  function contours() {
-    if (CONT) return CONT;
-    const X0 = -120, X1 = 1390, Z0 = -480, Z1 = 480, D = 9;
+  const SETS = {};
+  // levels every `step` units, sampled on a grid of `D` units → { levels, segs[level][owner] = Float32Array x,z pairs }
+  function contourSet(step, D) {
+    const key = step + ':' + D;
+    if (SETS[key]) return SETS[key];
+    const levels = [];
+    for (let L = 8; L < 842; L += step) levels.push(L);
+    const X0 = -120, X1 = 1390, Z0 = -480, Z1 = 480;
     const nx = Math.round((X1 - X0) / D) + 1, nz = Math.round((Z1 - Z0) / D) + 1;
     const H = new Float32Array(nx * nz), O = new Int8Array(nx * nz);
     for (let j = 0; j < nz; j++) for (let i = 0; i < nx; i++) {
       const [h, o] = height(X0 + i * D, Z0 + j * D); H[j * nx + i] = h; O[j * nx + i] = o;
     }
-    CONT = LV.map(() => [[], [], [], []]);
-    LV.forEach((L, li) => {
+    const PAIRS = { 1: [[3, 2]], 2: [[2, 1]], 3: [[3, 1]], 4: [[0, 1]], 5: [[3, 0], [2, 1]], 6: [[0, 2]], 7: [[3, 0]],
+      8: [[3, 0]], 9: [[0, 2]], 10: [[0, 1], [3, 2]], 11: [[0, 1]], 12: [[3, 1]], 13: [[2, 1]], 14: [[3, 2]] };
+    const out = levels.map(() => [[], [], [], []]);
+    levels.forEach((L, li) => {
       for (let j = 0; j < nz - 1; j++) for (let i = 0; i < nx - 1; i++) {
         const a = H[j * nx + i], b = H[j * nx + i + 1], c = H[(j + 1) * nx + i + 1], d = H[(j + 1) * nx + i];
         const k = (a > L ? 8 : 0) | (b > L ? 4 : 0) | (c > L ? 2 : 0) | (d > L ? 1 : 0);
         if (k === 0 || k === 15) continue;
         const x = X0 + i * D, z = Z0 + j * D;
-        const e = [
-          [x + D * (L - a) / (b - a), z],          // top    a–b
-          [x + D, z + D * (L - b) / (c - b)],      // right  b–c
-          [x + D * (L - d) / (c - d), z + D],      // bottom d–c
-          [x, z + D * (L - a) / (d - a)]           // left   a–d
-        ];
-        const pairs = { 1: [[3, 2]], 2: [[2, 1]], 3: [[3, 1]], 4: [[0, 1]], 5: [[3, 0], [2, 1]], 6: [[0, 2]], 7: [[3, 0]],
-          8: [[3, 0]], 9: [[0, 2]], 10: [[0, 1], [3, 2]], 11: [[0, 1]], 12: [[3, 1]], 13: [[2, 1]], 14: [[3, 2]] }[k];
+        const e = [[x + D * (L - a) / (b - a), z], [x + D, z + D * (L - b) / (c - b)], [x + D * (L - d) / (c - d), z + D], [x, z + D * (L - a) / (d - a)]];
         const own = Math.max(0, O[j * nx + i] < 0 ? O[(j + 1) * nx + i + 1] : O[j * nx + i]);
-        pairs.forEach(([p, q]) => CONT[li][own].push(e[p][0], e[p][1], e[q][0], e[q][1]));
+        PAIRS[k].forEach(([p, q]) => out[li][own].push(e[p][0], e[p][1], e[q][0], e[q][1]));
       }
     });
-    CONT = CONT.map(row => row.map(a => new Float32Array(a)));
-    return CONT;
+    return (SETS[key] = { levels, segs: out.map(row => row.map(a => new Float32Array(a))) });
   }
+  const contours = () => contourSet(STEP, 9).segs;
 
   /* the camera over the timeline (with an optional "hold" on one summit) */
   function camera(t) {
@@ -226,5 +225,5 @@
     return { draw, peakAt, END, tourStart: k => T1 + k * TP, tourEnd: T2, focus };
   }
 
-  window.Aragats = { create, END, T1, TP, T2, focus };
+  window.Aragats = { create, END, T1, TP, T2, focus, contourSet, PEAKS: PEAKS.map(p => ({ ax: p.ax, H: p.H, z: p.z, fill: p.fill })) };
 })();

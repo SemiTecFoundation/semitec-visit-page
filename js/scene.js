@@ -6,7 +6,7 @@ class SignalScene {
     const css=getComputedStyle(document.documentElement);
     const color=(key,fallback)=>{const h=css.getPropertyValue(key).trim()||fallback;return [1,3,5].map(i=>parseInt(h.slice(i,i+2),16)/255);};
     this.palette={board:color('--chip-board','#10232a'),chip:color('--chip-body','#21383e'),metal:color('--chip-metal','#526264'),gold:color('--chip-signal','#eac883'),teal:color('--chip-trace','#397b80'),fog:color('--chip-fog','#071419')};
-    this.active=true;this.mesh=[];this.buildPrograms();this.buildWorld();this.buildDetail();this.buildEvents();this.buildFinale();
+    this.active=true;this.mesh=[];this.buildPrograms();this.buildWorld();this.buildDetail();this.buildEvents();this.buildFinale();this.buildLandmarks();
     this.worldBuffer=this.upload(this.mesh);this.worldCount=this.mesh.length/10;
     this.mesh=[];this.buildLoop();this.loopBuffer=this.upload(this.mesh);this.loopCount=this.mesh.length/10;
     this.mesh=[];this.buildLoop(JOURNEY_SETTINGS.loopReturnBack);this.loopBackBuffer=this.upload(this.mesh);this.loopBackCount=this.mesh.length/10;this.mesh=null;
@@ -141,6 +141,7 @@ class SignalScene {
       if(z<sealZ+8)continue;
       for(const side of [-1,1]){
         if(side>0&&this.memorySites().some(m=>Math.abs(z-m.memZ)<24))continue; // MEMORY: keep the right side free for memory blocks
+        if(this.landmarkClear(z,side))continue; // LANDMARKS: keep the mountain's side free
         const x=this.path(z)+side*(side<0?91:19+(i%3)*1.2),h=3.1+(i%4)*1.1;
         this.chip(x,z,10+(i%3),14,h,i);
         this.chip(x+side*19,z-9,11,20,8+(i%3)*2,i+1);
@@ -297,6 +298,78 @@ class SignalScene {
     });
     // the main trace runs on to the centre of the pad row
     this.trace([[ex,.04,sealZ+1],[ex,.04,padZ+1.4]],.085,gold,2);
+  }
+  /* LANDMARKS — the presentation's pictures, built into the chip:
+     Our Symbol: Aragats as stacked contour rings beside the road, its four summits marked;
+     Directions: the road crosses a gap on a bridge of five planks, and each direction stands as a small
+     block beside the road with a status light; News & Events: five coloured stations, one per type of event. */
+  secIndex(id){return SITE_CONTENT.sections.findIndex(s=>s.id===id);}
+  landmarkClear(z,side){
+    const fi=this.secIndex('focus');if(fi<1||side<0)return false;
+    const zc=sectionZ(fi)-30;return Math.abs(z-zc)<36;
+  }
+  buildLandmarks(){
+    this.landmarks=[];
+    const gold=this.palette.gold,teal=this.palette.teal,metal=this.palette.metal;
+    const STATUS={run:[.32,.86,.56],prep:[.93,.75,.42],plan:[.52,.68,.96]};
+    const statusOf=items=>{const en=(items||[]).map(i=>Array.isArray(i)?i[0]:i).join(' ');return /running/i.test(en)?'run':/prepar/i.test(en)?'prep':/planned/i.test(en)?'plan':'';};
+    /* Our Symbol: Aragats */
+    const fi=this.secIndex('focus');
+    if(fi>0&&window.Aragats){
+      const zc=sectionZ(fi)-30,xc=this.path(zc)+22,k=.026,set=Aragats.contourSet(42,14);
+      this.box(xc,.01,zc,44,.03,30,[.05,.12,.14]);
+      set.levels.forEach((L,li)=>{
+        const t=L/842,col=[teal[0]+(gold[0]-teal[0])*t,teal[1]+(gold[1]-teal[1])*t,teal[2]+(gold[2]-teal[2])*t];
+        const y=L*k;
+        set.segs[li].forEach(arr=>{for(let i=0;i<arr.length;i+=4){
+          const a=[xc+(arr[i]-635)*k,y,zc+arr[i+1]*k],b=[xc+(arr[i+2]-635)*k,y,zc+arr[i+3]*k];
+          const n=normalize([b[2]-a[2],0,a[0]-b[0]]);
+          this.quad(a,b,[b[0],y+.13,b[2]],[a[0],y+.13,a[2]],n,col,1);
+        }});
+      });
+      Aragats.PEAKS.forEach((p,i)=>{
+        const x=xc+(p.ax-635)*k,y=p.H*k,z=zc+p.z*k;
+        this.box(x,y,z,.45,.45,.45,gold,2);
+        this.beam([x,y+.4,z],[x,y+3.2,z],.05,gold,2);
+        this.landmarks.push({kind:'summit',k:i,sec:fi,point:[x,y+3.8,z]});
+      });
+    }
+    /* Directions: the gap, the bridge of five planks, five blocks with status lights */
+    const di=this.secIndex('initiatives');
+    if(di>0){
+      const sec=SITE_CONTENT.sections[di],kids=(sec.children||[]).slice(0,5),zb=sectionZ(di)-2,xb=this.path(zb);
+      this.box(xb,.015,zb,34,.08,16,[.012,.035,.045]);                                   // the gap
+      for(const e of [-8,8])this.beam([xb-17,.1,zb+e],[xb+17,.1,zb+e],.06,teal,1);           // its edges
+      kids.forEach((c,i)=>{
+        const z=zb+6-i*3,x=this.path(z);
+        this.box(x,.1,z,9,.18,1.1,[.46,.36,.2]);                                              // plank
+        this.beam([x-4.5,.3,z+.56],[x+4.5,.3,z+.56],.04,gold,1);
+        this.landmarks.push({kind:'plank',k:i,sec:di,point:[x+5.2,.7,z]});
+      });
+      this.beam([xb,.32,zb+7],[xb,.32,zb-7],.085,gold,2);                                    // the signal crosses
+      kids.forEach((c,i)=>{
+        const z=sectionZ(di)-12-i*3.2,side=i%2?-1:1,x=this.path(z)+side*9.2,h=2.2+i*.35,st=STATUS[statusOf(c.items)]||STATUS.prep;
+        this.box(x,.05,z,3.6,.25,3.6,[.14,.25,.26]);
+        this.box(x,.3,z,3,h,3,this.palette.chip);
+        this.box(x,.3+h,z,2.6,.12,2.6,metal);
+        this.box(x,.42+h,z,1,.7,1,st,2);                                                      // status light
+        this.beam([this.path(z)+side*.4,.05,z],[x-side*1.8,.05,z],.05,st,1);
+        this.landmarks.push({kind:'dir',k:i,sec:di,status:statusOf(c.items),point:[x,h+2,z]});
+      });
+    }
+    /* News & Events: five stations, one per type of event */
+    const ei=this.secIndex('events');
+    if(ei>0){
+      const TYPES=[['lecture',[.93,.75,.42]],['meeting',[.36,.78,.8]],['workshop',[.32,.82,.52]],['hackathon',[.92,.48,.26]],['conference',[.5,.66,.95]]];
+      TYPES.forEach(([type,col],i)=>{
+        const z=sectionZ(ei)+12-i*5.5,x=this.path(z)-8.4;
+        this.box(x,.03,z,2.6,.06,2.6,[col[0]*.35,col[1]*.35,col[2]*.35],1);
+        this.box(x,.09,z,.7,2.6,.7,metal);
+        this.box(x,2.7,z,1.3,.5,1.3,col,2);
+        this.beam([this.path(z)-.4,.05,z],[x+1.3,.05,z],.05,col,1);
+        this.landmarks.push({kind:'station',k:i,type,sec:ei,point:[x,3.7,z]});
+      });
+    }
   }
   buildLoop(back=0){
     const points=[],gold=this.palette.gold,W=JOURNEY_SETTINGS.loopWidth,D=JOURNEY_SETTINGS.loopDepth;
