@@ -2332,6 +2332,14 @@ const SITE_CONTENT = {
       "To be announced",
       "Կհրապարակվի"
     ],
+    "detailsMore": [
+      "More details",
+      "Մանրամասներ"
+    ],
+    "symbolHint3d": [
+      "The mountain beside the road is our mark: its four summits are the four pillars. Choose one to read more.",
+      "Ճանապարհի կողքին գտնվող լեռը մեր նշանն է․ նրա չորս գագաթները չորս հենասյուներն են։ Ընտրեք մեկը՝ ավելին կարդալու համար։"
+    ],
     "aboutPath": [
       "Our path",
       "Մեր ճանապարհը"

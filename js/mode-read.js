@@ -300,6 +300,15 @@
   const SECX = { purpose: aboutHTML, focus: symbolHTML, initiatives: dirHTML, impact: impactHTML, people: peopleHTML, transparency: trustHTML, donate: giveHTML, support: joinHTML };
   const OWN_ROWS = { initiatives: 1, donate: 1, support: 1 };      // their paths are already cards above
   const OWN_TEXT = { purpose: 1, donate: 1, initiatives: 1 };      // their text and presentation are part of the blocks
+  /* the same blocks for the 3D view's reading card (js/mode-signal.js); Our Symbol shows its pillars there,
+     because the mountain itself stands beside the road */
+  ST.secHTML = s => {
+    if (s.id === 'events') return eventsPanel();
+    if (s.id === 'focus') return `<div class="about-x"><div class="ab-block rv">${kick('A', ST.pick(s.label))}<p class="ab-body">${ST.esc(ST.text('symbolHint3d'))}</p>
+      <div class="sy-pillars">${(s.showcase || []).slice(0, 4).map((c, k) => `<button type="button" class="sy-pill" data-card="focus:${k}"><span class="sy-n">0${k + 1}</span><strong>${ST.esc(ST.pick(c.title))}</strong><span class="sy-d">${ST.esc(ST.pick(c.intro))}</span></button>`).join('')}</div></div></div>`;
+    return SECX[s.id] ? SECX[s.id](s) : '';
+  };
+  ST.ownsPaths = id => !!OWN_ROWS[id];
   /* ---------- 02 Our Symbol: a contour map rises into Aragats, each summit is visited, and the
      silhouette fills into the SemiTec mark (drawn by expo/js/aragats.js, shared with the presentation) ---------- */
   function symbolHTML(s) {
@@ -431,7 +440,7 @@
       if (e.target.closest('.dr-back')) { drawer.stack.pop(); drawerRender(); return; }
       const cr = e.target.closest('[data-crumb]');
       if (cr) {
-        if (cr.dataset.crumb === 'section') { const sid = drawer.stack[0].path[0]; drawerClose(); scrollToPath([sid]); }
+        if (cr.dataset.crumb === 'section') { const sid = drawer.stack[0].path[0]; drawerClose(); if (document.documentElement.dataset.mode !== '3d') scrollToPath([sid]); }
         else { drawer.stack.length = +cr.dataset.crumb + 1; drawerRender(); }
         return;
       }
@@ -471,17 +480,19 @@
     drawer.stack = [entry]; drawerRender();
     el.setAttribute('aria-hidden', 'false'); el.classList.add('is-open');
     document.documentElement.classList.add('dr-open');
-    if (entry.kind === 'path') { openPath = [...entry.path]; history.replaceState(null, '', '#' + entry.path.join('/')); }
+    if (entry.kind === 'path' && document.documentElement.dataset.mode !== '3d') { openPath = [...entry.path]; history.replaceState(null, '', '#' + entry.path.join('/')); }
     setTimeout(() => el.querySelector('.dr-panel').focus(), 50);
     ST.sound && ST.sound.blip && ST.sound.blip('read');
   }
+  ST.drawerOpen = e => drawerOpen(e);
+  ST.paintThumbs = () => aboutThumb();
   function drawerClose(keepHash) {
     if (!drawer.el || !drawer.el.classList.contains('is-open')) return;
     const first = drawer.stack[0];
     drawer.el.classList.remove('is-open'); drawer.el.setAttribute('aria-hidden', 'true');
     document.documentElement.classList.remove('dr-open');
     drawer.stack = []; openPath = null;
-    if (!keepHash && first && first.kind === 'path') history.replaceState(null, '', '#' + first.path[0]);
+    if (!keepHash && first && first.kind === 'path' && document.documentElement.dataset.mode !== '3d') history.replaceState(null, '', '#' + first.path[0]);
     const row = first && first.kind === 'path' && document.getElementById(`row-${first.path[0]}-${first.path[1]}`); if (row) row.focus({ preventScroll: true });
   }
   R.closeDrawer = () => drawerClose(true);
@@ -508,7 +519,8 @@
     const d = [];
     if (x.who) d.push([T('evFor'), x.who]);
     if (x.format) d.push([T('evFormat'), x.format]);
-    return { title: x.title, intro: x.intro, short: t.label,
+    const ex = SITE_CONTENT.ui.evExample || ['Example', 'Example'], lab = t.label || ['', ''];
+    return { title: x.title, intro: x.intro, short: t.label, kicker: [`${ex[0]} · ${lab[0]}`, `${ex[1]} · ${lab[1]}`],
       details: d.map(([k, v]) => [`${k}: ${ST.pick(v)}`, `${k}: ${ST.pick(v)}`]).concat(x.bring ? [[`${T('evBring')}: ${ST.pick(x.bring)}`, `${T('evBring')}: ${ST.pick(x.bring)}`]] : []).concat([[T('evExampleNote'), T('evExampleNote')]]),
       items: x.agenda || [], links: x.path ? [{ label: [T('evDirection'), T('evDirection')], href: '#' + x.path }] : [] };
   };

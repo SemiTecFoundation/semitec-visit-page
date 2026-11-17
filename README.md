@@ -300,3 +300,8 @@ EDITING.md          how to edit (adapted from Signal)
 4. **An "auto tour" button** in 3D for events or booth screens.
 
 The text is still example content. Names, events, partners, reports and donation or contact details must be confirmed before publication. The Armenian strings added for the new controls should be checked.
+
+## 3D view (Travel) — same content as 2D
+- The reading card of each main section shows the same blocks as the 2D page (`ST.secHTML` in `js/mode-read.js`), in dark colours, in a scrolling area; "More" and cards open the same side panel (`ST.drawerOpen`).
+- Boards along the road are text only (no old pictures) and open the side panel; News & Events shows the example events there.
+- Landmarks (`buildLandmarks` in `js/scene.js`): Aragats as contour rings beside the road at Our Symbol (shared contours from `expo/js/aragats.js`), a five-plank bridge over a gap and five direction blocks with status lights at Directions, five coloured event stations at News & Events. Their labels (`lm-tag`) open the pillar, travel into the direction, or open an example event.
