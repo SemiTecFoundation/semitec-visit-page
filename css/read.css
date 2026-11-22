@@ -1234,7 +1234,7 @@ html.dr-open{overflow:hidden}
 .intro-3d .sn strong{color:#f1eee6}
 .intro-3d .fab-cap .fc-t{color:#f1eee6}.intro-3d .fab-cap .fc-p{color:#a9c0c0}.intro-3d .fab-cap .fc-k{color:#eac883}
 @media (max-width:900px){
-  .story .story-card,.story .story-card.is-final{left:16px!important;right:16px!important;top:auto;bottom:110px;margin:0;width:auto}
+  .story .story-card,.story .story-card.is-final{left:16px!important;right:16px!important;bottom:auto;margin:0;width:auto}
   .story .sc-t{font-size:22px}.story .sc-p{font-size:13px}
   .fab-cap{bottom:auto;top:96px}.fab-cap .fc-p{display:none}
 }
@@ -1254,16 +1254,19 @@ html.dr-open{overflow:hidden}
 .story-start-text .sc-fab{font-size:15px}
 .story-start-text .sc-fab b{font-size:12px}
 .intro-3d .story .sc-fab,.intro-3d .sc-fab{color:#a9c0c0}
-@media (max-width:900px){.story-start-text{left:16px;right:16px;top:auto;bottom:110px;width:auto;margin:0}}
+@media (max-width:900px){.story-start-text{left:16px;right:16px;bottom:auto;width:auto;margin:0}}
 
 /* phone: the film has the band under the title, the text starts below it — they never overlap */
 @media (max-width:599px){
-  .story .story-card,.story .story-card.is-final,.story-start-text{top:calc(100px + 36%)!important;bottom:auto!important;left:18px!important;right:18px!important;margin:0!important;width:auto!important}
+  .story .story-card,.story .story-card.is-final,.story-start-text{bottom:auto!important;left:18px!important;right:18px!important;margin:0!important;width:auto!important}
   .story .sc-t{font-size:21px}.story .story-card.is-pair .sc-t{font-size:18px}
   .story .sc-p,.story .story-card.is-section .sc-p,.story .story-card.is-pair .sc-p{font-size:13px;line-height:1.55}
   .story .story-card.is-pair{gap:16px}
   .story .story-card.is-pair .sc-p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   .story-start-text .sc-fab{font-size:14px}
+  /* the brief keeps to its essentials on a phone: the four directions by name, no closing note */
+  .story .story-card.is-glance .sc-note,.story .story-card.is-glance .sn span{display:none}
+  .story .sc-nums.is-dirs{gap:8px 14px}
 }
 /* the film's two videos (js/film.js): kept in the page, tiny and nearly invisible (WebGL draws the film) */
 .film-video{position:absolute;left:0;bottom:0;width:4px;height:4px;opacity:.01;pointer-events:none}
