@@ -65,6 +65,7 @@ function nativeScroll(distance,instant=false){
 /* ▸ENDING after the chip edge the page scrolls on: the camera rises and pulls back, the package closes over
    the chip and the ecosystem modules connect — the same ending as the 2D page (js/ecosystem.js) */
 const outroPx=()=>Math.round(innerHeight*3.4);
+let endZoom=null,endZoomNow=1;   // ▸ENDING the chip's zoom out of (and back into) its inside
 let eco3d=null,endLift=0,endStage=0,endMap=null,endEl=null,endCur=null,endAnim=null,endFade=null,endShow=0;
 function updateTrack(){document.querySelector('#scroll-track').style.height=(scrollSpace.height(timeline.length)+innerHeight+outroPx())+'px';}
 function outroAmount(){return clamp((scrollY-scrollSpace.toPixels(timeline.length))/outroPx(),0,1);}
@@ -96,6 +97,11 @@ function updateOutro(dt){
   const to=want>=1&&want<=2?1:0;
   if(to!==(endFade?endFade.to:endShow>.5?1:0))endFade=quick?null:{from:endShow,to,start:now+(want>=3?500+650+80:endStage===0?450:0),ms:want===1&&endStage===0?600:450};
   if(quick)endShow=to;
+  /* out of the chip: the camera rises first, then the chip comes in from very large (we are leaving its inside)
+     and shrinks to its place; back in: it grows past the screen and fades — the dive of the opening, reversed */
+  if(!quick&&want>=1&&endStage===0){endZoom={from:5,to:1,start:now+300,ms:1150,ease:ST.easeOut};endFade={from:0,to:1,start:now+300,ms:700};}
+  if(!quick&&want===0&&endStage>=1){endZoom={from:endZoomNow,to:5,start:now,ms:750,ease:ST.easeInOut};endFade={from:endShow,to:0,start:now+150,ms:600};}
+  if(quick){endZoom=null;endZoomNow=1;}
   endStage=want;eco3d.setStage(endStage);endMap.setFlip(endStage===2);endMap.setPacking(endStage>=3);
   if(ST.sound)endStage>=3?ST.sound.blip('open'):ST.sound.tick();
  }
@@ -108,6 +114,8 @@ function updateOutro(dt){
  /* where the chip is: in the middle for the topology and the turn, in the package's place afterwards */
  const tgt=(endStage>=3?eco3d.packMapRect():eco3d.bigRect())||endCur;let r=tgt;
  if(endAnim&&tgt){const t=clamp((performance.now()-endAnim.start)/624,0,1),k=ST.easeInOut(t);r={l:endAnim.from.l+(tgt.l-endAnim.from.l)*k,t:endAnim.from.t+(tgt.t-endAnim.from.t)*k,w:endAnim.from.w+(tgt.w-endAnim.from.w)*k,h:endAnim.from.h+(tgt.h-endAnim.from.h)*k};if(t>=1)endAnim=null;}
+ if(endZoom){const t=clamp((performance.now()-endZoom.start)/endZoom.ms,0,1);endZoomNow=endZoom.from+(endZoom.to-endZoom.from)*endZoom.ease(t);if(t>=1){endZoom=null;if(endZoomNow>1.01&&endStage===0)endZoomNow=1;}}
+ endEl.style.transform=Math.abs(endZoomNow-1)>.001?`scale(${endZoomNow.toFixed(4)})`:'';
  if(endFade){const t=clamp((performance.now()-endFade.start)/endFade.ms,0,1);endShow=endFade.from+(endFade.to-endFade.from)*t;if(t>=1)endFade=null;}
  if(r){endCur=r;Object.assign(endEl.style,{left:r.l.toFixed(1)+'px',top:r.t.toFixed(1)+'px',width:r.w.toFixed(1)+'px',height:r.h.toFixed(1)+'px'});}
  endEl.style.opacity=endShow.toFixed(3);endEl.style.visibility=endShow>.01?'visible':'hidden';
@@ -145,8 +153,9 @@ function finishIntro(quiet){
 }
 function updateIntro(dt,force){
  if(!introOn||!introRoot)return;
- if(introAnim&&!still){const now=performance.now();introAnim.el+=(now-introAnim.last)*introRate;introAnim.last=now;const t=clamp(introAnim.el/introAnim.ms,0,1);introP=introAnim.from+(introAnim.to-introAnim.from)*ST.easeInOut(t);if(t>=1){introAnim=null;introQuiet=now+200;const q=introQueued;introQueued=0;if(q&&introP<introLen()-.01){introRate=Math.max(1.5,introRate*.8);introMove(q,true);}else introRate=1;}else wake();}
- else{introAnim=null;introP=introT;}
+ if(introAnim&&introAnim.film){introP=introAnim.film.P();if(!introAnim.film.busy()){introP=introT=introAnim.to;introAnim=null;introQuiet=performance.now()+250;introRate=1;}else wake();}
+ else if(introAnim&&!still){const now=performance.now();introAnim.el+=(now-introAnim.last)*introRate;introAnim.last=now;const t=clamp(introAnim.el/introAnim.ms,0,1);introP=introAnim.from+(introAnim.to-introAnim.from)*ST.easeInOut(t);if(t>=1){introAnim=null;introQuiet=now+200;const q=introQueued;introQueued=0;if(q&&introP<introLen()-.01){introRate=Math.max(1.5,introRate*.8);introMove(q,true);}else introRate=1;}else wake();}
+ else{introAnim=null;const k=still?1:1-Math.exp(-(dt||.016)*7);introP+=(introT-introP)*k;if(Math.abs(introT-introP)>.0005)wake();else introP=introT;}
  const S=storyLen(),d=clamp(introP-S,0,1);
  const cr=ST.story.apply(introRoot,Math.min(introP,S),introMap,innerWidth<=900);
  const stage=introRoot.querySelector('.choose-stage');
@@ -158,7 +167,7 @@ function updateIntro(dt,force){
  stage.style.opacity=d>0?(1-clamp((d-.45)/.5,0,1)).toFixed(3):'';
  const rest=d>0?(1-clamp(d/.3,0,1)).toFixed(3):'';
  introRoot.querySelectorAll('.story-head,.story-cards,.story-hint').forEach(el=>{el.style.opacity=rest;el.style.pointerEvents=d>.2?'none':'';});
- const board=introEl.querySelector('.intro-board');if(board)board.style.opacity=d>0?(1-clamp((d-.15)/.75,0,1)).toFixed(3):'';
+ const board=introEl.querySelector('.intro-board');if(board)board.style.opacity=d>0?(1-clamp((d-.32)/.6,0,1)).toFixed(3):'';   // the inside of the chip shows only once the dive is deep into the map
  const skip=introEl.querySelector('.story-skip');if(skip)skip.style.opacity=rest;
  introEl.style.pointerEvents=d>.6?'none':'';
  document.documentElement.classList.toggle('travel-intro',d<.85);
@@ -168,31 +177,36 @@ function updateIntro(dt,force){
 /* one step per gesture: each card lands on the chip (or the connections draw, the contacts appear) in one timed
    animation; input during it, and until the wheel has been quiet for a moment, is ignored */
 let introAnim=null,introQuiet=0,introRate=1,introQueued=0;
-const introSteps=()=>{const n=introRoot?introRoot.querySelectorAll('.story-card').length:0;return [...Array(n+1).keys(),introLen()];};
+const introSteps=()=>[...ST.story.rests(),introLen()];
 function introGo(to){
- const from=introP,m=Object.assign({card:700,connections:1000,pads:900,journey:1400},(SITE_CONTENT.story||{}).stepMs||{});
- const card=introRoot&&introRoot.querySelectorAll('.story-card')[Math.round(Math.max(from,to))-2],kind=card&&card.dataset.card;
- const ms=to>=introLen()-1e-3||from>storyLen()?m.journey:kind==='conn'?m.connections:kind==='pads'?m.pads:m.card;
+ /* ▸FILM inside the film the film plays the step itself (js/film.js); the dive into the 3D chip is timed */
+ const film=introRoot&&introRoot._film;
+ if(film&&!still&&to<=storyLen()&&introP<=storyLen()+1e-3&&film.playTo(to)){introT=to;introAnim={film,to};wake();return;}
+ const from=introP,m=Object.assign({film:2600,journey:1400},(SITE_CONTENT.story||{}).stepMs||{});
+ /* ▸FILM each step of the film plays by itself to its end; the chip → map step is a little longer */
+ const ms=to>=introLen()-1e-3||from>storyLen()?m.journey:Math.max(from,to)>storyLen()-1.5?m.film+300:m.film;
  introT=to;introAnim=still?null:{from,to,el:0,last:performance.now(),ms};wake();
 }
 function introMove(dir,fresh=true){
- if(introAnim){if(fresh&&Math.sign(introAnim.to-introAnim.from)===dir){introRate=Math.min(4,introRate*1.8);introQueued=dir;}return;}
+ if(introAnim){if(introAnim.film){if(fresh&&Math.sign(introAnim.to-introP)===dir)introAnim.film.hurry();return;}if(fresh&&Math.sign(introAnim.to-introAnim.from)===dir){introRate=Math.min(4,introRate*1.8);introQueued=dir;}return;}
  if(performance.now()<introQuiet&&!fresh){introQuiet=performance.now()+200;return;}
  const steps=introSteps(),cur=introT;
- const next=dir>0?steps.find(s=>s>cur+.01):[...steps].reverse().find(s=>s<cur-.01);
+ const next=dir>0?steps.find(p=>p>cur+.01):[...steps].reverse().find(p=>p<cur-.01);
  if(next==null){if(dir>0)finishIntro(true);return;}
+ if(next>introLen()){finishIntro(true);return;}if(next<0)return;
  introGo(next);
 }
+function introScrub(d){introAnim=null;introT=clamp(introT+d,0,introLen());if(introT>=introLen()-1e-3){introT=introLen();}wake();}
 const atJourneyStart=()=>on&&!introOn&&scrollY<=2&&currentDistance<.5&&introRoot!==undefined;
 window.addEventListener('wheel',e=>{
  if(!on||ST.state.switching)return;
- if(introOn){e.preventDefault();if(Math.abs(e.deltaY)>=1)introMove(Math.sign(e.deltaY),ST.wheelFresh);return;}
+ if(introOn){e.preventDefault();if(Math.abs(e.deltaY)>=1)introMove(Math.sign(e.deltaY),ST.wheelFresh!==false);return;}   // ▸FILM a scroll plays the next step of the film
  if(e.deltaY<0&&atJourneyStart()&&lift<.05){e.preventDefault();openIntro(introLen()-.02);}
 },{passive:false,capture:true});
 window.addEventListener('touchstart',e=>{touchY=e.touches[0].clientY;},{passive:true,capture:true});
 window.addEventListener('touchmove',e=>{
  if(!on||touchY==null)return;const y=e.touches[0].clientY,dy=touchY-y;
- if(introOn){e.preventDefault();if(Math.abs(dy)>28){touchY=null;introMove(Math.sign(dy));}return;}
+ if(introOn){e.preventDefault();if(Math.abs(dy)>28){touchY=null;introMove(Math.sign(dy),true);}return;}
  if(dy<-30&&atJourneyStart()){touchY=null;openIntro(introLen()-.02);}
 },{passive:false,capture:true});
 window.addEventListener('keydown',e=>{
@@ -667,7 +681,7 @@ function setLanguage(lang){ // ▸DUAL brand, bottom bar and [data-ui] are handl
  for(const b of mediaBoards){if(b.relabel){b.relabel();continue;}b.image.alt=pick(b.data.alt);b.heading.textContent=pick(b.title||b.data.title);b.kicker.textContent=text('mediaType');b.view.firstChild.textContent=text('viewImage');}
  updateMotionButton();textFinale();textEvents();textGates();if(eco3d){eco3d.render(eco3dEl);}if(introRoot){const was=introOn,P=introT;introRoot=null;renderIntro();if(was){introOn=false;openIntro(P);}else introEl.classList.remove('is-on');}if(on){renderCard(true);if(mapDialog.open)buildMap();wake();}
 }
-function updateMotionButton(){const b=document.querySelector('#motion-toggle');b.setAttribute('aria-pressed',String(still));b.setAttribute('aria-label',still?text('resume'):text('pause'));b.querySelector('span').textContent=still?text('motion'):text('still');}
+function updateMotionButton(){const b=document.querySelector('#motion-toggle');if(!b)return;b.setAttribute('aria-pressed',String(still));b.setAttribute('aria-label',still?text('resume'):text('pause'));b.querySelector('span').textContent=still?text('motion'):text('still');}
 function setStill(value){still=value;document.body.classList.toggle('still-view',still);if(!still)displayedFrame=null;updateMotionButton();wake();}
 function readHash(){try{const p=decodeURIComponent(location.hash.slice(1)).split('/').filter(Boolean);return resolveRoute(p)?.path||(ST.isShowcase(p)?[p[0]]:['overview']);}catch{return ['overview'];}}
 function frame(time){
@@ -699,9 +713,10 @@ function frame(time){
  if(!still||glide||Math.abs(targetDistance-currentDistance)>.001||Math.abs(scrollSpace.offset)>1e-6)wake();
 }
 function wake(){if(on&&!animation&&!document.hidden)animation=requestAnimationFrame(frame);}
-function fallback(){document.body.classList.add('no-webgl');document.querySelector('#scene-media').hidden=true;document.querySelector('#motion-toggle').hidden=true;}
+function fallback(){document.body.classList.add('no-webgl');document.querySelector('#scene-media').hidden=true;const mt=document.querySelector('#motion-toggle');if(mt)mt.hidden=true;}
 /* ▸DUAL wiring: bottom bar, brand, language and the "Explore sections" button live in core.js */
-document.querySelector('#motion-toggle').addEventListener('click',()=>setStill(!still));reducedMotion.addEventListener('change',e=>setStill(e.matches));
+/* no "still view" button any more: the still view follows the system setting (reduce motion) */
+reducedMotion.addEventListener('change',e=>setStill(e.matches));
 document.querySelector('#map-close').addEventListener('click',()=>mapDialog.close());document.querySelector('#media-close').addEventListener('click',()=>mediaDialog.close());
 for(const dialog of [mapDialog,mediaDialog])dialog.addEventListener('click',e=>{if(e.target!==dialog)return;const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();});
 window.addEventListener('scroll',()=>{if(!on)return;lastScrollMotion=performance.now();targetDistance=clamp(scrollSpace.fromPixels(scrollY),0,timeline.length);wake();},{passive:true});

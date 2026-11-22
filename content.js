@@ -2348,6 +2348,118 @@ const SITE_CONTENT = {
       "Presentation",
       "Ներկայացում"
     ],
+    "fabKicker": [
+      "How a chip is made",
+      "Ինչպես է պատրաստվում չիպը"
+    ],
+    "fabTitle": [
+      "From sand to silicon. From ideas to opportunities.",
+      "Ավազից՝ սիլիցիում։ Գաղափարներից՝ հնարավորություններ։"
+    ],
+    "fabScroll": [
+      "Scroll or use the arrow keys: one step of the fab at a time",
+      "Ոլորեք կամ օգտագործեք սլաքները՝ արտադրության մեկ քայլ ամեն անգամ"
+    ],
+    "fabStep": [
+      "Step",
+      "Քայլ"
+    ],
+    "fabStartK": [
+      "The beginning",
+      "Սկիզբը"
+    ],
+    "fabStart": [
+      "It starts with sand",
+      "Ամեն ինչ սկսվում է ավազից"
+    ],
+    "fabStartt": [
+      "Quartz sand is purified into silicon, the second most common element in the Earth’s crust.",
+      "Քվարցային ավազը մաքրվում և դառնում է սիլիցիում՝ Երկրի ընդերքում երկրորդ ամենատարածված տարրը։"
+    ],
+    "fab0": [
+      "Crystal growth",
+      "Բյուրեղի աճեցում"
+    ],
+    "fab0t": [
+      "A seed is dipped into molten silicon and pulled slowly up while turning: one perfect crystal, the ingot, grows.",
+      "Սերմնաբյուրեղը իջեցվում է հալված սիլիցիումի մեջ և պտտվելով դանդաղ բարձրացվում․ աճում է մեկ կատարյալ բյուրեղ՝ ձուլակտորը։"
+    ],
+    "fab1": [
+      "Slicing and polishing",
+      "Կտրում և հղկում"
+    ],
+    "fab1t": [
+      "The ingot is cut into thin wafers, polished until they are flatter than a mirror.",
+      "Ձուլակտորը կտրվում է բարակ թիթեղների, որոնք հղկվում են մինչև հայելուց ավելի հարթ դառնալը։"
+    ],
+    "fab2": [
+      "Oxidation and coating",
+      "Օքսիդացում և ծածկում"
+    ],
+    "fab2t": [
+      "A thin oxide grows on the wafer, then a light-sensitive resist is spun evenly across it.",
+      "Թիթեղի վրա աճում է բարակ օքսիդային շերտ, ապա պտտման միջոցով հավասարաչափ քսվում է լուսազգայուն ռեզիստ։"
+    ],
+    "fab3": [
+      "Photolithography",
+      "Ֆոտոլիտոգրաֆիա"
+    ],
+    "fab3t": [
+      "Ultraviolet light shines through a mask and prints the chip’s pattern into the resist, die by die.",
+      "Ուլտրամանուշակագույն լույսը դիմակի միջով տպում է չիպի պատկերը ռեզիստի վրա՝ բյուրեղ առ բյուրեղ։"
+    ],
+    "fab4": [
+      "Etching and doping",
+      "Խածատում և լեգիրում"
+    ],
+    "fab4t": [
+      "Where the pattern is open, material is etched away and ions are shot in to change how the silicon conducts.",
+      "Բաց հատվածներում նյութը հեռացվում է, իսկ ներարկված իոնները փոխում են սիլիցիումի հաղորդականությունը։"
+    ],
+    "fab5": [
+      "Metal interconnect",
+      "Մետաղական միացումներ"
+    ],
+    "fab5t": [
+      "Layers of copper wires connect the transistors into one working circuit.",
+      "Պղնձե լարերի շերտերը տրանզիստորները միացնում են մեկ աշխատող սխեմայի մեջ։"
+    ],
+    "fab6": [
+      "Wafer test",
+      "Թիթեղի փորձարկում"
+    ],
+    "fab6t": [
+      "Fine needles touch every die and test it before it is cut out.",
+      "Բարակ ասեղները դիպչում են յուրաքանչյուր բյուրեղին և փորձարկում այն՝ նախքան կտրելը։"
+    ],
+    "fab7": [
+      "Dicing",
+      "Կտրատում"
+    ],
+    "fab7t": [
+      "A thin blade cuts the wafer along the streets between the dies, and the dies come apart.",
+      "Բարակ սկավառակը թիթեղը կտրում է բյուրեղների միջև ընկած գծերով, և բյուրեղները բաժանվում են իրարից։"
+    ],
+    "fab8": [
+      "Packaging and bonding",
+      "Կորպուսավորում և միացում"
+    ],
+    "fab8t": [
+      "A good die is picked and set in its package; thin gold wires join them, and a lid closes it: the chip is ready.",
+      "Սարքին բյուրեղը վերցվում և դրվում է կորպուսի մեջ, բարակ ոսկե լարերը միացնում են դրանք, և կափարիչը փակում է այն․ չիպը պատրաստ է։"
+    ],
+    "fab9": [
+      "Open the chip",
+      "Բացեք չիպը"
+    ],
+    "fab9t": [
+      "The package opens: inside is the SemiTec chip, and its blocks are the sections of this page.",
+      "Կորպուսը բացվում է․ ներսում SemiTec չիպն է, և նրա բլոկները այս էջի բաժիններն են։"
+    ],
+    "fabScroll2": [
+      "Scroll a little: each step of the chip plays by itself, from sand to silicon",
+      "Մի փոքր ոլորեք․ չիպի պատրաստման յուրաքանչյուր քայլ ինքն է ցուցադրվում՝ ավազից մինչև սիլիցիում"
+    ],
     "aboutPath": [
       "Our path",
       "Մեր ճանապարհը"
@@ -3177,7 +3289,8 @@ const SITE_CONTENT = {
       ]
     ],
     "stepMs": {
-      "card": 700,
+      "film": 2600,
+      "card": 900,
       "connections": 1000,
       "pads": 900,
       "journey": 1400,

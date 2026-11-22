@@ -61,68 +61,93 @@
           <div class="choose-opt"><span class="scroll-mouse" aria-hidden="true"><i></i></span><span><strong>${ST.esc(ST.text('chooseRead'))} ↓</strong><small>${ST.esc(ST.text('chooseReadNote'))}</small></span></div>
           <a class="choose-opt is-3d" href="#overview" data-travel="overview"><span class="ms-icon ms-3d" aria-hidden="true"></span><span><strong>${ST.esc(ST.text('enter3d'))} ↗</strong><small>${ST.esc(ST.text('choose3dNote'))}</small></span></a>
         </div></article>`);
-    return cards.join('');
+    /* in turn on the right and on the left of the drawing; the last one (the two ways) on the right of the chip */
+    return cards.map((c, k) => c.replace('class="story-card', `class="story-card ${k === cards.length - 1 || k % 2 === 0 ? 'is-right' : 'is-left'}`)).join('');
   }
 
   let last = -1;
   ST.story = {
     html(mode) {
-      return `<div class="story-head"><p class="sec-eyebrow"><span class="sec-rule" aria-hidden="true"></span><span>${ST.esc(ST.text('buildKicker'))}</span></p>
-          <h2 class="choose-title">${ST.esc(ST.text('buildTitle'))}</h2></div>
+      return `<div class="story-head"><p class="sec-eyebrow"><span class="sec-rule" aria-hidden="true"></span><span>${ST.esc(ST.text('fabKicker'))}</span></p>
+          <h2 class="choose-title">${ST.esc(ST.text('fabTitle'))}</h2></div>
+        <div class="fab-film" aria-hidden="true"></div>
+        <div class="story-start-text"><p class="sc-fab"><b>${ST.esc(ST.text('fabStartK'))} · ${ST.esc(ST.text('fabStart'))}</b><span>${ST.esc(ST.text('fabStartt'))}</span></p></div>
         <div class="choose-stage" aria-hidden="true"></div>
         <div class="story-cards">${storyCards(mode)}</div>
-        <p class="story-hint"><span class="scroll-mouse" aria-hidden="true"><i></i></span>${ST.esc(ST.text('buildScroll'))}</p>`;
+        <p class="story-hint"><span class="scroll-mouse" aria-hidden="true"><i></i></span>${ST.esc(ST.text('fabScroll2'))}</p>${mode === '3d' ? '' : `
+        <button type="button" class="story-skip is-2d">${ST.esc(ST.text('storySkip'))} →</button>`}`;
     },
-    /* number of steps: the empty chip + one per card (+ a little rest at the end) */
-    length(root) { return root.querySelectorAll('.story-card').length + .6; },
+    /* the film runs P = 0 … 12: step s rests at P = s (0 the sand … 9 the package), 9 → 10.6 the chip opens, then the
+       chip map and the two ways (11 …); rests() are the places a step stops */
+    length() { return 12; },
+    rests() { return ST.film ? ST.film.rests() : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 12]; },
+    /* How a chip is made: a rendered film (js/film.js), played one step at a time. The text has no frame: it stands in
+       the free space beside the film, right and left in turn, and the film moves to the other side. In the last
+       frames the camera looks straight down at the finished die; the film is then scaled so that die lies exactly
+       on the chip map's die, the map fades in over it and tilts up: one object from the film to the page. */
     apply(root, P, map, phone) {
       const cards = [...root.querySelectorAll('.story-card')], n = cards.length;
       const pr = root.getBoundingClientRect(), W = pr.width, H = pr.height;
-      /* where the chip floats: centred at first, then aside (left on wide screens, top on phones) */
-      const shift = ST.smoothstep(ST.clamp((P - .35) / .65));
       const headH = phone ? 96 : 124, pad = phone ? 12 : W * .04;
-      const big = { l: W * .08, t: headH, w: W * .84, h: H - headH - (phone ? 70 : 64) };
+      const mid = phone ? { l: pad, t: headH - 8, w: W - 2 * pad, h: H * .4 } : { l: W * .22, t: headH, w: W * .56, h: H - headH - 60 };
       const aside = phone ? { l: pad, t: headH - 8, w: W - 2 * pad, h: H * .36 } : { l: pad, t: headH, w: W * .54 - pad, h: H - headH - 40 };
-      const cr = { l: ST.lerp(big.l, aside.l, shift), t: ST.lerp(big.t, aside.t, shift), w: ST.lerp(big.w, aside.w, shift), h: ST.lerp(big.h, aside.h, shift) };
+      const shift = ST.smoothstep(ST.clamp((P - 11.0) / .55));
+      const cr = { l: ST.lerp(mid.l, aside.l, shift), t: ST.lerp(mid.t, aside.t, shift), w: ST.lerp(mid.w, aside.w, shift), h: ST.lerp(mid.h, aside.h, shift) };
       root.style.setProperty('--shift', shift.toFixed(3));
-      /* the chip's parts: each section card flies into its block in the last part of its step */
-      const blocks = Array(sections.length).fill(0);
-      let route = 0, pads = 0;
-      const box = root.querySelector('.story-cards').getBoundingClientRect();
+      /* the stage of the fab, as a small line above each text */
+      if (!root._fabLines) {
+        root._fabLines = true;
+        cards.forEach((card, k) => {
+          if (k >= n - 1) return;
+          const el = document.createElement('p'); el.className = 'sc-fab';
+          el.innerHTML = `<b>${ST.esc(ST.text('fabStep'))} ${ST.pad(k + 1)} / 09 · ${ST.esc(ST.text('fab' + k))}</b><span>${ST.esc(ST.text('fab' + k + 't'))}</span>`;
+          card.prepend(el);
+        });
+      }
+      const sideOf = k => k < 0 ? -1 : k >= n - 1 ? 1 : (k % 2 === 0 ? 1 : -1);
+      /* step s (1 … n-1) plays from P = s-1 to s: first the move to the next station, then the work; its text is
+         on from the end of the move (ST.film.textP) until the next step starts. P = 0: the sand, 9 → 12: the end */
+      const textIn = s => ST.film ? ST.film.textP(s) : s - .7;
+      const blockAt = x => x <= .001 ? -1 : x > n - 1 ? n - 1 : Math.ceil(x - .001) - 1;
+      /* the film */
+      const holder = root.querySelector('.fab-film');
+      if (!root._film && ST.film) root._film = ST.film.attach(holder);
+      let align = null;
+      const k = ST.smoothstep(ST.clamp((P - 10.3) / .3));
+      if (k > 0 && map && map.frame) {
+        const world = map.frame.querySelector('.cm-world'), r = world && world.getBoundingClientRect();
+        if (r && r.width) align = { l: r.left - pr.left, t: r.top - pr.top, w: r.width, h: r.height, k };
+      }
+      if (root._film) root._film.set(P, phone || P > n - 1 ? 0 : sideOf(blockAt(P)), align);
+      holder.style.opacity = (1 - ST.clamp((P - 10.62) / .12)).toFixed(3);
+      /* the chip map: flat and still under the film's last frame, then it fades in over it and tilts up */
+      if (map && map.frame) {
+        map.frame.style.opacity = P < 10.45 ? '0' : P >= 10.65 ? '' : ST.clamp((P - 10.45) / .2).toFixed(3);
+        const tilt = ST.smoothstep(ST.clamp((P - 10.75) / .45));
+        if (map.storyTilt !== tilt) { map.storyTilt = tilt; map.frame.classList.toggle('is-flat', tilt < .99); if (map.applyFollow) map.applyFollow(); if (map.wake) map.wake(); }
+      }
+      /* the text: each comes in as its step's work begins and stays until the next step starts */
+      const start = root.querySelector('.story-start-text');
+      if (start) { const out = ST.clamp(P / .06); start.style.opacity = (1 - out).toFixed(3); start.style.transform = `translateY(${(-out * 18).toFixed(1)}px)`; start.inert = out > .5; }
       cards.forEach((card, k) => {
-        const f = P - (k + 1);
-        const inn = ST.clamp((f + .14) / .14), kind = card.dataset.card;   /* the next card comes in as the previous one lands */
-        let op = inn, tf = `translateY(${((1 - inn) * 24).toFixed(1)}px)`;
-        if (kind === 'sec') {
-          /* each section of the group flies into its own block: from its place on the card to its place on the chip */
-          const g = ST.smoothstep(ST.clamp((f - .62) / .38));
-          card.querySelectorAll('.sc-part').forEach(pt => {
-            const i = +pt.dataset.index; blocks[i] = g;
-            let ptf = '';
-            if (g > 0) {
-              const br = map.blockRect(i), pw = pt.offsetWidth || 1, ph = pt.offsetHeight || 1;
-              if (br) {
-                const dx = br.l - (box.left + pt.offsetLeft), dy = br.t - (box.top + pt.offsetTop);
-                ptf = `translate(${(dx * g).toFixed(1)}px,${(dy * g).toFixed(1)}px) scale(${ST.lerp(1, br.w / pw, g).toFixed(3)},${ST.lerp(1, br.h / ph, g).toFixed(3)})`;
-              }
-            }
-            pt.style.transform = ptf; pt.style.setProperty('--fly', g.toFixed(3));
-          });
-          if (g > 0) { tf = ''; op = 1 - ST.clamp((g - .75) / .25); }
-        } else if (kind === 'conn') { route = ST.clamp(f / .7); op = inn * (1 - ST.clamp((f - .82) / .18)); }
-        else if (kind === 'pads') { pads = ST.clamp((f - .05) / .75); op = inn * (1 - ST.clamp((f - .82) / .18)); }
-        else if (kind === 'glance') op = inn * (1 - ST.clamp((f - .78) / .2));
-        if (f > 1.05 && kind !== 'final') op = 0;
-        card.style.opacity = op.toFixed(3); card.style.transform = tf;
+        let op, y;
+        if (k === n - 1) { op = ST.clamp((P - 11.1) / .4); y = (1 - op) * 24; }
+        else {
+          const s = k + 1, ti = textIn(s), inn = ST.smoothstep(ST.clamp((P - (ti - .12)) / .12)), out = ST.smoothstep(ST.clamp((P - s) / .06));
+          op = inn * (1 - out); y = (1 - inn) * 18 - out * 18;
+        }
+        card.style.opacity = op.toFixed(3);
+        card.style.transform = `translateY(${y.toFixed(1)}px)`;
         card.classList.toggle('is-on', op > .5);
         card.inert = op < .5;
       });
-      /* everything before the current point is built, so going back un-builds it */
-      map.setStory({ blocks, route: P > n ? 1 : route, pads: P > n ? 1 : pads });
-      const step = Math.floor(P);
-      if (step !== last) { if (last >= 0 && ST.sound) ST.sound.tick(); last = step; }
-      root.classList.toggle('is-ready', P >= n - .1);
-      const hint = root.querySelector('.story-hint'); if (hint) hint.style.opacity = (1 - ST.clamp(P / .5)).toFixed(3);
+      map.setStory({ blocks: Array(sections.length).fill(1), route: 1, pads: 1 });
+      const s = Math.floor(P);
+      if (s !== last) { if (last >= 0 && ST.sound) ST.sound.tick(); last = s; }
+      root.classList.toggle('is-ready', P >= 11);
+      const skip = root.querySelector('.story-skip.is-2d');
+      if (skip) { const o = 1 - ST.clamp((P - 10.4) / .4); skip.style.opacity = o.toFixed(3); skip.style.pointerEvents = o < .5 ? 'none' : ''; skip.tabIndex = o < .5 ? -1 : 0; }
+      const hint = root.querySelector('.story-hint'); if (hint) hint.style.opacity = (1 - ST.clamp(P / .4)).toFixed(3);
       return cr;
     }
   };

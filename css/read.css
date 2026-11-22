@@ -782,7 +782,8 @@ html.map-end .map-dock:before{opacity:0}
 [data-mode="3d"] .intro-3d.is-on{display:block;position:absolute;inset:0 0 var(--nav);z-index:7;pointer-events:auto;transition:opacity .6s ease}
 [data-mode="3d"] .intro-3d.is-leaving{opacity:0;pointer-events:none}
 .intro-3d.is-snap .story-card{transition:none!important}
-.intro-board{position:absolute;inset:0;background:radial-gradient(ellipse at 40% 45%,#13323aee 0,#0b1e24f2 60%,#06131af7 100%)}
+/* the opening's own board: opaque, the inside of the chip is not seen until the dive into it */
+.intro-board{position:absolute;inset:0;background:radial-gradient(ellipse at 40% 45%,#13323a 0,#0b1e24 60%,#06131a 100%)}
 .intro-root{position:absolute;inset:0}
 .intro-3d .story-head .choose-title{color:#f1eee6}
 .intro-3d .story-head .sec-eyebrow{color:#eac883}
@@ -1195,3 +1196,78 @@ html.dr-open{overflow:hidden}
 .dr-mv{margin-top:14px;max-width:none}
 .dr-mv .ab-card{padding:0;border:0;background:none}
 .dr-mv .ab-kick{display:none}
+
+/* ==========================================================================
+   How a chip is made — one continuous 3D film (js/fab3d.js), text without frames beside it
+   ========================================================================== */
+.choose.story{height:calc(100vh - var(--header) - var(--nav) + 1250vh)}
+.fab-film{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.fab3d-canvas{display:block;width:100%;height:100%}
+.story-head{z-index:2}
+.fab-cap{position:absolute;left:0;right:0;bottom:46px;display:grid;justify-items:center;gap:3px;text-align:center;pointer-events:none;z-index:2;will-change:opacity,transform}
+.fab-cap .fc-k{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)}
+.fab-cap .fc-t{font-size:16px;font-weight:500;color:var(--text)}
+.fab-cap .fc-p{max-width:460px;font-size:12.5px;line-height:1.5;color:var(--muted)}
+.story-cards{position:absolute;left:0;right:0;top:0;bottom:0;width:auto;height:auto;transform:none;pointer-events:none;z-index:2}
+/* the text stands on the page: no box, no border, no shadow */
+.story .story-card,.story .story-card.is-group,.story .sc-part,.story .story-card.is-final{background:none!important;border:0!important;box-shadow:none!important;border-radius:0;overflow:visible}
+.story .story-card{inset:auto;top:50%;margin-top:-170px;width:min(400px,28vw);height:auto;max-height:none;padding:0;gap:14px;pointer-events:auto;will-change:opacity,transform}
+.story .story-card.is-right{right:5vw;left:auto}
+.story .story-card.is-left{left:5vw;right:auto}
+.story .story-card.is-final{width:min(460px,36vw);right:5vw;margin-top:-140px}
+.story .sc-part{padding:0!important;color:var(--text)!important;gap:8px;flex:none}
+.story .story-card.is-pair{gap:34px}
+.story .sc-k,.story .story-card.is-section .sc-k{color:var(--accent)}
+.story .sc-t{font-size:clamp(26px,2.4vw,38px);line-height:1.08;letter-spacing:-.03em;color:var(--text);text-shadow:0 0 18px var(--background),0 0 36px var(--background)}
+.story .story-card.is-pair .sc-t{font-size:clamp(22px,1.9vw,30px)}
+.story .sc-p,.story .story-card.is-section .sc-p,.story .story-card.is-pair .sc-p{font-size:15px;line-height:1.65;color:var(--muted);-webkit-line-clamp:unset;display:block;text-shadow:0 0 12px var(--background),0 0 24px var(--background)}
+.story .sc-go{color:var(--accent);font-weight:500}
+.story .sc-nums.is-dirs{grid-template-columns:1fr 1fr;gap:14px 22px}
+.story .sn{padding:0 0 0 12px;background:none;border:0;border-left:2px solid var(--accent);border-radius:0}
+.story .sn strong{font-size:15px;font-weight:500}
+.story .sn span{font-size:12px}
+.story .sc-note{font-size:11px}
+.story .choose-opt{background:color-mix(in srgb,var(--surface) 70%,transparent);backdrop-filter:blur(6px)}
+.intro-3d .story .sc-t,.intro-3d .sc-t{color:#f1eee6;text-shadow:0 0 18px #071419,0 0 36px #071419}
+.intro-3d .sc-p,.intro-3d .story-card.is-section .sc-p{color:#a9c0c0;text-shadow:0 0 12px #071419}
+.intro-3d .sc-part{color:#f1eee6!important}
+.intro-3d .sn strong{color:#f1eee6}
+.intro-3d .fab-cap .fc-t{color:#f1eee6}.intro-3d .fab-cap .fc-p{color:#a9c0c0}.intro-3d .fab-cap .fc-k{color:#eac883}
+@media (max-width:900px){
+  .story .story-card,.story .story-card.is-final{left:16px!important;right:16px!important;top:auto;bottom:110px;margin:0;width:auto}
+  .story .sc-t{font-size:22px}.story .sc-p{font-size:13px}
+  .fab-cap{bottom:auto;top:96px}.fab-cap .fc-p{display:none}
+}
+
+/* ---------- the rendered film (js/film.js) ---------- */
+.film-canvas{position:absolute;left:0;top:0;display:block;width:0;height:0}
+/* the film over the page (js/film.js): 1 − transparency multiplies the page, the picture is added on top */
+.fab-film{background:var(--background)}
+.intro-3d .fab-film{background:radial-gradient(ellipse at 40% 45%,#13323a 0,#0b1e24 60%,#06131a 100%)}
+.film-m{mix-blend-mode:multiply}
+.film-c{mix-blend-mode:screen}
+@supports (mix-blend-mode:plus-lighter){.film-c{mix-blend-mode:plus-lighter}}
+.chipmap.is-flat .cm-viewport{animation:none!important}
+.story .sc-fab{display:grid;gap:4px;margin:0 0 6px;font-size:12.5px;line-height:1.5;color:var(--muted)}
+.story .sc-fab b{font-size:10.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+.story-start-text{position:absolute;left:5vw;top:50%;margin-top:-60px;width:min(360px,26vw);z-index:2}
+.story-start-text .sc-fab{font-size:15px}
+.story-start-text .sc-fab b{font-size:12px}
+.intro-3d .story .sc-fab,.intro-3d .sc-fab{color:#a9c0c0}
+@media (max-width:900px){.story-start-text{left:16px;right:16px;top:auto;bottom:110px;width:auto;margin:0}}
+
+/* phone: the film has the band under the title, the text starts below it — they never overlap */
+@media (max-width:599px){
+  .story .story-card,.story .story-card.is-final,.story-start-text{top:calc(100px + 36%)!important;bottom:auto!important;left:18px!important;right:18px!important;margin:0!important;width:auto!important}
+  .story .sc-t{font-size:21px}.story .story-card.is-pair .sc-t{font-size:18px}
+  .story .sc-p,.story .story-card.is-section .sc-p,.story .story-card.is-pair .sc-p{font-size:13px;line-height:1.55}
+  .story .story-card.is-pair{gap:16px}
+  .story .story-card.is-pair .sc-p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .story-start-text .sc-fab{font-size:14px}
+}
+/* the film's two videos (js/film.js): kept in the page, tiny and nearly invisible (WebGL draws the film) */
+.film-video{position:absolute;left:0;bottom:0;width:4px;height:4px;opacity:.01;pointer-events:none}
+/* "Skip the intro" in the 2D opening too (the 3D view has its own, js/mode-signal.js) */
+.story-skip.is-2d{z-index:3;background:color-mix(in srgb,var(--surface) 82%,transparent);border-color:var(--line);color:var(--text);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:opacity .3s}
+.story-skip.is-2d:hover{background:var(--surface);border-color:var(--accent)}
+@media (max-width:599px){.story-skip{right:12px;bottom:10px;padding:7px 12px;font-size:11.5px}}
