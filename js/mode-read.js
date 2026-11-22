@@ -909,20 +909,29 @@
   /* ---------- view API ---------- */
   /* step-by-step scrolling: the opening story (one step per card: it lands on the chip, the connections, the contacts)
      and the ending (topology → I/O side → package → ecosystem). Durations: SITE_CONTENT.story.stepMs */
-  const MS = () => Object.assign({ card: 700, connections: 1000, pads: 900, ending: 1100 }, (SITE_CONTENT.story || {}).stepMs || {});
+  const MS = () => Object.assign({ film: 2600, card: 700, connections: 1000, pads: 900, ending: 1100 }, (SITE_CONTENT.story || {}).stepMs || {});
   function storySteps() {
     const ch = $('.choose'), pin = ch && ch.firstElementChild; if (!pin || !ch.offsetHeight) return [];
     const header = $('.header').offsetHeight, top = ch.getBoundingClientRect().top + scrollY - header, span = ch.offsetHeight - pin.offsetHeight, len = ST.story.length(pin);
-    const n = pin.querySelectorAll('.story-card').length, P = [...Array(n + 1).keys(), len];
-    return P.map(p => Math.round(top + (p / len) * span));
+    return ST.story.rests().map(p => Math.round(top + (p / len) * span));
   }
+  /* scroll ↔ story position */
+  function storyMap() {
+    const ch = $('.choose'), pin = ch && ch.firstElementChild; if (!pin || !ch.offsetHeight) return null;
+    const header = $('.header').offsetHeight, top = ch.getBoundingClientRect().top + scrollY - header, span = ch.offsetHeight - pin.offsetHeight, len = ST.story.length(pin);
+    return { pin, toP: y => (y - top) / span * len, toY: P => top + P / len * span };
+  }
+  /* the opening film plays step by step: a short scroll starts the next step, it plays to its end by itself
+     (scrolling on meanwhile only makes it faster), then waits for the next scroll. Durations: story.stepMs.film */
   ST.stepRegion({
     enabled: () => on && !map.expanded,
     positions: storySteps,
-    ms: (from, to) => {
-      const pin = $('.choose .choose-pin') || ($('.choose') || {}).firstElementChild, pos = storySteps(), k = pos.findIndex(p => Math.abs(p - to) < 3);
-      const card = pin && pin.querySelectorAll('.story-card')[k - 2], kind = card && card.dataset.card, m = MS();
-      return kind === 'conn' ? m.connections : kind === 'pads' ? m.pads : k === pos.length - 1 ? 500 : m.card;
+    ms: () => MS().film,
+    /* the film plays the step (js/film.js) and the page scrolls along with it */
+    play: (fromY, toY) => {
+      const sm = storyMap(), film = sm && sm.pin._film;
+      if (!film || !film.playTo(sm.toP(toY))) return null;
+      return { y: () => sm.toY(film.P()), done: () => !film.busy(), hurry: () => film.hurry() };
     }
   });
   ST.stepRegion({
@@ -933,6 +942,15 @@
     },
     ms: () => MS().ending,
     holdEnd: true   /* the ecosystem is the last screen: scrolling on does not push it up under the header */
+  });
+  /* "Skip the intro": straight to the end of the opening film (the chip map and the two ways) */
+  document.addEventListener('click', e => {
+    const b = e.target.closest && e.target.closest('.story-skip.is-2d'); if (!b || !on) return;
+    e.preventDefault();
+    const sm = storyMap(); if (!sm) return;
+    if (ST.stepCancel) ST.stepCancel();
+    if (sm.pin._film) sm.pin._film.stop();
+    scrollTo({ top: Math.round(sm.toY(ST.story.length(sm.pin))), behavior: 'instant' });
   });
   R.init = function () {
     main = $('#read-sections'); intro = $('#read-intro'); outro = $('#read-outro');

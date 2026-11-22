@@ -241,11 +241,14 @@
      A region is a list of scroll positions (one per step). Inside it, one wheel gesture, swipe or key press moves
      exactly one step: the page glides to the next position while that step's animation plays, and further input is
      ignored until it has finished and the wheel has been quiet for a moment. Outside the region scrolling is normal.
-     ST.stepRegion({ enabled: () => bool, positions: () => [scrollY…] (ascending), ms: (from, to) => duration }) */
+     ST.stepRegion({ enabled: () => bool, positions: () => [scrollY…] (ascending), ms: (from, to) => duration,
+                    play: (fromY, toY) => ({ y(), done(), hurry() }) — optional: the region plays the step itself }) */
   const regions = [];
   let stepBusyUntil = 0, stepAnim = 0, touchY0 = null, touchDone = false;
   ST.stepRegion = r => { regions.push(r); return r; };
   ST.stepBusy = () => !!stepAnim || performance.now() < stepBusyUntil;
+  /* stop a step that is playing (the visitor jumps somewhere else) */
+  ST.stepCancel = () => { cancelAnimationFrame(stepAnim); stepAnim = 0; drive = null; glideRate = 1; glideQueued = 0; };
   function regionAt(y, dir) {
     for (const r of regions) {
       if (!r.enabled()) continue;
@@ -260,14 +263,27 @@
   /* hurrying: a new swipe while a step plays means "faster" — the current step speeds up and the next one
      follows straight after it, also fast; the speed returns to normal once the visitor stops pushing */
   let glideRate = 1, glideQueued = 0, glideDir = 0;
+  let drive = null;
   function hurry(dir) {
     if (dir !== glideDir) return;
+    if (drive) { drive.hurry(); return; }   // a played step (the film) only gets faster; it still stops at its end
     glideRate = Math.min(4, glideRate * 1.8); glideQueued = dir;
   }
-  function glideTo(target, ms) {
+  function glideTo(target, ms, r) {
     const from = scrollY; let el = 0, last = performance.now();
     glideDir = Math.sign(target - from);
     cancelAnimationFrame(stepAnim);
+    /* a region can play its own step (r.play(from, to) → { y(), done(), hurry() }): the page follows it */
+    drive = r && r.play ? r.play(from, target) : null;
+    if (drive) {
+      const tick = () => {
+        const done = drive.done();
+        scrollTo({ top: Math.round(done ? target : drive.y()), behavior: 'instant' });
+        if (!done) { stepAnim = requestAnimationFrame(tick); return; }
+        stepAnim = 0; drive = null; stepBusyUntil = performance.now() + 250; glideRate = 1; glideQueued = 0;
+      };
+      stepAnim = requestAnimationFrame(tick); return;
+    }
     const tick = now => {
       el += (now - last) * glideRate; last = now;
       const t = Math.min(1, el / ms), y = from + (target - from) * ST.easeInOut(t);
@@ -301,7 +317,7 @@
     }
     const next = dir > 0 ? hit.pos.find(p => p > y + 3) : [...hit.pos].reverse().find(p => p < y - 3);
     if (next == null) return !!(dir > 0 && hit.r.holdEnd && y >= hit.pos[hit.pos.length - 1] - 3);   // leaving the region: normal scrolling again (unless it is the end of the page)
-    glideTo(next, hit.r.ms(y, next)); return true;
+    glideTo(next, hit.r.ms(y, next), hit.r); return true;
   }
   addEventListener('wheel', e => {
     if (e.ctrlKey || !regions.length || document.querySelector('dialog[open]')) return;

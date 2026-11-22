@@ -13,22 +13,24 @@
     document.documentElement.dataset.mode=(m==='3d')?'3d':'2d';})();
   </script>
   <link rel="stylesheet" href="css/base.css?v=s2611180005">
-  <link rel="stylesheet" href="css/read.css?v=s2611180005">
+  <link rel="stylesheet" href="css/read.css?v=film5">
   <link rel="stylesheet" href="css/signal.css?v=s2611180005">
-  <script src="content.js?v=s2611180005" defer></script>
+  <script src="content.js?v=film5" defer></script>
   <script src="js/db.js?v=s2611180005" defer></script>
   <!-- started in this order by js/db.js, once the content database has been read -->
   <script type="text/plain" data-src="js/journey.js?v=s2611180005"></script>
   <script type="text/plain" data-src="js/scene.js?v=s2611180005"></script>
-  <script type="text/plain" data-src="js/core.js?v=s2611180005"></script>
+  <script type="text/plain" data-src="js/core.js?v=film5"></script>
   <script type="text/plain" data-src="js/sound.js?v=s2611180005"></script>
   <script type="text/plain" data-src="js/chiplayout.js?v=s2611180005"></script>
-  <script type="text/plain" data-src="js/chipmap.js?v=s2611180005"></script>
+  <script type="text/plain" data-src="js/chipmap.js?v=film1"></script>
   <script type="text/plain" data-src="js/ecosystem.js?v=s2611180005"></script>
-  <script type="text/plain" data-src="js/story.js?v=s2611180005"></script>
+  <script type="text/plain" data-src="assets/film/film-meta.js?v=film5"></script>
+  <script type="text/plain" data-src="js/film.js?v=film5"></script>
+  <script type="text/plain" data-src="js/story.js?v=film5"></script>
   <script type="text/plain" data-src="expo/js/aragats.js?v=s2611180005"></script>
-  <script type="text/plain" data-src="js/mode-read.js?v=s2611180005"></script>
-  <script type="text/plain" data-src="js/mode-signal.js?v=s2611180005"></script>
+  <script type="text/plain" data-src="js/mode-read.js?v=film5"></script>
+  <script type="text/plain" data-src="js/mode-signal.js?v=film5"></script>
 </head>
 <body>
   <a class="skip" href="#main" data-ui="skip"></a>
@@ -50,7 +52,6 @@
       <button type="button" id="map-toggle" class="text-button" aria-haspopup="dialog" data-ui="map"></button>
       <button type="button" id="sound-toggle" class="sound-toggle" aria-pressed="false"><svg viewBox="0 0 20 20" aria-hidden="true"><path class="spk" d="M3 8h3l4-3v10l-4-3H3z"/><path class="sw sw1" d="M13 7.5a3.5 3.5 0 0 1 0 5"/><path class="sw sw2" d="M15.5 5.2a7 7 0 0 1 0 9.6"/><path class="sx" d="M13.2 8.2l3.6 3.6M16.8 8.2l-3.6 3.6"/></svg></button>
       <div class="languages" role="group"><button type="button" data-lang="en" aria-pressed="true">EN</button><span>/</span><button type="button" data-lang="hy" aria-pressed="false">ՀԱՅ</button></div>
-      <button type="button" id="motion-toggle" class="motion-toggle" aria-pressed="false"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 5v10M14 5v10"/></svg><span></span></button>
     </div>
     <div class="progress" aria-hidden="true"><i id="progress-bar"></i></div>
   </header>

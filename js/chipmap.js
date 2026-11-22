@@ -527,7 +527,7 @@
         return;
       }
       if (this.showcase) { Object.assign(this.tgt, { x: L.width / 2, y: L.height / 2, z: .9, tilt: 1 }); return; }
-      if (this.locked) { Object.assign(this.tgt, { x: L.width / 2, y: L.height / 2 - 30, z: .9, tilt: 1 }); return; }   /* the opening object */
+      if (this.locked) { const st = this.storyTilt == null ? 1 : this.storyTilt; Object.assign(this.tgt, { x: L.width / 2, y: L.height / 2 - 30 * st, z: .9, tilt: st }); return; }   /* the opening object (the film's last frames set it flat: storyTilt) */
       /* the ending shows the whole chip; Top / 3D still applies (except while it goes into the package: top view) */
       const c = cameraAt(this.p), o = ST.smoothstep(this.outro || 0), v = this.packing ? 0 : (this.locked || this.view === 'tilt') ? 1 : 0;
       Object.assign(this.tgt, { x: ST.lerp(c.x, L.width / 2, o), y: ST.lerp(c.y, L.height / 2, o), z: ST.lerp(c.z, 1, o), tilt: v });

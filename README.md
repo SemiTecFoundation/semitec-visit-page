@@ -66,35 +66,33 @@ All text comes from the document "SemiTec Foundation — Public Website Content 
 - The contact form does not send yet; it says so on the page.
 - The Armenian text is a draft and needs a native review before publishing.
 
-## The 2D opening: the story of the chip
+## The opening: how a chip is made (2D and 3D)
 
-The first screen after the overview is pinned while you scroll, so the page itself stays still:
+The first screen after the overview is a film of a chip being made, rendered in Blender (Cycles), with the
+foundation's story told beside it. It is played one step at a time:
 
-1. **The empty chip** floats in the middle as an object, with the SemiTec Foundation name and logo on it: no window, no zoom or drag, only a slow float. The name and logo stay through "At a glance" and fade away as the first section lands on the chip.
-2. **At a glance:** the chip moves aside (to the left, or to the top on phones). On the right comes "SemiTec in brief": the mission, the four directions (education, research, collaboration, community) and the vision. The next event shows only when a real one exists. Numbers come later (see TODO.md).
-3. **One card per section:** each card introduces a section (title and a short text). Then it **flies into the chip and becomes that section's block**, from Purpose to Connect, with Support as the power unit.
-4. **Connections:** the signal route draws itself through every block, and Support's power rails appear.
-5. **Edge contacts:** the pads appear around the edge. Gold is for partners, copper for supporters, and **+** marks a free contact, with links to become a partner or supporter.
-6. **Two ways to explore:** read on, or enter the 3D journey.
+- **Steps:** sand → crystal growth → slicing → oxidation and coating → photolithography → etching and doping →
+  metal interconnect → wafer test → dicing → packaging and bonding. Each step is a short move of the camera to the
+  next station (the text changes) and then the work of that step (the text stays and the process runs by itself).
+- **Moving through it:** a short scroll, a swipe or the arrow keys start the next step; it plays to its end by
+  itself and stops exactly on its last frame. While it plays the page does not move on, and scrolling again only makes
+  it faster. Scrolling up plays the steps backwards.
+- **The text:** the story cards ("SemiTec in brief", the sections, the connections, the edge contacts) stand beside
+  the film without frames, right and left in turn; above each one, a line says which step of the fab is shown.
+  Texts of the steps: `fab*` keys in `SITE_CONTENT.ui` (`content.js`).
+- **The end:** the package opens and the camera looks straight down at the die. The die is a picture of the chip
+  map, so the page lays the chip map exactly over it, the map fades in and tilts up: one object from the film to the
+  page. Then come the two ways to explore (read on, or enter the 3D journey).
+- **Skip the intro** (bottom right, in both views) goes straight to the end of the opening.
+- **3D view:** the same film and story on the dark board; the inside of the chip is not seen until the dive. After
+  the last card, scrolling on dives into the chip map and opens into the 3D chip; scrolling up at the very start of
+  the journey plays the dive in reverse. At the end of the journey it is the other way round: the camera rises out of
+  the chip first, then the chip comes in from very large and shrinks to its place, as if leaving its inside.
 
-In this part the chip's blocks show only their section's name (the subsections appear once the page continues). Scrolling back un-builds the chip. You can click a block at any time to go to its section. Then the page releases, and at the switching point the map docks on the left (desktop) or becomes the strip or badge (phones).
-
-**Edit:**
-- The brief, the four directions and the vision are in `SITE_CONTENT.story` in `content.js`.
-- The next event comes from `SITE_CONTENT.events`.
-- The length of the story is the height of `.choose.story` in `css/read.css`, about 60% of a screen per card.
-
-## The 3D opening: the same story, then the journey
-
-The 3D view starts with the same story over the risen 3D chip: the empty chip with the SemiTec Foundation name, "At a glance", the section cards flying into their blocks, the connections and the edge contacts. The last card is **Start the journey**.
-
-- **Moving through it:** while the story shows, the wheel, a swipe, the arrow keys or Space move through it, and the page itself doesn't scroll.
-- **Into the journey:** after the last card, scrolling on dives into the chip: the cards fade, the topology zooms in towards the middle of the screen and opens into the 3D chip as the camera comes down to the journey. **Start the journey** plays the same dive; **Skip the intro** in the corner or Esc fade straight to the journey.
-- **Back:** scrolling up at the very start of the journey plays the dive in reverse: the 3D chip zooms out into the topology and "Building connections. Creating opportunities." returns.
-- **Switching views:** during the story, switching between 2D and 3D keeps the same step and the same picture.
-- **Direct links:** opening 3D at a section (a link, or the 2D / 3D switch while reading a section) skips the story.
-
-**Code:** `js/story.js` (shared by both views) and `mode-signal.js` (marked ▸STORY).
+**Files:** `js/film.js` (the player), `js/story.js` (the text and the hand-off to the map), `js/core.js` (one step
+per gesture), `assets/film/` (`film.mp4`, `film-rev.mp4`, stills of the rests, `film-meta.js`). The video holds the
+picture in its top half and 1 − its transparency in the bottom half; two canvases lay them over the page with blend
+modes, so the film has no background. The Blender scripts are in `tools/film/` (see its README).
 
 ## The 2D ending: the package and the ecosystem
 
