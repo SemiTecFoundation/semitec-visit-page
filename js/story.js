@@ -126,9 +126,23 @@
         const tilt = ST.smoothstep(ST.clamp((P - 10.75) / .45));
         if (map.storyTilt !== tilt) { map.storyTilt = tilt; map.frame.classList.toggle('is-flat', tilt < .99); if (map.applyFollow) map.applyFollow(); if (map.wake) map.wake(); }
       }
+      /* every text fits between the title (on phones: the film) and the bottom of the free space — above
+         "Skip the intro" and the bottom bar: centred there, and made a little smaller when it is too tall */
+      const navEl = document.querySelector('.chapter-nav'), skipEl = root.querySelector('.story-skip') || (root.parentElement && root.parentElement.querySelector('.story-skip'));
+      const nr = navEl ? navEl.getBoundingClientRect() : null, sr = skipEl ? skipEl.getBoundingClientRect() : null;
+      const lowest = Math.min(H, nr && nr.height && nr.top < innerHeight ? nr.top - pr.top : H, sr && sr.height ? sr.top - pr.top : H) - (phone ? 10 : 18);
+      const highest = phone ? (root._film && root._film.bandBottom ? root._film.bandBottom(H) : 96 + H * .36) + 8 : headH + 14;
+      const fit = card => {
+        const h = card.offsetHeight, room = Math.max(60, lowest - highest);
+        const k = h > room ? Math.max(.62, room / h) : 1;
+        const top = highest + Math.max(0, (room - h * k) / (phone ? 1e9 : 2));
+        if (card._top !== Math.round(top)) { card._top = Math.round(top); card.style.top = card._top + 'px'; card.style.marginTop = '0px'; }
+        card.style.transformOrigin = card.classList.contains('is-right') && !phone ? '100% 0' : '0 0';
+        return k;
+      };
       /* the text: each comes in as its step's work begins and stays until the next step starts */
       const start = root.querySelector('.story-start-text');
-      if (start) { const out = ST.clamp(P / .06); start.style.opacity = (1 - out).toFixed(3); start.style.transform = `translateY(${(-out * 18).toFixed(1)}px)`; start.inert = out > .5; }
+      if (start) { const out = ST.clamp(P / .06), f = fit(start); start.style.opacity = (1 - out).toFixed(3); start.style.transform = `translateY(${(-out * 18).toFixed(1)}px)` + (f < .999 ? ` scale(${f.toFixed(3)})` : ''); start.inert = out > .5; }
       cards.forEach((card, k) => {
         let op, y;
         if (k === n - 1) { op = ST.clamp((P - 11.1) / .4); y = (1 - op) * 24; }
@@ -137,7 +151,8 @@
           op = inn * (1 - out); y = (1 - inn) * 18 - out * 18;
         }
         card.style.opacity = op.toFixed(3);
-        card.style.transform = `translateY(${y.toFixed(1)}px)`;
+        const f = fit(card);
+        card.style.transform = `translateY(${y.toFixed(1)}px)` + (f < .999 ? ` scale(${f.toFixed(3)})` : '');
         card.classList.toggle('is-on', op > .5);
         card.inert = op < .5;
       });

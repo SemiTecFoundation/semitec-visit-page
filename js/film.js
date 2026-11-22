@@ -86,9 +86,9 @@
     function place(W, H) {
       /* where the film goes: as large as the free space allows, moved away from the text;
          at the end, scaled and moved so the die covers `align` (the chip map's die) exactly */
-      const fw = META.width, fh = META.height, phone = W < 600;
+      const fw = META.width, fh = META.height, phone = W < 900;
       /* on a phone the film keeps the band under the title and the text sits below it (css/read.css) */
-      const top = phone ? 96 : W < 900 ? 110 : 130, bottom = phone ? H - top - H * .36 : 40;
+      const top = phone ? 96 : 130, bottom = phone ? H - top - H * .36 : 40;
       const s = Math.min(W * (phone ? 1 : .72) / fw, (H - top - bottom) / fh), w = fw * s, h = fh * s;
       /* never past the holder's sides: the film blends with the holder's own background */
       const normal = { x: ST.clamp((W - w) / 2 - (phone ? 0 : st.sideNow * W * .17), 0, Math.max(0, W - w)), y: top + (H - top - bottom - h) / 2, s };
@@ -211,6 +211,8 @@
       /* stop where it is (the visitor skips the film) */
       stop() { if (pl.dir) { pl.dir = 0; pl.rate = 1; park(Math.min(pl.t, D)); } },
       busy: () => !!pl.dir,
+      /* the bottom of the film's band (phones and tablets: the text starts below it) */
+      bandBottom: H => 96 + H * .36,
       P: () => pOf(pl.t),
       get meta() { return META; }
     };
