@@ -3122,12 +3122,12 @@ const SITE_CONTENT = {
           "ՍեմիԹեք հիմնադրամ"
         ],
         "title": [
-          "Rooted in Armenia",
-          "Արմատները՝ Հայաստանում"
+          "A foundation for Armenia’s chip future",
+          "Հիմնադրամ՝ Հայաստանի կիսահաղորդչային ապագայի համար"
         ],
         "text": [
-          "SemiTec, the Semiconductor Technology Development Foundation, is a nonprofit that advances education, science, technology and innovation in Armenia.",
-          "ՍեմիԹեքը՝ Կիսահաղորդչային գիտարվեստի զարգացման հիմնադրամը, ոչ առևտրային կազմակերպություն է, որը նպաստում է Հայաստանում կրթության, գիտության, տեխնոլոգիաների և նորարարության զարգացմանը։"
+          "SemiTec, the Semiconductor Technology Development Foundation, is a nonprofit working to make Armenia a place where chips are designed, researched and taught.",
+          "ՍեմիԹեքը՝ Կիսահաղորդչային գիտարվեստի զարգացման հիմնադրամը, ոչ առևտրային կազմակերպություն է, որն աշխատում է, որպեսզի Հայաստանը դառնա վայր, որտեղ չիպեր են նախագծում, հետազոտում և դասավանդում։"
         ]
       },
       {
@@ -3136,26 +3136,26 @@ const SITE_CONTENT = {
           "Մեր խորհրդանիշը"
         ],
         "title": [
-          "Four summits, four pillars",
-          "Չորս գագաթ, չորս հենասյուն"
+          "Four summits, one mountain",
+          "Չորս գագաթ, մեկ լեռ"
         ],
         "text": [
-          "The four summits of Aragats stand for the four pillars we bring together: education, science, industry and community.",
-          "Արագածի չորս գագաթները խորհրդանշում են այն չորս հենասյուները, որոնք մենք միավորում ենք՝ կրթություն, գիտություն, արդյունաբերություն և համայնք։"
+          "Education, science, industry and community: four summits that rise from the same ground. We grow them together, not one at a time.",
+          "Կրթություն, գիտություն, արդյունաբերություն և համայնք՝ չորս գագաթ, որ բարձրանում են նույն հիմքից։ Մենք դրանք զարգացնում ենք միասին, ոչ թե առանձին։"
         ]
       },
       {
         "kicker": [
-          "Why we exist",
-          "Ինչու ենք մենք"
+          "The opportunity",
+          "Հնարավորությունը"
         ],
         "title": [
-          "The talent is here",
-          "Տաղանդն այստեղ է"
+          "The raw material is here",
+          "Հումքն այստեղ է"
         ],
         "text": [
-          "Armenia has curious students and strong teachers. What they often lack is the place, the tools and the projects to turn knowledge into real chips.",
-          "Հայաստանն ունի հետաքրքրասեր ուսանողներ և ուժեղ դասախոսներ։ Նրանց հաճախ պակասում են վայրը, գործիքներն ու նախագծերը, որոնցով գիտելիքը կվերածվի իրական չիպերի։"
+          "Armenia has talent, a strong engineering tradition and a growing tech community. The potential is in place; it needs the right environment to become an industry.",
+          "Հայաստանն ունի տաղանդ, ճարտարագիտական ուժեղ ավանդույթ և աճող տեխնոլոգիական համայնք։ Ներուժը կա, պետք է ճիշտ միջավայր, որպեսզի այն դառնա արդյունաբերություն։"
         ]
       },
       {
@@ -3164,124 +3164,124 @@ const SITE_CONTENT = {
           "Խնդիրը"
         ],
         "title": [
-          "Theory is not enough",
-          "Միայն տեսությունը բավական չէ"
+          "A gap between learning and building",
+          "Բաց՝ սովորելու և ստեղծելու միջև"
         ],
         "text": [
-          "Students learn the theory, while industry needs engineers who have already built real things. We work to close that gap.",
-          "Ուսանողները սովորում են տեսությունը, իսկ արդյունաբերությանը պետք են ինժեներներ, ովքեր արդեն իրական սարքեր են ստեղծել։ Մենք աշխատում ենք այդ բացը լրացնելու համար։"
+          "Universities teach the theory, companies need engineers who have built real things, and the two rarely meet. Too often talent leaves, or reaches industry without practice.",
+          "Համալսարանները դասավանդում են տեսությունը, ընկերություններին պետք են իրական սարքեր ստեղծած ինժեներներ, և այս երկուսը հազվադեպ են հանդիպում։ Հաճախ տաղանդը հեռանում է կամ արդյունաբերություն է հասնում առանց փորձի։"
         ]
       },
       {
         "kicker": [
-          "Our mission",
-          "Մեր առաքելությունը"
+          "Our answer",
+          "Մեր պատասխանը"
         ],
         "title": [
-          "A connected ecosystem",
-          "Փոխկապակցված էկոհամակարգ"
+          "An ecosystem, not a course",
+          "Էկոհամակարգ, ոչ թե դասընթաց"
         ],
         "text": [
-          "An ecosystem where knowledge is accessible, experience is shared, collaboration continues and ideas become real results.",
-          "Էկոհամակարգ, որտեղ գիտելիքը հասանելի է, փորձը՝ փոխանցելի, համագործակցությունը՝ շարունակական, իսկ գաղափարները վերածվում են իրական արդյունքների։"
+          "We connect universities, education centres, students and industry into one ecosystem, where knowledge is open, experience is shared and ideas grow into results.",
+          "Մենք միավորում ենք համալսարանները, կրթական կենտրոնները, ուսանողներին և արդյունաբերությունը մեկ էկոհամակարգում, որտեղ գիտելիքը բաց է, փորձը՝ փոխանցելի, իսկ գաղափարները վերածվում են արդյունքների։"
         ]
       },
       {
         "kicker": [
-          "How we work",
-          "Ինչպես ենք աշխատում"
+          "Next-level universities",
+          "Նոր մակարդակի համալսարաններ"
         ],
         "title": [
-          "Five directions",
-          "Հինգ ուղղություն"
+          "Universities that build",
+          "Համալսարաններ, որոնք ստեղծում են"
         ],
         "text": [
-          "Laboratories, SemiTec Academy, diploma and research projects, hackathons and conferences, and meetings with engineers.",
-          "Լաբորատորիաներ, SemiTec Ակադեմիա, ավարտական և հետազոտական նախագծեր, հաքաթոններ և գիտաժողովներ, հանդիպումներ ինժեներների հետ։"
+          "Universities where students learn on real tools and real problems, research labs work with industry, and every degree ends in something that works.",
+          "Համալսարաններ, որտեղ ուսանողները սովորում են իրական գործիքներով և իրական խնդիրների վրա, հետազոտական լաբորատորիաներն աշխատում են արդյունաբերության հետ, և յուրաքանչյուր կրթական աստիճան ավարտվում է աշխատող արդյունքով։"
         ]
       },
       {
         "kicker": [
-          "University laboratories",
-          "Համալսարանական լաբորատորիաներ"
+          "Learning with AI",
+          "Ուսուցում ԱԲ-ով"
         ],
         "title": [
-          "Learning by doing",
-          "Սովորել՝ անելով"
+          "AI in every lab and lecture",
+          "Արհեստական բանականություն՝ ամեն լաբորատորիայում և լսարանում"
         ],
         "text": [
-          "Laboratories in universities, with real boards and tools, where students design and test chips themselves.",
-          "Լաբորատորիաներ համալսարաններում՝ իրական սարքավորումներով և գործիքներով, որտեղ ուսանողներն իրենք են նախագծում և փորձարկում չիպեր։"
+          "AI is changing how chips are designed and how people learn. Students should study, design and research with AI as a partner, ready for how the work will be done next.",
+          "Արհեստական բանականությունը փոխում է, թե ինչպես են նախագծվում չիպերը և ինչպես են մարդիկ սովորում։ Ուսանողները պետք է սովորեն, նախագծեն և հետազոտեն ԱԲ-ի հետ՝ որպես գործընկերոջ, պատրաստ վաղվա աշխատանքին։"
         ]
       },
       {
         "kicker": [
-          "SemiTec Academy",
-          "SemiTec Ակադեմիա"
+          "Industry together",
+          "Արդյունաբերության հետ միասին"
         ],
         "title": [
-          "Knowledge in one place",
-          "Գիտելիքը՝ մեկ տեղում"
+          "Education and industry, side by side",
+          "Կրթություն և արդյունաբերություն՝ կողք կողքի"
         ],
         "text": [
-          "Courses, trainings and learning materials, gathered in one place and made for practice.",
-          "Դասընթացներ, վերապատրաստումներ և ուսումնական նյութեր՝ հավաքված մեկ տեղում և ստեղծված գործնական աշխատանքի համար։"
+          "Companies help shape what is taught, engineers mentor students, and students work on industry problems long before they graduate.",
+          "Ընկերությունները մասնակցում են ուսուցման ձևավորմանը, ինժեներները մենթորություն են անում, իսկ ուսանողներն արդյունաբերական խնդիրների վրա են աշխատում դեռ ավարտելուց շատ առաջ։"
         ]
       },
       {
         "kicker": [
-          "Diploma & research projects",
-          "Ավարտական և հետազոտական նախագծեր"
+          "Startups",
+          "Ստարտափներ"
         ],
         "title": [
-          "From idea to result",
-          "Գաղափարից՝ արդյունք"
+          "From student projects to startups",
+          "Ուսանողական նախագծերից՝ ստարտափներ"
         ],
         "text": [
-          "We define diploma and research projects and supervise students from the first idea to a working design and a published paper.",
-          "Մենք սահմանում ենք ավարտական և հետազոտական նախագծեր և ղեկավարում ուսանողներին՝ առաջին գաղափարից մինչև աշխատող նախագիծ և հրապարակված հոդված։"
+          "The best projects should not end as a grade. Ideas from labs and classrooms should become startups and products made in Armenia.",
+          "Լավագույն նախագծերը չպետք է ավարտվեն միայն գնահատականով։ Լաբորատորիաներից ու լսարաններից ծնված գաղափարները պետք է դառնան ստարտափներ և Հայաստանում ստեղծված արտադրանք։"
         ]
       },
       {
         "kicker": [
-          "Engineer meetings & guest lectures",
-          "Հանդիպումներ ինժեներների հետ և հրավիրյալ դասախոսություններ"
+          "Global companies",
+          "Համաշխարհային ընկերություններ"
         ],
         "title": [
-          "Engineers meet students",
-          "Ինժեներները հանդիպում են ուսանողներին"
+          "A home for the world’s chip companies",
+          "Տուն աշխարհի չիպային ընկերությունների համար"
         ],
         "text": [
-          "Engineers come to universities to give guest lectures, and regular meetings between students and industry are starting.",
-          "Ինժեներները գալիս են համալսարաններ դասախոսություններով, և սկսվում են ուսանողների ու արդյունաբերության կանոնավոր հանդիպումները։"
+          "A strong community of engineers attracts the industry. Leading EDA, IC design and semiconductor companies should open teams and branches in Armenia.",
+          "Ինժեներների ուժեղ համայնքը գրավում է արդյունաբերությանը։ EDA-ի, ինտեգրալ սխեմաների նախագծման և կիսահաղորդչային ոլորտի առաջատար ընկերությունները պետք է Հայաստանում բացեն թիմեր և մասնաճյուղեր։"
         ]
       },
       {
         "kicker": [
-          "Grants & transparency",
-          "Դրամաշնորհներ և թափանցիկություն"
+          "Beyond the capital",
+          "Մայրաքաղաքից դուրս"
         ],
         "title": [
-          "Support you can see",
-          "Տեսանելի աջակցություն"
+          "Every region connected",
+          "Միացված յուրաքանչյուր մարզ"
         ],
         "text": [
-          "We help students apply for grants with their projects, and we report openly on what we do and what it achieves.",
-          "Մենք օգնում ենք ուսանողներին իրենց նախագծերով դրամաշնորհների դիմել և բաց պատմում ենք մեր արածի ու դրա արդյունքների մասին։"
+          "Opportunity should not stop at Yerevan. Labs, programmes and companies in every region, so a student in Gyumri, Vanadzor or Goris has the same path.",
+          "Հնարավորությունները չպետք է սահմանափակվեն Երևանով։ Լաբորատորիաներ, ծրագրեր և ընկերություններ յուրաքանչյուր մարզում, որպեսզի Գյումրիում, Վանաձորում կամ Գորիսում ապրող ուսանողն ունենա նույն ճանապարհը։"
         ]
       },
       {
         "kicker": [
-          "Hackathons & conferences",
-          "Հաքաթոններ և գիտաժողովներ"
+          "Openness",
+          "Բաց լինել"
         ],
         "title": [
-          "A stage for ideas",
-          "Բեմ գաղափարների համար"
+          "Measured, open, shared",
+          "Չափելի, բաց, համատեղ"
         ],
         "text": [
-          "We are preparing hackathons and conferences where students’ projects meet the wider community.",
-          "Մենք պատրաստում ենք հաքաթոններ և գիտաժողովներ, որտեղ ուսանողների նախագծերը կհանդիպեն լայն հանրությանը։"
+          "Every step is measured and shared openly, so students, partners and supporters can see what works and build on it.",
+          "Յուրաքանչյուր քայլ չափվում և բաց կիսվում է, որպեսզի ուսանողները, գործընկերներն ու աջակիցները տեսնեն՝ ինչն է աշխատում, և շարունակեն դրա վրա։"
         ]
       },
       {
@@ -3290,12 +3290,12 @@ const SITE_CONTENT = {
           "Մեր երազանքների քարտեզը"
         ],
         "title": [
-          "Engineers who build",
-          "Ստեղծող ինժեներներ"
+          "Armenia, where chips are designed",
+          "Հայաստան, որտեղ չիպեր են նախագծում"
         ],
         "text": [
-          "Our goal is a generation of engineers in Armenia who design and build chips, with partners who grow with them.",
-          "Մեր նպատակը Հայաստանում չիպեր նախագծող և ստեղծող ինժեներների սերունդն է՝ գործընկերների հետ, որոնք աճում են նրանց հետ միասին։"
+          "Engineers who design and build chips, universities that lead, and an industry that grows across the whole country.",
+          "Չիպեր նախագծող և ստեղծող ինժեներներ, առաջատար համալսարաններ և արդյունաբերություն, որն աճում է ամբողջ երկրով մեկ։"
         ],
         "goals": [
           {
@@ -3304,8 +3304,8 @@ const SITE_CONTENT = {
               "5 տարում"
             ],
             "text": [
-              "Labs in leading universities, SemiTec Academy open to every student, and real diploma and research projects every year.",
-              "Լաբորատորիաներ առաջատար համալսարաններում, SemiTec Ակադեմիա՝ բաց յուրաքանչյուր ուսանողի համար, և իրական ավարտական ու հետազոտական նախագծեր ամեն տարի։"
+              "Leading universities teach chip design hands-on, with AI in study and research; students, education centres and companies work as one network; the first startups grow from student projects.",
+              "Առաջատար համալսարանները չիպերի նախագծում են դասավանդում գործնականում՝ ԱԲ-ով ուսման և հետազոտության մեջ, ուսանողները, կրթական կենտրոններն ու ընկերություններն աշխատում են որպես մեկ ցանց, իսկ ուսանողական նախագծերից աճում են առաջին ստարտափները։"
             ]
           },
           {
@@ -3314,8 +3314,8 @@ const SITE_CONTENT = {
               "10 տարում"
             ],
             "text": [
-              "A generation of Armenian chip engineers, research known abroad, and companies growing out of student projects.",
-              "Չիպեր նախագծող հայ ինժեներների սերունդ, արտերկրում ճանաչված հետազոտություններ և ուսանողական նախագծերից աճած ընկերություններ։"
+              "Armenia is a recognised centre of IC design: global EDA and semiconductor companies run teams here, Armenian startups ship products, and every region takes part.",
+              "Հայաստանը ճանաչված կենտրոն է ինտեգրալ սխեմաների նախագծման ոլորտում. համաշխարհային EDA և կիսահաղորդչային ընկերություններն այստեղ թիմեր ունեն, հայկական ստարտափներն արտադրանք են թողարկում, և մասնակցում է յուրաքանչյուր մարզ։"
             ]
           }
         ]
