@@ -8,16 +8,19 @@
    film will be), the top half is added on top (mix-blend-mode plus-lighter) — the film without a background,
    on the paper of the 2D page or the dark board of the 3D view, and it also works from a file (no pixels are read).
    assets/film/film-meta.js → window.FILM_META = { fps, frames, rests, texts, width, height, gap, die }
-     rests[s]: the frame where step s rests (s = 0 the sand … 9 the closed package), texts[s]: the frame
+     rests[s]: the frame where step s rests (s = 0 the mountains … the closed package), texts[s]: the frame
      where its text comes in, die: where the finished die is in the last frame (0…1), for the chip map.
-   Story positions P (js/story.js): step s rests at P = s (0 … 9); 9 → 10.6 the package opens (the last
-   frame); 10.6 → 12 the page alone (the chip map comes in, tilts, the two ways appear) — a timed tail.
+   Story positions P (js/story.js): step s rests at P = s; after the last rest the package opens (the last frame,
+   P = end()), then the page alone (the chip map comes in, tilts, the two ways appear) until last() — a timed tail.
    ST.film.attach(holder) → { set(P, side, align), playTo(P), hurry(), busy(), P() }
    ========================================================================== */
 (function () {
   const ST = window.ST;
-  const BASE = 'assets/film/', TAIL = 1.7, FILM_END = 10.6, LAST = 12;
+  const BASE = 'assets/film/', TAIL = 1.4, OPEN = 1.6;
   const META = window.FILM_META || null;
+  /* step s rests at P = s; after the last rest the package opens (OPEN) and the film ends at FILM_END; then the page
+     alone (the chip map, the two ways) until LAST */
+  const NR = META ? META.rests.length : 13, FILM_END = NR - 1 + OPEN, LAST = FILM_END + TAIL;
   const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 
   /* story position ↔ film time (seconds) */
@@ -26,7 +29,7 @@
     if (KNOTS || !META) return KNOTS;
     const D = (META.frames - 1) / META.fps;
     KNOTS = META.rests.map((f, s) => [s, f / META.fps]);
-    KNOTS.push([FILM_END, D], [LAST, D + TAIL]);
+    KNOTS.push([FILM_END, D], [LAST, D + 1.7]);
     return KNOTS;
   }
   function timeOf(P) {
@@ -193,7 +196,7 @@
       set(P, side, align) {
         st.side = side || 0; st.align = align;
         if (META && !pl.dir) {
-          const r = Math.round(P), Ps = Math.abs(P - r) < .03 && r <= 9 ? r : P, t = timeOf(Ps);
+          const r = Math.round(P), Ps = Math.abs(P - r) < .03 && r <= NR - 1 ? r : P, t = timeOf(Ps);
           if (Math.abs(t - pl.t) > 1e-4) { pl.t = t; park(Math.min(t, D)); }
         }
         kick();
@@ -217,5 +220,5 @@
       get meta() { return META; }
     };
   }
-  ST.film = { attach, timeOf, pOf, textP, rests: () => [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, LAST] };
+  ST.film = { attach, timeOf, pOf, textP, end: () => FILM_END, last: () => LAST, rests: () => [...Array(NR).keys(), LAST] };
 })();

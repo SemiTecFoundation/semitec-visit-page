@@ -2349,116 +2349,16 @@ const SITE_CONTENT = {
       "Ներկայացում"
     ],
     "fabKicker": [
-      "How a chip is made",
-      "Ինչպես է պատրաստվում չիպը"
+      "Our story",
+      "Մեր պատմությունը"
     ],
     "fabTitle": [
-      "From sand to silicon. From ideas to opportunities.",
-      "Ավազից՝ սիլիցիում։ Գաղափարներից՝ հնարավորություններ։"
-    ],
-    "fabScroll": [
-      "Scroll or use the arrow keys: one step of the fab at a time",
-      "Ոլորեք կամ օգտագործեք սլաքները՝ արտադրության մեկ քայլ ամեն անգամ"
-    ],
-    "fabStep": [
-      "Step",
-      "Քայլ"
-    ],
-    "fabStartK": [
-      "The beginning",
-      "Սկիզբը"
-    ],
-    "fabStart": [
-      "It starts with sand",
-      "Ամեն ինչ սկսվում է ավազից"
-    ],
-    "fabStartt": [
-      "Quartz sand is purified into silicon, the second most common element in the Earth’s crust.",
-      "Քվարցային ավազը մաքրվում և դառնում է սիլիցիում՝ Երկրի ընդերքում երկրորդ ամենատարածված տարրը։"
-    ],
-    "fab0": [
-      "Crystal growth",
-      "Բյուրեղի աճեցում"
-    ],
-    "fab0t": [
-      "A seed is dipped into molten silicon and pulled slowly up while turning: one perfect crystal, the ingot, grows.",
-      "Սերմնաբյուրեղը իջեցվում է հալված սիլիցիումի մեջ և պտտվելով դանդաղ բարձրացվում․ աճում է մեկ կատարյալ բյուրեղ՝ ձուլակտորը։"
-    ],
-    "fab1": [
-      "Slicing and polishing",
-      "Կտրում և հղկում"
-    ],
-    "fab1t": [
-      "The ingot is cut into thin wafers, polished until they are flatter than a mirror.",
-      "Ձուլակտորը կտրվում է բարակ թիթեղների, որոնք հղկվում են մինչև հայելուց ավելի հարթ դառնալը։"
-    ],
-    "fab2": [
-      "Oxidation and coating",
-      "Օքսիդացում և ծածկում"
-    ],
-    "fab2t": [
-      "A thin oxide grows on the wafer, then a light-sensitive resist is spun evenly across it.",
-      "Թիթեղի վրա աճում է բարակ օքսիդային շերտ, ապա պտտման միջոցով հավասարաչափ քսվում է լուսազգայուն ռեզիստ։"
-    ],
-    "fab3": [
-      "Photolithography",
-      "Ֆոտոլիտոգրաֆիա"
-    ],
-    "fab3t": [
-      "Ultraviolet light shines through a mask and prints the chip’s pattern into the resist, die by die.",
-      "Ուլտրամանուշակագույն լույսը դիմակի միջով տպում է չիպի պատկերը ռեզիստի վրա՝ բյուրեղ առ բյուրեղ։"
-    ],
-    "fab4": [
-      "Etching and doping",
-      "Խածատում և լեգիրում"
-    ],
-    "fab4t": [
-      "Where the pattern is open, material is etched away and ions are shot in to change how the silicon conducts.",
-      "Բաց հատվածներում նյութը հեռացվում է, իսկ ներարկված իոնները փոխում են սիլիցիումի հաղորդականությունը։"
-    ],
-    "fab5": [
-      "Metal interconnect",
-      "Մետաղական միացումներ"
-    ],
-    "fab5t": [
-      "Layers of copper wires connect the transistors into one working circuit.",
-      "Պղնձե լարերի շերտերը տրանզիստորները միացնում են մեկ աշխատող սխեմայի մեջ։"
-    ],
-    "fab6": [
-      "Wafer test",
-      "Թիթեղի փորձարկում"
-    ],
-    "fab6t": [
-      "Fine needles touch every die and test it before it is cut out.",
-      "Բարակ ասեղները դիպչում են յուրաքանչյուր բյուրեղին և փորձարկում այն՝ նախքան կտրելը։"
-    ],
-    "fab7": [
-      "Dicing",
-      "Կտրատում"
-    ],
-    "fab7t": [
-      "A thin blade cuts the wafer along the streets between the dies, and the dies come apart.",
-      "Բարակ սկավառակը թիթեղը կտրում է բյուրեղների միջև ընկած գծերով, և բյուրեղները բաժանվում են իրարից։"
-    ],
-    "fab8": [
-      "Packaging and bonding",
-      "Կորպուսավորում և միացում"
-    ],
-    "fab8t": [
-      "A good die is picked and set in its package; thin gold wires join them, and a lid closes it: the chip is ready.",
-      "Սարքին բյուրեղը վերցվում և դրվում է կորպուսի մեջ, բարակ ոսկե լարերը միացնում են դրանք, և կափարիչը փակում է այն․ չիպը պատրաստ է։"
-    ],
-    "fab9": [
-      "Open the chip",
-      "Բացեք չիպը"
-    ],
-    "fab9t": [
-      "The package opens: inside is the SemiTec chip, and its blocks are the sections of this page.",
-      "Կորպուսը բացվում է․ ներսում SemiTec չիպն է, և նրա բլոկները այս էջի բաժիններն են։"
+      "From stone to silicon. From ideas to opportunities.",
+      "Քարից՝ սիլիցիում։ Գաղափարներից՝ հնարավորություններ։"
     ],
     "fabScroll2": [
-      "Scroll a little: each step of the chip plays by itself, from sand to silicon",
-      "Մի փոքր ոլորեք․ չիպի պատրաստման յուրաքանչյուր քայլ ինքն է ցուցադրվում՝ ավազից մինչև սիլիցիում"
+      "Scroll a little: each step plays by itself, from the mountains to the chip",
+      "Մի փոքր ոլորեք․ յուրաքանչյուր քայլ ինքն է ցուցադրվում՝ լեռներից մինչև չիպ"
     ],
     "aboutPath": [
       "Our path",
@@ -3215,6 +3115,190 @@ const SITE_CONTENT = {
   },
   "partners": [],
   "story": {
+    "film": [
+      {
+        "kicker": [
+          "Armenia · average altitude 1,800 m",
+          "Հայաստան · միջին բարձրությունը՝ 1800 մ"
+        ],
+        "title": [
+          "A land of mountains",
+          "Լեռների երկիր"
+        ],
+        "text": [
+          "Armenia is a mountain country: on average it lies about 1,800 metres above the sea. Our story begins here.",
+          "Հայաստանը լեռնային երկիր է․ ծովի մակերևույթից միջինում մոտ 1800 մետր բարձր։ Մեր պատմությունն սկսվում է այստեղից։"
+        ]
+      },
+      {
+        "kicker": [
+          "Mount Aragats · 4,090 m",
+          "Արագած լեռ · 4090 մ"
+        ],
+        "title": [
+          "Four summits, one mountain",
+          "Չորս գագաթ, մեկ լեռ"
+        ],
+        "text": [
+          "Aragats, the highest mountain in Armenia, has four summits around one crater. They are our symbol: education, science, industry and community, four peaks that rise from the same ground.",
+          "Արագածը՝ Հայաստանի ամենաբարձր լեռը, ունի չորս գագաթ՝ մեկ խառնարանի շուրջ։ Դրանք մեր խորհրդանիշն են՝ կրթություն, գիտություն, արդյունաբերություն և համայնք․ չորս գագաթ, որ բարձրանում են նույն հիմքից։"
+        ]
+      },
+      {
+        "kicker": [
+          "Silica",
+          "Սիլիցիումի երկօքսիդ"
+        ],
+        "title": [
+          "Silicon is in the stone",
+          "Սիլիցիումը քարի մեջ է"
+        ],
+        "text": [
+          "Like most of the Earth’s crust, the rock of these mountains is rich in silica: silicon bound to oxygen. In its purest form it grows as clear quartz crystals.",
+          "Ինչպես Երկրի կեղևի մեծ մասը, այս լեռների ապարները հարուստ են սիլիցիումի երկօքսիդով՝ թթվածնի հետ կապված սիլիցիումով։ Իր ամենամաքուր տեսքով այն աճում է որպես թափանցիկ քվարցի բյուրեղներ։"
+        ]
+      },
+      {
+        "kicker": [
+          "From stone to sand",
+          "Քարից՝ ավազ"
+        ],
+        "title": [
+          "Every chip starts as sand",
+          "Ամեն չիպ սկսվում է ավազից"
+        ],
+        "text": [
+          "Quartz is crushed and purified into silicon, the material of every chip. Our raw material is people: curious students who want to build.",
+          "Քվարցը մանրացվում և մաքրվում է՝ դառնալով սիլիցիում, յուրաքանչյուր չիպի նյութը։ Մեր հումքը մարդիկ են՝ հետաքրքրասեր ուսանողներ, որոնք ուզում են ստեղծել։"
+        ]
+      },
+      {
+        "kicker": [
+          "Crystal growth",
+          "Բյուրեղի աճեցում"
+        ],
+        "title": [
+          "Growing, step by step",
+          "Աճ՝ քայլ առ քայլ"
+        ],
+        "text": [
+          "A perfect crystal grows slowly from a small seed. SemiTec, the Semiconductor Technology Development Foundation, helps engineers grow the same way: with patience, guidance and real work.",
+          "Կատարյալ բյուրեղը դանդաղ աճում է փոքրիկ սաղմից։ ՍեմիԹեքը՝ Կիսահաղորդչային գիտարվեստի զարգացման հիմնադրամը, օգնում է ինժեներներին աճել նույն կերպ՝ համբերությամբ, ուղղորդմամբ և իրական աշխատանքով։"
+        ]
+      },
+      {
+        "kicker": [
+          "Slicing and polishing",
+          "Կտրում և հղկում"
+        ],
+        "title": [
+          "Theory is not enough",
+          "Միայն տեսությունը բավական չէ"
+        ],
+        "text": [
+          "Students learn the theory, but industry needs engineers who have already built real things. Between the lecture hall and the lab there is a gap, and that gap is the problem we work on.",
+          "Ուսանողները սովորում են տեսությունը, բայց արդյունաբերությանը պետք են ինժեներներ, ովքեր արդեն իրական սարքեր են ստեղծել։ Լսարանի և լաբորատորիայի միջև բաց կա, և մենք աշխատում ենք հենց այդ խնդրի վրա։"
+        ]
+      },
+      {
+        "kicker": [
+          "Oxidation and coating",
+          "Օքսիդացում և ծածկում"
+        ],
+        "title": [
+          "Preparing the ground",
+          "Հիմքի նախապատրաստում"
+        ],
+        "text": [
+          "Our goal is laboratories in universities, with real boards and tools, where students learn to design chips by designing them.",
+          "Մեր նպատակն է լաբորատորիաներ ստեղծել համալսարաններում՝ իրական սարքավորումներով և գործիքներով, որտեղ ուսանողները չիպեր նախագծել են սովորում՝ նախագծելով։"
+        ]
+      },
+      {
+        "kicker": [
+          "Photolithography",
+          "Ֆոտոլիտոգրաֆիա"
+        ],
+        "title": [
+          "A pattern to follow",
+          "Նախշը, որին հետևում ենք"
+        ],
+        "text": [
+          "Light prints the pattern of the chip. We define diploma and research projects and supervise students as they turn them into working designs.",
+          "Լույսը տպում է չիպի նախշը։ Մենք սահմանում ենք ավարտական և հետազոտական նախագծեր և ղեկավարում ուսանողներին, մինչև դրանք վերածվեն աշխատող նախագծերի։"
+        ]
+      },
+      {
+        "kicker": [
+          "Etching and doping",
+          "Խածատում և լեգիրում"
+        ],
+        "title": [
+          "Knowledge that changes the material",
+          "Գիտելիք, որ փոխում է նյութը"
+        ],
+        "text": [
+          "Ions change how silicon conducts; knowledge changes what a student can do. SemiTec Academy brings courses and learning materials together in one place.",
+          "Իոնները փոխում են սիլիցիումի հաղորդականությունը, գիտելիքը՝ ուսանողի կարողությունները։ SemiTec Ակադեմիան դասընթացներն ու ուսումնական նյութերը միավորում է մեկ տեղում։"
+        ]
+      },
+      {
+        "kicker": [
+          "Metal interconnect",
+          "Մետաղական միացումներ"
+        ],
+        "title": [
+          "Everything gets connected",
+          "Ամեն ինչ միանում է"
+        ],
+        "text": [
+          "Copper wires join the transistors into one circuit. We bring engineers to universities for guest lectures, and we are starting regular meetings between students and industry.",
+          "Պղնձե լարերը տրանզիստորները միավորում են մեկ սխեմայի մեջ։ Մենք ինժեներներին հրավիրում ենք համալսարաններ դասախոսությունների և սկսում ենք ուսանողների ու արդյունաբերության կանոնավոր հանդիպումներ։"
+        ]
+      },
+      {
+        "kicker": [
+          "Wafer test",
+          "Թիթեղի փորձարկում"
+        ],
+        "title": [
+          "Every die is tested",
+          "Յուրաքանչյուր բյուրեղ ստուգվում է"
+        ],
+        "text": [
+          "Before a chip leaves the fab, every part of it is checked. We help students apply for grants with their projects, and we report openly on what we do and what we achieve.",
+          "Մինչև չիպը կլքի գործարանը, նրա յուրաքանչյուր մասը ստուգվում է։ Մենք օգնում ենք ուսանողներին իրենց նախագծերով դրամաշնորհների դիմել և բաց պատմում ենք մեր արածի ու արդյունքների մասին։"
+        ]
+      },
+      {
+        "kicker": [
+          "Dicing",
+          "Բաժանում"
+        ],
+        "title": [
+          "Ready to stand alone",
+          "Պատրաստ ինքնուրույն աշխատելու"
+        ],
+        "text": [
+          "Each die is cut free to work on its own. Next we are preparing hackathons and conferences, where students’ projects will meet the world.",
+          "Յուրաքանչյուր բյուրեղ կտրվում է, որպեսզի աշխատի ինքնուրույն։ Հաջորդը հաքաթոններն ու գիտաժողովներն են, որոնք պատրաստում ենք, և որտեղ ուսանողների նախագծերը կհանդիպեն աշխարհին։"
+        ]
+      },
+      {
+        "kicker": [
+          "Packaging and bonding",
+          "Փաթեթավորում և միացում"
+        ],
+        "title": [
+          "The chip is ready",
+          "Չիպը պատրաստ է"
+        ],
+        "text": [
+          "Our goal: a generation of engineers in Armenia who design and build chips, and an ecosystem of universities, industry and community that grows them.",
+          "Մեր նպատակը Հայաստանում չիպեր նախագծող և ստեղծող ինժեներների սերունդն է, ինչպես նաև համալսարանների, արդյունաբերության ու համայնքի էկոհամակարգը, որն աճեցնում է նրանց։"
+        ]
+      }
+    ],
     "brief": [
       "To foster a connected educational, scientific, and technological ecosystem where knowledge is accessible, experience is shared, collaboration continues, and ideas can become meaningful results.",
       "Ձևավորել փոխկապակցված գիտակրթական և տեխնոլոգիական էկոհամակարգ, որտեղ գիտելիքը հասանելի է, փորձը՝ փոխանցելի, համագործակցությունը՝ շարունակական, իսկ գաղափարները կարող են վերածվել իրական արդյունքների։"

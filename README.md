@@ -66,20 +66,23 @@ All text comes from the document "SemiTec Foundation — Public Website Content 
 - The contact form does not send yet; it says so on the page.
 - The Armenian text is a draft and needs a native review before publishing.
 
-## The opening: how a chip is made (2D and 3D)
+## The opening: the foundation's story, from the mountains to the chip (2D and 3D)
 
-The first screen after the overview is a film of a chip being made, rendered in Blender (Cycles), with the
-foundation's story told beside it. It is played one step at a time:
+The first screen after the overview is a film rendered in Blender (Cycles), with the foundation's story told
+beside it, one short text per step. It is played one step at a time:
 
-- **Steps:** sand → crystal growth → slicing → oxidation and coating → photolithography → etching and doping →
-  metal interconnect → wafer test → dicing → packaging and bonding. Each step is a short move of the camera to the
-  next station (the text changes) and then the work of that step (the text stays and the process runs by itself).
+- **Steps:** the mountains of Armenia (a relief cut along the border, from NASA SRTM elevation data) → Mount
+  Aragats, its contour lines and four summits (our symbol) → quartz, the silica in the stone → sand → crystal growth
+  → slicing → oxidation and coating → photolithography → etching and doping → metal interconnect → wafer test →
+  dicing → packaging and bonding. Each step is a short move of the camera (the text changes) and then the work of
+  that step (the text stays and the process runs by itself).
+- **The story:** who we are, the four pillars (education, science, industry, community), the problem (students
+  learn the theory, industry needs engineers who have built real things), what we do and plan (laboratories,
+  projects, SemiTec Academy, lectures and meetings, grants, hackathons and conferences) and the goal. The texts
+  are in `SITE_CONTENT.story.film` (`content.js`): one `{ kicker, title, text }` per step, in order.
 - **Moving through it:** a short scroll, a swipe or the arrow keys start the next step; it plays to its end by
   itself and stops exactly on its last frame. While it plays the page does not move on, and scrolling again only makes
   it faster. Scrolling up plays the steps backwards.
-- **The text:** the story cards ("SemiTec in brief", the sections, the connections, the edge contacts) stand beside
-  the film without frames, right and left in turn; above each one, a line says which step of the fab is shown.
-  Texts of the steps: `fab*` keys in `SITE_CONTENT.ui` (`content.js`).
 - **The end:** the package opens and the camera looks straight down at the die. The die is a picture of the chip
   map, so the page lays the chip map exactly over it, the map fades in and tilts up: one object from the film to the
   page. Then come the two ways to explore (read on, or enter the 3D journey).
