@@ -34,6 +34,7 @@ This project is plain HTML, CSS and JavaScript. It works when `index.html` is op
 | Behavior of the 2D page (cards, reveals, map follow) | `js/mode-read.js` |
 | Switching between views, language, bottom bar | `js/core.js` |
 | Browser title, description, favicon, no-script message | `index.html` |
+| The opening film's story: one text per step (kicker, title, text), in order | `SITE_CONTENT.story.film` in `content.js` (the film itself: `assets/film/`, made with `tools/film/`) |
 
 Most content and visual changes need only **content.js and the css files**. The renderer reads chip colors at page load, so reload after changing them. Use six-digit hex values for the `--chip-*` colors. Decorative detail colors remain in `scene.js`.
 
