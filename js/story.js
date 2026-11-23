@@ -21,10 +21,12 @@
   const storySections = () => sections.slice(1).filter(s => CHIP_LAYOUT && buildChipLayout(sections, CHIP_LAYOUT, SITE_CONTENT.partners || []).blocks[s.id]);
   function storyCards(mode) {
     /* the foundation's story, one text per step of the film (SITE_CONTENT.story.film), then the two ways on */
-    const cards = ((SITE_CONTENT.story || {}).film || []).map(it => `<article class="story-card" data-card="film">
+    const cards = ((SITE_CONTENT.story || {}).film || []).map((it, i) => `<article class="story-card" data-card="film" data-i="${i}">
         <p class="sc-k">${ST.esc(ST.pick(it.kicker))}</p>
         <h3 class="sc-t">${ST.esc(ST.pick(it.title))}</h3>
-        <p class="sc-p">${ST.esc(ST.pick(it.text))}</p>${(it.goals || []).length ? `
+        <p class="sc-p">${ST.esc(ST.pick(it.text))}</p>${it.more ? `
+        <p class="sc-p sc-more">${ST.esc(ST.pick(it.more))}</p>
+        <button type="button" class="sc-more-btn" aria-expanded="false"><span class="sc-more-o">${ST.esc(ST.text('storyMore'))} +</span><span class="sc-more-c">${ST.esc(ST.text('storyLess'))} −</span></button>` : ''}${(it.goals || []).length ? `
         <dl class="sc-goals">${it.goals.map(g => `<div><dt>${ST.esc(ST.pick(g.when))}</dt><dd>${ST.esc(ST.pick(g.text))}</dd></div>`).join('')}</dl>` : ''}</article>`);
     cards.push(mode === '3d' ? `<article class="story-card is-final" data-card="final">
         <p class="sc-k">${ST.esc(ST.text('storyJourneyKicker'))}</p><h3 class="sc-t">${ST.esc(ST.text('storyJourneyTitle'))}</h3>
@@ -42,6 +44,20 @@
   }
 
   let last = -1;
+  /* "Read more" / "Show less" on a step whose whole text does not fit beside the film */
+  document.addEventListener('click', e => {
+    const b = e.target.closest && e.target.closest('.sc-more-btn'); if (!b) return;
+    e.preventDefault(); e.stopPropagation();
+    const card = b.closest('.story-card'), root = card.closest('.choose-pin,.intro-root'), open = !card.classList.contains('is-open');
+    if (open && card._openOK === false && ST.openTextSheet) {
+      /* too long to open beside the film (a small phone): the whole text in the reading window */
+      const it = ((SITE_CONTENT.story || {}).film || [])[+card.dataset.i]; if (!it) return;
+      ST.openTextSheet(ST.pick(it.title), [it.text, it.more, ...(it.goals || []).map(g => [0, 1].map(l => g.when[l] + ' — ' + g.text[l]))].filter(Boolean));
+      return;
+    }
+    card.classList.toggle('is-open', open); b.setAttribute('aria-expanded', String(open));
+    if (root && root._apply) ST.story.apply(root, ...root._apply);
+  }, true);
   ST.story = {
     html(mode) {
       return `<div class="story-head"><p class="sec-eyebrow"><span class="sec-rule" aria-hidden="true"></span><span>${ST.esc(ST.text('fabKicker'))}</span></p>
@@ -62,6 +78,7 @@
        frames the camera looks straight down at the finished die; the film is then scaled so that die lies exactly
        on the chip map's die, the map fades in over it and tilts up: one object from the film to the page. */
     apply(root, P, map, phone) {
+      root._apply = [P, map, phone];
       const cards = [...root.querySelectorAll('.story-card')], n = cards.length;
       const pr = root.getBoundingClientRect(), W = pr.width, H = pr.height;
       const headH = phone ? 96 : 124, pad = phone ? 12 : W * .04;
@@ -99,10 +116,28 @@
       const nr = navEl ? navEl.getBoundingClientRect() : null, sr = skipEl ? skipEl.getBoundingClientRect() : null;
       const lowest = Math.min(H, nr && nr.height && nr.top < innerHeight ? nr.top - pr.top : H, sr && sr.height ? sr.top - pr.top : H) - (phone ? 10 : 18);
       const highest = phone ? (root._film && root._film.bandBottom ? root._film.bandBottom(H) : 96 + H * .36) + 8 : headH + 14;
+      /* a step whose whole text does not fit there shows its first paragraph and "Read more"; opened, the text
+         rises over the film (on phones) and is shown whole on a plain background */
+      const key = W + '|' + H + '|' + document.documentElement.lang;
+      const headEl = root.querySelector('.story-head'), titleB = headEl ? headEl.getBoundingClientRect().bottom - pr.top : headH;
       const fit = card => {
-        const h = card.offsetHeight, room = Math.max(60, lowest - highest);
+        const more = card.querySelector('.sc-more'), goals = card.querySelector('.sc-goals');
+        if (more && card._mk !== key) {
+          /* heights of the whole text, without the second paragraph, and without the goals too */
+          const was = card.className; card.classList.remove('is-brief', 'is-brief2', 'is-open');
+          card._h0 = card.offsetHeight; card.classList.add('is-brief'); card._h1 = card.offsetHeight;
+          card.classList.add('is-brief2'); card._h2 = card.offsetHeight; card.className = was; card._mk = key;
+        }
+        const open = card.classList.contains('is-open'), top0 = open && phone ? titleB + 18 : highest;
+        const room = Math.max(60, lowest - top0), roomC = Math.max(60, lowest - highest);
+        const lvl = !more || card._h0 * .9 <= roomC ? 0 : !goals || card._h1 * .85 <= roomC ? 1 : 2;
+        card._openOK = !more || card._h0 * .85 <= Math.max(60, lowest - (phone ? titleB + 18 : highest));
+        card.classList.toggle('has-brief', lvl > 0);
+        card.classList.toggle('is-brief', lvl > 0 && !open);
+        card.classList.toggle('is-brief2', lvl > 1 && !open);
+        const h = card.offsetHeight;
         const k = h > room ? Math.max(.62, room / h) : 1;
-        const top = highest + Math.max(0, (room - h * k) / (phone ? 1e9 : 2));
+        const top = top0 + Math.max(0, (room - h * k) / (phone ? 1e9 : 2));
         if (card._top !== Math.round(top)) { card._top = Math.round(top); card.style.top = card._top + 'px'; card.style.marginTop = '0px'; }
         card.style.transformOrigin = card.classList.contains('is-right') && !phone ? '100% 0' : '0 0';
         return k;
@@ -118,6 +153,7 @@
         card.style.opacity = op.toFixed(3);
         const f = fit(card);
         card.style.transform = `translateY(${y.toFixed(1)}px)` + (f < .999 ? ` scale(${f.toFixed(3)})` : '');
+        if (op < .5 && card.classList.contains('is-open')) { card.classList.remove('is-open'); const b = card.querySelector('.sc-more-btn'); if (b) b.setAttribute('aria-expanded', 'false'); }
         card.classList.toggle('is-on', op > .5);
         card.inert = op < .5;
       });

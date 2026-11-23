@@ -166,7 +166,8 @@ function updateIntro(dt,force){
  stage.style.transform=d>0?`translate(${dx.toFixed(1)}px,${dy.toFixed(1)}px) scale(${(1+zi*5).toFixed(3)})`:'';
  stage.style.opacity=d>0?(1-clamp((d-.45)/.5,0,1)).toFixed(3):'';
  const rest=d>0?(1-clamp(d/.3,0,1)).toFixed(3):'';
- introRoot.querySelectorAll('.story-head,.story-cards,.story-hint').forEach(el=>{el.style.opacity=rest;el.style.pointerEvents=d>.2?'none':'';});
+ introRoot.querySelectorAll('.story-head,.story-cards').forEach(el=>{el.style.opacity=rest;el.style.pointerEvents=d>.2?'none':'';});
+ const hintEl=introRoot.querySelector('.story-hint');if(hintEl)hintEl.style.opacity=Math.min(d>0?1-clamp(d/.3,0,1):1,1-clamp(introP/.4,0,1)).toFixed(3);   // the scroll hint only before the first step
  const board=introEl.querySelector('.intro-board');if(board)board.style.opacity=d>0?(1-clamp((d-.32)/.6,0,1)).toFixed(3):'';   // the inside of the chip shows only once the dive is deep into the map
  const skip=introEl.querySelector('.story-skip');if(skip)skip.style.opacity=rest;
  introEl.style.pointerEvents=d>.6?'none':'';

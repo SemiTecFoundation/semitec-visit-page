@@ -79,7 +79,7 @@ beside it, one short text per step. It is played one step at a time:
 - **The story:** who we are, the four pillars (education, science, industry, community), the problem (students
   learn the theory, industry needs engineers who have built real things), what we do and plan (laboratories,
   projects, SemiTec Academy, lectures and meetings, grants, hackathons and conferences) and the goal. The texts
-  are in `SITE_CONTENT.story.film` (`content.js`): one `{ kicker, title, text }` per step, in order.
+  are in `SITE_CONTENT.story.film` (`content.js`): one `{ kicker, title, text, more }` per step, in order (`more` is a second paragraph; where the whole text does not fit beside the film it is folded behind “Read more”, which opens it over the film or, when even that is too small, in the reading window).
 - **Moving through it:** a short scroll, a swipe or the arrow keys start the next step; it plays to its end by
   itself and stops exactly on its last frame. While it plays the page does not move on, and scrolling again only makes
   it faster. Scrolling up plays the steps backwards.
