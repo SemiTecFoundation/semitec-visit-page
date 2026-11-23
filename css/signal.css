@@ -332,13 +332,16 @@ html[lang=hy][data-mode="3d"] .breadcrumbs { font-size: 7px; }
 [data-mode="3d"] .pb-lead{display:none}
 @media (max-width:760px){
   [data-mode="3d"] .section-card.has-blocks > :is(.breadcrumbs,.eyebrow,.panel-intro,.panel-next,.prototype-note){display:none}
-  [data-mode="3d"] .section-card.has-blocks h1{font-size:22px;line-height:1.16;letter-spacing:-.4px;margin:0 0 8px;max-width:none}
-  html[lang=hy][data-mode="3d"] .section-card.has-blocks h1{font-size:19px}
+  [data-mode="3d"] .section-card.has-blocks h1{font-size:18px;line-height:1.2;letter-spacing:-.3px;margin:0 0 6px;max-width:none}
+  html[lang=hy][data-mode="3d"] .section-card.has-blocks h1{font-size:16px}
   [data-mode="3d"] .section-card.has-blocks > .panel-blocks{margin-top:0;border-top:1px solid #a1cbcc26;padding-top:10px}
-  [data-mode="3d"] .pb-lead{display:block;margin:0 0 16px;padding-bottom:14px;border-bottom:1px solid #a1cbcc1f}
-  [data-mode="3d"] .pb-lead .breadcrumbs{margin-bottom:8px}
-  [data-mode="3d"] .pb-lead .pb-intro{margin:0;font-size:13px;line-height:1.6;color:var(--muted)}
-  [data-mode="3d"] .pb-lead .panel-next{margin:12px 0 0}
+  [data-mode="3d"] .pb-lead{display:block;margin:0 0 10px;padding-bottom:10px;border-bottom:1px solid #a1cbcc1f}
+  [data-mode="3d"] .pb-lead .breadcrumbs,html[lang=hy][data-mode="3d"] .pb-lead .breadcrumbs{margin-bottom:5px;font-size:9px}
+  [data-mode="3d"] .pb-lead .pb-intro{margin:0;font-size:11px;line-height:1.5;color:var(--muted)}
+  [data-mode="3d"] .pb-lead .panel-next{margin:8px 0 0;font-size:11px}
+  /* the details themselves, a size smaller: more of them fits in the panel */
+  [data-mode="3d"] .section-card.has-blocks > .panel-blocks > :not(.pb-lead){zoom:.78}
+  [data-mode="3d"] .section-card.has-blocks .panel-actions{zoom:.9}
   /* a soft backing for the panel only, so a board in the scene behind the title does not mix with it */
   [data-mode="3d"] .section-card.has-blocks::before{content:'';position:absolute;z-index:-1;inset:-12px -4% -8px;border-radius:12px;background:linear-gradient(#071419d9,#071419f0 70px);box-shadow:0 0 0 1px #a1cbcc1a}
 }
