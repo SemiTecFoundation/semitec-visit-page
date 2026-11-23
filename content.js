@@ -2360,6 +2360,10 @@ const SITE_CONTENT = {
       "Scroll a little: each step plays by itself, from the mountains to the chip",
       "Մի փոքր ոլորեք․ յուրաքանչյուր քայլ ինքն է ցուցադրվում՝ լեռներից մինչև չիպ"
     ],
+    "fabScrollShort": [
+      "Scroll a little to begin",
+      "Ոլորեք՝ սկսելու համար"
+    ],
     "aboutPath": [
       "Our path",
       "Մեր ճանապարհը"
