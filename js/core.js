@@ -242,7 +242,8 @@
      exactly one step: the page glides to the next position while that step's animation plays, and further input is
      ignored until it has finished and the wheel has been quiet for a moment. Outside the region scrolling is normal.
      ST.stepRegion({ enabled: () => bool, positions: () => [scrollY…] (ascending), ms: (from, to) => duration,
-                    play: (fromY, toY) => ({ y(), done(), hurry() }) — optional: the region plays the step itself }) */
+                    play: (fromY, toY) => ({ y(), done(), hurry() }) — optional: the region plays the step itself,
+                    hold: true — optional: a fling or fast swipe stops on a step instead of running through the region }) */
   const regions = [];
   let stepBusyUntil = 0, stepAnim = 0, touchY0 = null, touchDone = false;
   ST.stepRegion = r => { regions.push(r); return r; };
@@ -326,6 +327,27 @@
     if (stepInput(Math.sign(px), px, ST.wheelFresh)) e.preventDefault();
   }, { passive: false });
   addEventListener('touchstart', e => { touchY0 = e.touches[0].clientY; touchDone = false; }, { passive: true });
+  /* A fast swipe or fling (the phone keeps scrolling after the finger has left, and no event can stop that) must
+     not carry the page through a region's steps: while the visitor is scrolling, a region with `hold` keeps the page
+     on a step — it stops at the first step when the page comes in from above, at the last when it comes from below,
+     and inside on the step it was on. Jumps the page makes itself (menu, links, "Skip the intro") are not held. */
+  let userScroll = 0, holdY = scrollY;
+  ST.releaseHold = () => { userScroll = 0; };   // the page is about to jump by itself (menu, links)
+  ['touchmove', 'wheel'].forEach(t => addEventListener(t, () => { userScroll = performance.now(); }, { capture: true, passive: true }));
+  addEventListener('touchend', () => { userScroll = performance.now(); }, { capture: true, passive: true });
+  addEventListener('scroll', () => {
+    const y = scrollY, prev = holdY; holdY = y;
+    if (stepAnim || performance.now() - userScroll > 1800 || document.querySelector('dialog[open]')) return;
+    for (const r of regions) {
+      if (!r.hold || !r.enabled()) continue;
+      const pos = r.positions(); if (!pos.length) continue;
+      const a = pos[0], b = pos[pos.length - 1];
+      if (!(y > a + 4 && y < b - 4)) continue;
+      const at = prev <= a + 4 ? a : prev >= b - 4 ? b : pos.reduce((m, p) => Math.abs(p - prev) < Math.abs(m - prev) ? p : m, a);
+      if (Math.abs(y - at) > 4) { scrollTo({ top: at, behavior: 'instant' }); holdY = at; userScroll = performance.now(); }   // held for as long as the fling pushes
+      return;
+    }
+  }, { passive: true });
   addEventListener('touchmove', e => {
     if (touchY0 == null || document.querySelector('dialog[open]')) return;
     const dy = touchY0 - e.touches[0].clientY, inside = regionAt(scrollY, Math.sign(dy) || 1);

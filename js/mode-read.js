@@ -927,6 +927,7 @@
     enabled: () => on && !map.expanded,
     positions: storySteps,
     ms: () => MS().film,
+    hold: true,
     /* the film plays the step (js/film.js) and the page scrolls along with it */
     play: (fromY, toY) => {
       const sm = storyMap(), film = sm && sm.pin._film;
@@ -949,6 +950,7 @@
     e.preventDefault();
     const sm = storyMap(); if (!sm) return;
     if (ST.stepCancel) ST.stepCancel();
+    if (ST.releaseHold) ST.releaseHold();
     if (sm.pin._film) sm.pin._film.stop();
     scrollTo({ top: Math.round(sm.toY(ST.story.length(sm.pin))), behavior: 'instant' });
   });
@@ -1041,6 +1043,7 @@
     return [sections[Math.max(0, index)].id];
   };
   R.go = function (path) {
+    if (ST.releaseHold) ST.releaseHold();
     history.replaceState(null, '', '#' + path.join('/'));
     scrollToPath(path, false);
   };
