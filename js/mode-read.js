@@ -846,6 +846,11 @@
     const r = ch.getBoundingClientRect(), header = $('.header').offsetHeight;
     const raw = ST.clamp((header - r.top) / Math.max(1, r.height - pin.offsetHeight));
     const P = raw * ST.story.length(pin);
+    /* past the opening (or before it) nothing in it changes: it is not drawn again on every frame of scrolling the
+       sections (redrawing the film's canvases and measuring its texts each frame made the chip map lag on laptops) */
+    const key = (raw >= 1 ? 'end' : raw <= 0 ? 'start' : '') + '|' + innerWidth + 'x' + innerHeight + '|' + ST.state.lang + '|' + state + '|' + narrow.matches;
+    if (key[0] !== '|' && key === pin._storyKey && !(pin._film && pin._film.busy && pin._film.busy())) return;
+    pin._storyKey = key;
     const cr = ST.story.apply(pin, P, map, narrow.matches);
     const stage = pin.querySelector('.choose-stage');
     Object.assign(stage.style, { left: cr.l.toFixed(1) + 'px', top: cr.t.toFixed(1) + 'px', width: cr.w.toFixed(1) + 'px', height: cr.h.toFixed(1) + 'px' });
@@ -866,12 +871,13 @@
     ecoQ = ST.clamp((header - r.top) / Math.max(1, r.height - stageH));
   }
   function reveal() {
-    placeStory();
+    /* all the measuring first, then the writing: reading a position after a style change forces the browser to lay
+       the page out again, several times in one frame */
+    const vh = innerHeight, secs = $$('.sec').map(sec => [sec, sec.getBoundingClientRect()]);
     placeEco();
+    placeStory();
     placeDock();
-    const vh = innerHeight;
-    $$('.sec').forEach(sec => {
-      const r = sec.getBoundingClientRect();
+    secs.forEach(([sec, r]) => {
       if (r.bottom < -vh || r.top > vh * 2) return;
       setVar(sec, '--enter', ST.clamp((vh * .98 - r.top) / (vh * .6)));
       setVar(sec, '--exit', ST.clamp((vh * .28 - r.bottom) / (vh * .28)));
