@@ -1281,3 +1281,16 @@ html.dr-open{overflow:hidden}
 .story .sc-goals dd{margin:3px 0 0;font-size:14px;line-height:1.5;color:var(--text)}
 .intro-3d .story .sc-goals dd{color:#f1eee6}
 @media (max-width:599px){.story .sc-goals{gap:8px}.story .sc-goals dd{font-size:12.5px}}
+/* the second paragraph of each step of the opening: more description, a little quieter */
+.story .story-card .sc-more{font-size:14px;line-height:1.6;margin-top:-4px}
+@media (max-width:599px){.story .story-card .sc-more{font-size:12px;line-height:1.5;margin-top:-2px}}
+/* "Read more": the second paragraph is folded when the whole text does not fit beside the film */
+.story .sc-more-btn{display:none;align-self:flex-start;margin-top:-4px;padding:6px 0;border:0;background:none;font:inherit;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);cursor:pointer}
+.story .story-card.has-brief .sc-more-btn{display:inline-block}
+.story .sc-more-btn .sc-more-c,.story .story-card.is-open .sc-more-btn .sc-more-o{display:none}
+.story .story-card.is-open .sc-more-btn .sc-more-c{display:inline}
+.story .story-card.is-brief .sc-more{display:none}
+.story .story-card.is-open{background:var(--background)!important;box-shadow:0 0 0 14px var(--background),0 18px 40px #0000001f!important;z-index:3}
+.intro-3d .story .story-card.is-open{background:#071419!important;box-shadow:0 0 0 14px #071419,0 18px 40px #00000066!important}
+@media (max-width:599px){.story .story-hint{justify-content:flex-start;padding:0 150px 0 18px;text-align:left}}
+.story .story-card.is-brief2 .sc-goals{display:none}

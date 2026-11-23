@@ -2868,6 +2868,14 @@ const SITE_CONTENT = {
       "Skip the intro",
       "Բաց թողնել ներածությունը"
     ],
+    "storyMore": [
+      "Read more",
+      "Կարդալ ավելին"
+    ],
+    "storyLess": [
+      "Show less",
+      "Ավելի քիչ"
+    ],
     "storyJourneyKicker": [
       "The journey",
       "Ճամփորդությունը"
@@ -3128,6 +3136,10 @@ const SITE_CONTENT = {
         "text": [
           "SemiTec, the Semiconductor Technology Development Foundation, is a nonprofit working to make Armenia a place where chips are designed, researched and taught.",
           "ՍեմիԹեքը՝ Կիսահաղորդչային գիտարվեստի զարգացման հիմնադրամը, ոչ առևտրային կազմակերպություն է, որն աշխատում է, որպեսզի Հայաստանը դառնա վայր, որտեղ չիպեր են նախագծում, հետազոտում և դասավանդում։"
+        ],
+        "more": [
+          "We bring together the people and institutions that shape the field: students and teachers, researchers, engineers and companies. We give them a common place to learn, work and grow. Our work is long-term: building the foundations an industry needs to grow here for decades.",
+          "Մենք համախմբում ենք ոլորտը ձևավորող մարդկանց և կառույցներին՝ ուսանողներին ու դասախոսներին, հետազոտողներին, ինժեներներին և ընկերություններին, և նրանց տալիս ենք ընդհանուր տարածք՝ սովորելու, աշխատելու և աճելու համար։ Մեր աշխատանքը երկարաժամկետ է՝ ստեղծել այն հիմքերը, որոնց վրա արդյունաբերությունը կարող է աճել այստեղ տասնամյակներով։"
         ]
       },
       {
@@ -3142,6 +3154,10 @@ const SITE_CONTENT = {
         "text": [
           "Education, science, industry and community: four summits that rise from the same ground. We grow them together, not one at a time.",
           "Կրթություն, գիտություն, արդյունաբերություն և համայնք՝ չորս գագաթ, որ բարձրանում են նույն հիմքից։ Մենք դրանք զարգացնում ենք միասին, ոչ թե առանձին։"
+        ],
+        "more": [
+          "Aragats is the highest mountain of Armenia, and its four peaks stand on one massif. In the same way, no part of the ecosystem can rise alone: education needs science, science needs industry, and all of them need a community that connects people and ideas.",
+          "Արագածը Հայաստանի ամենաբարձր լեռն է, և նրա չորս գագաթները կանգնած են մեկ զանգվածի վրա։ Նույն կերպ էկոհամակարգի ոչ մի մաս չի կարող բարձրանալ միայնակ. կրթությանը պետք է գիտություն, գիտությանը՝ արդյունաբերություն, իսկ բոլորին՝ համայնք, որը կապում է մարդկանց ու գաղափարները։"
         ]
       },
       {
@@ -3156,6 +3172,10 @@ const SITE_CONTENT = {
         "text": [
           "Armenia has talent, a strong engineering tradition and a growing tech community. The potential is in place; it needs the right environment to become an industry.",
           "Հայաստանն ունի տաղանդ, ճարտարագիտական ուժեղ ավանդույթ և աճող տեխնոլոգիական համայնք։ Ներուժը կա, պետք է ճիշտ միջավայր, որպեսզի այն դառնա արդյունաբերություն։"
+        ],
+        "more": [
+          "Like the quartz of our mountains that becomes the silicon of a chip, talent becomes real skill only through the right process. Chip design needs no mines or giant factories. It needs knowledge, tools and people, and that is exactly where Armenia can be strong.",
+          "Ինչպես մեր լեռների քվարցը դառնում է չիպի սիլիցիում, այնպես էլ տաղանդը իրական հմտություն է դառնում միայն ճիշտ գործընթացի շնորհիվ։ Չիպերի նախագծման համար պետք չեն հանքեր կամ հսկա գործարաններ։ Պետք են գիտելիք, գործիքներ և մարդիկ, և հենց այստեղ Հայաստանը կարող է ուժեղ լինել։"
         ]
       },
       {
@@ -3170,6 +3190,10 @@ const SITE_CONTENT = {
         "text": [
           "Universities teach the theory, companies need engineers who have built real things, and the two rarely meet. Too often talent leaves, or reaches industry without practice.",
           "Համալսարանները դասավանդում են տեսությունը, ընկերություններին պետք են իրական սարքեր ստեղծած ինժեներներ, և այս երկուսը հազվադեպ են հանդիպում։ Հաճախ տաղանդը հեռանում է կամ արդյունաբերություն է հասնում առանց փորձի։"
+        ],
+        "more": [
+          "Students rarely work with industry tools or take a design all the way to a working result. Teachers lack the time and resources to keep up with a field that changes every year, and companies spend months training graduates. The talent is there; the path from the classroom to a career is not.",
+          "Ուսանողները հազվադեպ են աշխատում արդյունաբերական գործիքներով կամ նախագիծը հասցնում աշխատող արդյունքի։ Դասախոսներին պակասում են ժամանակն ու ռեսուրսները՝ ամեն տարի փոխվող ոլորտին համընթաց քայլելու համար, իսկ ընկերությունները ամիսներ են ծախսում շրջանավարտներին վերապատրաստելու վրա։ Տաղանդը կա, բայց լսարանից մասնագիտություն տանող ճանապարհը դեռ չկա։"
         ]
       },
       {
@@ -3184,6 +3208,10 @@ const SITE_CONTENT = {
         "text": [
           "We connect universities, education centres, students and industry into one ecosystem, where knowledge is open, experience is shared and ideas grow into results.",
           "Մենք միավորում ենք համալսարանները, կրթական կենտրոնները, ուսանողներին և արդյունաբերությունը մեկ էկոհամակարգում, որտեղ գիտելիքը բաց է, փորձը՝ փոխանցելի, իսկ գաղափարները վերածվում են արդյունքների։"
+        ],
+        "more": [
+          "Instead of one more course, we build the links between the parts: shared programmes and materials, access to tools, mentors from industry and a community open to everyone. Each part makes the others stronger, and together they grow faster than any of them alone.",
+          "Եվս մեկ դասընթացի փոխարեն մենք կառուցում ենք կապերը մասերի միջև՝ համատեղ ծրագրեր և նյութեր, գործիքների հասանելիություն, մենթորներ արդյունաբերությունից և բոլորի համար բաց համայնք։ Յուրաքանչյուր մաս ուժեղացնում է մյուսներին, և միասին նրանք աճում են ավելի արագ, քան առանձին։"
         ]
       },
       {
@@ -3198,6 +3226,10 @@ const SITE_CONTENT = {
         "text": [
           "Universities where students learn on real tools and real problems, research labs work with industry, and every degree ends in something that works.",
           "Համալսարաններ, որտեղ ուսանողները սովորում են իրական գործիքներով և իրական խնդիրների վրա, հետազոտական լաբորատորիաներն աշխատում են արդյունաբերության հետ, և յուրաքանչյուր կրթական աստիճան ավարտվում է աշխատող արդյունքով։"
+        ],
+        "more": [
+          "Universities are the heart of the ecosystem: curricula renewed together with industry, teachers supported with materials and training, and labs where students design, simulate and test. A graduate should leave not only with knowledge, but with a portfolio of real work.",
+          "Համալսարանները էկոհամակարգի սիրտն են՝ արդյունաբերության հետ միասին թարմացվող ծրագրեր, նյութերով և վերապատրաստմամբ աջակցվող դասախոսներ և լաբորատորիաներ, որտեղ ուսանողները նախագծում, մոդելավորում և փորձարկում են։ Շրջանավարտը պետք է դուրս գա ոչ միայն գիտելիքով, այլև իրական աշխատանքների պորտֆոլիոյով։"
         ]
       },
       {
@@ -3212,6 +3244,10 @@ const SITE_CONTENT = {
         "text": [
           "AI is changing how chips are designed and how people learn. Students should study, design and research with AI as a partner, ready for how the work will be done next.",
           "Արհեստական բանականությունը փոխում է, թե ինչպես են նախագծվում չիպերը և ինչպես են մարդիկ սովորում։ Ուսանողները պետք է սովորեն, նախագծեն և հետազոտեն ԱԲ-ի հետ՝ որպես գործընկերոջ, պատրաստ վաղվա աշխատանքին։"
+        ],
+        "more": [
+          "AI can be a personal tutor that explains, a design assistant that checks and suggests, and a research tool that speeds up discovery. We want it to be part of how students study, how teachers teach and how projects are built: used wisely, on top of a deep understanding of the fundamentals.",
+          "ԱԲ-ն կարող է լինել անհատական ուսուցիչ, որը բացատրում է, նախագծման օգնական, որը ստուգում և առաջարկում է, և հետազոտական գործիք, որն արագացնում է բացահայտումները։ Մենք ուզում ենք, որ այն դառնա ուսանողների սովորելու, դասախոսների դասավանդելու և նախագծերի ստեղծման մաս՝ օգտագործվի իմաստուն և հիմունքների խոր ըմբռնմամբ։"
         ]
       },
       {
@@ -3226,6 +3262,10 @@ const SITE_CONTENT = {
         "text": [
           "Companies help shape what is taught, engineers mentor students, and students work on industry problems long before they graduate.",
           "Ընկերությունները մասնակցում են ուսուցման ձևավորմանը, ինժեներները մենթորություն են անում, իսկ ուսանողներն արդյունաբերական խնդիրների վրա են աշխատում դեռ ավարտելուց շատ առաջ։"
+        ],
+        "more": [
+          "Internships, joint projects, guest lectures and shared challenges turn the distance between a university and a company into a bridge. Students gain experience and direction, and companies meet the engineers they will hire, already prepared for real work.",
+          "Պրակտիկաները, համատեղ նախագծերը, հյուր դասախոսությունները և ընդհանուր խնդիրները համալսարանի ու ընկերության միջև հեռավորությունը վերածում են կամրջի։ Ուսանողները ձեռք են բերում փորձ և ուղղություն, իսկ ընկերությունները հանդիպում են այն ինժեներներին, որոնց կընդունեն աշխատանքի՝ արդեն պատրաստ իրական գործին։"
         ]
       },
       {
@@ -3240,6 +3280,10 @@ const SITE_CONTENT = {
         "text": [
           "The best projects should not end as a grade. Ideas from labs and classrooms should become startups and products made in Armenia.",
           "Լավագույն նախագծերը չպետք է ավարտվեն միայն գնահատականով։ Լաբորատորիաներից ու լսարաններից ծնված գաղափարները պետք է դառնան ստարտափներ և Հայաստանում ստեղծված արտադրանք։"
+        ],
+        "more": [
+          "A young team with a good idea needs mentors, tools, first partners and the confidence to begin. We want an environment where starting a chip or EDA company in Armenia is a natural next step, and where new companies open new jobs and new directions for the whole field.",
+          "Լավ գաղափար ունեցող երիտասարդ թիմին պետք են մենթորներ, գործիքներ, առաջին գործընկերներ և սկսելու վստահություն։ Մենք ուզում ենք միջավայր, որտեղ Հայաստանում չիպային կամ EDA ընկերություն հիմնելը լինի բնական հաջորդ քայլ, և նոր ընկերությունները բացեն նոր աշխատատեղեր ու նոր ուղղություններ ամբողջ ոլորտի համար։"
         ]
       },
       {
@@ -3254,6 +3298,10 @@ const SITE_CONTENT = {
         "text": [
           "A strong community of engineers attracts the industry. Leading EDA, IC design and semiconductor companies should open teams and branches in Armenia.",
           "Ինժեներների ուժեղ համայնքը գրավում է արդյունաբերությանը։ EDA-ի, ինտեգրալ սխեմաների նախագծման և կիսահաղորդչային ոլորտի առաջատար ընկերությունները պետք է Հայաստանում բացեն թիմեր և մասնաճյուղեր։"
+        ],
+        "more": [
+          "Companies go where the talent is. When universities prepare strong engineers and the ecosystem stands behind them, the world’s leading companies see Armenia as a place to grow their teams. Every new team brings experience, standards and opportunities that stay in the country.",
+          "Ընկերությունները գնում են այնտեղ, որտեղ տաղանդն է։ Երբ համալսարանները պատրաստում են ուժեղ ինժեներներ, իսկ էկոհամակարգը կանգնած է նրանց թիկունքում, աշխարհի առաջատար ընկերությունները Հայաստանը տեսնում են որպես իրենց թիմերն ընդլայնելու վայր։ Յուրաքանչյուր նոր թիմ բերում է փորձ, չափանիշներ և հնարավորություններ, որոնք մնում են երկրում։"
         ]
       },
       {
@@ -3268,6 +3316,10 @@ const SITE_CONTENT = {
         "text": [
           "Opportunity should not stop at Yerevan. Labs, programmes and companies in every region, so a student in Gyumri, Vanadzor or Goris has the same path.",
           "Հնարավորությունները չպետք է սահմանափակվեն Երևանով։ Լաբորատորիաներ, ծրագրեր և ընկերություններ յուրաքանչյուր մարզում, որպեսզի Գյումրիում, Վանաձորում կամ Գորիսում ապրող ուսանողն ունենա նույն ճանապարհը։"
+        ],
+        "more": [
+          "Talent is everywhere, not only in the capital. Regional universities, schools and education centres can join the same network, with the same courses, tools and mentors, and companies can open teams where the people are. That keeps young people in their towns and brings new life to every region.",
+          "Տաղանդն ամենուր է, ոչ միայն մայրաքաղաքում։ Մարզային համալսարանները, դպրոցներն ու կրթական կենտրոնները կարող են միանալ նույն ցանցին՝ նույն դասընթացներով, գործիքներով և մենթորներով, իսկ ընկերությունները կարող են թիմեր բացել այնտեղ, որտեղ մարդիկ են։ Դա երիտասարդներին պահում է իրենց քաղաքներում և նոր կյանք է բերում յուրաքանչյուր մարզ։"
         ]
       },
       {
@@ -3282,6 +3334,10 @@ const SITE_CONTENT = {
         "text": [
           "Every step is measured and shared openly, so students, partners and supporters can see what works and build on it.",
           "Յուրաքանչյուր քայլ չափվում և բաց կիսվում է, որպեսզի ուսանողները, գործընկերներն ու աջակիցները տեսնեն՝ ինչն է աշխատում, և շարունակեն դրա վրա։"
+        ],
+        "more": [
+          "We share materials, results and lessons learned, so good ideas are reused instead of reinvented. Clear goals and honest numbers build trust with students, universities, companies and supporters, and show us where to go next.",
+          "Մենք կիսվում ենք նյութերով, արդյունքներով և ստացված դասերով, որպեսզի լավ գաղափարները կրկին օգտագործվեն, այլ ոչ թե նորից հորինվեն։ Հստակ նպատակներն ու ազնիվ թվերը վստահություն են ստեղծում ուսանողների, համալսարանների, ընկերությունների և աջակիցների հետ և ցույց են տալիս՝ ուր գնալ հետո։"
         ]
       },
       {
@@ -3296,6 +3352,10 @@ const SITE_CONTENT = {
         "text": [
           "Engineers who design and build chips, universities that lead, and an industry that grows across the whole country.",
           "Չիպեր նախագծող և ստեղծող ինժեներներ, առաջատար համալսարաններ և արդյունաբերություն, որն աճում է ամբողջ երկրով մեկ։"
+        ],
+        "more": [
+          "This is the direction we work toward, step by step, together with our partners. The sections below show what is already happening.",
+          "Սա այն ուղղությունն է, որով մենք շարժվում ենք քայլ առ քայլ՝ մեր գործընկերների հետ միասին։ Ներքևի բաժիններում կտեսնեք, թե ինչ է արդեն արվում։"
         ],
         "goals": [
           {
