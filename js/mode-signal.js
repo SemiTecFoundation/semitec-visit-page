@@ -344,7 +344,9 @@ function renderCard(force=false){
  if(!inLoop&&node.id==='events'){const up=ST.events().upcoming[0],nx=element('p','panel-next');nx.append(element('span','',text(up?'evNext':'evNoNext')));if(up)nx.append(element('strong','',`${ST.fmtDate(up.when)} · ${pick(up.title)}`));card.append(nx);}
  /* ▸BLOCKS a main section shows the same blocks as the 2D page (js/mode-read.js), in the dark colours */
  let blocks=null;
- if(!inLoop&&route.index>0&&ST.secHTML){const html=ST.secHTML(node);if(html){blocks=element('div','panel-blocks');blocks.innerHTML=html;blocks.querySelectorAll('.rv,.xs-rv,.pr-row').forEach(e=>e.classList.add('is-in'));card.append(blocks);card.classList.add('has-blocks');}}
+ if(!inLoop&&route.index>0&&ST.secHTML){const html=ST.secHTML(node);if(html){blocks=element('div','panel-blocks');blocks.innerHTML=html;
+  /* ▸PHONE the path and the description open the scrolling part there, so only the title stays fixed above it */
+  const lead=element('div','pb-lead');lead.append(breadcrumb(active.path),element('p','pb-intro',pick(node.intro)));const nx=card.querySelector('.panel-next');if(nx)lead.append(nx.cloneNode(true));blocks.prepend(lead);blocks.querySelectorAll('.rv,.xs-rv,.pr-row').forEach(e=>e.classList.add('is-in'));card.append(blocks);card.classList.add('has-blocks');}}
  if(inLoop&&(node.text||[]).length){   // the path's text, in a scrolling area that fits above the buttons
   const more=element('div','panel-more');node.text.forEach(t=>more.append(element('p','panel-text',pick(t))));card.append(more);
  }
