@@ -65,7 +65,7 @@
         <div class="fab-film" aria-hidden="true"></div>
         <div class="choose-stage" aria-hidden="true"></div>
         <div class="story-cards">${storyCards(mode)}</div>
-        <p class="story-hint"><span class="scroll-mouse" aria-hidden="true"><i></i></span>${ST.esc(ST.text('fabScroll2'))}</p>${mode === '3d' ? '' : `
+        <p class="story-hint"><span class="scroll-mouse" aria-hidden="true"><i></i></span><span class="sh-long">${ST.esc(ST.text('fabScroll2'))}</span><span class="sh-short">${ST.esc(ST.text('fabScrollShort'))}</span></p>${mode === '3d' ? '' : `
         <button type="button" class="story-skip is-2d">${ST.esc(ST.text('storySkip'))} →</button>`}`;
     },
     /* step s of the film rests at P = s (0 the mountains … the closed package); then the package opens and the camera
@@ -116,6 +116,10 @@
       const nr = navEl ? navEl.getBoundingClientRect() : null, sr = skipEl ? skipEl.getBoundingClientRect() : null;
       const lowest = Math.min(H, nr && nr.height && nr.top < innerHeight ? nr.top - pr.top : H, sr && sr.height ? sr.top - pr.top : H) - (phone ? 10 : 18);
       const highest = phone ? (root._film && root._film.bandBottom ? root._film.bandBottom(H) : 96 + H * .36) + 8 : headH + 14;
+      /* phones: the scroll hint (before the first step) stands in the free strip at the foot of the film, so it
+         meets neither the first text nor "Skip the intro" */
+      const hintNode = root.querySelector('.story-hint');
+      if (hintNode) { hintNode.style.top = phone ? Math.round(highest - 6 - hintNode.offsetHeight) + 'px' : ''; hintNode.style.bottom = phone ? 'auto' : ''; }
       /* a step whose whole text does not fit there shows its first paragraph and "Read more"; opened, the text
          rises over the film (on phones) and is shown whole on a plain background */
       const key = W + '|' + H + '|' + document.documentElement.lang;

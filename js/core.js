@@ -332,6 +332,14 @@
      on a step — it stops at the first step when the page comes in from above, at the last when it comes from below,
      and inside on the step it was on. Jumps the page makes itself (menu, links, "Skip the intro") are not held. */
   let userScroll = 0, holdY = scrollY;
+  /* a phone's fling (the momentum after the finger has left) cannot be cancelled by an event, but it stops when the
+     page briefly cannot scroll: without this it keeps pushing against the held step and the film jumps between frames */
+  let flingStop = 0;
+  const stopFling = () => {
+    if (flingStop || !matchMedia('(pointer: coarse)').matches) return;
+    const de = document.documentElement; de.style.overflow = 'hidden';
+    flingStop = setTimeout(() => { de.style.overflow = ''; flingStop = 0; }, 80);
+  };
   ST.releaseHold = () => { userScroll = 0; };   // the page is about to jump by itself (menu, links)
   ['touchmove', 'wheel'].forEach(t => addEventListener(t, () => { userScroll = performance.now(); }, { capture: true, passive: true }));
   addEventListener('touchend', () => { userScroll = performance.now(); }, { capture: true, passive: true });
@@ -344,7 +352,7 @@
       const a = pos[0], b = pos[pos.length - 1];
       if (!(y > a + 4 && y < b - 4)) continue;
       const at = prev <= a + 4 ? a : prev >= b - 4 ? b : pos.reduce((m, p) => Math.abs(p - prev) < Math.abs(m - prev) ? p : m, a);
-      if (Math.abs(y - at) > 4) { scrollTo({ top: at, behavior: 'instant' }); holdY = at; userScroll = performance.now(); }   // held for as long as the fling pushes
+      if (Math.abs(y - at) > 4) { stopFling(); scrollTo({ top: at, behavior: 'instant' }); holdY = at; userScroll = performance.now(); }   // held, and the fling stopped
       return;
     }
   }, { passive: true });

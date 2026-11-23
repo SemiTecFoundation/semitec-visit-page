@@ -1292,8 +1292,11 @@ html.dr-open{overflow:hidden}
 .story .story-card.is-brief .sc-more{display:none}
 .story .story-card.is-open{background:var(--background)!important;box-shadow:0 0 0 14px var(--background),0 18px 40px #0000001f!important;z-index:3}
 .intro-3d .story .story-card.is-open{background:#071419!important;box-shadow:0 0 0 14px #071419,0 18px 40px #00000066!important}
-@media (max-width:599px){.story .story-hint{justify-content:flex-start;padding:0 150px 0 18px;text-align:left}}
+@media (max-width:599px){.story .story-hint{justify-content:center;padding:0 18px;text-align:center}}
 .story .story-card.is-brief2 .sc-goals{display:none}
 /* 3D "Skip the intro": the opening fades to the end of the film before the dive */
 .intro-3d.is-skipcut .intro-root{animation:skipcut .45s ease}
 @keyframes skipcut{from{opacity:0}}
+/* the scroll hint: one short line on phones */
+.story-hint .sh-short{display:none}
+@media (max-width:599px){.story-hint .sh-long{display:none}.story-hint .sh-short{display:inline}}
