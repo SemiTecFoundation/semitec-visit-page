@@ -3118,184 +3118,206 @@ const SITE_CONTENT = {
     "film": [
       {
         "kicker": [
-          "Armenia · average altitude 1,800 m",
-          "Հայաստան · միջին բարձրությունը՝ 1800 մ"
+          "SemiTec Foundation",
+          "ՍեմիԹեք հիմնադրամ"
         ],
         "title": [
-          "A land of mountains",
-          "Լեռների երկիր"
+          "Rooted in Armenia",
+          "Արմատները՝ Հայաստանում"
         ],
         "text": [
-          "Armenia is a mountain country: on average it lies about 1,800 metres above the sea. Our story begins here.",
-          "Հայաստանը լեռնային երկիր է․ ծովի մակերևույթից միջինում մոտ 1800 մետր բարձր։ Մեր պատմությունն սկսվում է այստեղից։"
+          "SemiTec, the Semiconductor Technology Development Foundation, is a nonprofit that advances education, science, technology and innovation in Armenia.",
+          "ՍեմիԹեքը՝ Կիսահաղորդչային գիտարվեստի զարգացման հիմնադրամը, ոչ առևտրային կազմակերպություն է, որը նպաստում է Հայաստանում կրթության, գիտության, տեխնոլոգիաների և նորարարության զարգացմանը։"
         ]
       },
       {
         "kicker": [
-          "Mount Aragats · 4,090 m",
-          "Արագած լեռ · 4090 մ"
+          "Our symbol",
+          "Մեր խորհրդանիշը"
         ],
         "title": [
-          "Four summits, one mountain",
-          "Չորս գագաթ, մեկ լեռ"
+          "Four summits, four pillars",
+          "Չորս գագաթ, չորս հենասյուն"
         ],
         "text": [
-          "Aragats, the highest mountain in Armenia, has four summits around one crater. They are our symbol: education, science, industry and community, four peaks that rise from the same ground.",
-          "Արագածը՝ Հայաստանի ամենաբարձր լեռը, ունի չորս գագաթ՝ մեկ խառնարանի շուրջ։ Դրանք մեր խորհրդանիշն են՝ կրթություն, գիտություն, արդյունաբերություն և համայնք․ չորս գագաթ, որ բարձրանում են նույն հիմքից։"
+          "The four summits of Aragats stand for the four pillars we bring together: education, science, industry and community.",
+          "Արագածի չորս գագաթները խորհրդանշում են այն չորս հենասյուները, որոնք մենք միավորում ենք՝ կրթություն, գիտություն, արդյունաբերություն և համայնք։"
         ]
       },
       {
         "kicker": [
-          "Silica",
-          "Սիլիցիումի երկօքսիդ"
+          "Why we exist",
+          "Ինչու ենք մենք"
         ],
         "title": [
-          "Silicon is in the stone",
-          "Սիլիցիումը քարի մեջ է"
+          "The talent is here",
+          "Տաղանդն այստեղ է"
         ],
         "text": [
-          "Like most of the Earth’s crust, the rock of these mountains is rich in silica: silicon bound to oxygen. In its purest form it grows as clear quartz crystals.",
-          "Ինչպես Երկրի կեղևի մեծ մասը, այս լեռների ապարները հարուստ են սիլիցիումի երկօքսիդով՝ թթվածնի հետ կապված սիլիցիումով։ Իր ամենամաքուր տեսքով այն աճում է որպես թափանցիկ քվարցի բյուրեղներ։"
+          "Armenia has curious students and strong teachers. What they often lack is the place, the tools and the projects to turn knowledge into real chips.",
+          "Հայաստանն ունի հետաքրքրասեր ուսանողներ և ուժեղ դասախոսներ։ Նրանց հաճախ պակասում են վայրը, գործիքներն ու նախագծերը, որոնցով գիտելիքը կվերածվի իրական չիպերի։"
         ]
       },
       {
         "kicker": [
-          "From stone to sand",
-          "Քարից՝ ավազ"
-        ],
-        "title": [
-          "Every chip starts as sand",
-          "Ամեն չիպ սկսվում է ավազից"
-        ],
-        "text": [
-          "Quartz is crushed and purified into silicon, the material of every chip. Our raw material is people: curious students who want to build.",
-          "Քվարցը մանրացվում և մաքրվում է՝ դառնալով սիլիցիում, յուրաքանչյուր չիպի նյութը։ Մեր հումքը մարդիկ են՝ հետաքրքրասեր ուսանողներ, որոնք ուզում են ստեղծել։"
-        ]
-      },
-      {
-        "kicker": [
-          "Crystal growth",
-          "Բյուրեղի աճեցում"
-        ],
-        "title": [
-          "Growing, step by step",
-          "Աճ՝ քայլ առ քայլ"
-        ],
-        "text": [
-          "A perfect crystal grows slowly from a small seed. SemiTec, the Semiconductor Technology Development Foundation, helps engineers grow the same way: with patience, guidance and real work.",
-          "Կատարյալ բյուրեղը դանդաղ աճում է փոքրիկ սաղմից։ ՍեմիԹեքը՝ Կիսահաղորդչային գիտարվեստի զարգացման հիմնադրամը, օգնում է ինժեներներին աճել նույն կերպ՝ համբերությամբ, ուղղորդմամբ և իրական աշխատանքով։"
-        ]
-      },
-      {
-        "kicker": [
-          "Slicing and polishing",
-          "Կտրում և հղկում"
+          "The problem",
+          "Խնդիրը"
         ],
         "title": [
           "Theory is not enough",
           "Միայն տեսությունը բավական չէ"
         ],
         "text": [
-          "Students learn the theory, but industry needs engineers who have already built real things. Between the lecture hall and the lab there is a gap, and that gap is the problem we work on.",
-          "Ուսանողները սովորում են տեսությունը, բայց արդյունաբերությանը պետք են ինժեներներ, ովքեր արդեն իրական սարքեր են ստեղծել։ Լսարանի և լաբորատորիայի միջև բաց կա, և մենք աշխատում ենք հենց այդ խնդրի վրա։"
+          "Students learn the theory, while industry needs engineers who have already built real things. We work to close that gap.",
+          "Ուսանողները սովորում են տեսությունը, իսկ արդյունաբերությանը պետք են ինժեներներ, ովքեր արդեն իրական սարքեր են ստեղծել։ Մենք աշխատում ենք այդ բացը լրացնելու համար։"
         ]
       },
       {
         "kicker": [
-          "Oxidation and coating",
-          "Օքսիդացում և ծածկում"
+          "Our mission",
+          "Մեր առաքելությունը"
         ],
         "title": [
-          "Preparing the ground",
-          "Հիմքի նախապատրաստում"
+          "A connected ecosystem",
+          "Փոխկապակցված էկոհամակարգ"
         ],
         "text": [
-          "Our goal is laboratories in universities, with real boards and tools, where students learn to design chips by designing them.",
-          "Մեր նպատակն է լաբորատորիաներ ստեղծել համալսարաններում՝ իրական սարքավորումներով և գործիքներով, որտեղ ուսանողները չիպեր նախագծել են սովորում՝ նախագծելով։"
+          "An ecosystem where knowledge is accessible, experience is shared, collaboration continues and ideas become real results.",
+          "Էկոհամակարգ, որտեղ գիտելիքը հասանելի է, փորձը՝ փոխանցելի, համագործակցությունը՝ շարունակական, իսկ գաղափարները վերածվում են իրական արդյունքների։"
         ]
       },
       {
         "kicker": [
-          "Photolithography",
-          "Ֆոտոլիտոգրաֆիա"
+          "How we work",
+          "Ինչպես ենք աշխատում"
         ],
         "title": [
-          "A pattern to follow",
-          "Նախշը, որին հետևում ենք"
+          "Five directions",
+          "Հինգ ուղղություն"
         ],
         "text": [
-          "Light prints the pattern of the chip. We define diploma and research projects and supervise students as they turn them into working designs.",
-          "Լույսը տպում է չիպի նախշը։ Մենք սահմանում ենք ավարտական և հետազոտական նախագծեր և ղեկավարում ուսանողներին, մինչև դրանք վերածվեն աշխատող նախագծերի։"
+          "Laboratories, SemiTec Academy, diploma and research projects, hackathons and conferences, and meetings with engineers.",
+          "Լաբորատորիաներ, SemiTec Ակադեմիա, ավարտական և հետազոտական նախագծեր, հաքաթոններ և գիտաժողովներ, հանդիպումներ ինժեներների հետ։"
         ]
       },
       {
         "kicker": [
-          "Etching and doping",
-          "Խածատում և լեգիրում"
+          "University laboratories",
+          "Համալսարանական լաբորատորիաներ"
         ],
         "title": [
-          "Knowledge that changes the material",
-          "Գիտելիք, որ փոխում է նյութը"
+          "Learning by doing",
+          "Սովորել՝ անելով"
         ],
         "text": [
-          "Ions change how silicon conducts; knowledge changes what a student can do. SemiTec Academy brings courses and learning materials together in one place.",
-          "Իոնները փոխում են սիլիցիումի հաղորդականությունը, գիտելիքը՝ ուսանողի կարողությունները։ SemiTec Ակադեմիան դասընթացներն ու ուսումնական նյութերը միավորում է մեկ տեղում։"
+          "Laboratories in universities, with real boards and tools, where students design and test chips themselves.",
+          "Լաբորատորիաներ համալսարաններում՝ իրական սարքավորումներով և գործիքներով, որտեղ ուսանողներն իրենք են նախագծում և փորձարկում չիպեր։"
         ]
       },
       {
         "kicker": [
-          "Metal interconnect",
-          "Մետաղական միացումներ"
+          "SemiTec Academy",
+          "SemiTec Ակադեմիա"
         ],
         "title": [
-          "Everything gets connected",
-          "Ամեն ինչ միանում է"
+          "Knowledge in one place",
+          "Գիտելիքը՝ մեկ տեղում"
         ],
         "text": [
-          "Copper wires join the transistors into one circuit. We bring engineers to universities for guest lectures, and we are starting regular meetings between students and industry.",
-          "Պղնձե լարերը տրանզիստորները միավորում են մեկ սխեմայի մեջ։ Մենք ինժեներներին հրավիրում ենք համալսարաններ դասախոսությունների և սկսում ենք ուսանողների ու արդյունաբերության կանոնավոր հանդիպումներ։"
+          "Courses, trainings and learning materials, gathered in one place and made for practice.",
+          "Դասընթացներ, վերապատրաստումներ և ուսումնական նյութեր՝ հավաքված մեկ տեղում և ստեղծված գործնական աշխատանքի համար։"
         ]
       },
       {
         "kicker": [
-          "Wafer test",
-          "Թիթեղի փորձարկում"
+          "Diploma & research projects",
+          "Ավարտական և հետազոտական նախագծեր"
         ],
         "title": [
-          "Every die is tested",
-          "Յուրաքանչյուր բյուրեղ ստուգվում է"
+          "From idea to result",
+          "Գաղափարից՝ արդյունք"
         ],
         "text": [
-          "Before a chip leaves the fab, every part of it is checked. We help students apply for grants with their projects, and we report openly on what we do and what we achieve.",
-          "Մինչև չիպը կլքի գործարանը, նրա յուրաքանչյուր մասը ստուգվում է։ Մենք օգնում ենք ուսանողներին իրենց նախագծերով դրամաշնորհների դիմել և բաց պատմում ենք մեր արածի ու արդյունքների մասին։"
+          "We define diploma and research projects and supervise students from the first idea to a working design and a published paper.",
+          "Մենք սահմանում ենք ավարտական և հետազոտական նախագծեր և ղեկավարում ուսանողներին՝ առաջին գաղափարից մինչև աշխատող նախագիծ և հրապարակված հոդված։"
         ]
       },
       {
         "kicker": [
-          "Dicing",
-          "Բաժանում"
+          "Engineer meetings & guest lectures",
+          "Հանդիպումներ ինժեներների հետ և հրավիրյալ դասախոսություններ"
         ],
         "title": [
-          "Ready to stand alone",
-          "Պատրաստ ինքնուրույն աշխատելու"
+          "Engineers meet students",
+          "Ինժեներները հանդիպում են ուսանողներին"
         ],
         "text": [
-          "Each die is cut free to work on its own. Next we are preparing hackathons and conferences, where students’ projects will meet the world.",
-          "Յուրաքանչյուր բյուրեղ կտրվում է, որպեսզի աշխատի ինքնուրույն։ Հաջորդը հաքաթոններն ու գիտաժողովներն են, որոնք պատրաստում ենք, և որտեղ ուսանողների նախագծերը կհանդիպեն աշխարհին։"
+          "Engineers come to universities to give guest lectures, and regular meetings between students and industry are starting.",
+          "Ինժեներները գալիս են համալսարաններ դասախոսություններով, և սկսվում են ուսանողների ու արդյունաբերության կանոնավոր հանդիպումները։"
         ]
       },
       {
         "kicker": [
-          "Packaging and bonding",
-          "Փաթեթավորում և միացում"
+          "Grants & transparency",
+          "Դրամաշնորհներ և թափանցիկություն"
         ],
         "title": [
-          "The chip is ready",
-          "Չիպը պատրաստ է"
+          "Support you can see",
+          "Տեսանելի աջակցություն"
         ],
         "text": [
-          "Our goal: a generation of engineers in Armenia who design and build chips, and an ecosystem of universities, industry and community that grows them.",
-          "Մեր նպատակը Հայաստանում չիպեր նախագծող և ստեղծող ինժեներների սերունդն է, ինչպես նաև համալսարանների, արդյունաբերության ու համայնքի էկոհամակարգը, որն աճեցնում է նրանց։"
+          "We help students apply for grants with their projects, and we report openly on what we do and what it achieves.",
+          "Մենք օգնում ենք ուսանողներին իրենց նախագծերով դրամաշնորհների դիմել և բաց պատմում ենք մեր արածի ու դրա արդյունքների մասին։"
+        ]
+      },
+      {
+        "kicker": [
+          "Hackathons & conferences",
+          "Հաքաթոններ և գիտաժողովներ"
+        ],
+        "title": [
+          "A stage for ideas",
+          "Բեմ գաղափարների համար"
+        ],
+        "text": [
+          "We are preparing hackathons and conferences where students’ projects meet the wider community.",
+          "Մենք պատրաստում ենք հաքաթոններ և գիտաժողովներ, որտեղ ուսանողների նախագծերը կհանդիպեն լայն հանրությանը։"
+        ]
+      },
+      {
+        "kicker": [
+          "Our dream map",
+          "Մեր երազանքների քարտեզը"
+        ],
+        "title": [
+          "Engineers who build",
+          "Ստեղծող ինժեներներ"
+        ],
+        "text": [
+          "Our goal is a generation of engineers in Armenia who design and build chips, with partners who grow with them.",
+          "Մեր նպատակը Հայաստանում չիպեր նախագծող և ստեղծող ինժեներների սերունդն է՝ գործընկերների հետ, որոնք աճում են նրանց հետ միասին։"
+        ],
+        "goals": [
+          {
+            "when": [
+              "In 5 years",
+              "5 տարում"
+            ],
+            "text": [
+              "Labs in leading universities, SemiTec Academy open to every student, and real diploma and research projects every year.",
+              "Լաբորատորիաներ առաջատար համալսարաններում, SemiTec Ակադեմիա՝ բաց յուրաքանչյուր ուսանողի համար, և իրական ավարտական ու հետազոտական նախագծեր ամեն տարի։"
+            ]
+          },
+          {
+            "when": [
+              "In 10 years",
+              "10 տարում"
+            ],
+            "text": [
+              "A generation of Armenian chip engineers, research known abroad, and companies growing out of student projects.",
+              "Չիպեր նախագծող հայ ինժեներների սերունդ, արտերկրում ճանաչված հետազոտություններ և ուսանողական նախագծերից աճած ընկերություններ։"
+            ]
+          }
         ]
       }
     ],
