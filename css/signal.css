@@ -332,6 +332,9 @@ html[lang=hy][data-mode="3d"] .breadcrumbs { font-size: 7px; }
 [data-mode="3d"] .pb-lead{display:none}
 @media (max-width:760px){
   [data-mode="3d"] .section-card.has-blocks > :is(.breadcrumbs,.eyebrow,.panel-intro,.panel-next,.prototype-note){display:none}
+  /* a smaller panel: the map, its paths and boards show above it */
+  [data-mode="3d"] .section-card.has-blocks{max-height:41vh;max-height:41svh}
+  [data-mode="3d"] .section-card.has-blocks > .panel-blocks{min-height:110px}
   [data-mode="3d"] .section-card.has-blocks h1{font-size:18px;line-height:1.2;letter-spacing:-.3px;margin:0 0 6px;max-width:none}
   html[lang=hy][data-mode="3d"] .section-card.has-blocks h1{font-size:16px}
   [data-mode="3d"] .section-card.has-blocks > .panel-blocks{margin-top:0;border-top:1px solid #a1cbcc26;padding-top:10px}
