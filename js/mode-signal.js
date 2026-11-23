@@ -206,10 +206,14 @@ window.addEventListener('wheel',e=>{
 },{passive:false,capture:true});
 window.addEventListener('touchstart',e=>{touchY=e.touches[0].clientY;},{passive:true,capture:true});
 window.addEventListener('touchmove',e=>{
- if(!on||touchY==null)return;const y=e.touches[0].clientY,dy=touchY-y;
- if(introOn){e.preventDefault();if(Math.abs(dy)>28){touchY=null;introMove(Math.sign(dy),true);}return;}
+ if(!on)return;
+ /* while the opening shows, no part of a swipe scrolls the page (the journey waits behind it, at its start) */
+ if(introOn){e.preventDefault();if(touchY==null)return;const dy=touchY-e.touches[0].clientY;if(Math.abs(dy)>28){touchY=null;introMove(Math.sign(dy),true);}return;}
+ if(touchY==null)return;const dy=touchY-e.touches[0].clientY;
  if(dy<-30&&atJourneyStart()){touchY=null;openIntro(introLen()-.02);}
 },{passive:false,capture:true});
+/* anything else that would scroll the page during the opening (a fling, the scrollbar) is undone */
+window.addEventListener('scroll',()=>{if(on&&introOn&&scrollY>0)window.scrollTo({top:0,behavior:'instant'});},{passive:true});
 window.addEventListener('keydown',e=>{
  if(!on||!introOn||e.metaKey||e.ctrlKey||e.altKey)return;
  if(e.target.closest&&e.target.closest('input,textarea,select,dialog'))return;
@@ -221,7 +225,12 @@ window.addEventListener('keydown',e=>{
  introMove(fwd?1:-1);
 },{capture:true});
 introEl.addEventListener('click',e=>{
- if(e.target.closest('.story-skip,.story-start')){e.preventDefault();if(still)finishIntro();else introGo(introLen());return;}
+ if(e.target.closest('.story-skip,.story-start')){e.preventDefault();if(still){finishIntro();return;}
+  /* "Skip the intro": no fast-forward through the film; it fades to its end (the chip map), then the dive plays */
+  if(introP<storyLen()-.01){const f=introRoot&&introRoot._film;if(f)f.stop();introAnim=null;introP=introT=storyLen();
+   introEl.classList.remove('is-skipcut');void introEl.offsetWidth;introEl.classList.add('is-skipcut');setTimeout(()=>introEl.classList.remove('is-skipcut'),700);
+   updateIntro(0,true);setTimeout(()=>{if(introOn)introGo(introLen());},450);return;}
+  introGo(introLen());return;}
  const go=e.target.closest('.sc-go[data-path]');
  if(go){e.preventDefault();e.stopPropagation();finishIntro(true);navigate(go.dataset.path.split('/'));}
 },true);

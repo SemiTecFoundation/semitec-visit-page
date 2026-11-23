@@ -326,3 +326,22 @@ html[lang=hy][data-mode="3d"] .breadcrumbs { font-size: 7px; }
 [data-mode="3d"] .xs-mvlinks{display:grid;gap:8px;border-bottom:0}
 [data-mode="3d"] :is(.ab-verb,.ab-five b,.xs-ic em,.ab-si){color:#071419}
 [data-mode="3d"] .is-in .ab-si{color:#071419}
+
+/* ▸PHONE a section's details in 3D: the name, path and short description sit small near the top, and the
+   details below get most of the screen (the scene still shows above and through the panel) */
+@media (max-width:760px){
+  [data-mode="3d"] body:has(.section-card.has-blocks.is-current) .reading-panel{bottom:86px}
+  [data-mode="3d"] .section-card.has-blocks{max-height:calc(100svh - 86px - 112px)}
+  [data-mode="3d"] .section-card.has-blocks::before{content:'';position:absolute;z-index:-1;inset:-12px -4% -8px;background:#071a1ff7;border-radius:12px;box-shadow:0 0 0 1px #a1cbcc1f}
+  [data-mode="3d"] .section-card.has-blocks .breadcrumbs{font-size:10px;min-height:0;margin-bottom:4px}
+  [data-mode="3d"] .section-card.has-blocks .eyebrow{display:none}
+  [data-mode="3d"] .section-card.has-blocks h1{font-size:20px;line-height:1.18;letter-spacing:-.3px;margin:0 0 5px;max-width:none}
+  html[lang=hy][data-mode="3d"] .section-card.has-blocks h1{font-size:18px}
+  [data-mode="3d"] .section-card.has-blocks .panel-intro{font-size:11.5px;line-height:1.5;margin:0 0 6px;max-width:none;-webkit-line-clamp:2}
+  [data-mode="3d"] .section-card.has-blocks > .panel-blocks{margin:2px -6px 10px 0;border-top:1px solid #a1cbcc26;padding-top:10px}
+  [data-mode="3d"] .section-card.has-blocks .panel-actions{margin-top:0}
+  [data-mode="3d"] .section-card.has-blocks .prototype-note{display:none}
+  /* the boards in the scene would sit under the panel; their presentations are in the details too */
+  [data-mode="3d"] body:has(.section-card.has-blocks.is-current) .media-board{opacity:0!important;pointer-events:none!important}
+  [data-mode="3d"] body:has(.section-card.has-blocks.is-current) .scroll-cue{opacity:0}
+}
