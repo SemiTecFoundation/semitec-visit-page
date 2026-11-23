@@ -24,7 +24,8 @@
     const cards = ((SITE_CONTENT.story || {}).film || []).map(it => `<article class="story-card" data-card="film">
         <p class="sc-k">${ST.esc(ST.pick(it.kicker))}</p>
         <h3 class="sc-t">${ST.esc(ST.pick(it.title))}</h3>
-        <p class="sc-p">${ST.esc(ST.pick(it.text))}</p></article>`);
+        <p class="sc-p">${ST.esc(ST.pick(it.text))}</p>${(it.goals || []).length ? `
+        <dl class="sc-goals">${it.goals.map(g => `<div><dt>${ST.esc(ST.pick(g.when))}</dt><dd>${ST.esc(ST.pick(g.text))}</dd></div>`).join('')}</dl>` : ''}</article>`);
     cards.push(mode === '3d' ? `<article class="story-card is-final" data-card="final">
         <p class="sc-k">${ST.esc(ST.text('storyJourneyKicker'))}</p><h3 class="sc-t">${ST.esc(ST.text('storyJourneyTitle'))}</h3>
         <p class="sc-p">${ST.esc(ST.text('choose3dNote'))}</p>
