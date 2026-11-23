@@ -327,24 +327,29 @@ html[lang=hy][data-mode="3d"] .breadcrumbs { font-size: 7px; }
 [data-mode="3d"] :is(.ab-verb,.ab-five b,.xs-ic em,.ab-si){color:#071419}
 [data-mode="3d"] .is-in .ab-si{color:#071419}
 
-/* ▸PHONE a section's details in 3D: the panel stays low (the map and its paths show above it); only the title
-   is fixed, and the path and the description open the scrolling part, so the details get more room */
+/* ▸PHONE a section's details in 3D (and a path's): the panel stays low and small, so the map, its paths and
+   boards show above it; only the title is fixed, and the path, the description and everything else scroll */
 [data-mode="3d"] .pb-lead{display:none}
+[data-mode="3d"] .panel-scroll{display:contents}
 @media (max-width:760px){
-  [data-mode="3d"] .section-card.has-blocks > :is(.breadcrumbs,.eyebrow,.panel-intro,.panel-next,.prototype-note){display:none}
-  /* a smaller panel: the map, its paths and boards show above it */
-  [data-mode="3d"] .section-card.has-blocks{max-height:41vh;max-height:41svh}
-  [data-mode="3d"] .section-card.has-blocks > .panel-blocks{min-height:110px}
-  [data-mode="3d"] .section-card.has-blocks h1{font-size:18px;line-height:1.2;letter-spacing:-.3px;margin:0 0 6px;max-width:none}
-  html[lang=hy][data-mode="3d"] .section-card.has-blocks h1{font-size:16px}
-  [data-mode="3d"] .section-card.has-blocks > .panel-blocks{margin-top:0;border-top:1px solid #a1cbcc26;padding-top:10px}
+  [data-mode="3d"] .section-card:is(.has-blocks,.has-scroll){display:flex;flex-direction:column;max-height:41vh;max-height:41svh}
+  [data-mode="3d"] .section-card:is(.has-blocks,.has-scroll) > *{flex:none}
+  [data-mode="3d"] .section-card:is(.has-blocks,.has-scroll) > :is(.breadcrumbs,.eyebrow,.panel-intro,.panel-next,.prototype-note){display:none}
+  [data-mode="3d"] .section-card:is(.has-blocks,.has-scroll) h1,[data-mode="3d"] body[data-route-kind=loop] .section-card.has-scroll h1{font-size:18px;line-height:1.2;letter-spacing:-.3px;margin:0 0 6px;max-width:none}
+  html[lang=hy][data-mode="3d"] .section-card:is(.has-blocks,.has-scroll) h1,html[lang=hy][data-mode="3d"] body[data-route-kind=loop] .section-card.has-scroll h1{font-size:16px}
+  [data-mode="3d"] .section-card:is(.has-blocks,.has-scroll) > :is(.panel-blocks,.panel-scroll){flex:1 1 auto;min-height:110px;max-height:none;margin:0 -6px 10px 0;padding:10px 10px 6px 0;border-top:1px solid #a1cbcc26;overflow-y:auto;overscroll-behavior:contain}
+  [data-mode="3d"] .panel-scroll{display:block}
   [data-mode="3d"] .pb-lead{display:block;margin:0 0 10px;padding-bottom:10px;border-bottom:1px solid #a1cbcc1f}
   [data-mode="3d"] .pb-lead .breadcrumbs,html[lang=hy][data-mode="3d"] .pb-lead .breadcrumbs{margin-bottom:5px;font-size:9px}
   [data-mode="3d"] .pb-lead .pb-intro{margin:0;font-size:11px;line-height:1.5;color:var(--muted)}
   [data-mode="3d"] .pb-lead .panel-next{margin:8px 0 0;font-size:11px}
   /* the details themselves, a size smaller: more of them fits in the panel */
   [data-mode="3d"] .section-card.has-blocks > .panel-blocks > :not(.pb-lead){zoom:.78}
-  [data-mode="3d"] .section-card.has-blocks .panel-actions{zoom:.9}
+  [data-mode="3d"] .section-card:is(.has-blocks,.has-scroll) .panel-actions{zoom:.9;margin-top:0}
+  /* a path's own text, its points, presentation and links, at the same size as a section's details */
+  [data-mode="3d"] .panel-scroll .panel-more{display:block;max-height:none;overflow:visible;-webkit-mask:none;mask:none;padding:0;margin:0 0 10px}
+  [data-mode="3d"] .panel-scroll .panel-text{font-size:11px;line-height:1.55;margin:0 0 8px;color:var(--muted)}
+  [data-mode="3d"] .panel-scroll > :is(.panel-detail,.panel-items,.panel-deck,.panel-events,.panel-links,.route-options,.loop-status){zoom:.8;margin-bottom:12px}
   /* a soft backing for the panel only, so a board in the scene behind the title does not mix with it */
-  [data-mode="3d"] .section-card.has-blocks::before{content:'';position:absolute;z-index:-1;inset:-12px -4% -8px;border-radius:12px;background:linear-gradient(#071419d9,#071419f0 70px);box-shadow:0 0 0 1px #a1cbcc1a}
+  [data-mode="3d"] .section-card:is(.has-blocks,.has-scroll)::before{content:'';position:absolute;z-index:-1;inset:-12px -4% -8px;border-radius:12px;background:linear-gradient(#071419d9,#071419f0 70px);box-shadow:0 0 0 1px #a1cbcc1a}
 }

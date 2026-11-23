@@ -366,6 +366,14 @@ function renderCard(force=false){
  if(node.deck&&!(blocks&&blocks.querySelector('[data-deck]'))){const holder=element('div','panel-deck');holder.innerHTML=ST.deckHTML(node);card.append(holder);}   // ▸DECK watch the expo chapter
  if(inLoop&&node.eventTypes){const holder=element('div','panel-events');holder.innerHTML=ST.pathEventsHTML(node);card.append(holder);}
  if((node.links||[]).length){const ls=element('div','panel-links');node.links.forEach(l=>{const inner=l.href[0]==='#',a=element('a','',pick(l.label)+(inner?' →':' ↗'));a.href=l.href;if(!inner){a.target='_blank';a.rel='noopener';}ls.append(a);});card.append(ls);}
+ /* ▸PHONE a path's card takes the sections' layout there: only the title fixed, the rest in one scrolling part
+    (on larger screens the wrapper is invisible to the layout: display: contents) */
+ if(inLoop&&!blocks){
+  const scroll=element('div','panel-scroll'),lead=element('div','pb-lead');
+  lead.append(breadcrumb(active.path),element('p','pb-intro',pick(node.intro)));scroll.append(lead);
+  [...card.children].forEach(el=>{if(!el.matches('.breadcrumbs,.eyebrow,h1,.panel-intro,.panel-next'))scroll.append(el);});
+  card.append(scroll);card.classList.add('has-scroll');
+ }
  const actions=element('div','panel-actions');
  const primary=element('button','primary-action');primary.type='button';
  primary.append(element('span','',inLoop?text('back')+labelFor(active.segment.visit.parentPath):route.index===0?text('enter'):route.index===sections.length-1?text('restart'):text('next')),element('span','',inLoop?'↺':'↗'));
